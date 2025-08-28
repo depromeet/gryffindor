@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 git merge/pull 후 의존성 확인중..."
+
+
+if git diff --name-only HEAD@{1} HEAD | grep -E "(package-lock\.json|pnpm-lock\.yaml)" > /dev/null; then
+    echo "변경된 의존성 있음, 변경된 의존성 설치중..."
+    
+    pnpm install
+    
+    if [ $? -eq 0 ]; then
+        echo "✅ 의존성 설치 완료!"
+    else
+        echo "❌ 의존성 설치 실패. 수동으로 'pnpm install' 실행해주세요."
+        exit 1
+    fi
+else
+    echo "✅ 의존성 변경 없음"
+fi

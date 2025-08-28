@@ -4,23 +4,46 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "build": "biome check --write . && next build",
     "start": "next start",
-    "lint": "biome check",
-    "format": "biome format --write"
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "ci": "biome ci .",
+    "prepare": "husky install && husky init && pnpm run husky:permissions",
+    "husky:permissions": "chmod +x .husky/pre-commit .husky/pre-push .husky/post-merge .husky/_/husky.sh 2>/dev/null || echo 'Husky permissions set'"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "biome lint --write",
+      "biome format --write"
+    ],
+    "*.json": [
+      "biome format --write"
+    ],
+    "*.{md,scss,css}": [
+      "echo 'Skipping SCSS/CSS formatting'"
+    ]
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.85.5",
+    "@tanstack/react-query-devtools": "^5.85.5",
+    "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.5.2"
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@biomejs/biome": "2.2.0",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
     "tailwindcss": "^4",
-    "@biomejs/biome": "2.2.0"
+    "typescript": "^5"
   }
 }

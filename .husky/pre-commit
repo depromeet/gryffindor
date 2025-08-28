@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 git 스테이징에 있는 파일 린팅 체크중..."
+npx lint-staged
