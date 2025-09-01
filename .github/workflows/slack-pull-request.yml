@@ -1,0 +1,44 @@
+name: PR Slack Notification
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  notify_pr_opened:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Map assignees & reviewers
+        id: map_ids
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const workers = JSON.parse(fs.readFileSync('.github/reviewers.json', 'utf8'));      
+            const assignees = context.payload.pull_request.assignees || [];
+            const mappedAssignees = assignees.map(assignee => `<@${workers[assignee.login]}>`);
+            const reviewers = context.payload.pull_request.requested_reviewers || [];
+            const mappedReviewers = reviewers.map(reviewer => `<@${workers[reviewer.login]}>`);
+
+            core.setOutput("assignees", mappedAssignees.join(", "));
+            core.setOutput("reviewers", mappedReviewers.join(", "));
+
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*📢 새로운 PR이 올라왔어요!*\n> *제목:* ${{ github.event.pull_request.title }}\n> *담당자:* ${{ steps.map_ids.outputs.assignees }}\n> *리뷰어:* ${{ steps.map_ids.outputs.reviewers }}\n> *링크:* <${{ github.event.pull_request.html_url }}>"
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
