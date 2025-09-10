@@ -32,6 +32,85 @@
   --color-primary400: #FF5532; /* primary color */
   --color-primary500: #F24622; /* text and element on color */
 
+  /* Typography scale */
+
+  /* Heading */
+  --text-heading1: 1.75rem;
+  --text-heading1--leading: 130%;
+  --text-heading1--font-weight: 700;
+  --text-heading1--letter-spacing: 0;
+
+  --text-title1: 1.5rem;
+  --text-title1--leading: 135%;
+  --text-title1--font-weight: 700;
+  --text-title1--letter-spacing: 0;
+
+  --text-title2: 1.25rem;
+  --text-title2--leading: 140%;
+  --text-title2--font-weight: 600;
+  --text-title2--letter-spacing: 0;
+
+  --text-subtitle1: 1.0625rem;
+  --text-subtitle1--leading: 140%;
+  --text-subtitle1--font-weight: 600;
+  --text-subtitle1--letter-spacing: -1%;
+
+  /* Body */
+  --text-body1-semibold: 1rem;
+  --text-body1-semibold--leading: 145%;
+  --text-body1-semibold--font-weight: 600;
+  --text-body1-semibold--letter-spacing: -1%;
+
+  --text-body1-regular: 1rem;
+  --text-body1-regular--leading: 145%;
+  --text-body1-regular--font-weight: 400;
+  --text-body1-regular--letter-spacing: -1%;
+
+  --text-body2-semibold: 0.875rem;
+  --text-body2-semibold--leading: 145%;
+  --text-body2-semibold--font-weight: 600;
+  --text-body2-semibold--letter-spacing: -1%;
+
+  --text-body2-medium: 0.875rem;
+  --text-body2-medium--leading: 145%;
+  --text-body2-medium--font-weight: 500;
+  --text-body2-medium--letter-spacing: -1%;
+
+  --text-body2-regular: 0.875rem;
+  --text-body2-regular--leading: 145%;
+  --text-body2-regular--font-weight: 400;
+  --text-body2-regular--letter-spacing: -1%;
+
+  --text-body3-semibold: 0.8125rem;
+  --text-body3-semibold--leading: 145%;
+  --text-body3-semibold--font-weight: 600;
+  --text-body3-semibold--letter-spacing: -1%;
+
+  --text-body3-regular: 0.8125rem;
+  --text-body3-regular--leading: 145%;
+  --text-body3-regular--font-weight: 400;
+  --text-body3-regular--letter-spacing: -1%;
+
+  /* Caption */
+  --text-caption1-semibold: 0.75rem;
+  --text-caption1-semibold--leading: 150%;
+  --text-caption1-semibold--font-weight: 600;
+  --text-caption1-semibold--letter-spacing: -1%;
+
+  --text-caption1-medium: 0.75rem;
+  --text-caption1-medium--leading: 150%;
+  --text-caption1-medium--font-weight: 500;
+  --text-caption1-medium--letter-spacing: -1%;
+
+  --text-caption2-semibold: 0.6875rem;
+  --text-caption2-semibold--leading: 150%;
+  --text-caption2-semibold--font-weight: 600;
+  --text-caption2-semibold--letter-spacing: -1%;
+
+  --text-caption2-medium: 0.6875rem;
+  --text-caption2-medium--leading: 150%;
+  --text-caption2-medium--font-weight: 500;
+  --text-caption2-medium--letter-spacing: -1%;
 }
 
 @media (prefers-color-scheme: dark) {
