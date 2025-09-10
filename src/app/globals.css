@@ -8,7 +8,30 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* Font */
   --font-sans: var(--font-pretendard);
+
+  /* Gray scale */
+  --color-gray0: #ffffff;
+  --color-gray50: #f3f5f8;   /* screen background */
+  --color-gray100: #e7e9ec;  /* functional element background */
+  --color-gray200: #dbdddf;
+  --color-gray300: #c2c4c6;
+  --color-gray400: #aaacae;  /* secondary text, disabled text in button */
+  --color-gray500: #929395;
+  --color-gray600: #7a7b7c;
+  --color-gray700: #49494a;  /* secondary text, placeholder in button */
+  --color-gray800: #242525;
+  --color-gray900: #101010;  /* basic text */
+
+  /* Primary */
+  --color-primary100: #FFE8E3; /* functional element background */
+  --color-primary200: #FFCEC4; /* outline color */
+  --color-primary300: #FF9F8B; /* secondary impact color */
+  --color-primary400: #FF5532; /* primary color */
+  --color-primary500: #F24622; /* text and element on color */
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,5 +43,5 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--color-gray900);
 }
