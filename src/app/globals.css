@@ -38,6 +38,86 @@
 
   /* Error */
   --color-error : #ff2d2d;
+
+  /* Typography scale */
+
+  /* Heading */
+  --text-heading1: 28px;
+  --text-heading1--leading: 130%;
+  --text-heading1--font-weight: 700;
+  --text-heading1--letter-spacing: 0;
+
+  --text-title1: 24px;
+  --text-title1--leading: 135%;
+  --text-title1--font-weight: 700;
+  --text-title1--letter-spacing: 0;
+
+  --text-title2: 20px;
+  --text-title2--leading: 140%;
+  --text-title2--font-weight: 600;
+  --text-title2--letter-spacing: 0;
+
+  --text-subtitle1: 17px;
+  --text-subtitle1--leading: 140%;
+  --text-subtitle1--font-weight: 600;
+  --text-subtitle1--letter-spacing: -1%;
+
+  /* Body */
+  --text-body1-semibold: 16px;
+  --text-body1-semibold--leading: 145%;
+  --text-body1-semibold--font-weight: 600;
+  --text-body1-semibold--letter-spacing: -1%;
+
+  --text-body1-regular: 16px;
+  --text-body1-regular--leading: 145%;
+  --text-body1-regular--font-weight: 400;
+  --text-body1-regular--letter-spacing: -1%;
+
+  --text-body2-semibold: 14px;
+  --text-body2-semibold--leading: 145%;
+  --text-body2-semibold--font-weight: 600;
+  --text-body2-semibold--letter-spacing: -1%;
+
+  --text-body2-medium: 14px;
+  --text-body2-medium--leading: 145%;
+  --text-body2-medium--font-weight: 500;
+  --text-body2-medium--letter-spacing: -1%;
+
+  --text-body2-regular: 14px;
+  --text-body2-regular--leading: 145%;
+  --text-body2-regular--font-weight: 400;
+  --text-body2-regular--letter-spacing: -1%;
+
+  --text-body3-semibold: 13px;
+  --text-body3-semibold--leading: 145%;
+  --text-body3-semibold--font-weight: 600;
+  --text-body3-semibold--letter-spacing: -1%;
+
+  --text-body3-regular: 13px;
+  --text-body3-regular--leading: 145%;
+  --text-body3-regular--font-weight: 400;
+  --text-body3-regular--letter-spacing: -1%;
+
+  /* Caption */
+  --text-caption1-semibold: 12px;
+  --text-caption1-semibold--leading: 150%;
+  --text-caption1-semibold--font-weight: 600;
+  --text-caption1-semibold--letter-spacing: -1%;
+
+  --text-caption1-medium: 12px;
+  --text-caption1-medium--leading: 150%;
+  --text-caption1-medium--font-weight: 500;
+  --text-caption1-medium--letter-spacing: -1%;
+
+  --text-caption2-semibold: 11px;
+  --text-caption2-semibold--leading: 150%;
+  --text-caption2-semibold--font-weight: 600;
+  --text-caption2-semibold--letter-spacing: -1%;
+
+  --text-caption2-medium: 11px;
+  --text-caption2-medium--leading: 150%;
+  --text-caption2-medium--font-weight: 500;
+  --text-caption2-medium--letter-spacing: -1%;
 }
 
 @media (prefers-color-scheme: dark) {
