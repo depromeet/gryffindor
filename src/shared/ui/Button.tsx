@@ -5,6 +5,7 @@
  * @param {string} props.label - 버튼의 레이블
  * @param {string} props.size - 버튼의 크기 (medium | large)
  * @param {string} props.disabled - disabled 상태 여부
+ * @param {boolean} props.fullWidth - 버튼의 너비를 부모 컨테이너에 맞출지 여부
  * @param {string} props.variant - 버튼의 타입 (primary | secondary)
  * @param {() => void} props.onClick - 클릭 이벤트 핸들러
  *
@@ -30,11 +31,19 @@ interface ButtonProps {
   label?: string;
   size?: "medium" | "large";
   disabled?: boolean;
+  fullWidth?: boolean;
   variant?: "primary" | "secondary";
   onClick?: () => void;
 }
 
-export function Button({ label, size, disabled, variant = "primary", onClick }: ButtonProps) {
+export function Button({
+  label,
+  size,
+  disabled,
+  fullWidth = false,
+  variant = "primary",
+  onClick,
+}: ButtonProps) {
   const variantStyle =
     variant === "primary"
       ? disabled
@@ -52,12 +61,14 @@ export function Button({ label, size, disabled, variant = "primary", onClick }: 
       : disabled
         ? "text-gray400"
         : "text-gray800";
+
+  const widthStyle = fullWidth ? "w-full" : size === "large" ? "w-[335px]" : "w-[160px]";
   return (
     <button
       type="button"
       className={`flex items-center justify-center py-[14px] rounded-[8px] gap-[10px] transition-color duration-300 cursor-pointer ${
         size === "large" ? "w-[335px]" : "w-[160px]"
-      } ${variantStyle}`}
+      } ${variantStyle} ${widthStyle}`}
       onClick={onClick}
       disabled={disabled}
     >
