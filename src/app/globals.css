@@ -32,6 +32,9 @@
   --color-primary400: #FF5532; /* primary color */
   --color-primary500: #F24622; /* text and element on color */
 
+  /* Not Specified */
+  --color-tag-text-color : #FB4F2B;
+
   /* Typography scale */
 
   /* Heading */
