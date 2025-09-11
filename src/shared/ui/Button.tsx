@@ -1,0 +1,67 @@
+/**
+ * 버튼 컴포넌트
+ *
+ * @param {Object} props - 컴포넌트 props
+ * @param {string} props.label - 버튼의 레이블
+ * @param {string} props.size - 버튼의 크기 (medium | large)
+ * @param {string} props.disabled - disabled 상태 여부
+ * @param {string} props.variant - 버튼의 타입 (primary | secondary)
+ * @param {() => void} props.onClick - 클릭 이벤트 핸들러
+ *
+ * @example
+ * const [selectedChip, setSelectedChip] = useState('');
+ * const chips = ['1단계', '2단계', '3단계'];
+ * return (
+ *   <>
+ *     {chips.map(chip => (
+ *       <FilterChip
+ *         key={chip}
+ *         label={chip}
+ *         selectedChip={selectedChip}
+ *         setSelectedChip={setSelectedChip}
+ *       />
+ *     ))}
+ *   </>
+ * );
+ */
+
+interface ButtonProps {
+  label?: string;
+  size?: "medium" | "large";
+  disabled?: boolean;
+  variant?: "primary" | "secondary";
+  onClick?: () => void;
+}
+
+export function Button({ label, size, disabled, variant = "primary", onClick }: ButtonProps) {
+  const variantStyle =
+    variant === "primary"
+      ? disabled
+        ? "bg-gray100 text-gray400"
+        : "bg-primary400 text-gray0"
+      : disabled
+        ? "bg-gray50 text-gray400"
+        : "bg-gray100 text-gray800";
+
+  const textStyle =
+    variant === "primary"
+      ? disabled
+        ? "text-gray400"
+        : "text-gray0"
+      : disabled
+        ? "text-gray400"
+        : "text-gray800";
+  return (
+    <button
+      type="button"
+      className={`flex items-center justify-center py-3.5 rounded-[8px] gap-2.5 transition-color duration-300 cursor-pointer ${
+        size === "large" ? "w-[20.9375rem]" : "w-[10rem]"
+      } ${variantStyle}`}
+      aria-label={label}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      <p className={`whitespace-nowrap text-subtitle1 truncate ${textStyle}`}>{label}</p>
+    </button>
+  );
+}
