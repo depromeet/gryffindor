@@ -9,6 +9,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
+  /* Font */
+  --font-sans: var(--font-pretendard);
 
   /* Gray scale */
   --color-gray0: #ffffff;
