@@ -9,20 +9,21 @@
  * @param {() => void} props.onClick - 클릭 이벤트 핸들러
  *
  * @example
- * const [selectedChip, setSelectedChip] = useState('');
- * const chips = ['1단계', '2단계', '3단계'];
- * return (
- *   <>
- *     {chips.map(chip => (
- *       <FilterChip
- *         key={chip}
- *         label={chip}
- *         selectedChip={selectedChip}
- *         setSelectedChip={setSelectedChip}
- *       />
- *     ))}
- *   </>
- * );
+ * // 기본 버튼
+ * <Button label="확인" onClick={() => console.log("clicked")} />
+ *
+ * @example
+ * // Large Secondary 버튼
+ * <Button
+ *   label="취소"
+ *   size="large"
+ *   variant="secondary"
+ *   onClick={() => console.log("취소됨")}
+ * />
+ *
+ * @example
+ * // Disabled 버튼
+ * <Button label="비활성" disabled />
  */
 
 interface ButtonProps {
