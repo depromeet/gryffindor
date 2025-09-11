@@ -8,8 +8,34 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+
+  /* Gray scale */
+  --color-gray0: #ffffff;
+  --color-gray50: #f3f5f8; /* screen background */
+  --color-gray100: #e7e9ec; /* functional element background */
+  --color-gray200: #dbdddf;
+  --color-gray300: #c2c4c6;
+  --color-gray400: #aaacae; /* secondary text, disabled text in button */
+  --color-gray500: #929395;
+  --color-gray600: #7a7b7c;
+  --color-gray700: #49494a; /* secondary text, placeholder in button */
+  --color-gray800: #242525;
+  --color-gray900: #101010; /* basic text */
+
+  /* Primary */
+  --color-primary100: #ffe8e3; /* functional element background */
+  --color-primary200: #ffcec4; /* outline color */
+  --color-primary300: #ff9f8b; /* secondary impact color */
+  --color-primary400: #ff5532; /* primary color */
+  --color-primary500: #f24622; /* text and element on color */
+
+  /* Status */
+  --color-blue100 : #eff6ff;
+  --color-blue400 : #1375F5;
+
+  /* Error */
+  --color-error : #ff2d2d;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,6 +47,5 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-gray900);
 }
