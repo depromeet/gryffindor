@@ -44,31 +44,39 @@ export function Button({
   variant = "primary",
   onClick,
 }: ButtonProps) {
-  const variantStyle =
-    variant === "primary"
-      ? disabled
-        ? "bg-gray100"
-        : "bg-primary400"
-      : disabled
-        ? "bg-gray50"
-        : "bg-gray100";
+  const bgMap = {
+    primary: {
+      active: "bg-primary400",
+      disabled: "bg-gray100",
+    },
+    secondary: {
+      active: "bg-gray100",
+      disabled: "bg-gray50",
+    },
+  } as const;
 
-  const textStyle =
-    variant === "primary"
-      ? disabled
-        ? "text-gray400"
-        : "text-gray0"
-      : disabled
-        ? "text-gray400"
-        : "text-gray800";
+  const textMap = {
+    primary: {
+      active: "text-gray0",
+      disabled: "text-gray400",
+    },
+    secondary: {
+      active: "text-gray800",
+      disabled: "text-gray400",
+    },
+  } as const;
 
   const widthStyle = fullWidth ? "w-full" : size === "large" ? "w-[335px]" : "w-[160px]";
+
+  const state = disabled ? "disabled" : "active";
+
+  const variantStyle = bgMap[variant][state];
+  const textStyle = textMap[variant][state];
+
   return (
     <button
       type="button"
-      className={`flex items-center justify-center py-[14px] rounded-[8px] gap-[10px] transition-color duration-300 cursor-pointer ${
-        size === "large" ? "w-[335px]" : "w-[160px]"
-      } ${variantStyle} ${widthStyle}`}
+      className={`flex items-center justify-center py-[14px] rounded-[8px] gap-[10px] transition-color duration-300 cursor-pointer ${variantStyle} ${widthStyle}`}
       onClick={onClick}
       disabled={disabled}
     >
