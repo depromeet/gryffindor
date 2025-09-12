@@ -8,6 +8,8 @@
  * @param {Object} props - 컴포넌트 props
  * @param {string} props.primaryLabel - 주요 CTA 버튼 텍스트
  * @param {() => void} props.onPrimary - 주요 CTA 버튼 클릭 핸들러
+ * @param {"primary" | "secondary"} [props.primaryVariant="primary"] - 주요 CTA 버튼의 스타일
+ * @param {boolean} [props.primaryDisabled=false] - 주요 CTA 버튼 비활성화 여부
  * @param {string} [props.secondaryLabel] - 보조 CTA 버튼 텍스트 (옵션)
  * @param {() => void} [props.onSecondary] - 보조 CTA 버튼 클릭 핸들러 (옵션)
  *
@@ -26,6 +28,14 @@
  *   primaryLabel="완료"
  *   onPrimary={() => console.log("완료 클릭됨")}
  * />
+ *
+ * @example
+ * // disabled 상태
+ * <CTA
+ *   primaryLabel="저장"
+ *   primaryDisabled
+ *   onPrimary={() => console.log("저장 클릭됨")}
+ * />
  */
 
 import { Button } from "./Button";
@@ -33,11 +43,20 @@ import { Button } from "./Button";
 interface CTAProps {
   primaryLabel: string;
   onPrimary: () => void;
+  primaryVariant?: "primary" | "secondary";
+  primaryDisabled?: boolean;
   secondaryLabel?: string;
   onSecondary?: () => void;
 }
 
-export function CTA({ primaryLabel, onPrimary, secondaryLabel, onSecondary }: CTAProps) {
+export function CTA({
+  primaryLabel,
+  onPrimary,
+  primaryVariant = "primary",
+  primaryDisabled = false,
+  secondaryLabel,
+  onSecondary,
+}: CTAProps) {
   const size = secondaryLabel ? "medium" : "large";
   return (
     <article className="flex flex-col w-full gap-[10px] p-[20px] items-start bg-gray0 [box-shadow:-4px_0_20px_0_rgba(0,0,0,0.08)]">
@@ -52,7 +71,14 @@ export function CTA({ primaryLabel, onPrimary, secondaryLabel, onSecondary }: CT
           />
         )}
 
-        <Button label={primaryLabel} size={size} fullWidth variant="primary" onClick={onPrimary} />
+        <Button
+          label={primaryLabel}
+          size={size}
+          variant={primaryVariant}
+          disabled={primaryDisabled}
+          fullWidth
+          onClick={onPrimary}
+        />
       </div>
     </article>
   );
