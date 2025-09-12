@@ -86,7 +86,7 @@ export function FilterButton({
       onClick={onClick}
       disabled={disabled}
     >
-      <p className={`text-body2-semibold whitespace-nowrap truncate ${textStyle}`}>{label}</p>
+      <p className={`text-body2-semibold truncate ${textStyle}`}>{label}</p>
     </button>
   );
 }

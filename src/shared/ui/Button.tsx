@@ -4,7 +4,7 @@
  * @param {Object} props - 컴포넌트 props
  * @param {string} props.label - 버튼의 레이블
  * @param {string} props.size - 버튼의 크기 (medium | large)
- * @param {string} props.disabled - disabled 상태 여부
+ * @param {boolean} props.disabled - disabled 상태 여부
  * @param {boolean} props.fullWidth - 버튼의 너비를 부모 컨테이너에 맞출지 여부
  * @param {string} props.variant - 버튼의 타입 (primary | secondary)
  * @param {() => void} props.onClick - 클릭 이벤트 핸들러
@@ -80,7 +80,7 @@ export function Button({
       onClick={onClick}
       disabled={disabled}
     >
-      <p className={`whitespace-nowrap text-subtitle1 truncate ${textStyle}`}>{label}</p>
+      <p className={`text-subtitle1 truncate ${textStyle}`}>{label}</p>
     </button>
   );
 }
