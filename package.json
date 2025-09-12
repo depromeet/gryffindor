@@ -12,7 +12,7 @@
     "check": "biome check .",
     "check:fix": "biome check --write .",
     "ci": "biome ci .",
-    "prepare": "husky install && husky init && pnpm run husky:permissions",
+    "prepare": "husky",
     "husky:permissions": "chmod +x .husky/pre-commit .husky/pre-push .husky/post-merge .husky/_/husky.sh 2>/dev/null || echo 'Husky permissions set'"
   },
   "lint-staged": {
@@ -31,6 +31,7 @@
     "@tanstack/react-query": "^5.85.5",
     "@tanstack/react-query-devtools": "^5.85.5",
     "next": "15.5.2",
+    "next-auth": "5.0.0-beta.29",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "zustand": "^5.0.8"
