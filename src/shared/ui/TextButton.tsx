@@ -24,7 +24,7 @@
  * />
  */
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 import { Icon } from "./Icon";
 
 interface TextButtonProps {
@@ -57,7 +57,7 @@ export function TextButton({
   return (
     <button
       type="button"
-      className="flex items-center justify-start gap-0.5 cursor-pointer "
+      className="flex cursor-pointer items-center justify-start gap-0.5"
       onClick={onClick}
     >
       <p
@@ -70,13 +70,13 @@ export function TextButton({
         {label}
       </p>
       {isIcon && (
-        <div className="w-4 h-4">
+        <div className="h-4 w-4">
           <Icon
             name="arrow"
             title="화살표"
             size={16}
             className={cn(
-              "transition-transform duration-300 ease-in-out text-gray600",
+              "text-gray600 transition-transform duration-300 ease-in-out",
               rotateClass,
               colorStyle,
             )}

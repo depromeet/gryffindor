@@ -38,7 +38,7 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 
 export function Button({
   label,
@@ -88,14 +88,14 @@ export function Button({
     <button
       type={type}
       className={cn(
-        "flex items-center justify-center py-[14px] rounded-[8px] gap-[10px] transition-color duration-300 cursor-pointer",
+        "flex cursor-pointer items-center justify-center gap-[10px] rounded-[8px] py-[14px] transition-color duration-300",
         variantStyle,
         widthStyle,
       )}
       onClick={onClick}
       disabled={disabled}
     >
-      <p className={cn("text-subtitle1 truncate", textStyle)}>{label}</p>
+      <p className={cn("truncate text-subtitle1", textStyle)}>{label}</p>
     </button>
   );
 }

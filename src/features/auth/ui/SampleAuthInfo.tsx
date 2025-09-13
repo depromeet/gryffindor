@@ -18,7 +18,7 @@ export function SampleAuthInfo() {
             await signOutAction();
           }}
         >
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded-md cursor-pointer">
+          <button type="submit" className="cursor-pointer rounded-md bg-blue-500 p-2 text-white">
             로그아웃
           </button>
         </form>

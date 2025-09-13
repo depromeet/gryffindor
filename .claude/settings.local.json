@@ -5,7 +5,11 @@
       "Bash(npx biome check:*)",
       "Bash(npm run check:fix:*)",
       "Bash(npm run check:*)",
-      "Bash(npm run format:*)"
+      "Bash(npm run format:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run:*)"
     ],
     "deny": [],
     "ask": []

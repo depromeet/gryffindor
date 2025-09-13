@@ -10,7 +10,7 @@
  * <RoundButton iconName="speaker" label="스피커" onClick={() => console.log("clicked")} />
  */
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 import { Icon, type IconName } from "./Icon";
 
 interface RoundButtonProps {
@@ -26,13 +26,13 @@ export function RoundButton({ iconName, label, type = "button", onClick }: Round
     <button
       type={type}
       className={cn(
-        "flex items-center justify-center py-1.5 rounded-full gap-[2px] bg-gray800 cursor-pointer",
+        "flex cursor-pointer items-center justify-center gap-[2px] rounded-full bg-gray800 py-1.5",
         paddingStyle,
       )}
       onClick={onClick}
     >
       {iconName && <Icon name={iconName} title="버튼" size={20} className="text-gray0" />}
-      <p className="text-body2-semibold truncate text-gray0">{label}</p>
+      <p className="truncate text-body2-semibold text-gray0">{label}</p>
     </button>
   );
 }

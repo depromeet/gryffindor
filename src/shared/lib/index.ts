@@ -1,2 +1,3 @@
 export * from "./hooks/useMobile";
-export * from "./utils";
+export * from "./utils/authUtils";
+export * from "./utils/styleUtils";

@@ -15,7 +15,7 @@ interface ChipFilterProps {
   onClick?: () => void;
 }
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 
 export function ChipFilter({ label, selected = false, onClick }: ChipFilterProps) {
   const styles = {
@@ -35,12 +35,12 @@ export function ChipFilter({ label, selected = false, onClick }: ChipFilterProps
     <button
       type="button"
       className={cn(
-        "flex items-center justify-center px-[12px] py-[6px] rounded-full cursor-pointer transition-colors duration-300",
+        "flex cursor-pointer items-center justify-center rounded-full px-[12px] py-[6px] transition-colors duration-300",
         styles[state].button,
       )}
       onClick={onClick}
     >
-      <p className={cn("text-body2-medium truncate", styles[state].text)}>{label}</p>
+      <p className={cn("truncate text-body2-medium", styles[state].text)}>{label}</p>
     </button>
   );
 }

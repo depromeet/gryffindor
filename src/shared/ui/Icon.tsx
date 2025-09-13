@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 import { ArrowIcon, CheckIcon, CrownIcon, HomeIcon, MapIcon, SpeakerIcon, UserIcon } from "./icons";
 // 사용 가능한 아이콘 이름들
 export type IconName = "home" | "map" | "user" | "speaker" | "check" | "arrow" | "crown";

@@ -34,7 +34,7 @@
  * );
  */
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 
 interface FilterButtonProps {
   label: string;
@@ -84,13 +84,13 @@ export function FilterButton({
     <button
       type={type}
       className={cn(
-        "flex w-[96px] items-center justify-center py-[12px] rounded-[8px] transition-colors duration-300 cursor-pointer",
+        "flex w-[96px] cursor-pointer items-center justify-center rounded-[8px] py-[12px] transition-colors duration-300",
         variantStyle,
       )}
       onClick={onClick}
       disabled={disabled}
     >
-      <p className={cn("text-body2-semibold truncate", textStyle)}>{label}</p>
+      <p className={cn("truncate text-body2-semibold", textStyle)}>{label}</p>
     </button>
   );
 }
