@@ -29,7 +29,7 @@ export function RoundButton({
   return (
     <button
       type={type}
-      className={`flex items-center justify-center ${paddingStyle} py-1.5 rounded-full gap-[2px] bg-gray800`}
+      className={`flex items-center justify-center ${paddingStyle} py-1.5 rounded-full gap-[2px] bg-gray800 cursor-pointer`}
       onClick={onClick}
     >
       {isIconShow && <Icon name="speaker" title="버튼" size={20} />}
