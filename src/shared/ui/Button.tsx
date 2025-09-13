@@ -6,7 +6,8 @@
  * @param {string} props.size - 버튼의 크기 (medium | large)
  * @param {boolean} props.disabled - disabled 상태 여부
  * @param {boolean} props.fullWidth - 버튼의 너비를 부모 컨테이너에 맞출지 여부
- * @param {string} props.variant - 버튼의 타입 (primary | secondary)
+ * @param {string} props.variant - 버튼의 스타일 (primary | secondary)
+ * @param {string} props.type - 버튼의 타입 (default: button)
  * @param {() => void} props.onClick - 클릭 이벤트 핸들러
  *
  * @example
@@ -33,49 +34,57 @@ interface ButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   variant?: "primary" | "secondary";
+  type?: "button" | "submit" | "reset";
   onClick?: () => void;
 }
 
 export function Button({
   label,
-  size,
+  size = "medium",
   disabled,
   fullWidth = false,
   variant = "primary",
+  type = "button",
   onClick,
 }: ButtonProps) {
-  const bgMap = {
+  const variants = {
     primary: {
-      active: "bg-primary400",
-      disabled: "bg-gray100",
+      active: {
+        button: "bg-primary400",
+        text: "text-gray0",
+      },
+      disabled: {
+        button: "bg-gray100",
+        text: "text-gray400",
+      },
     },
     secondary: {
-      active: "bg-gray100",
-      disabled: "bg-gray50",
+      active: {
+        button: "bg-gray100",
+        text: "text-gray800",
+      },
+      disabled: {
+        button: "bg-gray50",
+        text: "text-gray400",
+      },
     },
   } as const;
 
-  const textMap = {
-    primary: {
-      active: "text-gray0",
-      disabled: "text-gray400",
-    },
-    secondary: {
-      active: "text-gray800",
-      disabled: "text-gray400",
-    },
+  const sizeMap = {
+    medium: "w-[160px]",
+    large: "w-[335px]",
   } as const;
 
-  const widthStyle = fullWidth ? "w-full" : size === "large" ? "w-[335px]" : "w-[160px]";
+  const widthStyle = fullWidth ? "w-full" : sizeMap[size];
 
   const state = disabled ? "disabled" : "active";
 
-  const variantStyle = bgMap[variant][state];
-  const textStyle = textMap[variant][state];
+  const variantStyle = variants[variant][state].button;
+  const textStyle = variants[variant][state].text;
 
   return (
     <button
-      type="button"
+      type={type}
       className={`flex items-center justify-center py-[14px] rounded-[8px] gap-[10px] transition-color duration-300 cursor-pointer ${variantStyle} ${widthStyle}`}
       onClick={onClick}
       disabled={disabled}
