@@ -20,14 +20,7 @@ const iconMap = {
   user: UserIcon,
 } as const;
 
-export const Icon = ({
-  name,
-  size = 24,
-  className,
-  color,
-  title,
-  ...props
-}: IconProps) => {
+export const Icon = ({ name, size = 24, className, color, title, ...props }: IconProps) => {
   const IconComponent = iconMap[name];
 
   if (!IconComponent) {

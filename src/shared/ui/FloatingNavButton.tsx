@@ -36,7 +36,7 @@ export function FloatingNavButton() {
         className={cn(
           "relative w-20 h-10 rounded-full transition-all duration-300 ease-in-out",
           "bg-gray-800 shadow-lg hover:shadow-xl",
-          "border-2 border-gray-700"
+          "border-2 border-gray-700",
         )}
       >
         {/* Toggle Background */}
@@ -47,7 +47,7 @@ export function FloatingNavButton() {
           className={cn(
             "absolute top-1 w-8 h-8 rounded-full transition-transform duration-300 ease-in-out",
             "bg-white shadow-md flex items-center justify-center",
-            isMapMode ? "translate-x-10" : "translate-x-1"
+            isMapMode ? "translate-x-10" : "translate-x-1",
           )}
         >
           {/* Active Icon */}
@@ -64,7 +64,7 @@ export function FloatingNavButton() {
           <div
             className={cn(
               "w-6 h-6 flex items-center justify-center transition-opacity duration-300",
-              !isMapMode ? "opacity-0" : "opacity-40"
+              !isMapMode ? "opacity-0" : "opacity-40",
             )}
           >
             <Icon name="home" size={24} className="text-gray-400" />
@@ -74,7 +74,7 @@ export function FloatingNavButton() {
           <div
             className={cn(
               "w-6 h-6 flex items-center justify-center transition-opacity duration-300",
-              isMapMode ? "opacity-0" : "opacity-40"
+              isMapMode ? "opacity-0" : "opacity-40",
             )}
           >
             <Icon name="map" size={24} className="text-gray-400" />

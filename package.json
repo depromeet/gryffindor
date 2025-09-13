@@ -12,7 +12,7 @@
     "check": "biome check .",
     "check:fix": "biome check --write .",
     "ci": "biome ci .",
-    "prepare": "husky install && husky init && pnpm run husky:permissions",
+    "prepare": "husky",
     "husky:permissions": "chmod +x .husky/pre-commit .husky/pre-push .husky/post-merge .husky/_/husky.sh 2>/dev/null || echo 'Husky permissions set'"
   },
   "lint-staged": {
