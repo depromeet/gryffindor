@@ -5,7 +5,7 @@
  * @param {string} props.label - 버튼의 레이블
  * @param {boolean} props.selected - 선택 여부
  * @param {() => void} props.onClick - 버튼 클릭 이벤트 핸들러
- * @param {"fill" | "line"} props.variant - 버튼 스타일 (fill 또는 line)
+ * @param {"fill" | "outline"} props.variant - 버튼 스타일 (fill 또는 line)
  * @param {string} props.type - 버튼의 타입 (default: button)
  * @param {boolean} [props.disabled] - 비활성화 여부 (선택적)
  *
@@ -34,11 +34,13 @@
  * );
  */
 
+import { cn } from "@/shared/lib/utils";
+
 interface FilterButtonProps {
   label: string;
   selected: boolean;
   onClick: () => void;
-  variant: "fill" | "line";
+  variant: "fill" | "outline";
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
 }
@@ -57,7 +59,7 @@ export function FilterButton({
       gray: { button: "bg-gray100", text: "text-gray800" },
       disabled: { button: "bg-gray50", text: "text-gray400" },
     },
-    line: {
+    outline: {
       primary: {
         button: "bg-primary100 border border-primary300 border-[1.4px]",
         text: "text-primary500",
@@ -81,11 +83,14 @@ export function FilterButton({
   return (
     <button
       type={type}
-      className={`flex w-[96px] items-center justify-center py-[12px] rounded-[8px] transition-colors duration-300 cursor-pointer ${variantStyle}`}
+      className={cn(
+        "flex w-[96px] items-center justify-center py-[12px] rounded-[8px] transition-colors duration-300 cursor-pointer",
+        variantStyle,
+      )}
       onClick={onClick}
       disabled={disabled}
     >
-      <p className={`text-body2-semibold truncate ${textStyle}`}>{label}</p>
+      <p className={cn("text-body2-semibold truncate", textStyle)}>{label}</p>
     </button>
   );
 }

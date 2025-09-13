@@ -34,51 +34,38 @@ export function FloatingNavButton() {
         type="button"
         onClick={handleToggle}
         className={cn(
-          "relative w-20 h-10 rounded-full transition-all duration-300 ease-in-out",
+          "flex w-[96px] h-[52px] relative items-center justify-center p-1.5 rounded-[100px] transition-all duration-300 ease-in-out",
           "bg-gray-800 shadow-lg hover:shadow-xl",
-          "border-2 border-gray-700",
         )}
       >
-        {/* Toggle Background */}
-        <div className="absolute inset-1 rounded-full bg-gray-900" />
+        <div className="absolute inset-0 flex items-center justify-between px-4">
+          <Icon
+            name="home"
+            size={24}
+            className={cn(
+              "transition-colors duration-300",
+              isMapMode ? "text-gray500" : "text-white",
+            )}
+          />
+          <Icon
+            name="map"
+            size={24}
+            className={cn(
+              "transition-colors duration-300",
+              isMapMode ? "text-white" : "text-gray500",
+            )}
+          />
+        </div>
 
         {/* Sliding Circle */}
         <div
           className={cn(
-            "absolute top-1 w-8 h-8 rounded-full transition-transform duration-300 ease-in-out",
-            "bg-white shadow-md flex items-center justify-center",
-            isMapMode ? "translate-x-10" : "translate-x-1",
+            "absolute w-[40px] h-[40px] rounded-full transition-transform duration-300 ease-in-out",
+            "bg-gray0 flex items-center justify-center",
+            isMapMode ? "translate-x-[20px]" : "translate-x-[-20px]",
           )}
         >
-          {/* Active Icon */}
-          <Icon
-            name={isMapMode ? "map" : "home"}
-            size={18}
-            className={isMapMode ? "text-red-500" : "text-blue-500"}
-          />
-        </div>
-
-        {/* Background Icons */}
-        <div className="absolute inset-0 flex items-center justify-between px-2">
-          {/* Home Icon Background */}
-          <div
-            className={cn(
-              "w-6 h-6 flex items-center justify-center transition-opacity duration-300",
-              !isMapMode ? "opacity-0" : "opacity-40",
-            )}
-          >
-            <Icon name="home" size={24} className="text-gray-400" />
-          </div>
-
-          {/* Map Icon Background */}
-          <div
-            className={cn(
-              "w-6 h-6 flex items-center justify-center transition-opacity duration-300",
-              isMapMode ? "opacity-0" : "opacity-40",
-            )}
-          >
-            <Icon name="map" size={24} className="text-gray-400" />
-          </div>
+          <Icon name={isMapMode ? "map" : "home"} size={28} className="text-primary400" />
         </div>
       </button>
     </div>
