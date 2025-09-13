@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import type { HeaderConfig } from "@/shared/config/pages";
+import type { HeaderConfig } from "@/shared/config";
 import { cn } from "@/shared/lib/utils";
 
 interface StackHeaderProps {
