@@ -1,7 +1,8 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
-import { QueryProvider } from "./_providers";
+import { QueryProvider, SsgoiProvider } from "./_providers";
 
 const pretendard = localFont({
   src: [
@@ -26,9 +27,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className={`${pretendard.variable} `}>
-        <QueryProvider>{children}</QueryProvider>
+    <html lang="ko" className="overflow-x-hidden">
+      <body className={`overflow-x-hidden ${pretendard.variable}`}>
+        <QueryProvider>
+          <SsgoiProvider>{children}</SsgoiProvider>
+        </QueryProvider>
       </body>
     </html>
   );
