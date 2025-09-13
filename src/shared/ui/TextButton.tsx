@@ -4,7 +4,7 @@
  * @param {Object} props - 컴포넌트 props
  * @param {string} props.label - 버튼에 표시할 텍스트
  * @param {boolean} [props.color=false] - true일 경우 primary 색상, false일 경우 gray 색상 적용
- * @param {0|90|180|270} [props.rotateNumber] - 아이콘 회전 각도 (단위: 도)
+ * @param {number} [props.rotateNumber] - 아이콘 회전 각도 (단위: 도)
  * @param {boolean} [props.isIcon=true] - 아이콘 표시 여부
  * @param {boolean} [props.isUnderline=false] - 텍스트에 밑줄 표시 여부
  * @param {() => void} props.onClick - 버튼 클릭 이벤트 핸들러
@@ -24,6 +24,7 @@
  * />
  */
 
+import { cn } from "@/shared/lib/utils";
 import { Icon } from "./Icon";
 
 interface TextButtonProps {
@@ -38,33 +39,40 @@ interface TextButtonProps {
 export function TextButton({
   label,
   color = false,
-  rotateNumber,
+  rotateNumber = 0,
   isIcon = true,
   isUnderline,
   onClick,
 }: TextButtonProps) {
+  const rotateClassMap = {
+    0: "rotate-0",
+    90: "rotate-90",
+    180: "rotate-180",
+    270: "rotate-270",
+  };
+
   const colorStyle = color ? "text-primary400" : "text-gray600";
+  const rotateClass = rotateNumber !== undefined ? rotateClassMap[rotateNumber] : "";
   return (
-    <article className="flex justify-start items-center gap-0.5 cursor-pointer">
-      <button type="button" className="justify-start" onClick={onClick}>
-        <p
-          className={`text-body2-medium ${colorStyle} ${
-            isUnderline ? "underline underline-offset-2" : ""
-          }`}
-        >
-          {label}
-        </p>
-      </button>
+    <button
+      type="button"
+      className="flex items-center justify-start gap-0.5 cursor-pointer "
+      onClick={onClick}
+    >
+      <p
+        className={cn(
+          "text-body2-medium",
+          colorStyle,
+          isUnderline && "underline underline-offset-2",
+        )}
+      >
+        {label}
+      </p>
       {isIcon && (
         <div className="w-4 h-4">
-          <Icon
-            name="arrow"
-            title="화살표"
-            size={16}
-            className={`rotate-${rotateNumber} ${colorStyle}`}
-          />
+          <Icon name="arrow" title="화살표" size={16} className={cn(rotateClass, colorStyle)} />
         </div>
       )}
-    </article>
+    </button>
   );
 }

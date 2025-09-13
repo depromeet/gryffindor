@@ -34,6 +34,18 @@ export function Tag({
   className,
 }: TagProps) {
   const styles = {
+    size: {
+      small: {
+        container: "h-[19px] rounded-[3px]",
+        padding: hasIcon ? "pl-0.5 pr-1" : "px-1",
+        text: "text-caption2-semibold",
+      },
+      medium: {
+        container: "h-[25px] rounded-[4px]",
+        padding: hasIcon ? "pl-0.75 pr-1.25" : "px-1.25",
+        text: "text-body3-semibold",
+      },
+    },
     color: {
       red: {
         container: "bg-primary100 text-primary400",
@@ -44,7 +56,7 @@ export function Tag({
         icon: "gray500",
       },
       line: {
-        container: "bg-gray0 text-primary400",
+        container: "bg-gray0 text-primary400 border border-gray200 border-[1px]",
         icon: "primary400",
       },
       blue: {
@@ -52,25 +64,15 @@ export function Tag({
         icon: "blue400",
       },
     },
-    size: {
-      small: {
-        padding: hasIcon ? "pl-0.5 pr-1" : "px-1",
-        text: "text-caption2-semibold",
-      },
-      medium: {
-        padding: hasIcon ? "pl-0.75 pr-1.25" : "px-1.25",
-        text: "text-body3-semibold",
-      },
-    },
   } as const;
 
   return (
     <div
       className={cn(
-        "flex items-center gap-[1px] rounded-[4px] py-1",
+        "flex items-center gap-[1px] py-1",
+        styles.size[size].container,
         styles.size[size].padding,
         styles.color[color].container,
-        size === "medium" ? "h-[25px]" : "h-[19px]",
         className,
       )}
     >
