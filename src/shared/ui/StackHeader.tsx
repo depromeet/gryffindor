@@ -52,7 +52,7 @@ export function StackHeader({ config, className }: StackHeaderProps) {
       className={cn(
         "flex items-center justify-between",
         "border-b",
-        "px-4 py-3 h-14",
+        "h-14 px-4 py-3",
         "sticky top-0 z-40",
         className,
       )}
@@ -63,7 +63,7 @@ export function StackHeader({ config, className }: StackHeaderProps) {
         <button
           type="button"
           onClick={handleBack}
-          className="flex items-center justify-center w-10 h-10 -ml-2 rounded-full hover:bg-gray-100 transition-colors"
+          className="-ml-2 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
           aria-label="뒤로가기"
         >
           {backButton?.icon || (
@@ -87,10 +87,10 @@ export function StackHeader({ config, className }: StackHeaderProps) {
       )}
 
       {/* 뒤로가기 버튼이 숨겨진 경우 빈 공간 */}
-      {backButton?.hidden && <div className="w-10 h-10" />}
+      {backButton?.hidden && <div className="h-10 w-10" />}
 
       {/* 제목 */}
-      <h1 className="text-lg font-semibold text-center flex-1 px-4 truncate">{title}</h1>
+      <h1 className="flex-1 truncate px-4 text-center font-semibold text-lg">{title}</h1>
 
       {/* 우측 액션 영역 */}
       <div className="flex items-center gap-1">
@@ -100,7 +100,7 @@ export function StackHeader({ config, className }: StackHeaderProps) {
             <div key={index}>{action}</div>
           ))
         ) : (
-          <div className="w-10 h-10" /> // 빈 공간으로 중앙 정렬 유지
+          <div className="h-10 w-10" /> // 빈 공간으로 중앙 정렬 유지
         )}
       </div>
     </header>

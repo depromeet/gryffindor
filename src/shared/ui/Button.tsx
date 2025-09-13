@@ -38,6 +38,8 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
+import { cn } from "@/shared/lib";
+
 export function Button({
   label,
   size = "medium",
@@ -85,11 +87,15 @@ export function Button({
   return (
     <button
       type={type}
-      className={`flex items-center justify-center py-[14px] rounded-[8px] gap-[10px] transition-color duration-300 cursor-pointer ${variantStyle} ${widthStyle}`}
+      className={cn(
+        "flex cursor-pointer items-center justify-center gap-[10px] rounded-[8px] py-[14px] transition-color duration-300",
+        variantStyle,
+        widthStyle,
+      )}
       onClick={onClick}
       disabled={disabled}
     >
-      <p className={`text-subtitle1 truncate ${textStyle}`}>{label}</p>
+      <p className={cn("truncate text-subtitle1", textStyle)}>{label}</p>
     </button>
   );
 }

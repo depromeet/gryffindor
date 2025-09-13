@@ -59,7 +59,7 @@ export function CTA({
 }: CTAProps) {
   const size = secondaryLabel ? "medium" : "large";
   return (
-    <article className="flex flex-col w-full gap-[10px] p-[20px] items-start bg-gray0 [box-shadow:-4px_0_20px_0_rgba(0,0,0,0.08)]">
+    <article className="flex w-full flex-col items-start gap-[10px] bg-gray0 p-[20px] [box-shadow:-4px_0_20px_0_rgba(0,0,0,0.08)]">
       <div className="flex w-full items-center gap-[12px]">
         {secondaryLabel && (
           <Button
