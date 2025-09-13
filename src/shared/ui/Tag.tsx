@@ -1,0 +1,81 @@
+/**
+ * 태그 컴포넌트
+ *
+ * @param {string} label - 태그에 들어갈 텍스트
+ * @param {"red" | "gray" | "line" | "blue"} [color="gray"] - 태그의 색상
+ * @param {"small" | "medium"} [size="medium"] - 태그의 크기
+ * @param {boolean} [hasIcon=false] - 왕관 아이콘 표시 여부
+ * @param {string} [className] - 추가 클래스명
+ *
+ * @example
+ * // 기본 태그
+ * <Tag label="기본 태그" />
+ *
+ * // 빨강 + 작은 태그 + 아이콘
+ * <Tag label="중요" color="red" size="small" hasIcon />
+ */
+
+import { cn } from "@/shared/lib/utils";
+import { Icon } from "@/shared/ui/Icon";
+
+interface TagProps {
+  label: string;
+  color?: "red" | "gray" | "line" | "blue";
+  size?: "small" | "medium";
+  hasIcon?: boolean;
+  className?: string;
+}
+
+export function Tag({
+  label,
+  color = "gray",
+  size = "medium",
+  hasIcon = false,
+  className,
+}: TagProps) {
+  const styles = {
+    color: {
+      red: {
+        container: "bg-primary100 text-primary400",
+        icon: "primary400",
+      },
+      gray: {
+        container: "bg-gray50 text-gray600",
+        icon: "gray500",
+      },
+      line: {
+        container: "bg-gray0 text-primary400",
+        icon: "primary400",
+      },
+      blue: {
+        container: "bg-blue100 text-blue400",
+        icon: "blue400",
+      },
+    },
+    size: {
+      small: {
+        padding: hasIcon ? "pl-0.5 pr-1" : "px-1",
+        text: "text-caption2-semibold",
+      },
+      medium: {
+        padding: hasIcon ? "pl-0.75 pr-1.25" : "px-1.25",
+        text: "text-body3-semibold",
+      },
+    },
+  } as const;
+
+  return (
+    <div
+      className={cn(
+        "flex items-center gap-[1px] rounded-[4px] py-1",
+        styles.size[size].padding,
+        styles.color[color].container,
+        size === "medium" ? "h-[25px]" : "h-[19px]",
+        className,
+      )}
+    >
+      {hasIcon && <Icon name="crown" size={16} color={styles.color[color].icon} />}
+      <p className={styles.size[size].text}>{label}</p>
+    </div>
+  );
+}

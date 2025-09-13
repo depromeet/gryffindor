@@ -7,5 +7,6 @@ export * from "./FloatingNavButton";
 export * from "./Icon";
 export * from "./RoundButton";
 export * from "./StackHeader";
+export * from "./Tag";
 export * from "./TextButton";
 export * from "./TransitionLayout";
