@@ -4,7 +4,7 @@
  * @param {string} label - 태그에 들어갈 텍스트
  * @param {"red" | "gray" | "line" | "blue"} [color="gray"] - 태그의 색상
  * @param {"small" | "medium"} [size="medium"] - 태그의 크기
- * @param {boolean} [hasIcon=false] - 왕관 아이콘 표시 여부
+ * @param {IconName} [iconName] - 아이콘 이름
  * @param {string} [className] - 추가 클래스명
  *
  * @example
@@ -12,37 +12,31 @@
  * <Tag label="기본 태그" />
  *
  * // 빨강 + 작은 태그 + 아이콘
- * <Tag label="중요" color="red" size="small" hasIcon />
+ * <Tag label="중요" color="red" size="small" iconName="crown" />
  */
 
 import { cn } from "@/shared/lib/utils";
-import { Icon } from "@/shared/ui/Icon";
+import { Icon, type IconName } from "@/shared/ui/Icon";
 
 interface TagProps {
   label: string;
   color?: "red" | "gray" | "line" | "blue";
   size?: "small" | "medium";
-  hasIcon?: boolean;
+  iconName?: IconName;
   className?: string;
 }
 
-export function Tag({
-  label,
-  color = "gray",
-  size = "medium",
-  hasIcon = false,
-  className,
-}: TagProps) {
+export function Tag({ label, color = "gray", size = "medium", iconName, className }: TagProps) {
   const styles = {
     size: {
       small: {
         container: "h-[19px] rounded-[3px]",
-        padding: hasIcon ? "pl-0.5 pr-1" : "px-1",
+        padding: iconName ? "pl-0.5 pr-1" : "px-1",
         text: "text-caption2-semibold",
       },
       medium: {
         container: "h-[25px] rounded-[4px]",
-        padding: hasIcon ? "pl-0.75 pr-1.25" : "px-1.25",
+        padding: iconName ? "pl-0.75 pr-1.25" : "px-1.25",
         text: "text-body3-semibold",
       },
     },
@@ -76,7 +70,7 @@ export function Tag({
         className,
       )}
     >
-      {hasIcon && <Icon name="crown" size={16} color={styles.color[color].icon} />}
+      {iconName && <Icon name={iconName} size={16} color={styles.color[color].icon} />}
       <p className={styles.size[size].text}>{label}</p>
     </div>
   );

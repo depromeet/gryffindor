@@ -75,7 +75,11 @@ export function TextButton({
             name="arrow"
             title="화살표"
             size={16}
-            className={cn("transition-transform duration-300 ease-in-out", rotateClass, colorStyle)}
+            className={cn(
+              "transition-transform duration-300 ease-in-out text-gray600",
+              rotateClass,
+              colorStyle,
+            )}
           />
         </div>
       )}
