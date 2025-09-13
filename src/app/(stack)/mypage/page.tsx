@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { SampleAuthInfo } from "@/features/auth/ui";
 import { Icon, TransitionLayout } from "@/shared/ui";
 
 export default function MyPage() {
@@ -37,6 +38,7 @@ export default function MyPage() {
                 다음 스택으로 이동
               </div>
             </Link>
+            <SampleAuthInfo />
           </div>
         </div>
       </div>
