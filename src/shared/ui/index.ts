@@ -1,7 +1,9 @@
-export { Button } from "./Button";
-export { CTA } from "./CTA";
-export { FilterButton } from "./FilterButton";
+export * from "./Button";
+export * from "./ChipFilter";
+export * from "./CTA";
+export * from "./FilterButton";
 export * from "./FloatingNavButton";
 export * from "./Icon";
+export * from "./RoundButton";
 export * from "./StackHeader";
 export * from "./TransitionLayout";
