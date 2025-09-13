@@ -30,7 +30,7 @@ import { Icon } from "./Icon";
 interface TextButtonProps {
   label: string;
   color?: boolean;
-  rotateNumber?: 0 | 90 | 180 | 270;
+  rotateNumber?: 0 | 90 | 180 | 270 | 360;
   isIcon?: boolean;
   isUnderline?: boolean;
   onClick: () => void;
@@ -49,6 +49,7 @@ export function TextButton({
     90: "rotate-90",
     180: "rotate-180",
     270: "rotate-270",
+    360: "rotate-360",
   };
 
   const colorStyle = color ? "text-primary400" : "text-gray600";
@@ -70,7 +71,12 @@ export function TextButton({
       </p>
       {isIcon && (
         <div className="w-4 h-4">
-          <Icon name="arrow" title="화살표" size={16} className={cn(rotateClass, colorStyle)} />
+          <Icon
+            name="arrow"
+            title="화살표"
+            size={16}
+            className={cn("transition-transform duration-300 ease-in-out", rotateClass, colorStyle)}
+          />
         </div>
       )}
     </button>
