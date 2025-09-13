@@ -11,7 +11,7 @@
  */
 
 import { cn } from "@/shared/lib/utils";
-import { Icon, IconName } from "./Icon";
+import { Icon, type IconName } from "./Icon";
 
 interface RoundButtonProps {
   iconName?: IconName;
