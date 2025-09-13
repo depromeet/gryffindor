@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 
 import type { HeaderConfig } from "@/shared/config";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 
 interface StackHeaderProps {
   /**
