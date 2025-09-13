@@ -2,7 +2,7 @@
  * 태그 컴포넌트
  *
  * @param {string} label - 태그에 들어갈 텍스트
- * @param {"red" | "gray" | "line" | "blue"} [color="gray"] - 태그의 색상
+ * @param {"red" | "gray" | "outline" | "blue"} [color="gray"] - 태그의 색상
  * @param {"small" | "medium"} [size="medium"] - 태그의 크기
  * @param {IconName} [iconName] - 아이콘 이름
  * @param {string} [className] - 추가 클래스명
@@ -20,7 +20,7 @@ import { Icon, type IconName } from "@/shared/ui/Icon";
 
 interface TagProps {
   label: string;
-  color?: "red" | "gray" | "line" | "blue";
+  color?: "red" | "gray" | "outline" | "blue";
   size?: "small" | "medium";
   iconName?: IconName;
   className?: string;
@@ -49,7 +49,7 @@ export function Tag({ label, color = "gray", size = "medium", iconName, classNam
         container: "bg-gray50 text-gray600",
         icon: "gray500",
       },
-      line: {
+      outline: {
         container: "bg-gray0 text-primary400 border border-gray200 border-[1px]",
         icon: "primary400",
       },
