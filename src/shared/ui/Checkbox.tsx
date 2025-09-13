@@ -10,7 +10,7 @@
  * <Checkbox label="동의합니다" checked={checked} onChange={setChecked} />
  */
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 import { Icon } from "./Icon";
 
 interface CheckboxProps {
@@ -25,22 +25,22 @@ export function Checkbox({ label, checked, onChange }: CheckboxProps) {
   };
 
   return (
-    <label className="flex items-center gap-2 cursor-pointer">
+    <label className="flex cursor-pointer items-center gap-2">
       <input
         type="checkbox"
         checked={checked}
         onChange={handleCheckboxChange}
-        className="absolute w-0 h-0 opacity-0"
+        className="absolute h-0 w-0 opacity-0"
       />
       <div
         className={cn(
-          "flex items-center justify-center w-5 h-5 rounded-[4px] transition-colors duration-300",
+          "flex h-5 w-5 items-center justify-center rounded-[4px] transition-colors duration-300",
           checked ? "bg-primary400" : "bg-gray200",
         )}
       >
         <Icon name="check" size={16} />
       </div>
-      <p className="text-body2-regular truncate text-gray700">{label}</p>
+      <p className="truncate text-body2-regular text-gray700">{label}</p>
     </label>
   );
 }

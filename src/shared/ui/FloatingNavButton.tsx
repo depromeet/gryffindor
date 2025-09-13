@@ -29,12 +29,12 @@ export function FloatingNavButton() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed right-6 bottom-6 z-50">
       <button
         type="button"
         onClick={handleToggle}
         className={cn(
-          "flex w-[96px] h-[52px] relative items-center justify-center p-1.5 rounded-[100px] transition-all duration-300 ease-in-out",
+          "relative flex h-[52px] w-[96px] items-center justify-center rounded-[100px] p-1.5 transition-all duration-300 ease-in-out",
           "bg-gray-800 shadow-lg hover:shadow-xl",
         )}
       >
@@ -60,8 +60,8 @@ export function FloatingNavButton() {
         {/* Sliding Circle */}
         <div
           className={cn(
-            "absolute w-[40px] h-[40px] rounded-full transition-transform duration-300 ease-in-out",
-            "bg-gray0 flex items-center justify-center",
+            "absolute h-[40px] w-[40px] rounded-full transition-transform duration-300 ease-in-out",
+            "flex items-center justify-center bg-gray0",
             isMapMode ? "translate-x-[20px]" : "translate-x-[-20px]",
           )}
         >

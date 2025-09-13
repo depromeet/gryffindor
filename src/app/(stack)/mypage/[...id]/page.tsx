@@ -9,8 +9,8 @@ export default function MyPage(props: PageProps<"/mypage/[...id]">) {
 
   return (
     <TransitionLayout>
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 flex items-center justify-center p-6">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-50 to-pink-100 p-6">
+        <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl">
           {resolvedParams.id.join("/")}
         </div>
       </div>

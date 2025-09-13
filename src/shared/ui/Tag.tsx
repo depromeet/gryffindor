@@ -15,7 +15,7 @@
  * <Tag label="중요" color="red" size="small" iconName="crown" />
  */
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib";
 import { Icon, type IconName } from "@/shared/ui/Icon";
 
 interface TagProps {
