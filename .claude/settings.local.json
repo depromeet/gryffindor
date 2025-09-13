@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx biome format:*)",
+      "Bash(npx biome check:*)",
+      "Bash(npm run check:fix:*)",
+      "Bash(npm run check:*)",
+      "Bash(npm run format:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

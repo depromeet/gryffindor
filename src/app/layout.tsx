@@ -1,18 +1,21 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import type { Metadata } from "next";
+import "./globals.css";
+import localFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-import { QueryProvider } from "./_providers";
+import { QueryProvider, SsgoiProvider } from "./_providers";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const pretendard = localFont({
+  src: [
+    {
+      path: "../../public/fonts/PretendardVariable.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-pretendard",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -28,10 +31,12 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="ko" className="overflow-x-hidden">
+      <body className={`overflow-x-hidden ${pretendard.variable}`}>
         <SessionProvider session={session}>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <SsgoiProvider>{children}</SsgoiProvider>
+          </QueryProvider>
         </SessionProvider>
       </body>
     </html>

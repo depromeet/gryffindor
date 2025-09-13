@@ -1,1 +1,2 @@
-export { QueryProvider } from "./QueryProvider";
+export * from "./QueryProvider";
+export * from "./SsgoiProvider";
