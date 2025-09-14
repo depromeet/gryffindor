@@ -23,20 +23,18 @@ export function HonbobLevelCard({
       <div className="flex flex-col gap-y-[4px]">
         <div className="flex items-center gap-x-[8px]">
           <Tag label={honbobLevel} color="red" size="small" />
-          <span className="justify-start text-Gray-gray900 text-body1-semibold">
-            {honbobLevelTitle}
-          </span>
+          <span className="justify-start text-body1-semibold text-gray900">{honbobLevelTitle}</span>
         </div>
         <span className="justify-start text-body3-semibold text-primary400">
           {honbobLevelDescription}
         </span>
         <div className="flex flex-col gap-y-[2px]">
-          <div className="flex gap-y-[4px] text-Gray-gray900 text-body3-regular">
+          <div className="flex gap-y-[4px] text-body3-regular text-gray900">
             <span>추천 메뉴</span>
             <span>:</span>
             <span>{recommendedMenu}</span>
           </div>
-          <div className="flex gap-x-[4px] text-Gray-gray900 text-body3-regular">
+          <div className="flex gap-x-[4px] text-body3-regular text-gray900">
             <span>추천 식당</span>
             <span>:</span>
             <span>{recommendedStore}</span>

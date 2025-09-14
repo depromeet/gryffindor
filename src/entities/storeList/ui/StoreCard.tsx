@@ -46,11 +46,13 @@ export function StoreCard({
             <Tag label={`레벨 ${level}`} color="red" size="small" iconName="crown" />
             <span className="text-body1-semibold text-gray900">{name}</span>
             <div className="flex items-center gap-x-[4px] text-body3-regular text-gray600">
+              {/* fixme: 색상 코드 확인 필요(피그마 상 575757 색상) */}
               <span>대표메뉴</span>
               <span>·</span>
               <span>{signatureMenu}</span>
             </div>
             <div className="flex items-center gap-x-[4px] text-body3-regular text-gray600">
+              {/* fixme: 색상 코드 확인 필요(피그마 상 575757 색상) */}
               <span>{distance}</span>
               <span>·</span>
               <span>{distance}</span>
