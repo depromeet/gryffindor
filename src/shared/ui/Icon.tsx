@@ -1,7 +1,16 @@
 import { cn } from "@/shared/lib";
-import { ArrowIcon, CheckIcon, CrownIcon, HomeIcon, MapIcon, SpeakerIcon, UserIcon } from "./icons";
+import {
+  ArrowIcon,
+  CheckIcon,
+  CloseIcon,
+  CrownIcon,
+  HomeIcon,
+  MapIcon,
+  SpeakerIcon,
+  UserIcon,
+} from "./icons";
 // 사용 가능한 아이콘 이름들
-export type IconName = "home" | "map" | "user" | "speaker" | "check" | "arrow" | "crown";
+export type IconName = "home" | "map" | "user" | "speaker" | "check" | "arrow" | "crown" | "close";
 
 // 아이콘 컴포넌트 Props
 export interface IconProps {
@@ -21,6 +30,7 @@ const iconMap = {
   check: CheckIcon,
   arrow: ArrowIcon,
   crown: CrownIcon,
+  close: CloseIcon,
 } as const;
 
 export const Icon = ({ name, size = 24, className, color, title, ...props }: IconProps) => {
