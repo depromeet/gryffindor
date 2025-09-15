@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Kakao from "next-auth/providers/kakao";
-import { isTokenExpired, TOKEN_REFRESH_MARGIN } from "@/shared/lib";
+import { isTokenExpired } from "@/shared/lib";
 import type { ApiResponse } from "@/shared/model";
 
 export interface LoginResponse {
