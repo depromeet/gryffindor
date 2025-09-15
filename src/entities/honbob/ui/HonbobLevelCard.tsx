@@ -29,7 +29,7 @@ export function HonbobLevelCard({
           {honbobLevelDescription}
         </span>
         <div className="flex flex-col gap-y-[2px]">
-          <div className="flex gap-y-[4px] text-body3-regular text-gray900">
+          <div className="flex gap-x-[4px] text-body3-regular text-gray900">
             <span>추천 메뉴</span>
             <span>:</span>
             <span>{recommendedMenu}</span>
