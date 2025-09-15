@@ -1,8 +1,22 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Kakao from "next-auth/providers/kakao";
-import { isTokenExpired, refreshAccessToken } from "@/shared/lib";
+import { isTokenExpired, TOKEN_REFRESH_MARGIN } from "@/shared/lib";
 import type { ApiResponse } from "@/shared/model";
+
+export interface LoginResponse {
+  memberId: number;
+  nickName: string;
+  level: number;
+  profileImage: string;
+  providerType: "KAKAO" | "GOOGLE";
+  email: string;
+  accessToken: string;
+  refreshToken: string;
+  accessTokenExpiration: string;
+  refreshTokenExpiration: string;
+  memberRole: string;
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -12,41 +26,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, account }) {
       // 최초 로그인 시 소셜 로그인 처리
+
       if (account?.access_token) {
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/social-login`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/oauth/social-login`,
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                provider: account.provider,
+                provider: account.provider.toUpperCase(),
                 oAuthToken: account.access_token,
               }),
             },
           );
 
-          const data = (await response.json()) as ApiResponse<{
-            userId: string;
-            nickname: string;
-            level: number;
-            accessToken: string;
-            refreshToken: string;
-            accessTokenExpiresIn: number;
-            refreshTokenExpiresIn: number;
-          }>;
+          const data = (await response.json()) as ApiResponse<LoginResponse>;
 
           if (data.response) {
-            const now = Math.floor(Date.now() / 1000);
-
-            token.oAuthAccessToken = data.response.accessToken;
-            token.oAuthRefreshToken = data.response.refreshToken;
-            token.accessTokenExpiresAt = now + data.response.accessTokenExpiresIn;
-            token.refreshTokenExpiresAt = now + data.response.refreshTokenExpiresIn;
-            token.userId = data.response.userId;
-            token.nickname = data.response.nickname;
+            token.accessToken = data.response.accessToken;
+            token.refreshToken = data.response.refreshToken;
+            token.accessTokenExpiration = data.response.accessTokenExpiration;
+            token.refreshTokenExpiration = data.response.refreshTokenExpiration;
+            token.memberId = data.response.memberId;
+            token.nickName = data.response.nickName;
             token.level = data.response.level;
           }
         } catch (error) {
@@ -56,41 +61,54 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       // 토큰 만료 확인 및 갱신
-      if (token.accessTokenExpiresAt && isTokenExpired(token.accessTokenExpiresAt)) {
-        if (!token.oAuthRefreshToken) {
+      if (token.accessTokenExpiration && isTokenExpired(token.accessTokenExpiration)) {
+        // 1. refreshToken 존재 확인
+        if (!token.refreshToken) {
           console.error("No refresh token available");
           return { ...token, error: "RefreshTokenMissing" };
         }
-
-        // Refresh token도 만료되었는지 확인
-        if (token.refreshTokenExpiresAt && isTokenExpired(token.refreshTokenExpiresAt)) {
-          console.error("Refresh token expired");
-          return { ...token, error: "RefreshTokenExpired" };
-        }
-
+        console.log("refreshToken", token);
+        // 3. 토큰 갱신 시도
         try {
-          const refreshedTokens = await refreshAccessToken(token.oAuthRefreshToken);
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/renew`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token.refreshToken}`,
+              },
+            },
+          );
 
-          if (refreshedTokens) {
-            token.oAuthAccessToken = refreshedTokens.accessToken;
-            token.oAuthRefreshToken = refreshedTokens.refreshToken;
-            token.accessTokenExpiresAt = refreshedTokens.accessTokenExpiresAt;
-            token.refreshTokenExpiresAt = refreshedTokens.refreshTokenExpiresAt;
-            token.userId = refreshedTokens.userId;
-            token.nickname = refreshedTokens.nickname;
-            token.level = refreshedTokens.level;
+          const data = (await response.json()) as ApiResponse<LoginResponse>;
+
+          if (data.response) {
+            token.accessToken = data.response.accessToken;
+            token.refreshToken = data.response.refreshToken;
+            token.accessTokenExpiration = data.response.accessTokenExpiration;
+            token.refreshTokenExpiration = data.response.refreshTokenExpiration;
+            token.memberId = data.response.memberId;
+            token.nickName = data.response.nickName;
+            token.level = data.response.level;
 
             // 성공적으로 갱신된 경우 error 제거
             if (token.error) {
               delete token.error;
             }
           } else {
-            console.error("Failed to refresh token");
+            console.error("Failed to refresh token:", data);
             return { ...token, error: "RefreshTokenFailed" };
           }
         } catch (error) {
           console.error("Token refresh error:", error);
           return { ...token, error: "RefreshTokenError" };
+        }
+
+        // 2. refreshToken 만료 확인
+        if (token.refreshTokenExpiration && isTokenExpired(token.refreshTokenExpiration)) {
+          console.error("Refresh token expired");
+          return { ...token, error: "RefreshTokenExpired" };
         }
       }
 
@@ -98,12 +116,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       // 토큰 정보를 세션에 전달
-      if (token.oAuthAccessToken) {
-        session.oAuthAccessToken = token.oAuthAccessToken;
-        session.oAuthRefreshToken = token.oAuthRefreshToken;
-        session.accessTokenExpiresAt = token.accessTokenExpiresAt;
-        session.userId = token.userId;
-        session.nickname = token.nickname;
+      if (token.accessToken) {
+        session.accessToken = token.accessToken;
+        session.refreshToken = token.refreshToken;
+        session.accessTokenExpiration = token.accessTokenExpiration;
+        session.refreshTokenExpiration = token.refreshTokenExpiration;
+        session.memberId = token.memberId;
+        session.nickName = token.nickName;
         session.level = token.level;
       }
 
