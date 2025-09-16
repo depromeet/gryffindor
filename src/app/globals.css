@@ -3,8 +3,6 @@
 /* Ssgoi drill 애니메이션 최적화 */
 html,
 body {
-  overflow-x: hidden;
-  position: relative;
   width: 100%;
 }
 

@@ -5,6 +5,7 @@ export * from "./CTA";
 export * from "./FilterButton";
 export * from "./FloatingNavButton";
 export * from "./Icon";
+export * from "./MainHeader";
 export * from "./RoundButton";
 export * from "./StackHeader";
 export * from "./Tag";
