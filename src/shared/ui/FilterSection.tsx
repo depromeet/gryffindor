@@ -1,3 +1,16 @@
+/**
+ * FilterSection 컴포넌트
+ *
+ * @param {string} label - 섹션의 라벨
+ * @param {boolean} showCheckbox - '전체 선택' 체크박스 표시 여부
+ * @param {boolean} checked - '전체 선택' 체크박스 상태
+ * @param {function} onCheckChange - '전체 선택' 체크박스 상태 변경
+ * @param {Array<string>} options - 필터링할 옵션 목록
+ * @param {Array<string>} selectedItems - 선택된 필터 옵션 목록
+ * @param {function} onChange - 필터 옵션 변경 핸들러
+ * @param {boolean} multiple - 다중 선택 가능 여부
+ */
+
 "use client";
 
 import { Checkbox, FilterButton } from "@/shared/ui";

@@ -17,12 +17,6 @@ const ALL_CATEGORIES = [
   "기타",
 ];
 
-interface FilterProps {
-  initialFilters: FilterData;
-  onApply: (filters: FilterData) => void;
-  onClose: () => void;
-}
-
 const FILTER_SECTIONS: SectionConfig[] = [
   {
     key: "level",
@@ -60,6 +54,12 @@ const FILTER_SECTIONS: SectionConfig[] = [
       })),
   },
 ];
+
+interface FilterProps {
+  initialFilters: FilterData;
+  onApply: (filters: FilterData) => void;
+  onClose: () => void;
+}
 
 export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
   const [draftFilters, setDraftFilters] = useState<FilterData>(initialFilters);
