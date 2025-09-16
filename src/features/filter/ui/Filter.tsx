@@ -4,6 +4,7 @@ import { useState } from "react";
 import { PriceRange } from "@/entities/filter/ui";
 import { CTA, FilterSection, Icon } from "@/shared/ui";
 import type { FilterData, SectionConfig } from "../model/types";
+import { areFiltersEqual } from "../utils/filter";
 
 const ALL_CATEGORIES = [
   "한식",
@@ -63,6 +64,8 @@ interface FilterProps {
 
 export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
   const [draftFilters, setDraftFilters] = useState<FilterData>(initialFilters);
+
+  const isDirty = !areFiltersEqual(initialFilters, draftFilters);
 
   const isAllFilled =
     !(draftFilters.price.min === 0 && draftFilters.price.max === 0) &&
@@ -126,7 +129,7 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
           primaryLabel="완료"
           onSecondary={handleReset}
           onPrimary={handleApply}
-          primaryDisabled={!isAllFilled}
+          primaryDisabled={!isDirty}
         />
       </div>
     </article>

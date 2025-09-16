@@ -37,7 +37,7 @@ export const Icon = ({
         !disableCurrentColor &&
           "[&>*]:fill-current [&>circle]:fill-current [&>path]:fill-current [&>rect]:fill-current",
         color && `text-${color}`,
-        className
+        className,
       )}
       title={title}
       {...props}

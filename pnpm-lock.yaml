@@ -2027,7 +2027,7 @@ snapshots:
     dependencies:
       '@babel/compat-data': 7.28.4
       '@babel/helper-validator-option': 7.27.1
-      browserslist: 4.25.4
+      browserslist: 4.26.0
       lru-cache: 5.1.1
       semver: 6.3.1
 
@@ -2898,7 +2898,7 @@ snapshots:
 
   '@ssgoi/react@2.2.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@ssgoi/core': 2.1.2
+      '@ssgoi/core': 2.2.0
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
@@ -3161,7 +3161,8 @@ snapshots:
 
   browserslist@4.26.0:
     dependencies:
-      caniuse-lite: 1.0.30001737
+      baseline-browser-mapping: 2.8.2
+      caniuse-lite: 1.0.30001741
       electron-to-chromium: 1.5.218
       node-releases: 2.0.21
       update-browserslist-db: 1.1.3(browserslist@4.26.0)
@@ -3182,6 +3183,8 @@ snapshots:
   chalk@5.6.0: {}
 
   chownr@3.0.0: {}
+
+  classnames@2.5.1: {}
 
   cli-cursor@5.0.0:
     dependencies:
@@ -3865,7 +3868,7 @@ snapshots:
 
   update-browserslist-db@1.1.3(browserslist@4.26.0):
     dependencies:
-      browserslist: 4.25.4
+      browserslist: 4.26.0
       escalade: 3.2.0
       picocolors: 1.1.1
 

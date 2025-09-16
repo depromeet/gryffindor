@@ -20,7 +20,7 @@ interface FilterSectionProps {
   showCheckbox?: boolean;
   checked?: boolean;
   onCheckChange?: (checked: boolean) => void;
-  options?: string[];
+  options: string[];
   selectedItems: string[];
   onChange: (items: string[]) => void;
   multiple?: boolean;
@@ -37,18 +37,20 @@ export function FilterSection({
   multiple = true,
 }: FilterSectionProps) {
   const handleFilterClick = (item: string) => {
-    onChange(
-      multiple
-        ? selectedItems.includes(item)
+    if (multiple) {
+      onChange(
+        selectedItems.includes(item)
           ? selectedItems.filter((i) => i !== item)
-          : [...selectedItems, item]
-        : [item],
-    );
+          : [...selectedItems, item],
+      );
+    } else {
+      onChange([item]);
+    }
   };
 
   const handleCheckAll = (checked: boolean) => {
     if (checked) {
-      onChange(options || []);
+      onChange(options);
     } else {
       onChange([]);
     }
@@ -62,7 +64,7 @@ export function FilterSection({
         {showCheckbox && <Checkbox label="전체 선택" checked={checked} onChange={handleCheckAll} />}
       </section>
       <section className="flex flex-wrap gap-3">
-        {options?.map((option) => (
+        {options.map((option) => (
           <FilterButton
             key={option}
             label={option}
