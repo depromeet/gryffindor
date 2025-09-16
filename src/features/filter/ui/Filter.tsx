@@ -119,6 +119,7 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
         values={[draftFilters.price.min, draftFilters.price.max]}
         onChange={handlePriceChange}
       />
+      <div className="mt-[51px]"></div>
       <div className="fixed right-0 bottom-0 left-0 z-50">
         <CTA
           secondaryLabel="초기화"
