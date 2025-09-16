@@ -43,7 +43,7 @@ export function FloatingNavButton() {
             name="home"
             size={24}
             className={cn(
-              "transition-colors duration-300",
+              "h-6 w-6 transition-colors duration-300",
               isMapMode ? "text-gray500" : "text-white",
             )}
           />
