@@ -11,7 +11,7 @@ export function SsgoiProvider({ children }: SsgoiProviderProps) {
   const isMobile = useMobile();
   return (
     <Ssgoi config={createSsgoiConfig(isMobile)}>
-      <div className="min-h-screen w-full overflow-x-hidden">{children}</div>
+      <div className="min-h-screen w-full">{children}</div>
     </Ssgoi>
   );
 }

@@ -1,7 +1,10 @@
 export { ArrowIcon } from "./ArrowIcon";
 export { CheckIcon } from "./CheckIcon";
 export { CrownIcon } from "./CrownIcon";
+export { DownChevronIcon } from "./DownChevronIcon";
 export { HomeIcon } from "./HomeIcon";
 export { MapIcon } from "./MapIcon";
+export { SearchIcon } from "./SearchIcon";
 export { SpeakerIcon } from "./SpeakerIcon";
 export { UserIcon } from "./UserIcon";
+export { UserProfileIcon } from "./UserProfile";

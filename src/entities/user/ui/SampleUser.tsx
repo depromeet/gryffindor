@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { userApi } from "@/features/user";
+import { userApi } from "@/entities/user";
 import { queryKeys } from "@/shared/api";
 
 export function SampleUser() {
