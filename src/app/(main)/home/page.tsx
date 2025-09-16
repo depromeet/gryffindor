@@ -1,11 +1,8 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { SampleAuthStateInfo } from "@/features/auth/ui";
-import { userApi } from "@/features/user/api/userApi";
-import { queryKeys } from "@/shared/api";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function HomePage() {
