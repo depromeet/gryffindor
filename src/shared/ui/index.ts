@@ -7,6 +7,7 @@ export * from "./FilterSection";
 export * from "./FloatingNavButton";
 export * from "./Icon";
 export * from "./PriceInput";
+export * from "./MainHeader";
 export * from "./RoundButton";
 export * from "./StackHeader";
 export * from "./Tag";

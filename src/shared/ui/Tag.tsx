@@ -30,12 +30,12 @@ export function Tag({ label, color = "gray", size = "medium", iconName, classNam
   const styles = {
     size: {
       small: {
-        container: "h-[19px] rounded-[3px]",
+        container: "h-[19px] rounded-[3px] w-fit",
         padding: iconName ? "pl-0.5 pr-1" : "px-1",
         text: "text-caption2-semibold",
       },
       medium: {
-        container: "h-[25px] rounded-[4px]",
+        container: "h-[25px] rounded-[4px] w-fit",
         padding: iconName ? "pl-0.75 pr-1.25" : "px-1.25",
         text: "text-body3-semibold",
       },

@@ -1,16 +1,8 @@
 import { cn } from "@/shared/lib";
-import {
-  ArrowIcon,
-  CheckIcon,
-  CloseIcon,
-  CrownIcon,
-  HomeIcon,
-  MapIcon,
-  SpeakerIcon,
-  UserIcon,
-} from "./icons";
+import { iconMap } from "./icons";
+
 // 사용 가능한 아이콘 이름들
-export type IconName = "home" | "map" | "user" | "speaker" | "check" | "arrow" | "crown" | "close";
+export type IconName = keyof typeof iconMap;
 
 // 아이콘 컴포넌트 Props
 export interface IconProps {
@@ -19,21 +11,17 @@ export interface IconProps {
   className?: string;
   color?: string;
   title?: string;
+  disableCurrentColor?: boolean; // SVG 기본 색상 사용하고 싶을 때
 }
 
-// 아이콘 매핑 객체
-const iconMap = {
-  home: HomeIcon,
-  map: MapIcon,
-  user: UserIcon,
-  speaker: SpeakerIcon,
-  check: CheckIcon,
-  arrow: ArrowIcon,
-  crown: CrownIcon,
-  close: CloseIcon,
-} as const;
-
-export const Icon = ({ name, size = 24, className, color, title, ...props }: IconProps) => {
+export const Icon = ({
+  name,
+  className,
+  color,
+  title,
+  disableCurrentColor,
+  ...props
+}: IconProps) => {
   const IconComponent = iconMap[name];
 
   if (!IconComponent) {
@@ -43,8 +31,14 @@ export const Icon = ({ name, size = 24, className, color, title, ...props }: Ico
 
   return (
     <IconComponent
-      size={size}
-      className={cn(color && `text-${color}`, className)}
+      className={cn(
+        // 기본 Tailwind 스타일링 지원
+        // disableCurrentColor가 true면 currentColor 적용 안함
+        !disableCurrentColor &&
+          "[&>*]:fill-current [&>circle]:fill-current [&>path]:fill-current [&>rect]:fill-current",
+        color && `text-${color}`,
+        className
+      )}
       title={title}
       {...props}
     />

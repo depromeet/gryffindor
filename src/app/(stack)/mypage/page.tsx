@@ -28,11 +28,7 @@ export default function MyPage() {
               <h3 className="mb-2 font-semibold text-pink-800">계정 설정</h3>
               <p className="text-pink-600 text-sm">알림 설정, 개인정보 보호</p>
             </div>
-            <Link href="/item">
-              <div className="w-full rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-3 font-medium text-white transition-all duration-200 hover:from-purple-600 hover:to-pink-600">
-                Item 페이지로 이동
-              </div>
-            </Link>
+
             <Link href="/mypage/tester">
               <div className="w-full rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-3 font-medium text-white transition-all duration-200 hover:from-purple-600 hover:to-pink-600">
                 다음 스택으로 이동
