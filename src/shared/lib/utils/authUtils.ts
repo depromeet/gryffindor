@@ -5,5 +5,5 @@ export function isTokenExpired(expiresAt: string | number): boolean {
   const now = Math.floor(Date.now() / 1000);
   const expireTime =
     typeof expiresAt === "string" ? Math.floor(new Date(expiresAt).getTime() / 1000) : expiresAt;
-  return now >= expireTime - TOKEN_REFRESH_MARGIN;
+  return now >= expireTime;
 }

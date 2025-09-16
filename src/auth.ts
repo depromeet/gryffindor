@@ -42,8 +42,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               }),
             },
           );
-
           const data = (await response.json()) as ApiResponse<LoginResponse>;
+          console.log("로그인 성공 RESPONSE", data.response);
 
           if (data.response) {
             token.accessToken = data.response.accessToken;
@@ -64,11 +64,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token.accessTokenExpiration && isTokenExpired(token.accessTokenExpiration)) {
         // 1. refreshToken 존재 확인
         if (!token.refreshToken) {
-          console.error("No refresh token available");
-          return { ...token, error: "RefreshTokenMissing" };
+          console.error("No refresh token available - signing out");
+          return null; // 세션 종료
         }
-        console.log("refreshToken", token);
-        // 3. 토큰 갱신 시도
+
+        // 2. refreshToken 만료 확인 (갱신 전에 체크)
+        if (token.refreshTokenExpiration && isTokenExpired(token.refreshTokenExpiration)) {
+          console.error("Refresh token expired - signing out");
+          return null; // 세션 종료
+        }
+
+        // 3. 토큰 갱신 중복 방지
+        if (token.isRefreshing) {
+          console.log("Token refresh already in progress");
+          return token;
+        }
+
+        token.isRefreshing = true;
+
         try {
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/renew`,
@@ -81,34 +94,32 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
           );
 
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
           const data = (await response.json()) as ApiResponse<LoginResponse>;
-
+          console.log("리프래쉬 토큰 로테이션 성공 RESPONSE", data.response);
           if (data.response) {
-            token.accessToken = data.response.accessToken;
-            token.refreshToken = data.response.refreshToken;
-            token.accessTokenExpiration = data.response.accessTokenExpiration;
-            token.refreshTokenExpiration = data.response.refreshTokenExpiration;
-            token.memberId = data.response.memberId;
-            token.nickName = data.response.nickName;
-            token.level = data.response.level;
-
-            // 성공적으로 갱신된 경우 error 제거
-            if (token.error) {
-              delete token.error;
-            }
+            return {
+              ...token,
+              accessToken: data.response.accessToken,
+              refreshToken: data.response.refreshToken,
+              accessTokenExpiration: data.response.accessTokenExpiration,
+              refreshTokenExpiration: data.response.refreshTokenExpiration,
+              memberId: data.response.memberId,
+              nickName: data.response.nickName,
+              level: data.response.level,
+              isRefreshing: false,
+              error: undefined,
+            };
           } else {
-            console.error("Failed to refresh token:", data);
-            return { ...token, error: "RefreshTokenFailed" };
+            console.error("Failed to refresh token - signing out");
+            return null; // 세션 종료
           }
         } catch (error) {
-          console.error("Token refresh error:", error);
-          return { ...token, error: "RefreshTokenError" };
-        }
-
-        // 2. refreshToken 만료 확인
-        if (token.refreshTokenExpiration && isTokenExpired(token.refreshTokenExpiration)) {
-          console.error("Refresh token expired");
-          return { ...token, error: "RefreshTokenExpired" };
+          console.error("Token refresh error - signing out:", error);
+          return null; // 세션 종료
         }
       }
 

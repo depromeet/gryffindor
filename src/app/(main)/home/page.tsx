@@ -14,13 +14,11 @@ export default function HomePage() {
   const isAuthenticated = session.status === "authenticated";
   const userName = session?.data?.nickName || "새로운 이잉";
 
-  const { data } = useQuery({
-    queryKey: queryKeys.USER_PROFILE(),
-    queryFn: () => userApi.getUserProfile(),
-    enabled: isAuthenticated,
-  });
-
-  console.log("PROFILE data", data);
+  // const { data } = useQuery({
+  //   queryKey: queryKeys.USER_PROFILE(),
+  //   queryFn: () => userApi.getUserProfile(),
+  //   enabled: isAuthenticated,
+  // });
 
   return (
     <TransitionLayout>
