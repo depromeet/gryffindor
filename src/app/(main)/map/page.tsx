@@ -1,4 +1,11 @@
-import { Icon, TransitionLayout } from "@/shared/ui";
+import {
+  BottomSheet,
+  BottomSheetContent,
+  BottomSheetHandler,
+  BottomSheetHeader,
+  Icon,
+  TransitionLayout,
+} from "@/shared/ui";
 
 export default function MapPage() {
   return (
@@ -34,6 +41,13 @@ export default function MapPage() {
           </div>
         </div>
       </div>
+
+      <BottomSheet type="fixed" collapsedHeight={226}>
+        <BottomSheetHeader>
+          <BottomSheetHandler />
+        </BottomSheetHeader>
+        <BottomSheetContent className="gap-[15px]">{/* store list */}</BottomSheetContent>
+      </BottomSheet>
     </TransitionLayout>
   );
 }
