@@ -14,10 +14,10 @@ export function PriceRange({ label, values, onChange }: PriceRangeProps) {
   const min = 0;
   const max = 20000;
 
-  const handleInputChange = (index: 0 | 1, num: number) => {
+  const handleInputChange = (type: "min" | "max", num: number) => {
     const newValues: [number, number] = [...values];
-    if (index === 0) newValues[0] = Math.max(min, num);
-    if (index === 1) newValues[1] = Math.min(max, num);
+    if (type === "min") newValues[0] = Math.max(min, num);
+    if (type === "max") newValues[1] = Math.min(max, num);
 
     if (newValues[0] <= newValues[1]) {
       onChange(newValues);
@@ -65,9 +65,9 @@ export function PriceRange({ label, values, onChange }: PriceRangeProps) {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <PriceInput value={values[0]} onChange={(val) => handleInputChange(0, val)} />
+          <PriceInput value={values[0]} onChange={(val) => handleInputChange("min", val)} />
           <div className="h-[1px] flex-1 bg-[#ddd]" />
-          <PriceInput value={values[1]} onChange={(val) => handleInputChange(1, val)} />
+          <PriceInput value={values[1]} onChange={(val) => handleInputChange("max", val)} />
         </div>
       </section>
     </article>

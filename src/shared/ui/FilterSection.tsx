@@ -8,7 +8,7 @@
  * @param {Array<string>} options - 필터링할 옵션 목록
  * @param {Array<string>} selectedItems - 선택된 필터 옵션 목록
  * @param {function} onChange - 필터 옵션 변경 핸들러
- * @param {boolean} multiple - 다중 선택 가능 여부
+ * @param {boolean} isMultiple - 다중 선택 가능 여부
  */
 
 "use client";
@@ -23,7 +23,7 @@ interface FilterSectionProps {
   options: string[];
   selectedItems: string[];
   onChange: (items: string[]) => void;
-  multiple?: boolean;
+  isMultiple?: boolean;
 }
 
 export function FilterSection({
@@ -34,10 +34,10 @@ export function FilterSection({
   options,
   selectedItems,
   onChange,
-  multiple = true,
+  isMultiple = true,
 }: FilterSectionProps) {
   const handleFilterClick = (item: string) => {
-    if (multiple) {
+    if (isMultiple) {
       onChange(
         selectedItems.includes(item)
           ? selectedItems.filter((i) => i !== item)

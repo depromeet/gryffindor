@@ -11,7 +11,7 @@ export interface SectionConfig {
   key: string;
   label: string;
   options: string[];
-  multiple: boolean;
+  isMultiple: boolean;
   getSelected: (draft: FilterData) => string[];
   onChange: (setDraft: Dispatch<SetStateAction<FilterData>>) => (selected: string[]) => void;
   withCheckbox?: boolean;

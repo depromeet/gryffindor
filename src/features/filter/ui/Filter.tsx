@@ -23,7 +23,7 @@ const FILTER_SECTIONS: SectionConfig[] = [
     key: "level",
     label: "혼밥 단계",
     options: ["1단계", "2단계", "3단계", "4단계"],
-    multiple: false,
+    isMultiple: false,
     getSelected: (draft) => (draft.level !== null ? [`${draft.level}단계`] : []),
     onChange: (setDraft) => (selected) =>
       setDraft((prev) => ({
@@ -35,7 +35,7 @@ const FILTER_SECTIONS: SectionConfig[] = [
     key: "seatTypes",
     label: "좌석 형태",
     options: ["칸막이", "바 좌석", "1인석", "2인석", "4인석"],
-    multiple: true,
+    isMultiple: true,
     getSelected: (draft) => draft.seatTypes,
     onChange: (setDraft) => (selected) => setDraft((prev) => ({ ...prev, seatTypes: selected })),
   },
@@ -43,7 +43,7 @@ const FILTER_SECTIONS: SectionConfig[] = [
     key: "categories",
     label: "메뉴 카테고리",
     options: ALL_CATEGORIES,
-    multiple: true,
+    isMultiple: true,
     withCheckbox: true,
     getSelected: (draft) => draft.categories,
     onChange: (setDraft) => (selected) => setDraft((prev) => ({ ...prev, categories: selected })),
@@ -66,12 +66,6 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
   const [draftFilters, setDraftFilters] = useState<FilterData>(initialFilters);
 
   const isDirty = !areFiltersEqual(initialFilters, draftFilters);
-
-  const isAllFilled =
-    !(draftFilters.price.min === 0 && draftFilters.price.max === 0) &&
-    draftFilters.level !== null &&
-    draftFilters.seatTypes.length > 0 &&
-    draftFilters.categories.length > 0;
 
   const handlePriceChange = (range: [number, number]) => {
     setDraftFilters((prev) => ({
@@ -107,7 +101,7 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
         const sectionProps = {
           label: section.label,
           options: section.options,
-          multiple: section.multiple,
+          isMultiple: section.isMultiple,
           showCheckbox: section.withCheckbox,
           selectedItems: section.getSelected(draftFilters),
           onChange: section.onChange(setDraftFilters),
