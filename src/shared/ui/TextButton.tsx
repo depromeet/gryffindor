@@ -72,7 +72,7 @@ export function TextButton({
       {isIcon && (
         <div className="h-4 w-4">
           <Icon
-            name="arrow"
+            name="downArrow"
             title="화살표"
             size={16}
             className={cn(

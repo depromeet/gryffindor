@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import type { HeaderConfig } from "@/shared/config";
 import { cn } from "@/shared/lib";
+import { Icon } from "./Icon";
 
 interface StackHeaderProps {
   /**
@@ -51,8 +52,8 @@ export function StackHeader({ config, className }: StackHeaderProps) {
     <header
       className={cn(
         "flex items-center justify-between",
-        "border-b",
-        "h-14 px-4 py-3",
+        "border-gray100 border-b",
+        "h-[60px] px-[20px] py-[14px]",
         "sticky top-0 z-40",
         className,
       )}
@@ -66,23 +67,7 @@ export function StackHeader({ config, className }: StackHeaderProps) {
           className="-ml-2 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
           aria-label="뒤로가기"
         >
-          {backButton?.icon || (
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-gray-700"
-            >
-              <title>뒤로가기</title>
-              <path d="M19 12H5" />
-              <path d="M12 19l-7-7 7-7" />
-            </svg>
-          )}
+          {backButton?.icon || <Icon name="leftArrow" disableCurrentColor />}
         </button>
       )}
 
@@ -90,7 +75,7 @@ export function StackHeader({ config, className }: StackHeaderProps) {
       {backButton?.hidden && <div className="h-10 w-10" />}
 
       {/* 제목 */}
-      <h1 className="flex-1 truncate px-4 text-center font-semibold text-lg">{title}</h1>
+      <h1 className="flex-1 truncate text-center font-semibold text-base">{title}</h1>
 
       {/* 우측 액션 영역 */}
       <div className="flex items-center gap-1">

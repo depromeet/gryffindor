@@ -1,4 +1,4 @@
-import { DownChevronIcon, SearchIcon, UserProfileIcon } from "./icons";
+import { Icon } from "./Icon";
 
 interface MainHeaderProps {
   isShowUserIcon?: boolean;
@@ -17,11 +17,11 @@ function MainHeader({ isShowUserIcon = true }: MainHeaderProps) {
       <section className="flex items-center gap-[2px]">
         {/* todo: 드롭다운 컴포넌트로 분리하기 */}
         <div className="font-semibold text-Gray-gray900 text-xl leading-relaxed">강남역</div>
-        <DownChevronIcon />
+        <Icon name="downArrow" />
       </section>
       <div className="flex items-center gap-[16px]">
-        <SearchIcon />
-        {isShowUserIcon && <UserProfileIcon />}
+        <Icon name="search" />
+        {isShowUserIcon && <Icon name="user" />}
       </div>
     </header>
   );
