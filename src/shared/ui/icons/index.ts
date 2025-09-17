@@ -1,4 +1,5 @@
 import CheckIcon from "./check.svg";
+import CloseIcon from "./close.svg";
 import CrownIcon from "./crown.svg";
 import DownArrowIcon from "./down-arrow.svg";
 import HomeIcon from "./home.svg";
@@ -19,4 +20,5 @@ export const iconMap = {
   user: UserIcon,
   check: CheckIcon,
   search: SearchIcon,
+  close: CloseIcon,
 } as const;
