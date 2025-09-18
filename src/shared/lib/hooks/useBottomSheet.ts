@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 
 interface BottomSheetMetrics {
@@ -12,8 +14,8 @@ interface UseBottomSheetProps {
 }
 
 export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheetProps) {
-  const sheetRef = useRef<HTMLDialogElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const sheetRef = useRef<HTMLDialogElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
   const metrics = useRef<BottomSheetMetrics>({
     start: { sheetY: 0, touchY: 0 },
     direction: "none",
@@ -24,6 +26,9 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
   const expandedY = expandedOffset; // 확장 상태 Y 좌표
 
   useEffect(() => {
+    const [sheet, content] = [sheetRef.current, contentRef.current];
+    if (!sheet || !content) return;
+
     // Y 좌표를 collapsedY ~ expandedY 사이로 제한
     const clamp = (value: number) => Math.min(Math.max(value, expandedY), collapsedY);
 
@@ -33,12 +38,10 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
 
       // 컨텐츠 영역에서 드래그 중이 아니거나 바텀시트가 확장되지 않은 경우는 이동 가능
       if (!isDraggingOnContent) return true;
-      if (sheetRef.current!.getBoundingClientRect().y !== expandedY) return true;
+      if (sheet.getBoundingClientRect().y !== expandedY) return true;
 
-      const atTop = contentRef.current!.scrollTop <= 0;
-      const atBottom =
-        contentRef.current!.scrollTop + contentRef.current!.clientHeight >=
-        contentRef.current!.scrollHeight;
+      const atTop = content.scrollTop <= 0;
+      const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight;
 
       // 드래그 방향에 따라 이동 가능 여부 결정
       return direction === "down" ? atTop : atBottom;
@@ -55,21 +58,21 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
         e.preventDefault();
 
         const nextY = clamp(start.sheetY + deltaY);
-        sheetRef.current!.style.transform = `translate3d(0, ${nextY - collapsedY}px, 0)`;
+        sheet.style.transform = `translate3d(0, ${nextY - collapsedY}px, 0)`;
       }
     };
 
     // 드래그 종료 시 스냅 위치로 이동
     const handlePointerUp = () => {
-      const currentY = sheetRef.current!.getBoundingClientRect().y;
+      const currentY = sheet.getBoundingClientRect().y;
       const snapTo =
         Math.abs(currentY - expandedY) < Math.abs(currentY - collapsedY) ? expandedY : collapsedY;
 
-      sheetRef.current!.style.transform = `translate3d(0, ${snapTo - collapsedY}px, 0)`;
-      sheetRef.current!.style.transition = "transform 0.3s cubic-bezier(0.4,0,0.2,1)";
+      sheet.style.transform = `translate3d(0, ${snapTo - collapsedY}px, 0)`;
+      sheet.style.transition = "transform 0.3s cubic-bezier(0.4,0,0.2,1)";
 
       setTimeout(() => {
-        sheetRef.current!.style.transition = "";
+        sheet.style.transition = "";
       }, 250);
 
       metrics.current.start = { sheetY: 0, touchY: 0 };
@@ -81,28 +84,31 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
 
     // 드래그 시작 시 초기 위치 저장
     const handlePointerDown = (e: PointerEvent) => {
-      metrics.current.start.sheetY = sheetRef.current!.getBoundingClientRect().y;
+      metrics.current.start.sheetY = sheet.getBoundingClientRect().y;
       metrics.current.start.touchY = e.clientY;
 
       document.addEventListener("pointermove", handlePointerMove, { passive: false });
       document.addEventListener("pointerup", handlePointerUp);
     };
 
-    sheetRef.current?.addEventListener("pointerdown", handlePointerDown);
+    sheet.addEventListener("pointerdown", handlePointerDown);
 
     return () => {
-      sheetRef.current?.removeEventListener("pointerdown", handlePointerDown);
+      sheet.removeEventListener("pointerdown", handlePointerDown);
     };
   }, [collapsedY, expandedY]);
 
   // 컨텐츠 영역에서 드래그 중임을 체크
   useEffect(() => {
+    const content = contentRef.current;
+    if (!content) return;
+
     const handleContentPointer = () => {
       metrics.current.isDraggingOnContent = true;
     };
 
-    contentRef.current?.addEventListener("pointerdown", handleContentPointer);
-    return () => contentRef.current?.removeEventListener("pointerdown", handleContentPointer);
+    content.addEventListener("pointerdown", handleContentPointer);
+    return () => content.removeEventListener("pointerdown", handleContentPointer);
   }, []);
 
   return { sheetRef, contentRef };
