@@ -1,18 +1,16 @@
 /**
  * 바텀 시트 컴포넌트
  *
- * @param {string} type - 바텀시트 타입 고정형/모달형 ("fixed" | "modal")
  * @param {boolean} isOpen - 바텀시트 열림/닫힘 상태
  * @param {() => void} onClose - 바텀시트 닫기 콜백 함수
- * @param {number} collapsedHeight - 축소된 바텀시트의 높이
- * @param {number} expandedOffset - 확장된 바텀시트에 화면 상단으로부터의 거리 (default 88px)
+ * @param {number} initialHeight - 초기 바텀시트의 높이
+ * @param {number} expandedOffset - 확장된 바텀시트에 화면 상단으로부터의 거리
  *
  * @example
  * <BottomSheet
- *   type="modal"
  *   isOpen={true}
  *   onClose={() => setIsOpen(false)}
- *   collapsedHeight={226}
+ *   initialHeight={226}
  *   expandedOffset={88}
  * >
  *   <BottomSheetHeader>
@@ -32,33 +30,31 @@ import { cn } from "@/shared/lib";
 import { useBottomSheet } from "../lib/hooks";
 
 interface BottomSheetProps {
-  type: "fixed" | "modal";
   isOpen?: boolean;
   onClose?: () => void;
-  collapsedHeight: number;
-  expandedOffset?: number;
+  initialHeight: number;
+  expandedOffset: number;
 }
 
 function BottomSheet({
-  type,
-  isOpen = true,
-  onClose = () => {},
-  collapsedHeight,
-  expandedOffset = 88,
+  isOpen,
+  onClose,
+  initialHeight,
+  expandedOffset,
   children,
 }: PropsWithChildren<BottomSheetProps>) {
-  const { sheetRef, contentRef } = useBottomSheet({ collapsedHeight, expandedOffset });
+  const { sheetRef, contentRef } = useBottomSheet({ initialHeight, expandedOffset });
 
   if (!isOpen) return null;
 
   return (
     <BottomSheetProvider contentRef={contentRef}>
-      {type === "modal" && <BottomSheetOverlay onClose={onClose} />}
+      {onClose && <BottomSheetOverlay onClose={onClose} />}
       <dialog
         ref={sheetRef}
         className="fixed right-0 left-0 z-50 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
         style={{
-          top: `calc(100% - ${collapsedHeight}px)`,
+          top: `calc(100% - ${initialHeight}px)`,
           height: `${window.innerHeight - expandedOffset}px`,
           transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         }}

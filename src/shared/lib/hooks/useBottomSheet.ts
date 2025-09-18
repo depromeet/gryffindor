@@ -7,11 +7,11 @@ interface BottomSheetMetrics {
 }
 
 interface UseBottomSheetProps {
-  collapsedHeight: number; // 축소된 바텀 시트의 높이
+  initialHeight: number; // 초기 바텀 시트의 높이
   expandedOffset: number; // 화면 상단으로부터 바텀시트 확장 위치
 }
 
-export function useBottomSheet({ collapsedHeight, expandedOffset }: UseBottomSheetProps) {
+export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheetProps) {
   const sheetRef = useRef<HTMLDialogElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const metrics = useRef<BottomSheetMetrics>({
@@ -20,7 +20,7 @@ export function useBottomSheet({ collapsedHeight, expandedOffset }: UseBottomShe
     isDraggingOnContent: false,
   });
 
-  const collapsedY = window.innerHeight - collapsedHeight; // 축소 상태 Y 좌표
+  const collapsedY = window.innerHeight - initialHeight; // 초기 상태 Y 좌표
   const expandedY = expandedOffset; // 확장 상태 Y 좌표
 
   useEffect(() => {
