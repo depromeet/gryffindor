@@ -84,7 +84,7 @@ export function FilterButton({
     <button
       type={type}
       className={cn(
-        "flex w-[96px] cursor-pointer items-center justify-center rounded-[8px] py-[12px] transition-colors duration-300",
+        "flex min-w-[96px] cursor-pointer items-center justify-center rounded-[8px] py-[12px] transition-colors duration-300",
         variantStyle,
       )}
       onClick={onClick}

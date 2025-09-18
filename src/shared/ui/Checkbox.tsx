@@ -38,7 +38,7 @@ export function Checkbox({ label, checked, onChange }: CheckboxProps) {
           checked ? "bg-primary400" : "bg-gray200",
         )}
       >
-        <Icon name="check" size={16} />
+        <Icon name="check" size={16} color="white" />
       </div>
       <p className="truncate text-body2-regular text-gray700">{label}</p>
     </label>

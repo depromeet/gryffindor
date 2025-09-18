@@ -31,6 +31,18 @@ interface RouteConfig {
 }
 
 /**
+ * 인증/권한 관련 경로 설정
+ */
+export const AUTH_CONFIG = {
+  // 인증이 필요한 경로들
+  PROTECTED_ROUTES: ["/onboarding"] as const,
+  // 인증되지 않은 사용자만 접근 가능한 경로들
+  AUTH_ROUTES: ["/login"] as const,
+  // 공개 경로들
+  PUBLIC_ROUTES: ["/", "/home", "/map", "/auth-callback"] as const,
+} as const;
+
+/**
  * 모든 페이지의 통합 설정
  * 여기서 한 번에 모든 페이지의 라우팅, 전환, 헤더를 관리
  */
@@ -81,6 +93,13 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
     transition: "drill",
     header: {
       title: "아이템 상세",
+    },
+  },
+  "/onboarding": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "레벨테스트",
     },
   },
 };
