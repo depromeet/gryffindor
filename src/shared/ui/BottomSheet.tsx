@@ -1,6 +1,7 @@
 /**
  * 바텀 시트 컴포넌트
  *
+ * @param {boolean} isFixed - 바텀시트 고정 여부
  * @param {boolean} isOpen - 바텀시트 열림/닫힘 상태
  * @param {() => void} onClose - 바텀시트 닫기 콜백 함수
  * @param {number} initialHeight - 초기 바텀시트의 높이
@@ -8,6 +9,7 @@
  *
  * @example
  * <BottomSheet
+ *   isFixed={true}
  *   isOpen={true}
  *   onClose={() => setIsOpen(false)}
  *   initialHeight={226}
@@ -30,6 +32,7 @@ import { cn } from "@/shared/lib";
 import { useBottomSheet } from "../lib/hooks";
 
 interface BottomSheetProps {
+  isFixed: boolean;
   isOpen?: boolean;
   onClose?: () => void;
   initialHeight: number;
@@ -37,6 +40,7 @@ interface BottomSheetProps {
 }
 
 function BottomSheet({
+  isFixed,
   isOpen,
   onClose,
   initialHeight,
@@ -48,10 +52,10 @@ function BottomSheet({
   if (!isOpen) return null;
 
   return (
-    <BottomSheetProvider contentRef={contentRef}>
+    <BottomSheetProvider contentRef={isFixed ? null : contentRef}>
       {onClose && <BottomSheetOverlay onClose={onClose} />}
       <dialog
-        ref={sheetRef}
+        ref={isFixed ? null : sheetRef}
         className="fixed right-0 left-0 z-50 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
         style={{
           top: `calc(100% - ${initialHeight}px)`,

@@ -4,7 +4,7 @@ import type { PropsWithChildren, RefObject } from "react";
 import { createContext, useContext } from "react";
 
 interface BottomSheetContextProps {
-  contentRef: RefObject<HTMLDivElement | null>;
+  contentRef?: RefObject<HTMLDivElement | null> | null;
 }
 
 const BottomSheetContext = createContext<BottomSheetContextProps | null>(null);
@@ -17,7 +17,7 @@ export function useBottomSheetContext() {
 }
 
 interface BottomSheetProviderProps {
-  contentRef: RefObject<HTMLDivElement | null>;
+  contentRef?: RefObject<HTMLDivElement | null> | null;
 }
 
 export function BottomSheetProvider({

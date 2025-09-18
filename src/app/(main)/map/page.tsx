@@ -42,7 +42,7 @@ export default function MapPage() {
         </div>
       </div>
 
-      <BottomSheet isOpen={true} initialHeight={226} expandedOffset={88}>
+      <BottomSheet isFixed={false} isOpen={true} initialHeight={226} expandedOffset={88}>
         <BottomSheetHeader>
           <BottomSheetHandler />
         </BottomSheetHeader>
