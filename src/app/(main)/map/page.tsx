@@ -42,7 +42,7 @@ export default function MapPage() {
       </div>
 
       {/* 스토어 리스트 바텀시트 */}
-      <BottomSheet isFixed={false} isOpen={true} initialHeight={226} expandedOffset={88}>
+      <BottomSheet isFixed={false} isOpen={false} initialHeight={226} expandedOffset={88}>
         <BottomSheetHeader>
           <BottomSheetHandler />
         </BottomSheetHeader>
@@ -53,10 +53,9 @@ export default function MapPage() {
       {isFilterOpen && (
         <BottomSheet
           isFixed={true}
-          isOpen={true}
+          isOpen={isFilterOpen}
           onClose={() => setIsFilterOpen(false)}
           expandedOffset={88}
-          className="pb-7"
         >
           <BottomSheetHeader>
             <div className="flex items-center justify-between p-5">
@@ -66,7 +65,7 @@ export default function MapPage() {
               </button>
             </div>
           </BottomSheetHeader>
-          <BottomSheetContent>
+          <BottomSheetContent className="pb-7">
             <Filter
               initialFilters={filters}
               onApply={handleApplyFilters}

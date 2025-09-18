@@ -6,7 +6,6 @@
  * @param {() => void} onClose - 바텀시트 닫기 콜백 함수
  * @param {number} initialHeight - 초기 바텀시트의 높이
  * @param {number} expandedOffset - 확장된 바텀시트에 화면 상단으로부터의 거리
- * @param {string} className - 추가 css
  *
  * @example
  * <BottomSheet
@@ -38,7 +37,6 @@ interface BottomSheetProps {
   onClose?: () => void;
   initialHeight?: number;
   expandedOffset: number;
-  className?: string;
 }
 
 function BottomSheet({
@@ -47,24 +45,19 @@ function BottomSheet({
   onClose,
   initialHeight,
   expandedOffset,
-  className,
   children,
 }: PropsWithChildren<BottomSheetProps>) {
   const defaultHeight = initialHeight ? initialHeight : window.innerHeight - expandedOffset;
-
   const { sheetRef, contentRef } = useBottomSheet({ initialHeight: defaultHeight, expandedOffset });
 
-  if (!isOpen) return null;
+  if (!isOpen) return;
 
   return (
     <BottomSheetProvider contentRef={isFixed ? null : contentRef}>
       {onClose && <BottomSheetOverlay onClose={onClose} />}
       <dialog
         ref={isFixed ? null : sheetRef}
-        className={cn(
-          "fixed right-0 left-0 z-50 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
-          className,
-        )}
+        className="fixed right-0 left-0 z-50 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
         style={{
           top: `calc(100% - ${defaultHeight}px)`,
           height: `${window.innerHeight - expandedOffset}px`,
@@ -102,7 +95,7 @@ function BottomSheetOverlay({ onClose }: { onClose: () => void }) {
     <button
       type="button"
       onClick={onClose}
-      className="fixed inset-0 cursor-pointer bg-[#00000066]"
+      className="fixed inset-0 z-50 cursor-pointer bg-[#00000066]"
     />
   );
 }
