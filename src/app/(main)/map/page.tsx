@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import { Filter } from "@/features/filter/ui";
 import {
   BottomSheet,
   BottomSheetContent,
@@ -7,47 +11,70 @@ import {
   TransitionLayout,
 } from "@/shared/ui";
 
+interface FilterData {
+  price: { min: number; max: number };
+  level: number | null;
+  seatTypes: string[];
+  categories: string[];
+}
+
 export default function MapPage() {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filters, setFilters] = useState<FilterData>({
+    price: { min: 0, max: 20000 },
+    level: null,
+    seatTypes: [],
+    categories: [],
+  });
+
+  const handleApplyFilters = (newFilters: FilterData) => {
+    setFilters(newFilters);
+  };
+
   return (
     <TransitionLayout>
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-red-50 to-orange-100 p-6">
-        <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl">
-          <div className="mb-6">
-            <Icon name="map" size={64} />
-          </div>
-          <h1 className="mb-4 font-bold text-3xl text-gray-800">지도 페이지</h1>
-          <p className="mb-6 text-gray-600">
-            여기는 지도 페이지입니다.
-            <br />
-            위치 정보와 지도를 표시하는 곳이에요.
-          </p>
-          <div className="space-y-4">
-            <div className="rounded-lg bg-red-50 p-4">
-              <h3 className="mb-2 font-semibold text-red-800">현재 위치</h3>
-              <p className="text-red-600 text-sm">서울특별시 강남구</p>
-            </div>
-            <div className="rounded-lg bg-orange-50 p-4">
-              <h3 className="mb-2 font-semibold text-orange-800">주변 장소</h3>
-              <div className="space-y-1 text-orange-600 text-sm">
-                <div>• 카페 5곳</div>
-                <div>• 음식점 12곳</div>
-                <div>• 편의점 3곳</div>
-              </div>
-            </div>
-            <div className="rounded-lg bg-yellow-50 p-4">
-              <h3 className="mb-2 font-semibold text-yellow-800">거리</h3>
-              <p className="text-sm text-yellow-600">반경 500m 내 검색 결과</p>
-            </div>
-          </div>
+        <div className="relative w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl">
+          <button type="button" onClick={() => setIsFilterOpen(true)}>
+            Open Filters
+          </button>
         </div>
       </div>
 
+      {/* 스토어 리스트 바텀시트 */}
       <BottomSheet isFixed={false} isOpen={true} initialHeight={226} expandedOffset={88}>
         <BottomSheetHeader>
           <BottomSheetHandler />
         </BottomSheetHeader>
-        <BottomSheetContent className="gap-[15px]">{/* store list */}</BottomSheetContent>
+        <BottomSheetContent className="gap-[15px]">{/* store list content */}</BottomSheetContent>
       </BottomSheet>
+
+      {/* 필터 바텀시트 */}
+      {isFilterOpen && (
+        <BottomSheet
+          isFixed={true}
+          isOpen={true}
+          onClose={() => setIsFilterOpen(false)}
+          expandedOffset={88}
+          className="pb-7"
+        >
+          <BottomSheetHeader>
+            <div className="flex items-center justify-between p-5">
+              <div className="justify-start text-subtitle1">필터 옵션</div>
+              <button type="button" onClick={() => setIsFilterOpen(false)}>
+                <Icon size={24} name="close" className="cursor-pointer text-gray400" />
+              </button>
+            </div>
+          </BottomSheetHeader>
+          <BottomSheetContent>
+            <Filter
+              initialFilters={filters}
+              onApply={handleApplyFilters}
+              onClose={() => setIsFilterOpen(false)}
+            />
+          </BottomSheetContent>
+        </BottomSheet>
+      )}
     </TransitionLayout>
   );
 }

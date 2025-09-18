@@ -6,6 +6,7 @@
  * @param {() => void} onClose - 바텀시트 닫기 콜백 함수
  * @param {number} initialHeight - 초기 바텀시트의 높이
  * @param {number} expandedOffset - 확장된 바텀시트에 화면 상단으로부터의 거리
+ * @param {string} className - 추가 css
  *
  * @example
  * <BottomSheet
@@ -35,8 +36,9 @@ interface BottomSheetProps {
   isFixed: boolean;
   isOpen?: boolean;
   onClose?: () => void;
-  initialHeight: number;
+  initialHeight?: number;
   expandedOffset: number;
+  className?: string;
 }
 
 function BottomSheet({
@@ -45,9 +47,12 @@ function BottomSheet({
   onClose,
   initialHeight,
   expandedOffset,
+  className,
   children,
 }: PropsWithChildren<BottomSheetProps>) {
-  const { sheetRef, contentRef } = useBottomSheet({ initialHeight, expandedOffset });
+  const defaultHeight = initialHeight ? initialHeight : window.innerHeight - expandedOffset;
+
+  const { sheetRef, contentRef } = useBottomSheet({ initialHeight: defaultHeight, expandedOffset });
 
   if (!isOpen) return null;
 
@@ -56,9 +61,12 @@ function BottomSheet({
       {onClose && <BottomSheetOverlay onClose={onClose} />}
       <dialog
         ref={isFixed ? null : sheetRef}
-        className="fixed right-0 left-0 z-50 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
+        className={cn(
+          "fixed right-0 left-0 z-50 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
+          className,
+        )}
         style={{
-          top: `calc(100% - ${initialHeight}px)`,
+          top: `calc(100% - ${defaultHeight}px)`,
           height: `${window.innerHeight - expandedOffset}px`,
           transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
@@ -70,7 +78,7 @@ function BottomSheet({
 }
 
 function BottomSheetHeader({ className, children }: PropsWithChildren<{ className?: string }>) {
-  return <div className={cn("relative flex flex-col p-[20px]", className)}>{children}</div>;
+  return <div className={cn("relative flex flex-col", className)}>{children}</div>;
 }
 
 function BottomSheetContent({ className, children }: PropsWithChildren<{ className?: string }>) {
@@ -80,7 +88,7 @@ function BottomSheetContent({ className, children }: PropsWithChildren<{ classNa
     <div
       ref={contentRef}
       className={cn(
-        "flex max-h-[812px] w-full flex-1 flex-col items-center overflow-y-auto px-5 pb-9 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        "flex max-h-[812px] w-full flex-1 flex-col items-center overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
         className,
       )}
     >
