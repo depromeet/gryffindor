@@ -41,7 +41,7 @@ export function SeatImageGallery({ images, storeName, level, userName }: SeatIma
                     className="h-full w-full object-cover"
                   />
                 ) : (
-                  <div className="h-full w-fullbg-gray-200" />
+                  <div className="h-full w-full bg-gray-200" />
                 )}
                 <span className="absolute top-3 left-3">
                   <Tag

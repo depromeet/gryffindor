@@ -2,7 +2,7 @@
 import { Tag } from "@/shared/ui";
 import type { Menu } from "../model/types";
 
-export function MenuItem({ imageUrl, name, price, isRepresentative }: Menu) {
+export function MenuItem({ name, price, isRepresentative }: Menu) {
   return (
     <article className="flex items-center gap-4">
       {/* Image 삭제 예정 */}
