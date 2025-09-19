@@ -1,3 +1,5 @@
+"use client";
+
 import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse } from "axios";
 import { getSession, signOut } from "next-auth/react";
 import type { ApiResponse } from "@/shared/model";
@@ -24,17 +26,42 @@ instance.interceptors.request.use(
   },
 );
 
-// Response 인터셉터: 401 에러 시 로그아웃 처리
+// Response 인터셉터: 토큰 갱신 및 에러 처리
 instance.interceptors.response.use(
   (response) => {
     return response;
   },
   async (error: AxiosError) => {
-    // 401 Unauthorized 에러 시 로그아웃 처리
-    if (error.response?.status === 401) {
-      console.error("Unauthorized access - redirecting to login");
+    const originalRequest = error.config;
+
+    // 401 Unauthorized 에러 처리
+    if (error.response?.status === 401 && originalRequest) {
+      // 토큰 갱신을 위해 세션 갱신 시도
+      const session = await getSession();
+
+      if (session?.error) {
+        // 세션에 에러가 있으면 로그아웃
+        console.error("Session error detected:", session.error);
+        await signOut({ callbackUrl: "/login" });
+        return Promise.reject(error);
+      }
+
+      if (
+        session?.accessToken &&
+        session.accessToken !==
+          (originalRequest.headers?.Authorization as string)?.replace("Bearer ", "")
+      ) {
+        // 새로운 토큰으로 재시도
+        originalRequest.headers = originalRequest.headers || {};
+        originalRequest.headers.Authorization = `Bearer ${session.accessToken}`;
+        return instance(originalRequest);
+      }
+
+      // 토큰 갱신도 실패했으면 로그아웃
+      console.error("Token refresh failed - redirecting to login");
       await signOut({ callbackUrl: "/login" });
     }
+
     return Promise.reject(error);
   },
 );
