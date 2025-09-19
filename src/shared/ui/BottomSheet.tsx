@@ -92,9 +92,9 @@ function BottomSheetContent({ className, children }: PropsWithChildren<{ classNa
 
 function BottomSheetOverlay({ onClose }: { onClose: () => void }) {
   return (
-    <button
-      type="button"
+    <div
       onClick={onClose}
+      aria-hidden="true"
       className="fixed inset-0 z-50 cursor-pointer bg-[#00000066]"
     />
   );

@@ -42,7 +42,7 @@ export default function MapPage() {
       </div>
 
       {/* 스토어 리스트 바텀시트 */}
-      <BottomSheet isFixed={false} isOpen={false} initialHeight={226} expandedOffset={88}>
+      <BottomSheet isFixed={false} isOpen={true} initialHeight={226} expandedOffset={88}>
         <BottomSheetHeader>
           <BottomSheetHandler />
         </BottomSheetHeader>
