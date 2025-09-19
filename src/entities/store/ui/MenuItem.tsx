@@ -1,6 +1,6 @@
 // import Image from "next/image";
 import { Tag } from "@/shared/ui";
-import { Menu } from "../model/types";
+import type { Menu } from "../model/types";
 
 export function MenuItem({ imageUrl, name, price, isRepresentative }: Menu) {
   return (
