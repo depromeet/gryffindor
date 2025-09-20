@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Icon, StationOverlaySelect } from "@/shared/ui";
 
 interface MainHeaderProps {
@@ -17,7 +18,11 @@ function MainHeader({ isShowUserIcon = true }: MainHeaderProps) {
       <StationOverlaySelect />
       <div className="flex items-center gap-[16px]">
         <Icon name="search" />
-        {isShowUserIcon && <Icon name="user" />}
+        {isShowUserIcon && (
+          <Link href="/mypage">
+            <Icon name="user" />
+          </Link>
+        )}
       </div>
     </header>
   );
