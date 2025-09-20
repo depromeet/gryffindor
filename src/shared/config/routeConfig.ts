@@ -102,6 +102,13 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
       title: "레벨테스트",
     },
   },
+  "/store/[id]": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "매장 정보",
+    },
+  },
 };
 
 /**

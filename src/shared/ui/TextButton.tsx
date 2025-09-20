@@ -23,8 +23,6 @@
  *   onClick={() => console.log("clicked")}
  * />
  */
-
-import { cn } from "@/shared/lib";
 import { Icon } from "./Icon";
 
 interface TextButtonProps {
@@ -52,34 +50,29 @@ export function TextButton({
     360: "rotate-360",
   };
 
-  const colorStyle = color ? "text-primary400" : "text-gray600";
-  const rotateClass = rotateNumber !== undefined ? rotateClassMap[rotateNumber] : "";
   return (
     <button
       type="button"
       className="flex cursor-pointer items-center justify-start gap-0.5"
       onClick={onClick}
     >
-      <p
-        className={cn(
-          "text-body2-medium",
-          colorStyle,
-          isUnderline && "underline underline-offset-2",
-        )}
+      <span
+        className={`text-body2-medium ${
+          color ? "text-primary400" : "text-gray600"
+        } ${isUnderline ? "underline underline-offset-2" : ""}`}
       >
         {label}
-      </p>
+      </span>
       {isIcon && (
         <div className="h-4 w-4">
           <Icon
             name="downArrow"
             title="화살표"
             size={16}
-            className={cn(
-              "text-gray600 transition-transform duration-300 ease-in-out",
-              rotateClass,
-              colorStyle,
-            )}
+            disableCurrentColor
+            className={`transition-transform duration-300 ease-in-out ${
+              rotateClassMap[rotateNumber]
+            } ${color ? "text-primary400" : "text-gray600"}`}
           />
         </div>
       )}

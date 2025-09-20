@@ -30,6 +30,7 @@ interface TransitionLayoutProps extends PropsWithChildren {
    * 디바이스 타입 강제 지정 (기본값: useMobile 훅 사용)
    */
   forceMobile?: boolean;
+  dynamicTitle?: string;
 }
 
 /**
@@ -56,6 +57,7 @@ export function TransitionLayout({
   transition = "auto",
   className = "min-h-full min-w-full",
   forceMobile,
+  dynamicTitle,
 }: TransitionLayoutProps) {
   const pathname = usePathname();
   const detectedMobile = useMobile();
@@ -86,7 +88,9 @@ export function TransitionLayout({
     >
       <div className="min-h-screen bg-gray-50">
         {/* 헤더가 있는 페이지에만 헤더 포함 */}
-        {needsHeader && routeConfig.header && <StackHeader config={routeConfig.header} />}
+        {needsHeader && routeConfig.header && (
+          <StackHeader config={routeConfig.header} title={dynamicTitle} />
+        )}
 
         {/* 페이지 콘텐츠 */}
         <div className={needsHeader ? "pb-safe" : ""}>{children}</div>
