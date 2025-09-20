@@ -6,6 +6,7 @@ import HomeIcon from "./home.svg";
 import LeftArrowIcon from "./left-arrow.svg";
 import MapIcon from "./map.svg";
 import MapBubbleIcon from "./map-bubble.svg";
+import MapLocationIcon from "./map-location.svg";
 import SearchIcon from "./search.svg";
 import SpeakerIcon from "./speaker.svg";
 import TriangleDownIcon from "./triangle-down.svg";
@@ -25,4 +26,5 @@ export const iconMap = {
   close: CloseIcon,
   mapBubble: MapBubbleIcon,
   triangleDown: TriangleDownIcon,
+  mapLocation: MapLocationIcon,
 } as const;
