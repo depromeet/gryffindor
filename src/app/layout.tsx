@@ -40,7 +40,7 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" className="overflow-x-hidden">
-      <body className={`${pretendard.variable}`}>
+      <body className={`${pretendard.variable}`} suppressHydrationWarning>
         <SessionProvider session={session}>
           <QueryProvider>
             <SsgoiProvider>{children}</SsgoiProvider>
