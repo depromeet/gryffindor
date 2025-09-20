@@ -108,6 +108,11 @@ body {
   --text-body3-regular--letter-spacing: -1%;
 
   /* Caption */
+  --text-caption1-bold: 12px;
+  --text-caption1-bold--leading: 150%;
+  --text-caption1-bold--font-weight: 700;
+  --text-caption1-bold--letter-spacing: -1%;
+
   --text-caption1-semibold: 12px;
   --text-caption1-semibold--leading: 150%;
   --text-caption1-semibold--font-weight: 600;
