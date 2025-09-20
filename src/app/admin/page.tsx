@@ -18,6 +18,7 @@ interface StoreImage {
 }
 
 interface Menu {
+  id: string;
   name: string;
   price: number;
   imageUrl: string | null;
@@ -72,7 +73,7 @@ const INITIAL_FORM_DATA: Store = {
   honbobLevel: 0,
   categories: { primaryCategory: "" },
   storeImages: [{ imageUrl: null, isMain: false }],
-  menus: [{ name: "", price: 0, imageUrl: null }],
+  menus: [{ id: crypto.randomUUID(), name: "", price: 0, imageUrl: null }],
   seatOptions: [{ seatType: "FOR_ONE", imageUrl: null }],
 };
 
@@ -96,7 +97,8 @@ export default function AdminPage() {
         imageUrl: img.imageUrl?.trim() || null,
       })),
       menus: formData.menus.map((menu) => ({
-        ...menu,
+        name: menu.name,
+        price: menu.price,
         imageUrl: menu.imageUrl?.trim() || null,
       })),
       seatOptions: formData.seatOptions.map((seat) => ({
@@ -141,7 +143,7 @@ export default function AdminPage() {
   const addMenu = () => {
     setFormData((prev) => ({
       ...prev,
-      menus: [...prev.menus, { name: "", price: 0, imageUrl: null }],
+      menus: [...prev.menus, { id: crypto.randomUUID(), name: "", price: 0, imageUrl: null }],
     }));
   };
 
@@ -501,10 +503,7 @@ export default function AdminPage() {
 
             <div className="space-y-4">
               {formData.menus.map((menu, index) => (
-                <div
-                  key={`menu-${menu.name}-${index}`}
-                  className="rounded-md border border-gray-200 p-4"
-                >
+                <div key={menu.id} className="rounded-md border border-gray-200 p-4">
                   <div className="mb-3 flex items-center justify-between">
                     <span className="font-medium text-gray-700 text-sm">메뉴 {index + 1}</span>
                     {formData.menus.length > 1 && (
