@@ -67,7 +67,7 @@ const MOCK_DATA = [
   },
 ];
 
-export const MOCK_REVIEWS = [
+const MOCK_REVIEWS = [
   {
     id: 1,
     content: "대표메뉴로 먹었는데 육즙도 많고 맛있어서 만족합니다 😊",
