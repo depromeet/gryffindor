@@ -15,6 +15,7 @@ interface StackHeaderProps {
    * 추가 CSS 클래스
    */
   className?: string;
+  title?: string;
 }
 
 /**
@@ -22,7 +23,7 @@ interface StackHeaderProps {
  * - 모바일에서 드릴다운 페이지에 사용
  * - 설정 객체 기반 또는 개별 props로 커스터마이징 가능
  */
-export function StackHeader({ config, className }: StackHeaderProps) {
+export function StackHeader({ config, className, title: dynamicTitle }: StackHeaderProps) {
   const router = useRouter();
 
   // config에서 값 추출
@@ -75,7 +76,9 @@ export function StackHeader({ config, className }: StackHeaderProps) {
       {backButton?.hidden && <div className="h-10 w-10" />}
 
       {/* 제목 */}
-      <h1 className="flex-1 truncate text-center font-semibold text-base">{title}</h1>
+      <h1 className="flex-1 truncate text-center font-semibold text-base">
+        {dynamicTitle || title}
+      </h1>
 
       {/* 우측 액션 영역 */}
       <div className="flex items-center gap-1">
