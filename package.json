@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "biome check --write . && next build",
+    "build": "biome check --write . && next build --turbopack",
     "start": "next start",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write .",

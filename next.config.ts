@@ -12,7 +12,6 @@ const nextConfig: NextConfig = {
     },
   },
 
-  output: "standalone",
   typedRoutes: true,
   reactStrictMode: false,
   eslint: {
