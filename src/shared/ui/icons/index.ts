@@ -5,8 +5,10 @@ import DownArrowIcon from "./down-arrow.svg";
 import HomeIcon from "./home.svg";
 import LeftArrowIcon from "./left-arrow.svg";
 import MapIcon from "./map.svg";
+import MapBubbleIcon from "./map-bubble.svg";
 import SearchIcon from "./search.svg";
 import SpeakerIcon from "./speaker.svg";
+import TriangleDownIcon from "./triangle-down.svg";
 import UserIcon from "./user.svg";
 
 // 아이콘 매핑 객체
@@ -21,4 +23,6 @@ export const iconMap = {
   check: CheckIcon,
   search: SearchIcon,
   close: CloseIcon,
+  mapBubble: MapBubbleIcon,
+  triangleDown: TriangleDownIcon,
 } as const;
