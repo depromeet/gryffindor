@@ -2,13 +2,15 @@ import CheckIcon from "./check.svg";
 import CloseIcon from "./close.svg";
 import CrownIcon from "./crown.svg";
 import DownArrowIcon from "./down-arrow.svg";
+import FilterIcon from "./filter.svg";
 import HomeIcon from "./home.svg";
 import LeftArrowIcon from "./left-arrow.svg";
 import MapIcon from "./map.svg";
 import MapBubbleIcon from "./map-bubble.svg";
-import MapLocationIcon from "./map-location.svg";
+import RefreshIcon from "./refresh.svg";
 import SearchIcon from "./search.svg";
 import SpeakerIcon from "./speaker.svg";
+import TargetIcon from "./target.svg";
 import TriangleDownIcon from "./triangle-down.svg";
 import UserIcon from "./user.svg";
 
@@ -26,5 +28,7 @@ export const iconMap = {
   close: CloseIcon,
   mapBubble: MapBubbleIcon,
   triangleDown: TriangleDownIcon,
-  mapLocation: MapLocationIcon,
+  target: TargetIcon,
+  refresh: RefreshIcon,
+  filter: FilterIcon,
 } as const;
