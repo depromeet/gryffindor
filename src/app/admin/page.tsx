@@ -13,28 +13,27 @@ interface Address {
 }
 
 interface StoreImage {
-  imageUrl: string;
+  imageUrl: string | null;
   isMain: boolean;
 }
 
 interface Menu {
-  id: string;
   name: string;
-  price: string;
-  imageUrl: string;
+  price: number;
+  imageUrl: string | null;
 }
 
 interface SeatOption {
   seatType: "FOR_ONE" | "FOR_TWO" | "FOR_FOUR" | "BAR_TABLE" | "CUBICLE";
-  imageUrl: string;
+  imageUrl: string | null;
 }
 
 interface Store {
   name: string;
   address: Address;
-  phoneNumber: string;
-  description: string;
-  mainImageUrl: string;
+  phoneNumber: string | null;
+  description: string | null;
+  mainImageUrl: string | null;
   honbobLevel: number;
   categories: {
     primaryCategory: string;
@@ -67,14 +66,14 @@ const SEAT_TYPES = [
 const INITIAL_FORM_DATA: Store = {
   name: "",
   address: { address: "", latitude: 0, longitude: 0 },
-  phoneNumber: "",
-  description: "",
-  mainImageUrl: "",
+  phoneNumber: null,
+  description: null,
+  mainImageUrl: null,
   honbobLevel: 0,
   categories: { primaryCategory: "" },
-  storeImages: [{ imageUrl: "", isMain: true }],
-  menus: [{ id: crypto.randomUUID(), name: "", price: "", imageUrl: "" }],
-  seatOptions: [{ seatType: "FOR_ONE", imageUrl: "" }],
+  storeImages: [{ imageUrl: null, isMain: false }],
+  menus: [{ name: "", price: 0, imageUrl: null }],
+  seatOptions: [{ seatType: "FOR_ONE", imageUrl: null }],
 };
 
 export default function AdminPage() {
@@ -86,8 +85,30 @@ export default function AdminPage() {
     e.preventDefault();
     setIsLoading(true);
 
+    // 빈 문자열을 null로 변환
+    const processedData = {
+      ...formData,
+      phoneNumber: formData.phoneNumber?.trim() || null,
+      description: formData.description?.trim() || null,
+      mainImageUrl: formData.mainImageUrl?.trim() || null,
+      storeImages: formData.storeImages.map((img) => ({
+        ...img,
+        imageUrl: img.imageUrl?.trim() || null,
+      })),
+      menus: formData.menus.map((menu) => ({
+        ...menu,
+        imageUrl: menu.imageUrl?.trim() || null,
+      })),
+      seatOptions: formData.seatOptions.map((seat) => ({
+        ...seat,
+        imageUrl: seat.imageUrl?.trim() || null,
+      })),
+    };
+
+    console.log("processedData", processedData);
+    setIsLoading(false);
     try {
-      const response = await axiosInstance.post("/api/admin/stores", [formData]);
+      const response = await axiosInstance.post("/api/admin/stores", [processedData]);
       alert("가게 정보가 성공적으로 추가되었습니다!");
       console.log("Response:", response);
 
@@ -104,7 +125,7 @@ export default function AdminPage() {
   const addStoreImage = () => {
     setFormData((prev) => ({
       ...prev,
-      storeImages: [...prev.storeImages, { imageUrl: "", isMain: false }],
+      storeImages: [...prev.storeImages, { imageUrl: null, isMain: false }],
     }));
   };
 
@@ -120,7 +141,7 @@ export default function AdminPage() {
   const addMenu = () => {
     setFormData((prev) => ({
       ...prev,
-      menus: [...prev.menus, { id: crypto.randomUUID(), name: "", price: "", imageUrl: "" }],
+      menus: [...prev.menus, { name: "", price: 0, imageUrl: null }],
     }));
   };
 
@@ -136,7 +157,7 @@ export default function AdminPage() {
   const addSeatOption = () => {
     setFormData((prev) => ({
       ...prev,
-      seatOptions: [...prev.seatOptions, { seatType: "FOR_ONE", imageUrl: "" }],
+      seatOptions: [...prev.seatOptions, { seatType: "FOR_ONE", imageUrl: null }],
     }));
   };
 
@@ -194,18 +215,17 @@ export default function AdminPage() {
                     htmlFor="phoneNumber"
                     className="mb-1 block font-medium text-gray-700 text-sm"
                   >
-                    전화번호 <span className="text-red-500">*</span>
+                    전화번호
                   </label>
                   <input
                     id="phoneNumber"
                     type="tel"
-                    value={formData.phoneNumber}
+                    value={formData.phoneNumber || ""}
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }))
                     }
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="010-1234-5678"
-                    required
                   />
                 </div>
               </div>
@@ -219,7 +239,7 @@ export default function AdminPage() {
                 </label>
                 <textarea
                   id="description"
-                  value={formData.description}
+                  value={formData.description || ""}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, description: e.target.value }))
                   }
@@ -249,7 +269,7 @@ export default function AdminPage() {
                     required
                   >
                     <option value="">레벨을 선택하세요</option>
-                    {[0, 1, 2, 3, 4, 5].map((level) => (
+                    {[1, 2, 3, 4].map((level) => (
                       <option key={level} value={level}>
                         레벨 {level} {"★".repeat(level)}
                       </option>
@@ -262,18 +282,17 @@ export default function AdminPage() {
                     htmlFor="mainImageUrl"
                     className="mb-1 block font-medium text-gray-700 text-sm"
                   >
-                    메인 이미지 URL <span className="text-red-500">*</span>
+                    메인 이미지 URL
                   </label>
                   <input
                     id="mainImageUrl"
                     type="url"
-                    value={formData.mainImageUrl}
+                    value={formData.mainImageUrl || ""}
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, mainImageUrl: e.target.value }))
                     }
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="https://example.com/image.jpg"
-                    required
                   />
                 </div>
               </div>
@@ -429,7 +448,7 @@ export default function AdminPage() {
                       <input
                         id={`storeImage-${index}`}
                         type="url"
-                        value={image.imageUrl}
+                        value={image.imageUrl || ""}
                         onChange={(e) => {
                           const newImages = [...formData.storeImages];
                           newImages[index].imageUrl = e.target.value;
@@ -482,7 +501,10 @@ export default function AdminPage() {
 
             <div className="space-y-4">
               {formData.menus.map((menu, index) => (
-                <div key={menu.id} className="rounded-md border border-gray-200 p-4">
+                <div
+                  key={`menu-${menu.name}-${index}`}
+                  className="rounded-md border border-gray-200 p-4"
+                >
                   <div className="mb-3 flex items-center justify-between">
                     <span className="font-medium text-gray-700 text-sm">메뉴 {index + 1}</span>
                     {formData.menus.length > 1 && (
@@ -527,15 +549,15 @@ export default function AdminPage() {
                         가격 <span className="text-red-500">*</span>
                       </label>
                       <input
-                        id="price"
+                        id={`menuPrice-${index}`}
                         type="number"
                         className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="서울시 강남구..."
+                        placeholder="15000"
                         required
                         value={menu.price}
                         onChange={(e) => {
                           const newMenus = [...formData.menus];
-                          newMenus[index].price = e.target.value;
+                          newMenus[index].price = parseInt(e.target.value, 10) || 0;
                           setFormData((prev) => ({ ...prev, menus: newMenus }));
                         }}
                       />
@@ -546,12 +568,12 @@ export default function AdminPage() {
                         htmlFor={`menuImage-${index}`}
                         className="mb-1 block font-medium text-gray-700 text-sm"
                       >
-                        이미지 URL <span className="text-red-500">*</span>
+                        이미지 URL
                       </label>
                       <input
                         id={`menuImage-${index}`}
                         type="url"
-                        value={menu.imageUrl}
+                        value={menu.imageUrl || ""}
                         onChange={(e) => {
                           const newMenus = [...formData.menus];
                           newMenus[index].imageUrl = e.target.value;
@@ -559,7 +581,6 @@ export default function AdminPage() {
                         }}
                         className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="https://example.com/menu.jpg"
-                        required
                       />
                     </div>
                   </div>
@@ -638,12 +659,12 @@ export default function AdminPage() {
                         htmlFor={`seatImage-${index}`}
                         className="mb-1 block font-medium text-gray-700 text-sm"
                       >
-                        이미지 URL <span className="text-red-500">*</span>
+                        이미지 URL
                       </label>
                       <input
                         id={`seatImage-${index}`}
                         type="url"
-                        value={seat.imageUrl}
+                        value={seat.imageUrl || ""}
                         onChange={(e) => {
                           const newSeats = [...formData.seatOptions];
                           newSeats[index].imageUrl = e.target.value;
@@ -651,7 +672,6 @@ export default function AdminPage() {
                         }}
                         className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="https://example.com/seat.jpg"
-                        required
                       />
                     </div>
                   </div>
