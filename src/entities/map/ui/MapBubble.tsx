@@ -17,7 +17,7 @@ export function SelectedBubble({ honbobLevel }: { honbobLevel: number }) {
 export function UnselectedBubble({ honbobLevel }: { honbobLevel: number }) {
   return (
     <div className="relative flex w-[63px] flex-col items-center gap-1">
-      <div className="flex h-6 items-center rounded-[13px] bg-primary400 px-1.5 py-1">
+      <div className="flex h-6 items-center gap-1 rounded-[13px] bg-primary400 px-1.5 py-1">
         <div className="flex h-4 w-4 items-center justify-center rounded-full bg-gray0">
           <Icon name="crown" color="primary400" />
         </div>
