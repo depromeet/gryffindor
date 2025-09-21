@@ -38,7 +38,7 @@ export function ReviewSection({ storeId }: ReviewSectionProps) {
   const reviews = data?.pages.flatMap((page) => page.reviews) || [];
 
   return (
-    <article className="mt-8 flex w-full flex-col gap-4 px-5">
+    <section className="mt-8 flex w-full flex-col gap-4 px-5">
       <div className="flex items-center justify-between">
         <span className="text-[#000] text-subtitle1">방문 후기</span>
       </div>
@@ -52,6 +52,6 @@ export function ReviewSection({ storeId }: ReviewSectionProps) {
           <TextButton label="더보기" isIcon onClick={handleLoadMoreClick} />
         )}
       </div>
-    </article>
+    </section>
   );
 }
