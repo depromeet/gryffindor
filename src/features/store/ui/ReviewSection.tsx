@@ -45,13 +45,13 @@ export function ReviewSection({ storeId }: ReviewSectionProps) {
 
       <ReviewList reviews={reviews} />
 
-      <div ref={loadMoreRef} />
+      {isInfiniteScrollEnabled && hasNextPage && <div ref={loadMoreRef} />}
 
-      <div className="mt-4 flex justify-center">
-        {hasNextPage && !isInfiniteScrollEnabled && (
+      {hasNextPage && !isInfiniteScrollEnabled && (
+        <div className="mt-4 flex justify-center">
           <TextButton label="더보기" isIcon onClick={handleLoadMoreClick} />
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }
