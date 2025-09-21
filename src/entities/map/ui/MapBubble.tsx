@@ -23,7 +23,7 @@ export function UnselectedBubble({ honbobLevel }: { honbobLevel: number }) {
         </div>
         <span className="whitespace-nowrap text-caption1-bold text-gray0">레벨 {honbobLevel}</span>
       </div>
-      <Icon name="triangleDown" color="primary400" className="absolute bottom-[-5px]" />
+      <Icon name="downTriangle" color="primary400" className="absolute bottom-[-5px]" />
     </div>
   );
 }
