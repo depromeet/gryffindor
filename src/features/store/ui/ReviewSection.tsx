@@ -1,28 +1,57 @@
-import type { Review } from "@/entities/review/model";
-import { ReviewCard } from "@/entities/review/ui";
+"use client";
+
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { fetchReviews } from "@/entities/review/api/mock";
+import { useInfiniteScroll } from "@/shared/lib";
+import { TextButton } from "@/shared/ui";
+import { ReviewList } from "./ReviewList";
 
 interface ReviewSectionProps {
-  reviews: Review[];
-  loadMoreRef?: React.RefObject<HTMLDivElement | null>;
+  storeId: number;
 }
 
-export function ReviewSection({ reviews, loadMoreRef }: ReviewSectionProps) {
+export function ReviewSection({ storeId }: ReviewSectionProps) {
+  const [isInfiniteScrollEnabled, setInfiniteScrollEnabled] = useState(false);
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: ["reviews", storeId],
+    queryFn: ({ pageParam }) => fetchReviews({ pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+
+  const loadMoreRef = useInfiniteScroll({
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    enabled: isInfiniteScrollEnabled,
+  });
+
+  const handleLoadMoreClick = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+      setInfiniteScrollEnabled(true);
+    }
+  };
+
+  const reviews = data?.pages.flatMap((page) => page.reviews) || [];
+
   return (
     <article className="mt-8 flex w-full flex-col gap-4 px-5">
       <div className="flex items-center justify-between">
         <span className="text-[#000] text-subtitle1">방문 후기</span>
       </div>
 
-      <div className="flex flex-col gap-5">
-        {reviews.map((review) => (
-          <div key={review.id}>
-            <ReviewCard review={review} />
-            <div className="mt-5 h-[1px] w-full bg-gray50" />
-          </div>
-        ))}
-      </div>
+      <ReviewList reviews={reviews} />
 
       <div ref={loadMoreRef} />
+
+      <div className="mt-4 flex justify-center">
+        {hasNextPage && !isInfiniteScrollEnabled && (
+          <TextButton label="더보기" isIcon onClick={handleLoadMoreClick} />
+        )}
+      </div>
     </article>
   );
 }
