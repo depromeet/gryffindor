@@ -11,7 +11,9 @@ const nextConfig: NextConfig = {
       },
     },
   },
-
+  images: {
+    domains: ["search.pstatic.net"],
+  },
   typedRoutes: true,
   reactStrictMode: false,
   eslint: {
