@@ -1,0 +1,148 @@
+import type { StoreInfoProps } from "@/app/(main)/map/page";
+
+export const STORE_INFO_DATA: StoreInfoProps[] = [
+  {
+    id: 1,
+    name: "폴인포케 강남역점",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250317_180%2F1742197930943TotdG_JPEG%2F%25B4%25DC%25C3%25BC%25C4%25C6_%25C6%25F7%25C0%25E5%25BF%25EB%25B1%25E2_45%25B5%25B5_%25281%2529.jpg",
+    signatureMenu: { name: "고추장 메밀면 샐러드", price: 9200 },
+    coordinate: { lat: 37.49971608046685, lon: 127.02873596367915 },
+    distance: 300,
+    walkingMinutes: 4,
+    seats: ["FOR_ONE", "FOR_TWO", "FOR_FOUR", "CUBICLE"],
+    honbobLevel: 1,
+  },
+  {
+    id: 2,
+    name: "딜리셧 부티끄",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210329_42%2F1617022718171tKb8U_JPEG%2Fvp7j4m0YDj0S95uaRdj5pA-Y.jpeg.jpg",
+    signatureMenu: { name: "스테이크 샐러드", price: 12000 },
+    coordinate: { lat: 37.49717510115111, lon: 127.02931172532637 },
+    distance: 150,
+    walkingMinutes: 2,
+    seats: ["FOR_ONE", "FOR_TWO", "BAR_TABLE"],
+    honbobLevel: 2,
+  },
+  {
+    id: 3,
+    name: "에그드랍 강남본점",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20181018_96%2F15398543138303AdAr_JPEG%2Fg3iEJtH9QgCHgFuMcvmJpQ0a.jpg",
+    signatureMenu: { name: "아메리칸 햄 치즈 샌드위치", price: 5300 },
+    coordinate: { lat: 37.496346709493345, lon: 127.02707233620052 },
+    distance: 400,
+    walkingMinutes: 5,
+    seats: ["FOR_ONE", "FOR_TWO", "CUBICLE", "FOR_FOUR"],
+    honbobLevel: 3,
+  },
+  {
+    id: 4,
+    name: "사가라멘 강남역점",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20241017_121%2F1729102566120W1CIS_JPEG%2F1.jpg",
+    signatureMenu: { name: "돈코츠 스테미나라멘", price: 10000 },
+    coordinate: { lat: 37.49851829860814, lon: 127.02634936089594 },
+    distance: 400,
+    walkingMinutes: 5,
+    seats: ["FOR_ONE", "FOR_TWO", "CUBICLE", "FOR_FOUR"],
+    honbobLevel: 3,
+  },
+  {
+    id: 5,
+    name: "태양의토마토라멘 강남점",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250409_270%2F1744163183179Vi8qc_JPEG%2F0_%25F3%25A2%25F9%25EA2880-2304%2528%25C5%25A9%25B1%25E2_%25C1%25B6%25C0%25FD%2529.jpg",
+    signatureMenu: { name: "태양의 토마토라멘", price: 9000 },
+    coordinate: { lat: 37.501446412320675, lon: 127.0270402498037 },
+    distance: 400,
+    walkingMinutes: 5,
+    seats: ["FOR_ONE", "FOR_TWO", "FOR_FOUR"],
+    honbobLevel: 3,
+  },
+  {
+    id: 6,
+    name: "감성타코 강남역점",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20180922_193%2F1537615738091CBjnF_JPEG%2FQoaVnhp1U1McLCJ3gcFaHa6s.jpg",
+    signatureMenu: { name: "숏립 타코", price: 12800 },
+    coordinate: { lat: 37.49929287463546, lon: 127.02761622484387 },
+    distance: 400,
+    walkingMinutes: 5,
+    seats: ["FOR_ONE", "CUBICLE", "FOR_FOUR"],
+    honbobLevel: 3,
+  },
+  {
+    id: 7,
+    name: "도스타코 강남역점",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_157%2F1441016032729vyLTO_JPEG%2F11673307_0.jpg",
+    signatureMenu: { name: "소프트타코", price: 6500 },
+    coordinate: { lat: 37.50173516341212, lon: 127.02509516748712 },
+    distance: 400,
+    walkingMinutes: 5,
+    seats: ["FOR_ONE", "FOR_TWO"],
+    honbobLevel: 2,
+  },
+  {
+    id: 8,
+    name: "온센 강남점",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210709_235%2F1625798744198bIIpX_JPEG%2FKqAilV4TXHvVIKlXtAZh3rm6.JPG.jpg",
+    signatureMenu: { name: "온센텐동", price: 10900 },
+    coordinate: { lat: 37.501041403320414, lon: 127.02502708058614 },
+    distance: 400,
+    walkingMinutes: 5,
+    seats: ["FOR_ONE", "FOR_TWO"],
+    honbobLevel: 3,
+  },
+  {
+    id: 9,
+    name: "우동키노야 강남신논현역점",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250528_274%2F1748412395197lDAfQ_JPEG%2F%25C0%25E5%25BE%25EE%25BA%25D7%25C4%25AB%25C4%25C94.jpg",
+    signatureMenu: { name: "30cm장어튀김 붓카케우동(냉)", price: 15900 },
+    coordinate: { lat: 37.502167844159196, lon: 127.02414533203928 },
+    distance: 400,
+    walkingMinutes: 5,
+    seats: ["FOR_ONE", "FOR_TWO"],
+    honbobLevel: 2,
+  },
+  {
+    id: 10,
+    name: "동경전통육개장",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220603_48%2F1654222243997sQx5q_JPEG%2F38C63C4E-5FDB-4AB2-9459-07E2F380FB5E.jpeg",
+    signatureMenu: { name: "전통육개장", price: 11000 },
+    coordinate: { lat: 37.50051283786172, lon: 127.03122991213027 },
+    distance: 400,
+    walkingMinutes: 5,
+    seats: ["FOR_ONE", "FOR_TWO"],
+    honbobLevel: 2,
+  },
+  {
+    id: 11,
+    name: "연희동칼국수",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20160120_290%2F1453256455707AdNTT_JPEG%2F176064534178593_0.jpeg",
+    signatureMenu: { name: "칼국수", price: 11000 },
+    coordinate: { lat: 37.49797314866697, lon: 127.0265329350111 },
+    distance: 400,
+    walkingMinutes: 5,
+    seats: ["FOR_ONE", "FOR_TWO"],
+    honbobLevel: 2,
+  },
+  {
+    id: 12,
+    name: "밸런스포케 역삼점",
+    thumbnailUrl:
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250212_54%2F1739350854097aVP02_JPEG%2FKakaoTalk_20250209_194102805_06.jpg",
+    signatureMenu: { name: "차돌포케", price: 12400 },
+    coordinate: { lat: 37.500719461636066, lon: 127.03344940320814 },
+    distance: 400,
+    walkingMinutes: 5,
+    seats: ["FOR_ONE", "FOR_TWO"],
+    honbobLevel: 2,
+  },
+];

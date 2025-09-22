@@ -45,6 +45,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
     "@tailwindcss/postcss": "^4",
+    "@types/navermaps": "^3.9.1",
     "@types/node": "^20",
     "@types/rc-slider": "^9.3.1",
     "@types/react": "^19",
