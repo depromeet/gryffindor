@@ -21,11 +21,9 @@ export function ChipFilter({ label, selected = false, onClick }: ChipFilterProps
   const styles = {
     selected: {
       button: "bg-primary400",
-      text: "text-gray0",
     },
     unselected: {
       button: "bg-gray0 border border-gray200",
-      text: "text-gray700",
     },
   } as const;
 
@@ -40,7 +38,9 @@ export function ChipFilter({ label, selected = false, onClick }: ChipFilterProps
       )}
       onClick={onClick}
     >
-      <p className={cn("truncate text-body2-medium", styles[state].text)}>{label}</p>
+      <span className={`truncate text-body2-medium ${selected ? "text-gray0" : "text-gray700"}`}>
+        {label}
+      </span>
     </button>
   );
 }
