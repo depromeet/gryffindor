@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { STORE_INFO_DATA } from "@/entities/storeList/model/storeInfoData";
 import { Filter } from "@/features/filter/ui";
+import { MapFloatingButton, MapRefreshButton } from "@/features/map/ui";
 import { NaverMap } from "@/features/map/ui/NaverMap";
 import {
   BottomSheet,
@@ -64,6 +65,18 @@ export default function MapPage() {
         storeList={storeList}
         selectedStoreId={selectedStoreId}
         onStoreSelect={(id) => setSelectedStoreId(id)}
+      />
+
+      <MapRefreshButton onClick={() => {}} />
+      <MapFloatingButton
+        iconName="filter"
+        position={{ top: 85, right: 19 }}
+        onClick={() => setIsFilterOpen(true)}
+      />
+      <MapFloatingButton
+        iconName="target"
+        position={{ bottom: 242, right: 19 }}
+        onClick={() => {}}
       />
 
       {/* 식당 리스트 바텀시트 */}

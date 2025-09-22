@@ -57,7 +57,7 @@ function BottomSheet({
       {onClose && <BottomSheetOverlay onClose={onClose} />}
       <dialog
         ref={isFixed ? null : sheetRef}
-        className="fixed right-0 left-0 z-50 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
+        className="fixed right-0 left-0 z-49 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
         style={{
           top: `calc(100% - ${defaultHeight}px)`,
           height: `${window.innerHeight - expandedOffset}px`,
@@ -71,7 +71,7 @@ function BottomSheet({
 }
 
 function BottomSheetHeader({ className, children }: PropsWithChildren<{ className?: string }>) {
-  return <div className={cn("relative flex flex-col", className)}>{children}</div>;
+  return <div className={cn("relative flex min-h-9 flex-col", className)}>{children}</div>;
 }
 
 function BottomSheetContent({ className, children }: PropsWithChildren<{ className?: string }>) {
@@ -95,7 +95,7 @@ function BottomSheetOverlay({ onClose }: { onClose: () => void }) {
     <div
       onClick={onClose}
       aria-hidden="true"
-      className="fixed inset-0 z-50 cursor-pointer bg-[#00000066]"
+      className="fixed inset-0 z-49 cursor-pointer bg-[#00000066]"
     />
   );
 }
