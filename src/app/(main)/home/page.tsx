@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { HonbobLevelCard } from "@/entities/honbob";
-import { StoreList } from "@/entities/storeList";
+import { StoreList } from "@/entities/storeList/ui";
 import { WelcomeUser } from "@/entities/user";
 import { TransitionLayout } from "@/shared/ui";
 

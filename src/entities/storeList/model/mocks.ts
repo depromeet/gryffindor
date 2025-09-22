@@ -1,6 +1,6 @@
-import type { StoreInfoProps } from "@/app/(main)/map/page";
+import type { StoreListResponse } from "../api/types";
 
-export const STORE_INFO_DATA: StoreInfoProps[] = [
+export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
   {
     id: 1,
     name: "폴인포케 강남역점",

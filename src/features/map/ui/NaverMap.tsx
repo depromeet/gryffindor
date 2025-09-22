@@ -3,11 +3,11 @@
 import Script from "next/script";
 import { useCallback, useEffect, useRef } from "react";
 import { renderToString } from "react-dom/server";
-import type { StoreInfoProps } from "@/app/(main)/map/page";
 import { MapPin } from "@/entities/map/ui";
+import type { StoreListResponse } from "@/entities/storeList/api";
 
 interface NaverMapProps {
-  storeList: StoreInfoProps[];
+  storeList: StoreListResponse[];
   selectedStoreId: number | null;
   onStoreSelect: (storeId: number) => void;
 }
@@ -16,7 +16,7 @@ export function NaverMap({ storeList, selectedStoreId, onStoreSelect }: NaverMap
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<naver.maps.Map | null>(null);
   const markersRef = useRef<Map<number, naver.maps.Marker>>(new Map());
-  const storeMapRef = useRef<Map<number, StoreInfoProps>>(new Map());
+  const storeMapRef = useRef<Map<number, StoreListResponse>>(new Map());
   const prevSelectedIdRef = useRef<number | null>(null);
 
   const initializeMap = () => {
@@ -34,7 +34,7 @@ export function NaverMap({ storeList, selectedStoreId, onStoreSelect }: NaverMap
   };
 
   const createMarkers = useCallback(
-    (stores: StoreInfoProps[]) => {
+    (stores: StoreListResponse[]) => {
       const map = mapInstanceRef.current;
       if (!map) return;
 
@@ -71,10 +71,8 @@ export function NaverMap({ storeList, selectedStoreId, onStoreSelect }: NaverMap
 
         markersRef.current.set(store.id, marker);
       });
-
-      console.log(`🗺️ 새로운 검색: ${storeList.length}개 매장 마커 생성`);
     },
-    [storeList, onStoreSelect],
+    [onStoreSelect],
   );
 
   const updateSelectedMarker = useCallback(
@@ -110,7 +108,6 @@ export function NaverMap({ storeList, selectedStoreId, onStoreSelect }: NaverMap
           newMarker.setZIndex(51);
         }
       }
-      console.log(`📍 핀 선택 변경: ${prevSelectedId} → ${newSelectedId}`);
 
       prevSelectedIdRef.current = newSelectedId;
     },

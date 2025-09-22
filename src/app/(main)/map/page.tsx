@@ -1,7 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
-import { STORE_INFO_DATA } from "@/entities/storeList/model/storeInfoData";
+import type { StoreListResponse } from "@/entities/storeList/api";
+import { STORE_LIST_MOCK_DATA } from "@/entities/storeList/model";
+import { SelectedStoreCard, StoreCard } from "@/entities/storeList/ui";
 import { Filter } from "@/features/filter/ui";
 import { MapFloatingButton, MapRefreshButton } from "@/features/map/ui";
 import { NaverMap } from "@/features/map/ui/NaverMap";
@@ -14,28 +17,6 @@ import {
   TransitionLayout,
 } from "@/shared/ui";
 
-export type SeatTypes = "FOR_ONE" | "FOR_TWO" | "FOR_FOUR" | "CUBICLE" | "BAR_TABLE";
-
-export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
-  FOR_ONE: "1인석",
-  FOR_TWO: "2인석",
-  FOR_FOUR: "4인석",
-  CUBICLE: "칸막이",
-  BAR_TABLE: "바 좌석",
-};
-
-export interface StoreInfoProps {
-  id: number;
-  name: string;
-  thumbnailUrl: string;
-  signatureMenu: { name: string; price: number };
-  coordinate: { lat: number; lon: number };
-  distance: number;
-  walkingMinutes: number;
-  seats: SeatTypes[];
-  honbobLevel: number;
-}
-
 interface FilterData {
   price: { min: number; max: number };
   level: number | null;
@@ -45,7 +26,7 @@ interface FilterData {
 
 export default function MapPage() {
   // TODO: API 연동 후, 목 데이터 제거
-  const [storeList] = useState<StoreInfoProps[]>(STORE_INFO_DATA);
+  const [storeList] = useState<StoreListResponse[]>(STORE_LIST_MOCK_DATA);
   const [selectedStoreId, setSelectedStoreId] = useState<number | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<FilterData>({
@@ -58,6 +39,8 @@ export default function MapPage() {
   const handleApplyFilters = (newFilters: FilterData) => {
     setFilters(newFilters);
   };
+
+  const selectedStoreInfo = storeList.find((store) => store.id === selectedStoreId);
 
   return (
     <TransitionLayout>
@@ -80,12 +63,28 @@ export default function MapPage() {
       />
 
       {/* 식당 리스트 바텀시트 */}
-      <BottomSheet isFixed={false} isOpen={true} initialHeight={226} expandedOffset={88}>
-        <BottomSheetHeader>
-          <BottomSheetHandler />
-        </BottomSheetHeader>
-        <BottomSheetContent className="px-5 pb-9">{/* store list content */}</BottomSheetContent>
-      </BottomSheet>
+      {selectedStoreInfo ? (
+        <div className="-translate-x-1/2 fixed bottom-22 left-1/2 z-49">
+          <SelectedStoreCard {...selectedStoreInfo} />
+        </div>
+      ) : (
+        <BottomSheet isFixed={false} isOpen={true} initialHeight={226} expandedOffset={88}>
+          <BottomSheetHeader>
+            <BottomSheetHandler />
+          </BottomSheetHeader>
+          <BottomSheetContent className="px-5 pb-9">
+            <ul className="flex w-full flex-col gap-y-[15px]">
+              {storeList.map((store) => (
+                <li key={store.id}>
+                  <Link href={`#`}>
+                    <StoreCard {...store} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </BottomSheetContent>
+        </BottomSheet>
+      )}
 
       {/* 필터 바텀시트 */}
       {isFilterOpen && (
