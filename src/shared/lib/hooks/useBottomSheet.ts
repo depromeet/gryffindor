@@ -117,5 +117,5 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
     return () => content.removeEventListener("pointerdown", handleContentPointer);
   }, []);
 
-  return { sheetRef, contentRef, collapsedYRef };
+  return { sheetRef, contentRef };
 }

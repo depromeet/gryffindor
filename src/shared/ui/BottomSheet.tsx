@@ -48,10 +48,7 @@ function BottomSheet({
   children,
 }: PropsWithChildren<BottomSheetProps>) {
   const defaultHeight = initialHeight ? initialHeight : window.innerHeight - expandedOffset;
-  const { sheetRef, contentRef, collapsedYRef } = useBottomSheet({
-    initialHeight: defaultHeight,
-    expandedOffset,
-  });
+  const { sheetRef, contentRef } = useBottomSheet({ initialHeight: defaultHeight, expandedOffset });
 
   if (!isOpen) return;
 
@@ -60,10 +57,13 @@ function BottomSheet({
       {onClose && <BottomSheetOverlay onClose={onClose} />}
       <dialog
         ref={isFixed ? null : sheetRef}
-        className="fixed right-0 left-0 z-49 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
+        className={cn(
+          "fixed right-0 left-0 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
+          onClose ? "z-50" : "z-49",
+        )}
         style={{
           top: `calc(100% - ${defaultHeight}px)`,
-          height: `${collapsedYRef}px`,
+          maxHeight: `calc(100% - ${expandedOffset}px)`,
           transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
@@ -84,7 +84,7 @@ function BottomSheetContent({ className, children }: PropsWithChildren<{ classNa
     <div
       ref={contentRef}
       className={cn(
-        "flex max-h-[812px] w-full flex-1 flex-col items-center overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        "flex h-full w-full flex-1 flex-col items-center overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
         className,
       )}
     >
@@ -98,7 +98,7 @@ function BottomSheetOverlay({ onClose }: { onClose: () => void }) {
     <div
       onClick={onClose}
       aria-hidden="true"
-      className="fixed inset-0 z-49 cursor-pointer bg-[#00000066]"
+      className="fixed inset-0 z-50 cursor-pointer bg-[#00000066]"
     />
   );
 }

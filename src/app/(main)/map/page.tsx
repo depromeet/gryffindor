@@ -13,7 +13,6 @@ import {
   BottomSheetContent,
   BottomSheetHandler,
   BottomSheetHeader,
-  Icon,
   TransitionLayout,
 } from "@/shared/ui";
 
@@ -50,7 +49,11 @@ export default function MapPage() {
         onStoreSelect={(id) => setSelectedStoreId(id)}
       />
 
-      <MapRefreshButton onClick={() => {}} />
+      <MapRefreshButton
+        onClick={() => {
+          /* api 요청 */
+        }}
+      />
       <MapFloatingButton
         iconName="filter"
         position={{ top: 85, right: 19 }}
@@ -94,14 +97,6 @@ export default function MapPage() {
           onClose={() => setIsFilterOpen(false)}
           expandedOffset={88}
         >
-          <BottomSheetHeader>
-            <div className="flex items-center justify-between p-5">
-              <div className="justify-start text-subtitle1">필터 옵션</div>
-              <button type="button" onClick={() => setIsFilterOpen(false)}>
-                <Icon size={24} name="close" className="cursor-pointer text-gray400" />
-              </button>
-            </div>
-          </BottomSheetHeader>
           <BottomSheetContent className="pb-7">
             <Filter
               initialFilters={filters}
