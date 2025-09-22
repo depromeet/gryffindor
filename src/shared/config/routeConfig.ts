@@ -39,7 +39,7 @@ export const AUTH_CONFIG = {
   // 인증되지 않은 사용자만 접근 가능한 경로들
   AUTH_ROUTES: ["/login"] as const,
   // 공개 경로들
-  PUBLIC_ROUTES: ["/", "/home", "/map", "/auth-callback"] as const,
+  PUBLIC_ROUTES: ["/", "/home", "/map", "/auth-callback", "/store/[id]"] as const,
 } as const;
 
 /**
@@ -113,6 +113,13 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
       backButton: {
         action: "/",
       },
+    },
+  },
+  "/store/[id]": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "매장 정보",
     },
   },
 };

@@ -14,6 +14,16 @@ html {
 body {
   min-height: 100dvh; /* 동적 뷰포트 지원 */
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -108,6 +118,11 @@ body {
   --text-body3-regular--letter-spacing: -1%;
 
   /* Caption */
+  --text-caption1-bold: 12px;
+  --text-caption1-bold--leading: 150%;
+  --text-caption1-bold--font-weight: 700;
+  --text-caption1-bold--letter-spacing: -1%;
+
   --text-caption1-semibold: 12px;
   --text-caption1-semibold--leading: 150%;
   --text-caption1-semibold--font-weight: 600;
