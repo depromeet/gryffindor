@@ -4,7 +4,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-import { QueryProvider, SsgoiProvider } from "./_providers";
+import { QueryProvider, SsgoiProvider, UserStateProvider } from "./_providers";
 
 const pretendard = localFont({
   src: [
@@ -42,9 +42,11 @@ export default async function RootLayout({
     <html lang="ko" className="overflow-x-hidden">
       <body className={`${pretendard.variable}`} suppressHydrationWarning>
         <SessionProvider session={session}>
-          <QueryProvider>
-            <SsgoiProvider>{children}</SsgoiProvider>
-          </QueryProvider>
+          <UserStateProvider>
+            <QueryProvider>
+              <SsgoiProvider>{children}</SsgoiProvider>
+            </QueryProvider>
+          </UserStateProvider>
         </SessionProvider>
       </body>
     </html>

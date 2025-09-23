@@ -1,7 +1,7 @@
-import { ChipFilter, MAIN_HEADER_HEIGHT } from "@/shared/ui";
+import { MAIN_HEADER_HEIGHT } from "@/shared/config";
+import { ChipFilter } from "@/shared/ui";
 
 const LEVEL_LIST = ["레벨 1", "레벨 2", "레벨 3", "레벨 4"];
-
 const DEFAULT_LEVEL = "레벨 1";
 
 interface StoreLevelListProps {
