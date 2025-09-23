@@ -102,7 +102,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     name: "우동키노야 강남신논현역점",
     thumbnailUrl:
       "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250528_274%2F1748412395197lDAfQ_JPEG%2F%25C0%25E5%25BE%25EE%25BA%25D7%25C4%25AB%25C4%25C94.jpg",
-    signatureMenu: { name: "30cm장어튀김 붓카케우동(냉)", price: 15900 },
+    signatureMenu: { name: "30cm 장어튀김 붓카케우동(냉)", price: 15900 },
     coordinate: { lat: 37.502167844159196, lon: 127.02414533203928 },
     distance: 400,
     walkingMinutes: 5,

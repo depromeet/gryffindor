@@ -40,7 +40,7 @@ export function StoreCard({
           <div className="flex items-center gap-x-[4px] text-body3-regular text-gray900">
             <span>대표메뉴</span>
             <span>·</span>
-            <span>{signatureMenu.name}</span>
+            <span className="flex-1 truncate">{signatureMenu.name}</span>
           </div>
           {/* NOTE: 일단 피그마에 기재된 색상(#575757) 사용 */}
           <div className="flex items-center gap-x-[4px] text-[#575757] text-body3-regular">
