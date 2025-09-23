@@ -6,7 +6,7 @@ interface LevelTestProgressProps {
 
 export function LevelTestProgress({ current, total }: LevelTestProgressProps) {
   return (
-    <div className="border-gray-200 border-b bg-white px-4 py-4">
+    <div className="mb-8">
       <div className="flex items-center justify-center space-x-1">
         {Array.from({ length: total }, (_, index) => {
           const step = index + 1;
@@ -16,7 +16,7 @@ export function LevelTestProgress({ current, total }: LevelTestProgressProps) {
           return (
             <div
               key={step}
-              className={`h-1 rounded-full transition-all duration-300 ${
+              className={`h-[6px] rounded-[8px] transition-all duration-300 ${
                 isCompleted || isActive ? "bg-primary400" : "bg-gray100"
               }`}
               style={{

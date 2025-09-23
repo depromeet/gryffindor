@@ -2,26 +2,27 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { LEVEL_TEST_QUESTIONS, useLevelTestStore } from "@/features/levelTest/model/levelTestStore";
-import { LevelTestProgress } from "@/features/levelTest/ui/LevelTestProgress";
-import { LevelTestQuestion } from "@/features/levelTest/ui/LevelTestQuestion";
-import { LevelTestResult } from "@/features/levelTest/ui/LevelTestResult";
+import {
+  LEVEL_TEST_QUESTIONS,
+  LevelTestProgress,
+  LevelTestQuestion,
+  LevelTestResult,
+  useLevelTestStore,
+} from "@/features/levelTest";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function LevelTestDynamicPage() {
   const router = useRouter();
   const params = useParams();
 
-  const { currentStep, totalSteps, result, setCurrentStep, getProgress, resetTest } =
-    useLevelTestStore();
+  const { currentStep, totalSteps, result, setCurrentStep, getProgress } = useLevelTestStore();
 
   const id = params.id as string[];
   const currentId = id?.[0];
 
-  // URL 파라미터 기반으로 상태 동기화
   useEffect(() => {
     if (currentId === "result") {
-      return; // 결과 페이지는 그대로 유지
+      return;
     }
 
     if (currentId) {
@@ -32,31 +33,33 @@ export default function LevelTestDynamicPage() {
     }
   }, [currentId, currentStep, totalSteps, setCurrentStep]);
 
-  // 다음 단계로 이동
   const goToNext = () => {
     const nextStep = currentStep + 1;
     if (nextStep <= totalSteps) {
       router.push(`/level-test/${nextStep}`);
     } else {
-      // 결과 계산 후 결과 페이지로 이동
       router.push("/level-test/result");
     }
   };
 
-  // 처음부터 다시 시작
-  const restartTest = () => {
-    resetTest();
-    router.push("/level-test/1");
-  };
+  useEffect(() => {
+    if (currentId && currentId !== "result") {
+      const step = parseInt(currentId, 10);
+      if (step < 1 || step > totalSteps) {
+        router.push("/level-test/1");
+      }
+    }
+  }, [currentId, totalSteps, router]);
 
-  // 현재 표시할 컨텐츠 결정
   const renderContent = () => {
-    // 결과 페이지
-    if (currentId === "result" && result) {
-      return <LevelTestResult result={result} onRestart={restartTest} />;
+    if (currentId === "result") {
+      if (!result) {
+        router.push("/level-test/1");
+        return <div>리다이렉트 중...</div>;
+      }
+      return <LevelTestResult result={result} />;
     }
 
-    // 질문 단계
     const step = parseInt(currentId || "1", 10);
     if (step >= 1 && step <= totalSteps) {
       const question = LEVEL_TEST_QUESTIONS[step - 1];
@@ -70,20 +73,18 @@ export default function LevelTestDynamicPage() {
       );
     }
 
-    // 유효하지 않은 경우 첫 번째 질문으로 리다이렉트
-    router.push("/level-test/1");
-    return null;
+    return <div>로딩 중...</div>;
   };
 
   const showProgress = currentId && currentId !== "result";
 
   return (
     <TransitionLayout>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray50 px-[20px] pt-[24px]">
         {showProgress && (
           <LevelTestProgress current={currentStep} total={totalSteps} progress={getProgress()} />
         )}
-        <div className="px-4 py-6">{renderContent()}</div>
+        <div className="">{renderContent()}</div>
       </div>
     </TransitionLayout>
   );

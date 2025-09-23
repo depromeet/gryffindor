@@ -1,96 +1,87 @@
-import { Button } from "@/shared/ui";
+"use client";
 
-interface LevelTestResultProps {
-  result: {
-    level: number;
-    categories: Record<string, number>;
-    recommendations: string[];
-  };
-  onRestart: () => void;
-}
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Lv1Image from "@/shared/lib/assets/Lv.1.png";
+import Lv2Image from "@/shared/lib/assets/Lv.2.png";
+import Lv3Image from "@/shared/lib/assets/Lv.3.png";
+import Lv4Image from "@/shared/lib/assets/Lv.4.png";
+import { Button, Tag } from "@/shared/ui";
+import type { LevelTestResponse } from "../model/levelTestStore";
 
 const LEVEL_DESCRIPTIONS = {
   1: {
     title: "혼밥 입문자",
-    subtitle: "첫 걸음을 내딛는 중",
+    subtitle: "아직 혼밥이 낯설군요. 시작은 가볍게!",
     description:
-      "혼밥이 아직 낯설지만 천천히 시작해보세요. 편안한 곳부터 도전해보는 것이 좋습니다.",
-    color: "bg-blue-500",
+      "패스트푸드처럼 눈치 안 보고 후딱 먹을 수 있는 곳을 찾아다녀요. 다른 시선이 조금 신경쓰이는, 혼밥 세계로 발을 들인 풋풋한 초보자예요.",
+    recommendations: "편의점 도시락, 샌드위치, 김밥, 패스트푸드",
+    image: Lv1Image,
   },
   2: {
-    title: "혼밥 초급자",
-    subtitle: "조심스럽게 도전하는 중",
-    description: "혼밥에 조금씩 익숙해지고 있어요. 1인석이 있는 곳을 중심으로 범위를 넓혀보세요.",
-    color: "bg-green-500",
+    title: "혼밥 탐험가",
+    subtitle: "혼밥 전용석에서 맛있는 한 끼 해볼까요?",
+    description:
+      '1인석이나 바 좌석을 찾아서 앉는 게 편안해요. 국밥 같은 혼밥 메뉴를 즐기며 "혼자 먹는 거 괜찮네?" 라는 자신감을 키우는 단계예요.',
+    recommendations: "국밥, 라면, 돈까스, 카레, 초밥/카페/디저트",
+    image: Lv2Image,
   },
   3: {
-    title: "혼밥 중급자",
-    subtitle: "자신감을 가지고 도전",
-    description: "혼밥에 어느 정도 익숙해졌어요. 다양한 메뉴와 분위기의 식당을 도전해보세요.",
-    color: "bg-yellow-500",
+    title: "혼밥 숙련자",
+    subtitle: "이제는 4인석도 두렵지 않아",
+    description:
+      '4인 테이블에 앉아도 당당하게 메뉴를 주문해요. 가끔 "혼자세요?"라는 질문을 받아도 웃으며 넘어갈 수 있는 혼밥 중급자예요.',
+    recommendations: "백반 정식, 파스타, 김치찌개/된장찌개",
+    image: Lv3Image,
   },
   4: {
-    title: "혼밥 고급자",
-    subtitle: "자유자재로 혼밥 즐기기",
-    description:
-      "혼밥에 상당히 익숙해요. 2인 메뉴도 혼자 주문할 수 있고 대부분의 식당을 편하게 이용합니다.",
-    color: "bg-orange-500",
-  },
-  5: {
     title: "혼밥 마스터",
-    subtitle: "혼밥의 달인",
+    subtitle: "최소 주문 단위가 2인분? 문제없지",
     description:
-      "혼밥에 완전히 익숙해져서 어떤 식당이든 자유자재로 이용할 수 있어요. 새로운 도전을 즐겨보세요!",
-    color: "bg-red-500",
+      "2인분 이상 주문 조건에도 굴하지 않아요. 닭갈비, 고깃집도 혼자서 정복하고, 필요하면 포장까지 완벽하게 챙기는 혼밥 고수예요.",
+    recommendations: "닭갈비, 찜닭, 부대찌개, 고깃집",
+    image: Lv4Image,
   },
 };
 
-export function LevelTestResult({ result, onRestart }: LevelTestResultProps) {
-  const levelInfo = LEVEL_DESCRIPTIONS[result.level as keyof typeof LEVEL_DESCRIPTIONS];
+interface LevelTestResultProps {
+  result: LevelTestResponse;
+}
+
+export function LevelTestResult({ result }: LevelTestResultProps) {
+  const levelInfo =
+    LEVEL_DESCRIPTIONS[result.level as keyof typeof LEVEL_DESCRIPTIONS] || LEVEL_DESCRIPTIONS[1];
+  const router = useRouter();
 
   return (
-    <div className="mx-auto max-w-md">
-      <div className="mb-8 text-center">
-        <h1 className="mb-2 font-bold text-2xl text-gray-900">테스트 완료!</h1>
-        <p className="text-gray-600">당신의 혼밥 레벨을 확인해보세요</p>
-      </div>
-
-      <div className="mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <div className="mb-6 text-center">
-          <div
-            className={`h-20 w-20 ${levelInfo.color} mx-auto mb-4 flex items-center justify-center rounded-full`}
-          >
-            <span className="font-bold text-2xl text-white">Lv.{result.level}</span>
-          </div>
-          <h2 className="mb-1 font-bold text-gray-900 text-xl">{levelInfo.title}</h2>
-          <p className="mb-4 text-gray-500 text-sm">{levelInfo.subtitle}</p>
-          <p className="text-gray-700 leading-relaxed">{levelInfo.description}</p>
+    <div className="w-full">
+      <div className="flex flex-col items-center rounded-[24px] bg-gray0 px-[20px] pt-[32px] pb-[40px] shadow-sm">
+        <Tag label={`레벨 ${result.level}`} color="red" size="small" iconName="crown" />
+        <span className="mt-[7px] mb-[20px] text-title1">{levelInfo.title}</span>
+        <div className="flex flex-col items-center">
+          <Image
+            className="mb-[20px] rounded-full"
+            src={levelInfo.image}
+            alt="level-test-result"
+            width={120}
+            height={120}
+          />
+          <p className="text-body3-semibold text-primary400">{levelInfo.subtitle}</p>
+          <span className="mt-[28px] mb-[8px] text-body2-semibold text-gray600">레벨 특징</span>
+          <p className="text-body1-regular text-gray900">{levelInfo.description}</p>
+          <div className="my-[28px] h-[1px] w-full bg-gray100" />
+          <span className="mb-[8px] text-body2-semibold text-gray600">추천 메뉴</span>
+          <p className="text-body1-regular text-gray900">{levelInfo.recommendations}</p>
         </div>
       </div>
 
-      <div className="mb-8 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <h3 className="mb-4 font-semibold text-gray-900">추천 맛집 유형</h3>
-        <div className="space-y-2">
-          {result.recommendations.map((recommendation) => (
-            <div key={recommendation} className="flex items-start">
-              <span className="mr-2 text-red-500">•</span>
-              <span className="text-gray-700 text-sm">{recommendation}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="space-y-3">
+      <div className="fixed bottom-0 left-0 w-full bg-gray0 p-[20px]">
         <Button
-          label="맞춤 맛집 찾아보기"
-          onClick={() => {
-            // 홈으로 이동하거나 맛집 목록으로 이동
-            window.location.href = "/home";
-          }}
+          label="혼밥 식당 보러가기"
+          variant="primary"
           fullWidth
-          size="large"
+          onClick={() => router.push("/home")}
         />
-        <Button label="다시 테스트하기" onClick={onRestart} variant="secondary" fullWidth />
       </div>
     </div>
   );

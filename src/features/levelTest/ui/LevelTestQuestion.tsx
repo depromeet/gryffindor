@@ -1,7 +1,10 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { type Question, useLevelTestStore } from "@/features/levelTest/model/levelTestStore";
+import { Icon } from "@/shared/ui";
+import { onBoardingApi } from "../api/onBoardingApi";
+import { type Question, useLevelTestStore } from "../model/levelTestStore";
 
 interface LevelTestQuestionProps {
   question: Question;
@@ -16,8 +19,19 @@ export function LevelTestQuestion({
   totalQuestions,
   onNext,
 }: LevelTestQuestionProps) {
-  const { setAnswer, calculateResult } = useLevelTestStore();
+  const { setAnswer, setResult, getBackendRequestData } = useLevelTestStore();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  const onBoardingMutation = useMutation({
+    mutationFn: onBoardingApi.createOnBoarding,
+    onSuccess: (response) => {
+      setResult({ level: response.response.level });
+      onNext();
+    },
+    onError: (error) => {
+      console.error("온보딩 제출 오류:", error);
+    },
+  });
 
   const handleOptionSelect = (optionId: string) => {
     let newSelection: string[];
@@ -27,12 +41,10 @@ export function LevelTestQuestion({
       setSelectedOptions(newSelection);
       setAnswer(question.id, newSelection);
 
-      // 단일 선택의 경우 선택 후 잠시 후 자동으로 다음으로 이동
       setTimeout(() => {
         handleNext();
       }, 500);
     } else {
-      // multiple choice
       newSelection = selectedOptions.includes(optionId)
         ? selectedOptions.filter((id) => id !== optionId)
         : [...selectedOptions, optionId];
@@ -43,26 +55,22 @@ export function LevelTestQuestion({
   };
 
   const handleNext = () => {
-    // 마지막 질문이면 결과 계산
     if (questionNumber === totalQuestions) {
-      calculateResult();
+      const requestData = getBackendRequestData();
+      onBoardingMutation.mutate({ answers: requestData.answers });
+    } else {
+      onNext();
     }
-
-    onNext();
   };
 
   return (
-    <div className="mx-auto max-w-md">
-      <div className="mb-6">
-        <h2 className="mb-6 font-semibold text-gray-900 text-lg leading-relaxed">
-          Q{questionNumber}
-        </h2>
-        <h3 className="mb-8 font-bold text-gray-900 text-xl leading-relaxed">
-          {question.question}
-        </h3>
+    <div className="mx-auto">
+      <div className="my-[40px] flex flex-col gap-[13px]">
+        <h2 className="text-title2">Q{questionNumber}</h2>
+        <h3 className="text-title1">{question.question}</h3>
       </div>
 
-      <div className="mb-8 space-y-3">
+      <div className="space-y-[20px]">
         {question.options.map((option) => {
           const isSelected = selectedOptions.includes(option.id);
           return (
@@ -70,26 +78,34 @@ export function LevelTestQuestion({
               key={option.id}
               type="button"
               onClick={() => handleOptionSelect(option.id)}
-              className={`w-full rounded-lg border-2 p-4 text-left transition-all duration-200 ${
+              className={`h-[72px] w-full rounded-[12px] border-[1px] px-[20px] py-[24px] text-left transition-all duration-200 ${
                 isSelected
-                  ? "border-red-500 bg-red-50 text-red-900"
-                  : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"
+                  ? "border-primary400 bg-primary100 text-primary500"
+                  : "border-gray-200 bg-gray0 text-gray900 hover:border-gray-300 hover:bg-gray-50"
               }`}
+              disabled={onBoardingMutation.isPending}
             >
-              <div className="flex items-center">
-                <div
-                  className={`mr-3 flex h-5 w-5 items-center justify-center rounded-full border-2 ${
-                    isSelected ? "border-red-500 bg-red-500" : "border-gray-300"
-                  }`}
-                >
-                  {isSelected && <div className="h-2 w-2 rounded-full bg-white" />}
-                </div>
-                <span className="leading-relaxed">{option.text}</span>
+              <div className="flex items-center gap-[12px]">
+                {isSelected ? (
+                  <Icon
+                    name="check"
+                    color="primary500"
+                    className="h-[24px] w-[24px]"
+                    disableCurrentColor
+                  />
+                ) : (
+                  <Icon name="selectCheck" disableCurrentColor />
+                )}
+                <span className="text-body1-semibold">{option.text}</span>
               </div>
             </button>
           );
         })}
       </div>
+
+      {onBoardingMutation.isPending && (
+        <div className="mt-4 text-center text-gray-500">결과를 계산 중입니다...</div>
+      )}
     </div>
   );
 }

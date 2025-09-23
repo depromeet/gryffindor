@@ -14,6 +14,7 @@ import MapIcon from "./map.svg";
 import MapBubbleIcon from "./map-bubble.svg";
 import RefreshIcon from "./refresh.svg";
 import SearchIcon from "./search.svg";
+import SelectCheckIcon from "./select-check.svg";
 import SpeakerIcon from "./speaker.svg";
 import TargetIcon from "./target.svg";
 import UserIcon from "./user.svg";
@@ -39,4 +40,5 @@ export const iconMap = {
   target: TargetIcon,
   refresh: RefreshIcon,
   filter: FilterIcon,
+  selectCheck: SelectCheckIcon,
 } as const;
