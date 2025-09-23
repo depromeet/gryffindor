@@ -1,13 +1,18 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
+import type { StoreListResponse } from "@/entities/storeList/api";
+import { STORE_LIST_MOCK_DATA } from "@/entities/storeList/model";
+import { SelectedStoreCard, StoreCard } from "@/entities/storeList/ui";
 import { Filter } from "@/features/filter/ui";
+import { MapFloatingButton, MapRefreshButton } from "@/features/map/ui";
+import { NaverMap } from "@/features/map/ui/NaverMap";
 import {
   BottomSheet,
   BottomSheetContent,
   BottomSheetHandler,
   BottomSheetHeader,
-  Icon,
   TransitionLayout,
 } from "@/shared/ui";
 
@@ -19,6 +24,9 @@ interface FilterData {
 }
 
 export default function MapPage() {
+  // TODO: API 연동 후, 목 데이터 제거
+  const [storeList] = useState<StoreListResponse[]>(STORE_LIST_MOCK_DATA);
+  const [selectedStoreId, setSelectedStoreId] = useState<number | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<FilterData>({
     price: { min: 0, max: 20000 },
@@ -31,23 +39,55 @@ export default function MapPage() {
     setFilters(newFilters);
   };
 
+  const selectedStoreInfo = storeList.find((store) => store.id === selectedStoreId);
+
   return (
     <TransitionLayout>
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-red-50 to-orange-100 p-6">
-        <div className="relative w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl">
-          <button type="button" onClick={() => setIsFilterOpen(true)}>
-            Open Filters
-          </button>
-        </div>
-      </div>
+      <NaverMap
+        storeList={storeList}
+        selectedStoreId={selectedStoreId}
+        onStoreSelect={(id) => setSelectedStoreId(id)}
+      />
 
-      {/* 스토어 리스트 바텀시트 */}
-      <BottomSheet isFixed={false} isOpen={true} initialHeight={226} expandedOffset={88}>
-        <BottomSheetHeader>
-          <BottomSheetHandler />
-        </BottomSheetHeader>
-        <BottomSheetContent className="gap-[15px]">{/* store list content */}</BottomSheetContent>
-      </BottomSheet>
+      <MapRefreshButton
+        onClick={() => {
+          /* api 요청 */
+        }}
+      />
+      <MapFloatingButton
+        iconName="filter"
+        position={{ top: 85, right: 19 }}
+        onClick={() => setIsFilterOpen(true)}
+      />
+      <MapFloatingButton
+        iconName="target"
+        position={{ bottom: 242, right: 19 }}
+        onClick={() => {}}
+      />
+
+      {/* 식당 리스트 바텀시트 */}
+      {selectedStoreInfo ? (
+        <div className="-translate-x-1/2 fixed bottom-22 left-1/2 z-49">
+          <SelectedStoreCard {...selectedStoreInfo} />
+        </div>
+      ) : (
+        <BottomSheet isFixed={false} isOpen={true} initialHeight={226} expandedOffset={88}>
+          <BottomSheetHeader>
+            <BottomSheetHandler />
+          </BottomSheetHeader>
+          <BottomSheetContent className="px-5 pb-9">
+            <ul className="flex w-full flex-col gap-y-[15px]">
+              {storeList.map((store) => (
+                <li key={store.id}>
+                  <Link href={`#`}>
+                    <StoreCard {...store} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </BottomSheetContent>
+        </BottomSheet>
+      )}
 
       {/* 필터 바텀시트 */}
       {isFilterOpen && (
@@ -57,14 +97,6 @@ export default function MapPage() {
           onClose={() => setIsFilterOpen(false)}
           expandedOffset={88}
         >
-          <BottomSheetHeader>
-            <div className="flex items-center justify-between p-5">
-              <div className="justify-start text-subtitle1">필터 옵션</div>
-              <button type="button" onClick={() => setIsFilterOpen(false)}>
-                <Icon size={24} name="close" className="cursor-pointer text-gray400" />
-              </button>
-            </div>
-          </BottomSheetHeader>
           <BottomSheetContent className="pb-7">
             <Filter
               initialFilters={filters}

@@ -10,7 +10,7 @@ interface StoreLevelListProps {
 
 export function StoreLevelList({ userLevel = DEFAULT_LEVEL }: StoreLevelListProps) {
   return (
-    <div className={`sticky bg-gray0 py-[20px]`} style={{ top: `${MAIN_HEADER_HEIGHT}px` }}>
+    <div className={`sticky z-50 bg-gray0 py-[20px]`} style={{ top: `${MAIN_HEADER_HEIGHT}px` }}>
       <div className="flex flex-start items-center gap-x-[8px]">
         {LEVEL_LIST.map((level) => (
           <ChipFilter key={level} label={level} selected={level === userLevel} />
