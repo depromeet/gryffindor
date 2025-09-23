@@ -22,7 +22,7 @@ export function StoreCard({
   honbobLevel,
 }: StoreCardProps) {
   return (
-    <div className="flex items-center gap-4 rounded-[16px]">
+    <article className="flex items-center gap-4 rounded-[16px]">
       <div className="relative h-[120px] w-[120px] flex-shrink-0">
         <Image
           src={thumbnailUrl}
@@ -36,22 +36,27 @@ export function StoreCard({
       <div className="flex flex-col gap-y-[8px]">
         <div className="flex flex-col gap-y-[4px]">
           <Tag label={`레벨 ${honbobLevel}`} color="red" size="small" iconName="crown" />
-          <span className="text-body1-semibold text-gray900">{name}</span>
+          <h3 className="text-body1-semibold text-gray900">{name}</h3>
           <div className="flex items-center gap-x-[4px] text-body3-regular text-gray900">
-            <span>대표메뉴 · {signatureMenu.name}</span>
+            <span>대표메뉴</span>
+            <span>·</span>
+            <span>{signatureMenu.name}</span>
           </div>
-          <div className="flex items-center gap-x-[4px] text-body3-regular text-gray600">
-            <span>
-              {distance}m · 내 위치에서 약 {walkingMinutes}분
-            </span>
+          {/* NOTE: 일단 피그마에 기재된 색상(#575757) 사용 */}
+          <div className="flex items-center gap-x-[4px] text-[#575757] text-body3-regular">
+            <span>{distance}m</span>
+            <span>·</span>
+            <span>내 위치에서 약 {walkingMinutes}분</span>
           </div>
         </div>
-        <div className="flex flex-nowrap items-center gap-x-[5px]">
+        <ul className="flex flex-nowrap items-center gap-x-[5px]">
           {seats.map((seat) => (
-            <Tag key={seat} label={SEAT_TYPES_MAP[seat]} color="blue" size="small" />
+            <li key={seat}>
+              <Tag label={SEAT_TYPES_MAP[seat]} color="blue" size="small" />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
-    </div>
+    </article>
   );
 }
