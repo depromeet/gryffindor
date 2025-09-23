@@ -1,3 +1,5 @@
+import BarSeatIcon from "./bar-seat.svg";
+import BulkheadIcon from "./bulkhead.svg";
 import CallIcon from "./call.svg";
 import CharacterIcon from "./character.svg";
 import CheckIcon from "./check.svg";
@@ -9,6 +11,9 @@ import CrownIcon from "./crown.svg";
 import DownArrowIcon from "./down-arrow.svg";
 import DownTriangleIcon from "./down-triangle.svg";
 import FilterIcon from "./filter.svg";
+import ForFourIcon from "./for-four.svg";
+import ForOneIcon from "./for-one.svg";
+import ForTwoIcon from "./for-two.svg";
 import HomeIcon from "./home.svg";
 import KeBabIcon from "./kebab.svg";
 import LeftArrowIcon from "./left-arrow.svg";
@@ -45,4 +50,9 @@ export const iconMap = {
   colorNote: ColorNoteIcon,
   colorSpeaker: ColorSpeakerIcon,
   colorTest: ColorTestIcon,
+  bulkhead: BulkheadIcon,
+  barSeat: BarSeatIcon,
+  forOne: ForOneIcon,
+  forTwo: ForTwoIcon,
+  forFour: ForFourIcon,
 } as const;

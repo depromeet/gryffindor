@@ -11,11 +11,11 @@ interface SeatImageGalleryProps {
 
 export function SeatImageGallery({ images, storeName, level, userName }: SeatImageGalleryProps) {
   const seatTypeMap = {
-    cubicle: "칸막이",
-    barTable: "바 좌석",
-    forOne: "1인석",
-    forTwo: "2인석",
-    forFour: "4인석",
+    CUBICLE: "칸막이",
+    BAR_TABLE: "바 좌석",
+    FOR_ONE: "1인석",
+    FOR_TWO: "2인석",
+    FOR_FOUR: "4인석",
   } as const;
 
   const seatLabels = images
@@ -57,8 +57,9 @@ export function SeatImageGallery({ images, storeName, level, userName }: SeatIma
       <section className="flex w-full flex-col justify-center gap-1 rounded-[12px] border-[1.2px] border-[rgb(20,20,20,0.2)] bg-gray50 p-4">
         <span className="text-body2-semibold text-primary500">좌석 사진</span>
         <span className="text-[rgba(20,20,20,0.8)] text-body2-regular">
-          {storeName}은 {seatLabels.join(", ")}이 있어서 혼밥 레벨 {level}
-          에게 안성맞춤이에요! {userName}님, 오늘은 {seatLabels[0]}에서 맛있는 혼밥 어떠세요?
+          {storeName}은 {seatLabels.join(", ")}이 있어서 혼밥 레벨 {level || 1}
+          에게 안성맞춤이에요! {userName || "밥잇"}님, 오늘은 {seatLabels[0]}
+          에서 맛있는 혼밥 어떠세요?
         </span>
       </section>
     </article>

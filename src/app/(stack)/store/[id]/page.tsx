@@ -1,16 +1,48 @@
 "use client";
 
-import { use } from "react";
-import { MOCK_DATA } from "@/entities/store/model";
+import { use, useEffect, useState } from "react";
+import { StoreResponse } from "@/entities/store/model";
 import { MenuItem } from "@/entities/store/ui";
+import { useUserState } from "@/entities/user";
 import { SeatImageGallery, SeatInfoSection, StoreInfo, SuggestionCard } from "@/features/store/ui";
 import { ReviewSection } from "@/features/store/ui/ReviewSection";
+import { axiosInstance } from "@/shared/config";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
   const { params } = props;
   const resolvedParams = use(params) as { id: string };
-  const store = MOCK_DATA.find((s) => s.storeId === Number(resolvedParams.id))!;
+  const [store, setStore] = useState<StoreResponse>();
+  const [isLoading, setIsLoading] = useState(true);
+  const { userState } = useUserState();
+
+  useEffect(() => {
+    const fetchStoreData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axiosInstance.get<StoreResponse>(
+          `/api/v1/stores/${resolvedParams.id}`,
+        );
+        setStore(response.response);
+      } catch (error) {
+        console.error("Error fetching store data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchStoreData();
+  }, [resolvedParams.id]);
+
+  if (isLoading || !store) {
+    return (
+      <TransitionLayout>
+        <div className="flex min-h-screen items-center justify-center">
+          <div>로딩 중...</div>
+        </div>
+      </TransitionLayout>
+    );
+  }
 
   return (
     <TransitionLayout dynamicTitle={store.name}>
@@ -28,15 +60,12 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
         <SeatInfoSection seatInfo={store.seatInfo} />
         <SeatImageGallery
           storeName={store.name}
-          level={store.level}
-          userName="홍길동"
+          level={userState.honbabLevel}
+          userName={userState.displayName}
           images={store.seatImages}
         />
         <ReviewSection storeId={store.storeId} />
-
-        <div className="px-5 pb-[59px]">
-          <SuggestionCard />
-        </div>
+        <SuggestionCard />
       </div>
     </TransitionLayout>
   );
