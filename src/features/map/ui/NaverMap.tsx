@@ -141,7 +141,7 @@ export function NaverMap({ storeList, selectedStoreId, onStoreSelect }: NaverMap
       <Script
         strategy="afterInteractive"
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}`}
-        onLoad={initializeMap}
+        onReady={initializeMap}
       />
       <div ref={mapRef} className="fixed inset-0 h-screen w-screen" />
     </>
