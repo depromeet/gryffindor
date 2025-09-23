@@ -53,6 +53,8 @@ const CATEGORIES = [
   { value: "분식", label: "분식", icon: "🥙" },
   { value: "아시아음식", label: "아시아음식", icon: "🍜" },
   { value: "카페", label: "카페", icon: "☕" },
+  { value: "샐러드", label: "샐러드", icon: "🥗" },
+  { value: "멕시칸", label: "멕시칸", icon: "🌮" },
   { value: "기타", label: "기타", icon: "🍽️" },
 ] as const;
 
