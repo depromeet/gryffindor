@@ -11,7 +11,14 @@ const nextConfig: NextConfig = {
       },
     },
   },
-
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
   typedRoutes: true,
   reactStrictMode: false,
   eslint: {

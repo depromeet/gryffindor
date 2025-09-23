@@ -9,7 +9,7 @@ interface MapPinProps {
 function StoreName({ name }: { name: string }) {
   return (
     <span
-      className="rounded-sm text-caption2-semibold"
+      className="whitespace-nowrap rounded-sm text-caption2-semibold"
       style={{
         textShadow: `1px 0 var(--color-gray0), -1px 0 var(--color-gray0), 0 1px var(--color-gray0), 0 -1px var(--color-gray0), 1px 1px var(--color-gray0), -1px -1px var(--color-gray0), 1px -1px var(--color-gray0), -1px 1px var(--color-gray0)`,
       }}
