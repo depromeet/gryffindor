@@ -10,7 +10,11 @@ import { TransitionLayout } from "@/shared/ui";
 export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
   const { params } = props;
   const resolvedParams = use(params) as { id: string };
-  const store = MOCK_DATA.find((s) => s.storeId === Number(resolvedParams.id))!;
+  const store = MOCK_DATA.find((s) => s.storeId === Number(resolvedParams.id));
+
+  if (!store) {
+    return <div>Store not found</div>;
+  }
 
   return (
     <TransitionLayout dynamicTitle={store.name}>

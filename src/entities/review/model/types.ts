@@ -18,5 +18,5 @@ export interface ReviewResponse {
   data: Review[];
   nextCursor: string | null;
   hasNext: boolean;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
 }
