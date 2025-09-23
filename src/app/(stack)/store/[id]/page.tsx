@@ -1,7 +1,7 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
-import { StoreResponse } from "@/entities/store/model";
+import type { StoreResponse } from "@/entities/store/model";
 import { MenuItem } from "@/entities/store/ui";
 import { useUserState } from "@/entities/user";
 import { SeatImageGallery, SeatInfoSection, StoreInfo, SuggestionCard } from "@/features/store/ui";
