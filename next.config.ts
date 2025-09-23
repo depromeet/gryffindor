@@ -12,7 +12,12 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
-    domains: ["search.pstatic.net"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
   },
   typedRoutes: true,
   reactStrictMode: false,
