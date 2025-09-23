@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PriceRange } from "@/entities/filter/ui";
-import { CTA, FilterSection } from "@/shared/ui";
+import { CTA, FilterSection, Icon } from "@/shared/ui";
 import type { FilterData, SectionConfig } from "../model/types";
 import { areFiltersEqual } from "../utils/filter";
 
@@ -90,6 +90,15 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
 
   return (
     <article className="flex flex-col">
+      <header className="flex items-center justify-between p-5">
+        <div className="justify-start text-subtitle1">필터 옵션</div>
+        <button type="button" onClick={onClose}>
+          <Icon size={24} name="close" className="cursor-pointer text-gray400" />
+        </button>
+      </header>
+
+      <div className="h-[1px] w-full bg-gray100" />
+
       {FILTER_SECTIONS.map((section) => {
         const sectionProps = {
           label: section.label,

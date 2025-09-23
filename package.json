@@ -28,12 +28,15 @@
     ]
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
     "@ssgoi/react": "^2.1.2",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query": "^5.85.5",
     "@tanstack/react-query-devtools": "^5.85.5",
     "axios": "^1.12.1",
     "clsx": "^2.1.1",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "next": "15.5.2",
     "next-auth": "5.0.0-beta.29",
     "rc-slider": "^11.1.9",
@@ -45,6 +48,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
     "@tailwindcss/postcss": "^4",
+    "@types/navermaps": "^3.9.1",
     "@types/node": "^20",
     "@types/rc-slider": "^9.3.1",
     "@types/react": "^19",

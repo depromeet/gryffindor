@@ -1,75 +1,62 @@
 import Image from "next/image";
 import { Tag } from "@/shared/ui";
+import type { SeatTypes, StoreListResponse } from "../api";
 
-const SEATING_TYPES_MAP = {
-  BAR: "바",
+export interface StoreCardProps extends Omit<StoreListResponse, "id" | "coordinate"> {}
+
+export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   FOR_ONE: "1인석",
   FOR_TWO: "2인석",
-} as const;
-
-export type SeatingType = keyof typeof SEATING_TYPES_MAP;
-
-interface StoreCardProps {
-  thumbnailUrls?: string;
-  level: string;
-  name: string;
-  distance: string;
-  signatureMenu: string;
-  seatingTypes: SeatingType[];
-}
+  FOR_FOUR: "4인석",
+  CUBICLE: "칸막이",
+  BAR_TABLE: "바 좌석",
+};
 
 export function StoreCard({
-  thumbnailUrls,
-  level,
   name,
+  thumbnailUrl,
   signatureMenu,
   distance,
-  seatingTypes,
+  walkingMinutes,
+  seats,
+  honbobLevel,
 }: StoreCardProps) {
   return (
-    <div className="flex items-center gap-x-[10px] rounded-[16px] py-[16px]">
-      <div className="flex items-center gap-x-[16px]">
-        {thumbnailUrls && (
-          <Image
-            src={thumbnailUrls}
-            alt={`${name}-thumbnailUrls`}
-            width={120}
-            height={120}
-            className="h-full w-full flex-shrink-0 rounded-[16px] object-cover"
-          />
-        )}
-        {!thumbnailUrls && (
-          <div className="h-[120px] w-[120px] flex-shrink-0 rounded-[16px] bg-gray200" />
-        )}
-        <div className="flex flex-col gap-y-[8px]">
-          <div className="flex flex-col gap-y-[4px]">
-            <Tag label={`레벨 ${level}`} color="red" size="small" iconName="crown" />
-            <span className="text-body1-semibold text-gray900">{name}</span>
-            <div className="flex items-center gap-x-[4px] text-body3-regular text-gray600">
-              {/* fixme: 색상 코드 확인 필요(피그마 상 575757 색상) */}
-              <span>대표메뉴</span>
-              <span>·</span>
-              <span>{signatureMenu}</span>
-            </div>
-            <div className="flex items-center gap-x-[4px] text-body3-regular text-gray600">
-              {/* fixme: 색상 코드 확인 필요(피그마 상 575757 색상) */}
-              <span>{distance}</span>
-              <span>·</span>
-              <span>{distance}</span>
-            </div>
+    <article className="flex items-center gap-4 rounded-[16px]">
+      <div className="relative h-[120px] w-[120px] flex-shrink-0">
+        <Image
+          src={thumbnailUrl}
+          alt={`${name}-thumbnail`}
+          fill
+          sizes="120px"
+          className="rounded-[12px] object-cover"
+        />
+      </div>
+
+      <div className="flex flex-col gap-y-[8px]">
+        <div className="flex flex-col gap-y-[4px]">
+          <Tag label={`레벨 ${honbobLevel}`} color="red" size="small" iconName="crown" />
+          <h3 className="text-body1-semibold text-gray900">{name}</h3>
+          <div className="flex items-center gap-x-[4px] text-body3-regular text-gray900">
+            <span>대표메뉴</span>
+            <span>·</span>
+            <span className="flex-1 truncate">{signatureMenu.name}</span>
           </div>
-          <div className="flex flex-nowrap items-center gap-x-[5px]">
-            {seatingTypes.map((seatingType) => (
-              <Tag
-                key={seatingType}
-                label={SEATING_TYPES_MAP[seatingType]}
-                color="blue"
-                size="small"
-              />
-            ))}
+          {/* NOTE: 일단 피그마에 기재된 색상(#575757) 사용 */}
+          <div className="flex items-center gap-x-[4px] text-[#575757] text-body3-regular">
+            <span>{distance}m</span>
+            <span>·</span>
+            <span>내 위치에서 약 {walkingMinutes}분</span>
           </div>
         </div>
+        <ul className="flex flex-nowrap items-center gap-x-[5px]">
+          {seats.map((seat) => (
+            <li key={seat}>
+              <Tag label={SEAT_TYPES_MAP[seat]} color="blue" size="small" />
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
+    </article>
   );
 }

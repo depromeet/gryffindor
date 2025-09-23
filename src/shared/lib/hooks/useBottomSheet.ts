@@ -22,15 +22,19 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
     isDraggingOnContent: false,
   });
 
-  const collapsedY = window.innerHeight - initialHeight; // 초기 상태 Y 좌표
-  const expandedY = expandedOffset; // 확장 상태 Y 좌표
+  const collapsedYRef = useRef(0); // 초기 바텀 시트 Y 좌표
+
+  useEffect(() => {
+    collapsedYRef.current = window.innerHeight - initialHeight;
+  }, [initialHeight]);
 
   useEffect(() => {
     const [sheet, content] = [sheetRef.current, contentRef.current];
     if (!sheet || !content) return;
 
     // Y 좌표를 collapsedY ~ expandedY 사이로 제한
-    const clamp = (value: number) => Math.min(Math.max(value, expandedY), collapsedY);
+    const clamp = (value: number) =>
+      Math.min(Math.max(value, expandedOffset), collapsedYRef.current);
 
     // 바텀시트를 움직일 수 있는 상황인지 확인
     const isSheetMovable = () => {
@@ -38,7 +42,7 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
 
       // 컨텐츠 영역에서 드래그 중이 아니거나 바텀시트가 확장되지 않은 경우는 이동 가능
       if (!isDraggingOnContent) return true;
-      if (sheet.getBoundingClientRect().y !== expandedY) return true;
+      if (sheet.getBoundingClientRect().y !== expandedOffset) return true;
 
       const atTop = content.scrollTop <= 0;
       const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight;
@@ -58,7 +62,7 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
         e.preventDefault();
 
         const nextY = clamp(start.sheetY + deltaY);
-        sheet.style.transform = `translate3d(0, ${nextY - collapsedY}px, 0)`;
+        sheet.style.transform = `translate3d(0, ${nextY - collapsedYRef.current}px, 0)`;
       }
     };
 
@@ -66,9 +70,11 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
     const handlePointerUp = () => {
       const currentY = sheet.getBoundingClientRect().y;
       const snapTo =
-        Math.abs(currentY - expandedY) < Math.abs(currentY - collapsedY) ? expandedY : collapsedY;
+        Math.abs(currentY - expandedOffset) < Math.abs(currentY - collapsedYRef.current)
+          ? expandedOffset
+          : collapsedYRef.current;
 
-      sheet.style.transform = `translate3d(0, ${snapTo - collapsedY}px, 0)`;
+      sheet.style.transform = `translate3d(0, ${snapTo - collapsedYRef.current}px, 0)`;
       sheet.style.transition = "transform 0.3s cubic-bezier(0.4,0,0.2,1)";
 
       setTimeout(() => {
@@ -96,7 +102,7 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
     return () => {
       sheet.removeEventListener("pointerdown", handlePointerDown);
     };
-  }, [collapsedY, expandedY]);
+  }, [expandedOffset]);
 
   // 컨텐츠 영역에서 드래그 중임을 체크
   useEffect(() => {

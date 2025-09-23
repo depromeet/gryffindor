@@ -2,6 +2,9 @@ import CallIcon from "./call.svg";
 import CharacterIcon from "./character.svg";
 import CheckIcon from "./check.svg";
 import CloseIcon from "./close.svg";
+import ColorNoteIcon from "./color-note.svg";
+import ColorSpeakerIcon from "./color-speaker.svg";
+import ColorTestIcon from "./color-test.svg";
 import CrownIcon from "./crown.svg";
 import DownArrowIcon from "./down-arrow.svg";
 import DownTriangleIcon from "./down-triangle.svg";
@@ -40,5 +43,8 @@ export const iconMap = {
   target: TargetIcon,
   refresh: RefreshIcon,
   filter: FilterIcon,
+  colorNote: ColorNoteIcon,
+  colorSpeaker: ColorSpeakerIcon,
+  colorTest: ColorTestIcon,
   selectCheck: SelectCheckIcon,
 } as const;
