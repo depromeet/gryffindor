@@ -1,10 +1,10 @@
 import { Icon } from "@/shared/ui";
 
-interface MapRefreshButtonProps {
+interface FetchStoreListButtonProps {
   onClick: () => void;
 }
 
-export function MapRefreshButton({ onClick }: MapRefreshButtonProps) {
+export function FetchStoreListButton({ onClick }: FetchStoreListButtonProps) {
   return (
     <button
       type="button"
