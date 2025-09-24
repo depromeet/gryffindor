@@ -7,6 +7,7 @@ export * from "./FilterButton";
 export * from "./FilterSection";
 export * from "./FloatingNavButton";
 export * from "./Icon";
+export * from "./Input";
 export * from "./MainHeader";
 export * from "./Modal";
 export * from "./Overlay";
