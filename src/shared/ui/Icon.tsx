@@ -16,6 +16,7 @@ export interface IconProps {
 
 export const Icon = ({
   name,
+  size,
   className,
   color,
   title,
@@ -31,6 +32,8 @@ export const Icon = ({
 
   return (
     <IconComponent
+      width={size}
+      height={size}
       className={cn(
         // 기본 Tailwind 스타일링 지원
         // disableCurrentColor가 true면 currentColor 적용 안함
