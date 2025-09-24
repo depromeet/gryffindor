@@ -9,7 +9,7 @@ function SelectedPin({ honbobLevel }: { honbobLevel: number }) {
         size="small"
         className="rounded-sm border-[1.4px] border-gray0 bg-primary400 px-1.5 py-0.5 text-gray0"
       />
-      <Icon name="mapBubble" disableCurrentColor />
+      <Icon name="mapBubble" size={60} disableCurrentColor />
     </div>
   );
 }
@@ -23,7 +23,7 @@ function UnselectedPin({ honbobLevel }: { honbobLevel: number }) {
         </div>
         <span className="whitespace-nowrap text-caption1-bold text-gray0">레벨 {honbobLevel}</span>
       </div>
-      <Icon name="downTriangle" color="primary400" className="absolute bottom-[-5px]" />
+      <Icon name="downTriangle" size={12} color="primary400" className="absolute bottom-[-5px]" />
     </div>
   );
 }

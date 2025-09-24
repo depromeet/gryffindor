@@ -18,7 +18,7 @@ export function MapActionButton({ type, onClick }: MapActionButtonProps) {
       className="fixed z-40 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray0 shadow-[0_4px_12px_0_rgba(0,0,0,0.15)]"
       style={getPositionStyle()}
     >
-      <Icon name={type} color="gray800" />
+      <Icon name={type} size={24} color="gray800" />
     </button>
   );
 }
