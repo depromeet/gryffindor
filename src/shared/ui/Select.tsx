@@ -82,12 +82,14 @@ interface SelectTriggerProps {
 function SelectTrigger({ children, className = "", onClick }: SelectTriggerProps) {
   const { isOpen, onOpenChange, triggerRef } = useSelectContext();
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
     if (onClick) {
       onClick();
-    } else {
-      onOpenChange(!isOpen);
     }
+
+    onOpenChange(!isOpen);
   };
 
   return (
