@@ -68,7 +68,7 @@ export function StackHeader({ config, className, title: dynamicTitle }: StackHea
           className="-ml-2 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
           aria-label="뒤로가기"
         >
-          {backButton?.icon || <Icon name="leftArrow" disableCurrentColor />}
+          {backButton?.icon || <Icon size={24} name="leftArrow" disableCurrentColor />}
         </button>
       )}
 
