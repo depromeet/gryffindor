@@ -23,7 +23,6 @@ import ColorNoteIcon from "./note.svg";
 import RefreshIcon from "./refresh.svg";
 import SearchIcon from "./search.svg";
 import SelectCheckIcon from "./select-check.svg";
-import SpeakerIcon from "./speaker.svg";
 import ColorSpeakerIcon from "./speaker.svg";
 import SpeakerIcon from "./speaker-line.svg";
 import TargetIcon from "./target.svg";
