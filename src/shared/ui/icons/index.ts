@@ -25,6 +25,7 @@ import Lv4UserIcon from "./lv4-user.svg";
 import MapIcon from "./map.svg";
 import MapBubbleIcon from "./map-bubble.svg";
 import ColorNoteIcon from "./note.svg";
+import PinIcon from "./pin.svg";
 import RefreshIcon from "./refresh.svg";
 import SearchIcon from "./search.svg";
 import ColorSpeakerIcon from "./speaker.svg";
@@ -71,4 +72,5 @@ export const iconMap = {
   lv2User: Lv2UserIcon,
   lv3User: Lv3UserIcon,
   lv4User: Lv4UserIcon,
+  pin: PinIcon,
 } as const;

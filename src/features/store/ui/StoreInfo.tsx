@@ -98,7 +98,7 @@ export function StoreInfo({
         <div className="flex flex-col items-start gap-1">
           <div className="flex items-center gap-1">
             <div className="flex items-center gap-2">
-              <Icon name="location" size={18} disableCurrentColor />
+              <Icon name="pin" size={18} className="text-gray400" />
               <span className="text-[#4C4C4C] text-body2-medium">위치</span>
             </div>
             <span className="text-[#4C4C4C] text-body2-medium">·</span>
@@ -107,7 +107,7 @@ export function StoreInfo({
 
           <div className="flex items-center gap-1">
             <div className="flex items-center gap-2">
-              <Icon name="call" size={18} disableCurrentColor />
+              <Icon name="call" size={18} className="text-gray400" />
               <span className="text-[#4C4C4C] text-body2-medium">전화</span>
             </div>
             <span className="text-[#4C4C4C] text-body2-medium">·</span>
