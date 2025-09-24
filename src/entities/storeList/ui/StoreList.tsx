@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { StoreListResponse } from "../api";
+import type { StoreSearchResponse } from "../api";
 import { StoreCard } from "./StoreCard";
 
-export function StoreList({ storeList }: { storeList: StoreListResponse[] }) {
+export function StoreList({ storeList }: { storeList: StoreSearchResponse[] }) {
   return (
     <ul className="flex flex-col gap-y-[15px]">
       {storeList.map((store) => (

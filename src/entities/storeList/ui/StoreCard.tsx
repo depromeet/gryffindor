@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Tag } from "@/shared/ui";
-import type { SeatTypes, StoreListResponse } from "../api";
+import type { SeatTypes, StoreSearchResponse } from "../api";
 
-export interface StoreCardProps extends Omit<StoreListResponse, "id" | "coordinate"> {}
+export interface StoreCardProps extends Omit<StoreSearchResponse, "id" | "coordinate"> {}
 
 export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   FOR_ONE: "1인석",

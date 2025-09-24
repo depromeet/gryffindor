@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import type { StoreListResponse } from "@/entities/storeList/api";
+import type { StoreSearchResponse } from "@/entities/storeList/api";
 import { FloatingStoreCard, StoreList } from "@/entities/storeList/ui";
 import {
   BottomSheet,
@@ -11,7 +11,7 @@ import {
 } from "@/shared/ui";
 
 interface StoreListBottomSheetProps {
-  storeList: StoreListResponse[];
+  storeList: StoreSearchResponse[];
   selectedStoreId: number | null;
 }
 

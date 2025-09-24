@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { Tag } from "@/shared/ui";
-import type { StoreListResponse } from "../api";
+import type { StoreSearchResponse } from "../api";
 import { SEAT_TYPES_MAP } from "./StoreCard";
 
-export interface FloatingStoreCardProps extends Omit<StoreListResponse, "id" | "coordinate"> {}
+export interface FloatingStoreCardProps extends Omit<StoreSearchResponse, "id" | "coordinate"> {}
 
 export function FloatingStoreCard({
   name,
