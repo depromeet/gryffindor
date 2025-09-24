@@ -6,10 +6,15 @@ interface SeatImageGalleryProps {
   storeName: string;
   level: number;
   userName: string;
-  images: SeatImage[];
+  seatImages: SeatImage[];
 }
 
-export function SeatImageGallery({ images, storeName, level, userName }: SeatImageGalleryProps) {
+export function SeatImageGallery({
+  seatImages,
+  storeName,
+  level,
+  userName,
+}: SeatImageGalleryProps) {
   const seatTypeMap = {
     CUBICLE: "칸막이",
     BAR_TABLE: "바 좌석",
@@ -18,7 +23,7 @@ export function SeatImageGallery({ images, storeName, level, userName }: SeatIma
     FOR_FOUR: "4인석",
   } as const;
 
-  const seatLabels = images
+  const seatLabels = seatImages
     .map((img) => seatTypeMap[img.seatType as keyof typeof seatTypeMap])
     .filter(Boolean);
   return (
@@ -26,8 +31,8 @@ export function SeatImageGallery({ images, storeName, level, userName }: SeatIma
       <section className="flex w-full flex-col gap-3">
         <span className="text-[#000] text-subtitle1">좌석 이미지</span>
         <div className="scrollbar-hide -mx-5 flex items-center gap-3 overflow-x-auto px-5">
-          {images.length > 0 &&
-            images.map((img) => (
+          {seatImages.length > 0 &&
+            seatImages.map((img) => (
               <div
                 key={img.seatType}
                 className="relative h-[180px] w-[180px] shrink-0 overflow-hidden rounded-[16px]"
@@ -57,8 +62,8 @@ export function SeatImageGallery({ images, storeName, level, userName }: SeatIma
       <section className="flex w-full flex-col justify-center gap-1 rounded-[12px] border-[1.2px] border-[rgb(20,20,20,0.2)] bg-gray50 p-4">
         <span className="text-body2-semibold text-primary500">좌석 사진</span>
         <span className="text-[rgba(20,20,20,0.8)] text-body2-regular">
-          {storeName}은 {seatLabels.join(", ")}이 있어서 혼밥 레벨 {level || 1}
-          에게 안성맞춤이에요! {userName || "밥잇"}님, 오늘은 {seatLabels[0]}
+          {storeName}은 {seatLabels.join(", ")}이 있어서 혼밥 레벨 {level}
+          에게 안성맞춤이에요! {userName}님, 오늘은 {seatLabels[0]}
           에서 맛있는 혼밥 어떠세요?
         </span>
       </section>

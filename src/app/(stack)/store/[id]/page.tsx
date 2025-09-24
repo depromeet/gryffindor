@@ -1,38 +1,31 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { use } from "react";
 import type { StoreResponse } from "@/entities/store/model";
 import { MenuItem } from "@/entities/store/ui";
 import { useUserState } from "@/entities/user";
 import { SeatImageGallery, SeatInfoSection, StoreInfo, SuggestionCard } from "@/features/store/ui";
 import { ReviewSection } from "@/features/store/ui/ReviewSection";
+import { queryKeys } from "@/shared/api";
 import { axiosInstance } from "@/shared/config";
 import { TransitionLayout } from "@/shared/ui";
+
+const getStoreDetail = async (storeId: string) => {
+  const response = await axiosInstance.get<StoreResponse>(`/api/v1/stores/${storeId}`);
+  return response.response;
+};
 
 export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
   const { params } = props;
   const resolvedParams = use(params) as { id: string };
-  const [store, setStore] = useState<StoreResponse>();
-  const [isLoading, setIsLoading] = useState(true);
   const { userState } = useUserState();
 
-  useEffect(() => {
-    const fetchStoreData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await axiosInstance.get<StoreResponse>(
-          `/api/v1/stores/${resolvedParams.id}`,
-        );
-        setStore(response.response);
-      } catch (error) {
-        console.error("Error fetching store data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchStoreData();
-  }, [resolvedParams.id]);
+  const { data: store, isLoading } = useQuery({
+    queryKey: queryKeys.STORE_DETAIL(resolvedParams.id),
+    queryFn: () => getStoreDetail(resolvedParams.id),
+    enabled: !!resolvedParams.id,
+  });
 
   if (isLoading || !store) {
     return (
@@ -62,7 +55,7 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
           storeName={store.name}
           level={userState.honbabLevel}
           userName={userState.displayName}
-          images={store.seatImages}
+          seatImages={store.seatImages}
         />
         <ReviewSection storeId={store.storeId} />
         <SuggestionCard />
