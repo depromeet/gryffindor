@@ -24,7 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Kakao({ clientId: process.env.KAKAO_CLIENT_ID, clientSecret: process.env.KAKAO_CLIENT_SECRET }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, trigger, session }) {
       // 최초 로그인 시 소셜 로그인 처리
 
       if (account?.access_token) {
@@ -121,6 +121,36 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           console.error("Token refresh error - signing out:", error);
           return null; // 세션 종료
         }
+      }
+
+      // 세션 업데이트 처리
+      if (trigger === "update" && session) {
+        if (session.nickName) {
+          token.nickName = session.nickName;
+        }
+        if (session.level) {
+          token.level = session.level;
+        }
+      }
+
+      // [GET] user/me호출 response 중 level과 nickname을 토큰에 저장
+      try {
+        const userMeResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/users/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${token.accessToken}`,
+            },
+          },
+        );
+
+        const userMeData = await userMeResponse.json();
+
+        token.level = userMeData.response.level;
+        token.nickName = userMeData.response.nickname;
+      } catch (error) {
+        console.error("User me error:", error);
+        signOut({ redirectTo: "/home" });
       }
 
       return token;
