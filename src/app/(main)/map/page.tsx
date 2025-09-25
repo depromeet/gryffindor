@@ -6,7 +6,7 @@ import type { StoreListResponse } from "@/entities/storeList/api";
 import { STORE_LIST_MOCK_DATA } from "@/entities/storeList/model";
 import { SelectedStoreCard, StoreCard } from "@/entities/storeList/ui";
 import { Filter } from "@/features/filter/ui";
-import { MapFloatingButton, MapRefreshButton } from "@/features/map/ui";
+import { FetchStoreListButton, MapActionButton } from "@/features/map/ui";
 import { NaverMap } from "@/features/map/ui/NaverMap";
 import {
   BottomSheet,
@@ -49,21 +49,13 @@ export default function MapPage() {
         onStoreSelect={(id) => setSelectedStoreId(id)}
       />
 
-      <MapRefreshButton
+      <FetchStoreListButton
         onClick={() => {
           /* api 요청 */
         }}
       />
-      <MapFloatingButton
-        iconName="filter"
-        position={{ top: 85, right: 19 }}
-        onClick={() => setIsFilterOpen(true)}
-      />
-      <MapFloatingButton
-        iconName="target"
-        position={{ bottom: 242, right: 19 }}
-        onClick={() => {}}
-      />
+      <MapActionButton type="filter" onClick={() => setIsFilterOpen(true)} />
+      <MapActionButton type="location" onClick={() => {}} />
 
       {/* 식당 리스트 바텀시트 */}
       {selectedStoreInfo ? (

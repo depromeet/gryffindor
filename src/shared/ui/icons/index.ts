@@ -24,7 +24,6 @@ import RefreshIcon from "./refresh.svg";
 import SearchIcon from "./search.svg";
 import ColorSpeakerIcon from "./speaker.svg";
 import SpeakerIcon from "./speaker-line.svg";
-import TargetIcon from "./target.svg";
 import ColorTestIcon from "./test.svg";
 import UserIcon from "./user.svg";
 import UserLoginIcon from "./user-login.svg";
@@ -47,7 +46,6 @@ export const iconMap = {
   character: CharacterIcon,
   mapBubble: MapBubbleIcon,
   downTriangle: DownTriangleIcon,
-  target: TargetIcon,
   refresh: RefreshIcon,
   filter: FilterIcon,
   colorNote: ColorNoteIcon,
