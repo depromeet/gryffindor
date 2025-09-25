@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import type { StoreListResponse } from "@/entities/storeList/api";
+import type { StoreSearchResponse } from "@/entities/storeList/api";
 import { STORE_LIST_MOCK_DATA } from "@/entities/storeList/model";
-import { SelectedStoreCard, StoreCard } from "@/entities/storeList/ui";
+import { SelectedStorePreviewCard, StorePreviewList } from "@/entities/storeList/ui";
 import { Filter } from "@/features/filter/ui";
 import { FetchStoreListButton, MapActionButton } from "@/features/map/ui";
 import { NaverMap } from "@/features/map/ui/NaverMap";
@@ -25,7 +24,7 @@ interface FilterData {
 
 export default function MapPage() {
   // TODO: API 연동 후, 목 데이터 제거
-  const [storeList] = useState<StoreListResponse[]>(STORE_LIST_MOCK_DATA);
+  const [storeList] = useState<StoreSearchResponse[]>(STORE_LIST_MOCK_DATA);
   const [selectedStoreId, setSelectedStoreId] = useState<number | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<FilterData>({
@@ -49,34 +48,20 @@ export default function MapPage() {
         onStoreSelect={(id) => setSelectedStoreId(id)}
       />
 
-      <FetchStoreListButton
-        onClick={() => {
-          /* api 요청 */
-        }}
-      />
+      <FetchStoreListButton onClick={() => {}} />
       <MapActionButton type="filter" onClick={() => setIsFilterOpen(true)} />
       <MapActionButton type="location" onClick={() => {}} />
 
       {/* 식당 리스트 바텀시트 */}
       {selectedStoreInfo ? (
-        <div className="-translate-x-1/2 fixed bottom-22 left-1/2 z-49">
-          <SelectedStoreCard {...selectedStoreInfo} />
-        </div>
+        <SelectedStorePreviewCard {...selectedStoreInfo} />
       ) : (
         <BottomSheet isFixed={false} isOpen={true} initialHeight={226} expandedOffset={88}>
           <BottomSheetHeader>
             <BottomSheetHandler />
           </BottomSheetHeader>
           <BottomSheetContent className="px-5 pb-9">
-            <ul className="flex w-full flex-col gap-y-[15px]">
-              {storeList.map((store) => (
-                <li key={store.id}>
-                  <Link href={`#`}>
-                    <StoreCard {...store} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <StorePreviewList storeList={storeList} />
           </BottomSheetContent>
         </BottomSheet>
       )}

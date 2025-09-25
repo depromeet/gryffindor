@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Tag } from "@/shared/ui";
-import type { SeatTypes, StoreListResponse } from "../api";
+import type { SeatTypes, StoreSearchResponse } from "../api";
 
-export interface StoreCardProps extends Omit<StoreListResponse, "id" | "coordinate"> {}
+export interface StorePreviewCardProps extends Omit<StoreSearchResponse, "id" | "coordinate"> {}
 
 export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   FOR_ONE: "1인석",
@@ -12,15 +12,15 @@ export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   BAR_TABLE: "바 좌석",
 };
 
-export function StoreCard({
+export function StorePreviewCard({
   name,
   thumbnailUrl,
   signatureMenu,
   distance,
   walkingMinutes,
-  seats,
+  seatTypes,
   honbobLevel,
-}: StoreCardProps) {
+}: StorePreviewCardProps) {
   return (
     <article className="flex items-center gap-4 rounded-[16px]">
       <div className="relative h-[120px] w-[120px] flex-shrink-0">
@@ -50,7 +50,7 @@ export function StoreCard({
           </div>
         </div>
         <ul className="flex flex-nowrap items-center gap-x-[5px]">
-          {seats.map((seat) => (
+          {seatTypes.map((seat) => (
             <li key={seat}>
               <Tag label={SEAT_TYPES_MAP[seat]} color="blue" size="small" />
             </li>
