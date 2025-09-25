@@ -6,9 +6,10 @@ import type { Review } from "../model/types";
 
 interface ReviewCardProps {
   review: Review;
+  memberId?: number;
 }
 
-export function ReviewCard({ review }: ReviewCardProps) {
+export function ReviewCard({ review, memberId }: ReviewCardProps) {
   return (
     <article className="flex w-full flex-col gap-3 pb-5">
       <section className="flex w-full items-center justify-between">
@@ -22,26 +23,19 @@ export function ReviewCard({ review }: ReviewCardProps) {
               className="rounded-full object-cover"
             />
           ) : (
-            // 임시 기본 이미지 -> 추후 디자이너분 시안 나오면 교체 예정
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="36"
-              height="36"
-              viewBox="0 0 36 36"
-              fill="none"
-            >
-              <title>profile</title>
-              <circle cx="18" cy="18" r="18" fill="#FF5532" />
-            </svg>
+            <Icon name="lv4User" size={36} disableCurrentColor />
           )}
           <div className="flex items-center gap-1.5">
             <span className="text-body2-semibold">{review.reviewer.nickname}</span>
             <Tag label={`레벨 ${review.reviewer.level}`} color="red" size="small" />
           </div>
         </div>
-        <button type="button" onClick={() => {}} className="cursor-pointer">
-          <Icon name="kebab" size={15} className="text-gray400" />
-        </button>
+        {/* 나중에 memberId로 교체 예정 */}
+        {1 === review.reviewer.id && (
+          <button type="button" onClick={() => {}} className="cursor-pointer">
+            <Icon name="kebab" size={15} className="text-gray400" />
+          </button>
+        )}
       </section>
 
       <section className="flex flex-col gap-2">

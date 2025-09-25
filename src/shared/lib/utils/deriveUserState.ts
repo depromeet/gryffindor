@@ -25,6 +25,7 @@ export function deriveUserState(session: Session | null): UserState {
   if (!DoneOnboarded) {
     return {
       isLoggedIn: true,
+      memberId: session.memberId,
       displayName: session.nickName || session.user?.name || DEFAULT_NICKNAME,
       honbabLevel: DEFAULT_HONBAB_LEVEL,
       isLevelTestCompleted: false,
@@ -35,6 +36,7 @@ export function deriveUserState(session: Session | null): UserState {
   // 3. 로그인 O, 온보딩 O 상태
   return {
     isLoggedIn: true,
+    memberId: session.memberId,
     displayName: session.nickName || session.user?.name || DEFAULT_NICKNAME,
     honbabLevel: session.level,
     isLevelTestCompleted: true,

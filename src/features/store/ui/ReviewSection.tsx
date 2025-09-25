@@ -9,9 +9,10 @@ import { ReviewList } from "./ReviewList";
 
 interface ReviewSectionProps {
   storeId: number;
+  memberId?: number;
 }
 
-export function ReviewSection({ storeId }: ReviewSectionProps) {
+export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
   const [isInfiniteScrollEnabled, setInfiniteScrollEnabled] = useState(false);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
@@ -41,9 +42,10 @@ export function ReviewSection({ storeId }: ReviewSectionProps) {
     <section className="mt-8 flex w-full flex-col gap-4 px-5">
       <div className="flex items-center justify-between">
         <span className="text-[#000] text-subtitle1">방문 후기</span>
+        <TextButton label="후기 작성하기" isIcon color rotateNumber={270} onClick={() => {}} />
       </div>
 
-      <ReviewList reviews={reviews} />
+      <ReviewList reviews={reviews} memberId={memberId} />
 
       {isInfiniteScrollEnabled && hasNextPage && <div ref={loadMoreRef} />}
 

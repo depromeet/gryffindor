@@ -10,6 +10,7 @@ export interface ApiResponse<T = unknown> {
 
 export interface UserState {
   isLoggedIn: boolean;
+  memberId?: number;
   displayName: string;
   honbabLevel: number;
   isLevelTestCompleted: boolean;

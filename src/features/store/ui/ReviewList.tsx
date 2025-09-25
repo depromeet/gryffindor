@@ -3,9 +3,10 @@ import { ReviewCard } from "@/entities/review/ui";
 
 interface ReviewListProps {
   reviews: Review[];
+  memberId?: number;
 }
 
-export function ReviewList({ reviews }: ReviewListProps) {
+export function ReviewList({ reviews, memberId }: ReviewListProps) {
   return (
     <div className="flex flex-col gap-5">
       {reviews.map((review) => (
