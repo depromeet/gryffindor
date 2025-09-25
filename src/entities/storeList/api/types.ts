@@ -10,6 +10,7 @@ export interface StoreListResponse {
   walkingMinutes: number;
   seats: SeatTypes[];
   honbobLevel: number;
+  tags?: string[];
 }
 
 export interface StoreListResponseReal {
@@ -29,7 +30,7 @@ export interface StoreListResponseData {
   distance: number;
   walkingMinutes: number;
   seats: SeatTypes[];
-  tags: string[];
+  tags?: string[]; //map 쪽의 mock 데이터와 충돌을 피하기 위해 옵셔널 값으로 제공
   honbobLevel: number;
 }
 export interface StoreListRequest {
