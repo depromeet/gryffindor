@@ -1,3 +1,5 @@
+import BubbleIcon from "./bubble.svg";
+import BubblePickIcon from "./bubble-pick.svg";
 import CallIcon from "./call.svg";
 import CharacterIcon from "./character.svg";
 import CheckIcon from "./check.svg";
@@ -7,7 +9,6 @@ import CloseIcon from "./close.svg";
 import CloseCircleIcon from "./close-circle.svg";
 import CrownIcon from "./crown.svg";
 import DownArrowIcon from "./down-arrow.svg";
-import DownTriangleIcon from "./down-triangle.svg";
 import FilterIcon from "./filter.svg";
 import HomeIcon from "./home.svg";
 import KeBabIcon from "./kebab.svg";
@@ -18,7 +19,6 @@ import Lv2UserIcon from "./lv2-user.svg";
 import Lv3UserIcon from "./lv3-user.svg";
 import Lv4UserIcon from "./lv4-user.svg";
 import MapIcon from "./map.svg";
-import MapBubbleIcon from "./map-bubble.svg";
 import ColorNoteIcon from "./note.svg";
 import RefreshIcon from "./refresh.svg";
 import SearchIcon from "./search.svg";
@@ -44,8 +44,8 @@ export const iconMap = {
   location: LocationIcon,
   kebab: KeBabIcon,
   character: CharacterIcon,
-  mapBubble: MapBubbleIcon,
-  downTriangle: DownTriangleIcon,
+  bubble: BubbleIcon,
+  bubblePick: BubblePickIcon,
   refresh: RefreshIcon,
   filter: FilterIcon,
   colorNote: ColorNoteIcon,
