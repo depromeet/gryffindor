@@ -1,10 +1,13 @@
 "use client";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 import { fetchReviews } from "@/entities/review/api/mock";
 import { useInfiniteScroll } from "@/shared/lib";
 import { TextButton } from "@/shared/ui";
+
 import { ReviewList } from "./ReviewList";
 
 interface ReviewSectionProps {
@@ -13,6 +16,7 @@ interface ReviewSectionProps {
 }
 
 export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
+  const router = useRouter();
   const [isInfiniteScrollEnabled, setInfiniteScrollEnabled] = useState(false);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
@@ -42,7 +46,13 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
     <section className="mt-8 flex w-full flex-col gap-4 px-5">
       <div className="flex items-center justify-between">
         <span className="text-[#000] text-subtitle1">방문 후기</span>
-        <TextButton label="후기 작성하기" isIcon color rotateNumber={270} onClick={() => {}} />
+        <TextButton
+          label="후기 작성하기"
+          isIcon
+          color
+          rotateNumber={270}
+          onClick={() => router.push(`/store/${storeId}/review`)}
+        />
       </div>
 
       <ReviewList reviews={reviews} memberId={memberId} />
