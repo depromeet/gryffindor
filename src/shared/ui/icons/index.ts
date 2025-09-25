@@ -1,3 +1,5 @@
+import BarSeatIcon from "./bar-seat.svg";
+import BulkheadIcon from "./bulkhead.svg";
 import CallIcon from "./call.svg";
 import CharacterIcon from "./character.svg";
 import CheckIcon from "./check.svg";
@@ -9,6 +11,9 @@ import CrownIcon from "./crown.svg";
 import DownArrowIcon from "./down-arrow.svg";
 import DownTriangleIcon from "./down-triangle.svg";
 import FilterIcon from "./filter.svg";
+import ForFourIcon from "./for-four.svg";
+import ForOneIcon from "./for-one.svg";
+import ForTwoIcon from "./for-two.svg";
 import HomeIcon from "./home.svg";
 import KeBabIcon from "./kebab.svg";
 import LeftArrowIcon from "./left-arrow.svg";
@@ -20,6 +25,7 @@ import Lv4UserIcon from "./lv4-user.svg";
 import MapIcon from "./map.svg";
 import MapBubbleIcon from "./map-bubble.svg";
 import ColorNoteIcon from "./note.svg";
+import PinIcon from "./pin.svg";
 import RefreshIcon from "./refresh.svg";
 import SearchIcon from "./search.svg";
 import ColorSpeakerIcon from "./speaker.svg";
@@ -53,6 +59,11 @@ export const iconMap = {
   colorNote: ColorNoteIcon,
   colorSpeaker: ColorSpeakerIcon,
   colorTest: ColorTestIcon,
+  bulkhead: BulkheadIcon,
+  barSeat: BarSeatIcon,
+  forOne: ForOneIcon,
+  forTwo: ForTwoIcon,
+  forFour: ForFourIcon,
   checkLight: CheckLightIcon,
   checkBold: CheckBoldIcon,
   closeCircle: CloseCircleIcon,
@@ -61,4 +72,5 @@ export const iconMap = {
   lv2User: Lv2UserIcon,
   lv3User: Lv3UserIcon,
   lv4User: Lv4UserIcon,
+  pin: PinIcon,
 } as const;
