@@ -23,6 +23,8 @@ export interface StoreResponse {
   thumbnailUrls: string[];
   level: number;
   name: string;
+  lat: number;
+  lon: number;
   address: string;
   phone: string;
   menus: Menu[];
