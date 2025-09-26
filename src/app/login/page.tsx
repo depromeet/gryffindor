@@ -1,5 +1,5 @@
-import { SampleLogin } from "@/features/auth/ui";
+import { LoginForm } from "@/features/auth/ui";
 
 export default function LoginPage() {
-  return <SampleLogin />;
+  return <LoginForm />;
 }

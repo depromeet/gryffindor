@@ -32,7 +32,6 @@ export function StackHeader({ config, className, title: dynamicTitle }: StackHea
   const handleBack = () => {
     if (backButton?.action) {
       if (typeof backButton.action === "string") {
-        // biome-ignore lint/suspicious/noExplicitAny: Next.js router typing issue
         router.push(backButton.action as any);
       } else {
         backButton.action();
