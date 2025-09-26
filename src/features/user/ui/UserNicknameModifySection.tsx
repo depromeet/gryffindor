@@ -13,9 +13,12 @@ export function UserNicknameModifySection() {
   const nickname = useNicknameInput(userState.displayName);
 
   const { mutate: updateNickname, isPending } = useMutateUserNickname({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await update({
+        nickName: nickname.value,
+      });
+
       router.push("/mypage");
-      update({ nickname: nickname.value });
     },
     onError: () => {
       alert("닉네임 수정에 실패했습니다. 다시 시도해주세요.");
