@@ -2,8 +2,6 @@ import Image from "next/image";
 import { Tag } from "@/shared/ui";
 import type { SeatTypes, StoreSearchResponse } from "../api";
 
-export interface StorePreviewCardProps extends Omit<StoreSearchResponse, "id" | "coordinate"> {}
-
 export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   FOR_ONE: "1인석",
   FOR_TWO: "2인석",
@@ -12,7 +10,7 @@ export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   BAR_TABLE: "바 좌석",
 };
 
-export function StorePreviewCard({
+export function StoreCard({
   name,
   thumbnailUrl,
   signatureMenu,
@@ -20,7 +18,7 @@ export function StorePreviewCard({
   walkingMinutes,
   seatTypes,
   honbobLevel,
-}: StorePreviewCardProps) {
+}: StoreSearchResponse) {
   return (
     <article className="flex items-center gap-4 rounded-[16px]">
       <div className="relative h-[120px] w-[120px] flex-shrink-0">

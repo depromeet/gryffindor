@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { StoreSearchResponse } from "@/entities/storeList/api";
-import { SelectedStorePreviewCard, StorePreviewCard } from "@/entities/storeList/ui";
+import { SelectedStoreCard, StoreCard } from "@/entities/storeList/ui";
 import {
   BottomSheet,
   BottomSheetContent,
@@ -16,7 +16,7 @@ export function StoreBottomSheet({ storeList }: { storeList: StoreSearchResponse
 
   if (selectedStoreId) {
     const selectedStoreInfo = storeList.find((store) => store.id === selectedStoreId);
-    if (selectedStoreInfo) return <SelectedStorePreviewCard {...selectedStoreInfo} />;
+    if (selectedStoreInfo) return <SelectedStoreCard {...selectedStoreInfo} />;
   }
 
   return (
@@ -29,7 +29,7 @@ export function StoreBottomSheet({ storeList }: { storeList: StoreSearchResponse
           {storeList.map((store) => (
             <li key={store.id}>
               <Link href={`#`}>
-                <StorePreviewCard {...store} />
+                <StoreCard {...store} />
               </Link>
             </li>
           ))}
