@@ -6,17 +6,16 @@ import { STORE_LIST_MOCK_DATA } from "@/entities/storeList/model";
 import type { FilterData } from "@/features/filter/model/types";
 import {
   FetchStoreListButton,
+  FilterBottomSheet,
   MapActionButton,
-  NaverMap,
+  MapView,
   StoreBottomSheet,
 } from "@/features/map/ui";
-import { FilterBottomSheet } from "@/features/map/ui/FilterBottomSheet";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function MapPage() {
   // TODO: API 연동 후, 목 데이터 제거
   const [storeList] = useState<StoreSearchResponse[]>(STORE_LIST_MOCK_DATA);
-  const [selectedStoreId, setSelectedStoreId] = useState<number | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<FilterData>({
     price: { min: 0, max: 20000 },
@@ -27,15 +26,11 @@ export default function MapPage() {
 
   return (
     <TransitionLayout>
-      <NaverMap
-        storeList={storeList}
-        selectedStoreId={selectedStoreId}
-        onStoreSelect={(id) => setSelectedStoreId(id)}
-      />
+      <MapView storeList={storeList} />
       <FetchStoreListButton onClick={() => {}} />
       <MapActionButton type="filter" onClick={() => setIsFilterOpen(true)} />
       <MapActionButton type="location" onClick={() => {}} />
-      <StoreBottomSheet storeList={storeList} selectedStoreId={selectedStoreId} />
+      <StoreBottomSheet storeList={storeList} />
       <FilterBottomSheet
         isOpen={isFilterOpen}
         onClose={() => setIsFilterOpen(false)}
