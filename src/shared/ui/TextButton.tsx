@@ -69,10 +69,9 @@ export function TextButton({
             name="downArrow"
             title="화살표"
             size={16}
-            disableCurrentColor
             className={`transition-transform duration-300 ease-in-out ${
               rotateClassMap[rotateNumber]
-            } ${color ? "text-primary400" : "text-gray600"}`}
+            } ${color ? "text-primary400" : "text-gray400"}`}
           />
         </div>
       )}

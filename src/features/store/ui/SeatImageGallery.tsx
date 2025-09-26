@@ -6,19 +6,24 @@ interface SeatImageGalleryProps {
   storeName: string;
   level: number;
   userName: string;
-  images: SeatImage[];
+  seatImages: SeatImage[];
 }
 
-export function SeatImageGallery({ images, storeName, level, userName }: SeatImageGalleryProps) {
+export function SeatImageGallery({
+  seatImages,
+  storeName,
+  level,
+  userName,
+}: SeatImageGalleryProps) {
   const seatTypeMap = {
-    cubicle: "칸막이",
-    barTable: "바 좌석",
-    forOne: "1인석",
-    forTwo: "2인석",
-    forFour: "4인석",
+    CUBICLE: "칸막이",
+    BAR_TABLE: "바 좌석",
+    FOR_ONE: "1인석",
+    FOR_TWO: "2인석",
+    FOR_FOUR: "4인석",
   } as const;
 
-  const seatLabels = images
+  const seatLabels = seatImages
     .map((img) => seatTypeMap[img.seatType as keyof typeof seatTypeMap])
     .filter(Boolean);
   return (
@@ -26,8 +31,8 @@ export function SeatImageGallery({ images, storeName, level, userName }: SeatIma
       <section className="flex w-full flex-col gap-3">
         <span className="text-[#000] text-subtitle1">좌석 이미지</span>
         <div className="scrollbar-hide -mx-5 flex items-center gap-3 overflow-x-auto px-5">
-          {images.length > 0 &&
-            images.map((img) => (
+          {seatImages.length > 0 &&
+            seatImages.map((img) => (
               <div
                 key={img.seatType}
                 className="relative h-[180px] w-[180px] shrink-0 overflow-hidden rounded-[16px]"
@@ -58,7 +63,8 @@ export function SeatImageGallery({ images, storeName, level, userName }: SeatIma
         <span className="text-body2-semibold text-primary500">좌석 사진</span>
         <span className="text-[rgba(20,20,20,0.8)] text-body2-regular">
           {storeName}은 {seatLabels.join(", ")}이 있어서 혼밥 레벨 {level}
-          에게 안성맞춤이에요! {userName}님, 오늘은 {seatLabels[0]}에서 맛있는 혼밥 어떠세요?
+          에게 안성맞춤이에요! {userName}님, 오늘은 {seatLabels[0]}
+          에서 맛있는 혼밥 어떠세요?
         </span>
       </section>
     </article>
