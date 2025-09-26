@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { Tag } from "@/shared/ui";
 
 interface HonbobLevelCardProps {
   honbobLevel: string;
   honbobLevelTitle: string;
   honbobLevelDescription: string;
-  honbobLevelIcon?: string;
+  honbobLevelIcon: StaticImageData;
   recommendedMenu: string;
   recommendedStore: string;
 }
@@ -41,10 +41,13 @@ export function HonbobLevelCard({
           </div>
         </div>
       </div>
-      {honbobLevelIcon && (
-        <Image src={honbobLevelIcon} alt="honbobLevelIcon" width={70} height={70} />
-      )}
-      {!honbobLevelIcon && <div className="h-[70px] w-[70px] bg-gray100">아이콘</div>}
+      <Image
+        src={honbobLevelIcon}
+        alt="honbobLevelIcon"
+        width={70}
+        height={70}
+        className="rounded-full"
+      />
     </div>
   );
 }

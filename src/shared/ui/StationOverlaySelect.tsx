@@ -19,25 +19,21 @@ export function StationOverlaySelect() {
     setIsOpen(false);
   };
 
-  const toggleIsOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
-
   return (
     <Select
       value={value}
       isOpen={isOpen}
       onValueChange={handleValueChange}
       onOpenChange={setIsOpen}
-      closeOnOutsideClick={true}
+      closeOnOutsideClick={false}
     >
-      <Select.Trigger className="flex items-center gap-[2px]" onClick={toggleIsOpen}>
+      <Select.Trigger className="flex items-center gap-[2px]">
         <Select.Value
           placeholder="역을 선택하세요"
           className="font-semibold text-Gray-gray900 text-xl leading-relaxed"
         />
-        <Select.Icon>
-          <Icon name="downArrow" />
+        <Select.Icon className="size-[24px]">
+          <Icon name="downArrow" disableCurrentColor />
         </Select.Icon>
       </Select.Trigger>
       <Overlay
