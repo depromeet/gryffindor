@@ -9,7 +9,8 @@
       "Bash(npm run lint)",
       "Bash(npm run lint:*)",
       "Bash(npm run typecheck:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

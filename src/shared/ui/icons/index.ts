@@ -1,4 +1,5 @@
 import BarSeatIcon from "./bar-seat.svg";
+import BobEatTextIcon from "./bob-eat-text.svg";
 import BubbleIcon from "./bubble.svg";
 import BubblePickIcon from "./bubble-pick.svg";
 import BulkheadIcon from "./bulkhead.svg";
@@ -15,7 +16,9 @@ import FilterIcon from "./filter.svg";
 import ForFourIcon from "./for-four.svg";
 import ForOneIcon from "./for-one.svg";
 import ForTwoIcon from "./for-two.svg";
+import GoogleIcon from "./google.svg";
 import HomeIcon from "./home.svg";
+import KakaoIcon from "./kakao.svg";
 import KeBabIcon from "./kebab.svg";
 import LeftArrowIcon from "./left-arrow.svg";
 import LocationIcon from "./location.svg";
@@ -28,6 +31,7 @@ import ColorNoteIcon from "./note.svg";
 import PinIcon from "./pin.svg";
 import RefreshIcon from "./refresh.svg";
 import SearchIcon from "./search.svg";
+import SelectCheckIcon from "./select-check.svg";
 import ColorSpeakerIcon from "./speaker.svg";
 import SpeakerIcon from "./speaker-line.svg";
 import ColorTestIcon from "./test.svg";
@@ -57,6 +61,7 @@ export const iconMap = {
   colorNote: ColorNoteIcon,
   colorSpeaker: ColorSpeakerIcon,
   colorTest: ColorTestIcon,
+  selectCheck: SelectCheckIcon,
   bulkhead: BulkheadIcon,
   barSeat: BarSeatIcon,
   forOne: ForOneIcon,
@@ -71,4 +76,7 @@ export const iconMap = {
   lv3User: Lv3UserIcon,
   lv4User: Lv4UserIcon,
   pin: PinIcon,
+  bobEatText: BobEatTextIcon,
+  kakao: KakaoIcon,
+  google: GoogleIcon,
 } as const;
