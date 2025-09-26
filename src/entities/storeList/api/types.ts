@@ -1,6 +1,6 @@
 export type SeatTypes = "FOR_ONE" | "FOR_TWO" | "FOR_FOUR" | "CUBICLE" | "BAR_TABLE";
 
-export interface StoreListResponse {
+export interface StoreSearchResponse {
   id: number;
   name: string;
   thumbnailUrl: string;

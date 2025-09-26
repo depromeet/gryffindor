@@ -9,7 +9,7 @@ export function UserMenuList() {
       {MY_PAGE_NAVIGATION.map((item) => (
         <li key={item.label}>
           {userState.isLoggedIn && (
-            <Link href={item.href as any}>
+            <Link href={`#`}>
               <UserMenuCard icon={item.icon} label={item.label} />
             </Link>
           )}

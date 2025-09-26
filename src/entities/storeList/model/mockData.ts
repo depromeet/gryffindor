@@ -1,6 +1,6 @@
-import type { StoreListResponse } from "../api/types";
+import type { StoreSearchResponse } from "../api/types";
 
-export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
+export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
   {
     id: 1,
     name: "폴인포케 강남역점",

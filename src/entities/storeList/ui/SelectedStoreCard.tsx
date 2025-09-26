@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { Tag } from "@/shared/ui";
-import type { StoreListResponse } from "../api";
+import type { StoreSearchResponse } from "../api";
 import { SEAT_TYPES_MAP } from "./StoreCard";
-
-export interface SelectedStoreCardProps extends Omit<StoreListResponse, "id" | "coordinate"> {}
 
 export function SelectedStoreCard({
   name,
@@ -13,11 +11,9 @@ export function SelectedStoreCard({
   walkingMinutes,
   seatTypes,
   honbobLevel,
-}: SelectedStoreCardProps) {
+}: StoreSearchResponse) {
   return (
-    <article
-      className={`flex w-[335px] justify-between gap-4 rounded-xl bg-gray0 px-4 py-3 shadow-[-4px_0_20px_0_rgba(0,0,0,0.08)]`}
-    >
+    <article className="-translate-x-1/2 fixed bottom-22 left-1/2 z-49 flex w-[335px] justify-between gap-4 rounded-xl bg-gray0 px-4 py-3 shadow-[-4px_0_20px_0_rgba(0,0,0,0.08)]">
       <div className="flex flex-col gap-y-3">
         <div className="flex flex-col gap-y-1">
           <Tag label={`레벨 ${honbobLevel}`} color="red" size="small" iconName="crown" />
@@ -42,6 +38,7 @@ export function SelectedStoreCard({
           ))}
         </ul>
       </div>
+
       <div className="relative h-[96px] w-[96px] flex-shrink-0">
         <Image
           src={thumbnailUrl}
