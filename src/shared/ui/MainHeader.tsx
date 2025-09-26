@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useUserState } from "@/entities/user";
 import { Icon, StationOverlaySelect } from "@/shared/ui";
 
 interface MainHeaderProps {
@@ -8,6 +9,8 @@ interface MainHeaderProps {
 }
 
 function MainHeader({ isShowUserIcon = true }: MainHeaderProps) {
+  const { userState } = useUserState();
+
   return (
     <header
       className={
@@ -20,7 +23,11 @@ function MainHeader({ isShowUserIcon = true }: MainHeaderProps) {
         <Icon name="search" />
         {isShowUserIcon && (
           <Link href="/mypage">
-            <Icon name="user" />
+            {userState.isLoggedIn ? (
+              <Icon name="userLogin" size={32} />
+            ) : (
+              <Icon name="user" size={32} />
+            )}
           </Link>
         )}
       </div>

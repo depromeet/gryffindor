@@ -1,19 +1,34 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { use } from "react";
-import { MOCK_DATA } from "@/entities/store/model";
 import { MenuItem } from "@/entities/store/ui";
+import { useUserState } from "@/entities/user";
+import { getStoreDetail } from "@/features/store/api/getStoreDetail";
 import { SeatImageGallery, SeatInfoSection, StoreInfo, SuggestionCard } from "@/features/store/ui";
 import { ReviewSection } from "@/features/store/ui/ReviewSection";
+import { queryKeys } from "@/shared/api";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
   const { params } = props;
   const resolvedParams = use(params) as { id: string };
-  const store = MOCK_DATA.find((s) => s.storeId === Number(resolvedParams.id));
+  const { userState } = useUserState();
 
-  if (!store) {
-    return <div>Store not found</div>;
+  const { data: store, isLoading } = useQuery({
+    queryKey: queryKeys.STORE_DETAIL(resolvedParams.id),
+    queryFn: () => getStoreDetail(resolvedParams.id),
+    enabled: !!resolvedParams.id,
+  });
+
+  if (isLoading || !store) {
+    return (
+      <TransitionLayout>
+        <div className="flex min-h-screen items-center justify-center">
+          <div>로딩 중...</div>
+        </div>
+      </TransitionLayout>
+    );
   }
 
   return (
@@ -32,15 +47,12 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
         <SeatInfoSection seatInfo={store.seatInfo} />
         <SeatImageGallery
           storeName={store.name}
-          level={store.level}
-          userName="홍길동"
-          images={store.seatImages}
+          level={userState.honbabLevel}
+          userName={userState.displayName}
+          seatImages={store.seatImages}
         />
         <ReviewSection storeId={store.storeId} />
-
-        <div className="px-5 pb-[59px]">
-          <SuggestionCard />
-        </div>
+        <SuggestionCard />
       </div>
     </TransitionLayout>
   );

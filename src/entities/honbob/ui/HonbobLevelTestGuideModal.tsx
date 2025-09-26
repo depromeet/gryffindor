@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useUserState } from "@/entities/user";
 import { useSessionStorage } from "@/shared/lib";
+import { BasicCharacter } from "@/shared/lib/assets";
 import { Button, Icon, Modal } from "@/shared/ui";
 
 const MODAL_SESSION_KEY = "honbob_level_test_guide_modal";
@@ -14,7 +16,9 @@ export function HonbobLevelTestGuideModal() {
   const { getSession, setSession } = useSessionStorage<boolean>(MODAL_SESSION_KEY);
   const hasSeenModal = getSession();
 
-  const [isOpen, setIsOpen] = useState(!hasSeenModal && !userState.isLevelTestCompleted);
+  const [isOpen, setIsOpen] = useState(
+    !hasSeenModal && userState.isLoggedIn && !userState.isLevelTestCompleted,
+  );
 
   const closeModal = () => {
     setIsOpen(false);
@@ -36,10 +40,10 @@ export function HonbobLevelTestGuideModal() {
     >
       <div className="flex w-[300px] flex-col items-center rounded-[10px] bg-white p-[20px]">
         <button className="cursor-pointer self-end" type="button" onClick={closeModal}>
-          <Icon name="close" />
+          <Icon name="close" size={22} disableCurrentColor />
         </button>
         <div className="flex w-full flex-col items-center gap-[24px]">
-          <div className="flex h-[120px] w-[120px] items-center gap-[8px] bg-gray200">아이콘</div>
+          <Image src={BasicCharacter} alt="basicCharacter" width={120} height={120} />
           <div className="flex w-full flex-col items-center gap-[8px]">
             <span className="text-gray900 text-subtitle1">
               혼밥 레벨 테스트를 <br />

@@ -11,7 +11,7 @@ export function SelectedStoreCard({
   signatureMenu,
   distance,
   walkingMinutes,
-  seats,
+  seatTypes,
   honbobLevel,
 }: SelectedStoreCardProps) {
   return (
@@ -35,9 +35,9 @@ export function SelectedStoreCard({
           </div>
         </div>
         <ul className="flex flex-nowrap items-center gap-x-[5px]">
-          {seats.map((seat) => (
-            <li key={seat}>
-              <Tag label={SEAT_TYPES_MAP[seat]} color="blue" size="small" />
+          {seatTypes.map((seatType) => (
+            <li key={seatType}>
+              <Tag label={SEAT_TYPES_MAP[seatType]} color="blue" size="small" />
             </li>
           ))}
         </ul>

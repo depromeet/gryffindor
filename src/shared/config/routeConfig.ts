@@ -67,6 +67,13 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
       title: "마이페이지",
     },
   },
+  "/mypage/nickname": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "닉네임 변경",
+    },
+  },
   "/mypage/*": {
     group: "stack",
     transition: "drill",
