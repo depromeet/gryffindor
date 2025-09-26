@@ -8,7 +8,7 @@ export interface StoreListResponse {
   coordinate: { lat: number; lon: number };
   distance: number;
   walkingMinutes: number;
-  seats: SeatTypes[];
+  seatTypes: SeatTypes[];
   honbobLevel: number;
   tags?: string[];
 }
@@ -29,7 +29,7 @@ export interface StoreListResponseData {
   coordinate: { lat: number; lon: number };
   distance: number;
   walkingMinutes: number;
-  seats: SeatTypes[];
+  seatTypes: SeatTypes[];
   tags?: string[]; //map 쪽의 mock 데이터와 충돌을 피하기 위해 옵셔널 값으로 제공
   honbobLevel: number;
 }

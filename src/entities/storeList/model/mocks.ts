@@ -10,7 +10,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.49971608046685, lon: 127.02873596367915 },
     distance: 300,
     walkingMinutes: 4,
-    seats: ["FOR_ONE", "FOR_TWO", "FOR_FOUR", "CUBICLE"],
+    seatTypes: ["FOR_ONE", "FOR_TWO", "FOR_FOUR", "CUBICLE"],
     honbobLevel: 1,
   },
   {
@@ -22,7 +22,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.49717510115111, lon: 127.02931172532637 },
     distance: 150,
     walkingMinutes: 2,
-    seats: ["FOR_ONE", "FOR_TWO", "BAR_TABLE"],
+    seatTypes: ["FOR_ONE", "FOR_TWO", "BAR_TABLE"],
     honbobLevel: 2,
   },
   {
@@ -34,7 +34,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.496346709493345, lon: 127.02707233620052 },
     distance: 400,
     walkingMinutes: 5,
-    seats: ["FOR_ONE", "FOR_TWO", "CUBICLE", "FOR_FOUR"],
+    seatTypes: ["FOR_ONE", "FOR_TWO", "CUBICLE", "FOR_FOUR"],
     honbobLevel: 3,
   },
   {
@@ -46,7 +46,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.49851829860814, lon: 127.02634936089594 },
     distance: 400,
     walkingMinutes: 5,
-    seats: ["FOR_ONE", "FOR_TWO", "CUBICLE", "FOR_FOUR"],
+    seatTypes: ["FOR_ONE", "FOR_TWO", "CUBICLE", "FOR_FOUR"],
     honbobLevel: 3,
   },
   {
@@ -58,7 +58,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.501446412320675, lon: 127.0270402498037 },
     distance: 400,
     walkingMinutes: 5,
-    seats: ["FOR_ONE", "FOR_TWO", "FOR_FOUR"],
+    seatTypes: ["FOR_ONE", "FOR_TWO", "FOR_FOUR"],
     honbobLevel: 3,
   },
   {
@@ -70,7 +70,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.49929287463546, lon: 127.02761622484387 },
     distance: 400,
     walkingMinutes: 5,
-    seats: ["FOR_ONE", "CUBICLE", "FOR_FOUR"],
+    seatTypes: ["FOR_ONE", "CUBICLE", "FOR_FOUR"],
     honbobLevel: 3,
   },
   {
@@ -82,7 +82,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.50173516341212, lon: 127.02509516748712 },
     distance: 400,
     walkingMinutes: 5,
-    seats: ["FOR_ONE", "FOR_TWO"],
+    seatTypes: ["FOR_ONE", "FOR_TWO"],
     honbobLevel: 2,
   },
   {
@@ -94,7 +94,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.501041403320414, lon: 127.02502708058614 },
     distance: 400,
     walkingMinutes: 5,
-    seats: ["FOR_ONE", "FOR_TWO"],
+    seatTypes: ["FOR_ONE", "FOR_TWO"],
     honbobLevel: 3,
   },
   {
@@ -106,7 +106,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.502167844159196, lon: 127.02414533203928 },
     distance: 400,
     walkingMinutes: 5,
-    seats: ["FOR_ONE", "FOR_TWO"],
+    seatTypes: ["FOR_ONE", "FOR_TWO"],
     honbobLevel: 2,
   },
   {
@@ -118,7 +118,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.50051283786172, lon: 127.03122991213027 },
     distance: 400,
     walkingMinutes: 5,
-    seats: ["FOR_ONE", "FOR_TWO"],
+    seatTypes: ["FOR_ONE", "FOR_TWO"],
     honbobLevel: 2,
   },
   {
@@ -130,7 +130,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.49797314866697, lon: 127.0265329350111 },
     distance: 400,
     walkingMinutes: 5,
-    seats: ["FOR_ONE", "FOR_TWO"],
+    seatTypes: ["FOR_ONE", "FOR_TWO"],
     honbobLevel: 2,
   },
   {
@@ -142,7 +142,7 @@ export const STORE_LIST_MOCK_DATA: StoreListResponse[] = [
     coordinate: { lat: 37.500719461636066, lon: 127.03344940320814 },
     distance: 400,
     walkingMinutes: 5,
-    seats: ["FOR_ONE", "FOR_TWO"],
+    seatTypes: ["FOR_ONE", "FOR_TWO"],
     honbobLevel: 2,
   },
 ];
