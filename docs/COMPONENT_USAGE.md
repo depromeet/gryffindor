@@ -8,6 +8,7 @@
 2. [StackHeader 컴포넌트](#stackheader-컴포넌트)
 3. [Icon 컴포넌트](#icon-컴포넌트)
 4. [라우트 설정 (RouteConfig)](#라우트-설정-routeconfig)
+5. [Input 컴포넌트](#input-컴포넌트)
 
 ---
 
@@ -206,6 +207,247 @@ import { Icon } from "@/shared/ui";
 
 ---
 
+## Input 컴포넌트
+
+설정 기반의 확장 가능한 입력 필드 시스템입니다.
+
+### 주요 특징
+
+- 🔧 **설정 기반**: inputConfig로 중앙화된 필드 관리
+- ✅ **내장 검증**: 실시간 validation과 에러 메시지
+- 🔄 **상태 관리**: 커스텀 훅으로 간편한 상태 처리
+- 🎨 **일관된 UI**: 통일된 디자인 시스템
+
+### 기본 사용법
+
+```tsx
+import { useNicknameInput } from "@/shared/lib";
+import { Input } from "@/shared/ui";
+
+export default function NicknamePage() {
+  const nickname = useNicknameInput("기본값"); //사전 정의 hook을 활용할 경우
+
+  const nicknameV2 = useInputField("nickname", "nickname", initialValue); //기본 hook을 활용할 경우 => 위 hook을 통해 Input 태그에 필요한 props를 쉽게 설정 가능합니다.
+  
+  return (
+    <div>
+      <Input {...nickname.inputProps} />
+      <button disabled={!nickname.isValid || !nickname.hasChanged}>
+        저장
+      </button>
+    </div>
+  );
+}
+```
+
+### Props
+
+| Prop | Type | Default | 설명 |
+|------|------|---------|------|
+| `value` | `string` | - | 입력 값 |
+| `onChange` | `(value: string) => void` | - | 값 변경 핸들러 |
+| `placeholder` | `string` | - | 플레이스홀더 텍스트 |
+| `label` | `string` | - | 라벨 텍스트 |
+| `validation` | `ValidationRule` | - | 검증 규칙 |
+| `disabled` | `boolean` | `false` | 비활성화 상태 |
+| `className` | `string` | `""` | 추가 CSS 클래스 |
+| `resetButton` | `boolean` | `false` | 초기화 버튼 표시(value가 truthy시 렌더링) |
+
+### ValidationRule 인터페이스
+
+```tsx
+interface ValidationRule {
+  required?: boolean;        // 필수 입력
+  pattern?: RegExp;         // 정규식 패턴
+  maxLength?: number;       // 최대 글자 수
+  minLength?: number;       // 최소 글자 수
+  message?: string;         // 커스텀 에러 메시지
+}
+```
+
+### 미리 정의된 검증 패턴과 규칙
+
+validation을 직접 작성할 수도 있지만, 자주 사용되는 패턴과 규칙들을 미리 정의해두고 조합하여 사용할 수 있습니다.
+
+```tsx
+// VALIDATION_PATTERNS: 자주 사용되는 정규식 패턴들
+export const VALIDATION_PATTERNS = {
+  NICKNAME: /^[가-힣a-zA-Z0-9]{2,8}$/,  // 닉네임 패턴
+} as const;
+
+// VALIDATION_RULES: 미리 정의된 검증 규칙들을 조합하여 사용
+export const VALIDATION_RULES = {
+  REQUIRED: { required: true },
+  REQUIRED_WITH_MESSAGE: {
+    NICKNAME: { required: true, message: "닉네임을 입력해주세요." }
+  },
+  PATTERNS: {
+    NICKNAME: { pattern: VALIDATION_PATTERNS.NICKNAME, message: "2-8글자의 한글, 영문, 숫자만 가능합니다." }
+  },
+  LENGTH: {
+    NICKNAME: { minLength: 2, maxLength: 8 }
+  }
+};
+```
+
+### 설정 기반(inputConfig.ts) 사용법
+
+이를 통해 Input 컴포넌트를 활용하는 요소들의 설정을 한 곳에서 제어할 수 있습니다.
+
+```tsx
+// inputConfig.ts에서 필드 설정 정의
+export const INPUT_CONFIG = {
+  nickname: {
+    nickname: {
+      label: "닉네임",
+      placeholder: "닉네임을 입력하세요",
+      // 미리 정의된 규칙들을 조합하여 사용
+      validation: {
+        ...VALIDATION_RULES.REQUIRED_WITH_MESSAGE.NICKNAME,
+        ...VALIDATION_RULES.PATTERNS.NICKNAME,
+        ...VALIDATION_RULES.LENGTH.NICKNAME,
+      },
+      resetButton: true
+    },
+    nicknameTest: {
+      label: "닉네임Test",
+      placeholder: "닉네임Test을 입력하세요",
+      // 직접 validation 규칙 작성도 가능
+      validation: {
+        required: true,
+        pattern: /^.{2,8}$/,
+        message: "2-8글자 가능합니다"
+      },
+      resetButton: true
+    }
+  }
+};
+
+// 컴포넌트에서 사용
+//const nickname = useInputField("<page>", "<fieldName>", "<initialValue>");
+const nickname = useInputField("nickname", "nickname", "이잉");
+const nickname = useInputField("nickname", "nicknameTest", "이잉😇");
+```
+
+### useInputField 훅
+
+커스텀 훅이 제공하는 반환값:
+
+```tsx
+interface UseInputFieldReturn {
+  // 기본 상태
+  value: string;
+  setValue: (value: string) => void;
+  
+  // 설정 정보
+  config: InputFieldConfig | null;
+  
+  // 검증 상태
+  isValid: boolean;
+  errorMessage: string;
+  
+  // 변경 감지
+  hasChanged: boolean;
+  
+  // Input 컴포넌트용 props
+  inputProps: {
+    value: string;
+    onChange: (value: string) => void;
+    label?: string;
+    placeholder?: string;
+    validation?: ValidationRule;
+    resetButton?: boolean;
+  };
+}
+```
+
+### 편의 훅들
+
+자주 사용되는 필드를 위한 미리 정의된 훅들:
+
+```tsx
+// 닉네임 입력
+const nickname = useNicknameInput("기본값");
+
+// 리뷰 입력  
+const review = useReviewInput();
+
+// 커스텀 필드
+const customField = useInputField("페이지명", "필드명", "초기값");
+```
+
+### 고급 사용법
+
+```tsx
+// 복수 필드 관리
+export default function ProfileForm() {
+  const nickname = useNicknameInput();
+  const email = useInputField("profile", "email");
+  
+  // 전체 폼 검증
+  const isFormValid = nickname.isValid && email.isValid;
+  const hasAnyChanges = nickname.hasChanged || email.hasChanged;
+  
+  const handleSubmit = () => {
+    if (!isFormValid) return;
+    
+    console.log({
+      nickname: nickname.value,
+      email: email.value
+    });
+  };
+  
+  return (
+    <form>
+      <Input {...nickname.inputProps} />
+      <Input {...email.inputProps} />
+      
+      <button 
+        disabled={!isFormValid || !hasAnyChanges}
+        onClick={handleSubmit}
+      >
+        저장
+      </button>
+    </form>
+  );
+}
+```
+
+### 새 필드 추가하기
+
+1. **inputConfig.ts에 설정 추가**
+```tsx
+export const INPUT_CONFIG = {
+  // 기존 설정들...
+  
+  profile: {
+    email: {
+      label: "이메일",
+      placeholder: "이메일을 입력하세요",
+      validation: {
+        required: true,
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: "올바른 이메일 형식이 아닙니다"
+      }
+    }
+  }
+};
+```
+
+2. **편의 훅 생성 (선택사항)**
+```tsx
+export const useEmailInput = (initialValue: string = "") =>
+  useInputField("profile", "email", initialValue);
+```
+
+3. **컴포넌트에서 사용**
+```tsx
+const email = useEmailInput();
+<Input {...email.inputProps} />
+```
+
+---
+
 ## 라우트 설정 (RouteConfig)
 
 중앙화된 라우트 관리 시스템입니다.
@@ -326,6 +568,72 @@ const customHeader = {
 2. `types.ts`에 아이콘 이름 추가
 3. `Icon.tsx`의 `iconMap`에 매핑 추가
 
+### 4. 새 Input config 추가하고 사용하기
+
+Input 컴포넌트 시스템에 새로운 필드를 추가하는 전체 과정:
+
+```tsx
+// 1. inputConfig.ts에 새 페이지/필드 설정 추가
+export const INPUT_CONFIG = {
+  // 기존 설정들...
+  
+  // 새 페이지 추가 (예: 상점 등록)
+  storeRegister: {
+    storeName: {
+      label: "가게 이름",
+      placeholder: "가게 이름",
+      validation: {
+        required: true,
+        minLength: 5,
+        maxLength: 120,
+        message: "5글자 이상 작성해주세요"
+      },
+      resetButton: true
+    },
+  }
+};
+
+// 2. useInputField.ts에 편의 훅 추가
+export const useStoreNameInput = (initialValue: string = "") =>
+  useInputField("storeRegister", "storeName", initialValue);
+
+// 3. 컴포넌트에서 사용
+export default function StoreRegisterPage() {
+  const storeName = useStoreNameInput();
+
+  
+  // 폼 검증
+  const isFormValid = storeName.isValid;
+  const hasChanged = storeName.hasChanged;
+  
+  const handleSubmit = () => {
+    if (!isFormValid || !hasChanged) return;
+    
+    console.log({
+      storeName: storeName.value,
+    });
+  };
+  
+  return (
+    <form className="space-y-4">
+      <Input {...storeName.inputProps} />
+      
+      <button 
+        disabled={!isFormValid || !hasChanged}
+        onClick={handleSubmit}
+      >
+        등록하기
+      </button>
+    </form>
+  );
+}
+
+// 4. 필요시 새 validation 패턴 추가
+export const VALIDATION_PATTERNS = {
+  STORE_NAME: /^.{5,120}$/,  // 5글자 이상 120글자 이하
+} as const;
+```
+
 ---
 
 ## 🔗 관련 파일
@@ -333,5 +641,9 @@ const customHeader = {
 - `src/shared/ui/TransitionLayout.tsx` - 전환 레이아웃 컴포넌트
 - `src/shared/ui/StackHeader.tsx` - 스택 헤더 컴포넌트  
 - `src/shared/ui/icons/` - 아이콘 컴포넌트들
+- `src/shared/ui/Input.tsx` - Input 컴포넌트
+- `src/shared/lib/hooks/useInputField.ts` - Input 관련 커스텀 훅들
 - `src/shared/config/routeConfig.ts` - 라우트 설정
+- `src/shared/config/inputConfig.ts` - Input 필드 설정
 - `src/shared/config/transitions.ts` - 전환 애니메이션 설정
+- `src/shared/lib/utils/inputValidation.ts` - Input 검증 유틸리티
