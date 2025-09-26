@@ -3,13 +3,13 @@
 import { useCallback, useEffect, useRef } from "react";
 import { renderToString } from "react-dom/server";
 import { MapPin } from "@/entities/map/ui";
-import type { StoreSearchResponse } from "@/entities/storeList/api";
+import type { StoreListResponseData } from "@/entities/storeList/api";
 import { useMapMarkers } from "../lib/hooks/useMapMarkers";
 import { useMapStore } from "../model";
 
 interface MapMarkersProps {
   map: naver.maps.Map | null;
-  storeList: StoreSearchResponse[];
+  storeList: StoreListResponseData[];
 }
 
 export function MapMarkers({ map, storeList }: MapMarkersProps) {
@@ -17,7 +17,7 @@ export function MapMarkers({ map, storeList }: MapMarkersProps) {
   const { createMarker, updateMarker, clearMarker, getStore } = useMapMarkers(map);
   const { selectedStoreId } = useMapStore();
 
-  const getMarkerHtml = useCallback((store: StoreSearchResponse, selected: boolean) => {
+  const getMarkerHtml = useCallback((store: StoreListResponseData, selected: boolean) => {
     return renderToString(
       <MapPin selected={selected} name={store.name} honbobLevel={store.honbobLevel} />,
     );
