@@ -23,8 +23,6 @@ export function useSessionStorage<T = boolean>(target: string) {
 
       const data: StorageData<T> = JSON.parse(raw);
 
-      console.log("data", data);
-
       // 만료 시간 체크
       if (data.expireAt && Date.now() > data.expireAt) {
         sessionStorage.removeItem(target);
