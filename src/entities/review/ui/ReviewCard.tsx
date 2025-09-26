@@ -40,7 +40,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
           </div>
         </div>
         <button type="button" onClick={() => {}} className="cursor-pointer">
-          <Icon name="kebab" size={15} disableCurrentColor />
+          <Icon name="kebab" size={15} className="text-gray400" />
         </button>
       </section>
 
