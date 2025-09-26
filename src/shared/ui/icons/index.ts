@@ -7,6 +7,7 @@ import CheckBoldIcon from "./check-bold.svg";
 import CheckLightIcon from "./check-light.svg";
 import CloseIcon from "./close.svg";
 import CloseCircleIcon from "./close-circle.svg";
+import ColorRightChevronIcon from "./color-right-chevron.svg";
 import CrownIcon from "./crown.svg";
 import DownArrowIcon from "./down-arrow.svg";
 import DownTriangleIcon from "./down-triangle.svg";
@@ -73,4 +74,5 @@ export const iconMap = {
   lv3User: Lv3UserIcon,
   lv4User: Lv4UserIcon,
   pin: PinIcon,
+  colorRightChevron: ColorRightChevronIcon,
 } as const;
