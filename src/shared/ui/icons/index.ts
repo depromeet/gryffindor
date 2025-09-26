@@ -1,6 +1,6 @@
+import BarSeatIcon from "./bar-seat.svg";
 import BubbleIcon from "./bubble.svg";
 import BubblePickIcon from "./bubble-pick.svg";
-import BarSeatIcon from "./bar-seat.svg";
 import BulkheadIcon from "./bulkhead.svg";
 import CallIcon from "./call.svg";
 import CharacterIcon from "./character.svg";
