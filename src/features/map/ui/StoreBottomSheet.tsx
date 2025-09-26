@@ -9,13 +9,11 @@ import {
   BottomSheetHandler,
   BottomSheetHeader,
 } from "@/shared/ui";
+import { useMapStore } from "../model";
 
-interface StoreBottomSheetProps {
-  storeList: StoreSearchResponse[];
-  selectedStoreId: number | null;
-}
+export function StoreBottomSheet({ storeList }: { storeList: StoreSearchResponse[] }) {
+  const { selectedStoreId } = useMapStore();
 
-export function StoreBottomSheet({ storeList, selectedStoreId }: StoreBottomSheetProps) {
   if (selectedStoreId) {
     const selectedStoreInfo = storeList.find((store) => store.id === selectedStoreId);
     if (selectedStoreInfo) return <SelectedStorePreviewCard {...selectedStoreInfo} />;
