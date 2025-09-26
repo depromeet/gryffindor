@@ -2,10 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Lv1Image from "@/shared/lib/assets/Lv.1.png";
-import Lv2Image from "@/shared/lib/assets/Lv.2.png";
-import Lv3Image from "@/shared/lib/assets/Lv.3.png";
-import Lv4Image from "@/shared/lib/assets/Lv.4.png";
+import { Lv1Character, Lv2Character, Lv3Character, Lv4Character } from "@/shared/lib/assets";
 import { Button, Tag } from "@/shared/ui";
 import type { LevelTestResponse } from "../model/levelTestStore";
 
@@ -16,7 +13,7 @@ const LEVEL_DESCRIPTIONS = {
     description:
       "패스트푸드처럼 눈치 안 보고 후딱 먹을 수 있는 곳을 찾아다녀요. 다른 시선이 조금 신경쓰이는, 혼밥 세계로 발을 들인 풋풋한 초보자예요.",
     recommendations: "편의점 도시락, 샌드위치, 김밥, 패스트푸드",
-    image: Lv1Image,
+    image: Lv1Character,
   },
   2: {
     title: "혼밥 탐험가",
@@ -24,7 +21,7 @@ const LEVEL_DESCRIPTIONS = {
     description:
       '1인석이나 바 좌석을 찾아서 앉는 게 편안해요. 국밥 같은 혼밥 메뉴를 즐기며 "혼자 먹는 거 괜찮네?" 라는 자신감을 키우는 단계예요.',
     recommendations: "국밥, 라면, 돈까스, 카레, 초밥/카페/디저트",
-    image: Lv2Image,
+    image: Lv2Character,
   },
   3: {
     title: "혼밥 숙련자",
@@ -32,7 +29,7 @@ const LEVEL_DESCRIPTIONS = {
     description:
       '4인 테이블에 앉아도 당당하게 메뉴를 주문해요. 가끔 "혼자세요?"라는 질문을 받아도 웃으며 넘어갈 수 있는 혼밥 중급자예요.',
     recommendations: "백반 정식, 파스타, 김치찌개/된장찌개",
-    image: Lv3Image,
+    image: Lv3Character,
   },
   4: {
     title: "혼밥 마스터",
@@ -40,7 +37,7 @@ const LEVEL_DESCRIPTIONS = {
     description:
       "2인분 이상 주문 조건에도 굴하지 않아요. 닭갈비, 고깃집도 혼자서 정복하고, 필요하면 포장까지 완벽하게 챙기는 혼밥 고수예요.",
     recommendations: "닭갈비, 찜닭, 부대찌개, 고깃집",
-    image: Lv4Image,
+    image: Lv4Character,
   },
 };
 
@@ -52,6 +49,10 @@ export function LevelTestResult({ result }: LevelTestResultProps) {
   const levelInfo =
     LEVEL_DESCRIPTIONS[result.level as keyof typeof LEVEL_DESCRIPTIONS] || LEVEL_DESCRIPTIONS[1];
   const router = useRouter();
+
+  const handeResultClick = () => {
+    router.push("/home");
+  };
 
   return (
     <div className="w-full">
@@ -76,12 +77,7 @@ export function LevelTestResult({ result }: LevelTestResultProps) {
       </div>
 
       <div className="fixed bottom-0 left-0 w-full bg-gray0 p-[20px]">
-        <Button
-          label="혼밥 식당 보러가기"
-          variant="primary"
-          fullWidth
-          onClick={() => router.push("/home")}
-        />
+        <Button label="혼밥 식당 보러가기" variant="primary" fullWidth onClick={handeResultClick} />
       </div>
     </div>
   );

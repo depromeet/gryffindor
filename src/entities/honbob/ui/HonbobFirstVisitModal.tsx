@@ -6,25 +6,25 @@ import { useState } from "react";
 import { useUserState } from "@/entities/user";
 import { useSessionStorage } from "@/shared/lib";
 import { BasicCharacter } from "@/shared/lib/assets";
-import { Button, Icon, Modal } from "@/shared/ui";
+import { Button, Icon, Modal, TextButton } from "@/shared/ui";
 
-const MODAL_SESSION_KEY = "honbob_level_test_guide_modal";
-const MODAL_EXPIRED_TIME = 24 * 60 * 60 * 1000; // 24시간
+export const FIRST_VISIT_SESSION_KEY = "honbob_level_test_first_visit_fIRST_VISIT";
+const FIRST_VISIT_EXPIRED_TIME = 24 * 60 * 60 * 1000; // 24시간
 
-export function HonbobLevelTestGuideModal() {
+export function HonbobFirstVisitModal() {
   const { userState } = useUserState();
   const router = useRouter();
 
-  const { getSession, setSession } = useSessionStorage<boolean>(MODAL_SESSION_KEY);
+  const { getSession, setSession } = useSessionStorage<boolean>(FIRST_VISIT_SESSION_KEY);
   const hasSeenModal = getSession();
 
   const [isOpen, setIsOpen] = useState(
-    !hasSeenModal && userState.isLoggedIn && !userState.isLevelTestCompleted,
+    !hasSeenModal && !userState.isLoggedIn && !userState.isLevelTestCompleted,
   );
 
   const closeModal = () => {
     setIsOpen(false);
-    setSession(true, Date.now() + MODAL_EXPIRED_TIME);
+    setSession(true, Date.now() + FIRST_VISIT_EXPIRED_TIME);
   };
 
   //todo: 모달 레이아웃을 따로 빼둘까 고민
@@ -47,17 +47,24 @@ export function HonbobLevelTestGuideModal() {
         <div className="flex w-full flex-col items-center gap-[24px]">
           <Image src={BasicCharacter} alt="basicCharacter" width={120} height={120} />
           <div className="flex w-full flex-col items-center gap-[8px]">
-            <span className="text-gray900 text-subtitle1">
-              혼밥 레벨 테스트를 <br />
-              완료하지 않으셨어요
+            <span className="text-center text-gray900 text-subtitle1">
+              처음 방문하셨네요!
+              <br />
+              혼밥 레벨 테스트를 시작해보세요
             </span>
             <span className="text-body2-regular text-gray600">테스트는 첫 방문 1회만 진행해요</span>
           </div>
           <Button
-            label="다시 시작하기"
+            label="시작하기"
             size="medium"
             variant="primary"
-            onClick={() => router.push("/level-test")}
+            onClick={() => router.push("/login")}
+          />
+          <TextButton
+            label="이미 계정이 있어요"
+            onClick={() => router.replace("/login")}
+            isUnderline
+            isIcon={false}
           />
         </div>
       </div>

@@ -81,7 +81,7 @@ export function LevelTestQuestion({
               className={`h-[72px] w-full rounded-[12px] border-[1px] px-[20px] py-[24px] text-left transition-all duration-200 ${
                 isSelected
                   ? "border-primary400 bg-primary100 text-primary500"
-                  : "border-gray-200 bg-gray0 text-gray900 hover:border-gray-300 hover:bg-gray-50"
+                  : "border-gray-200 bg-gray50 text-gray900 hover:border-gray-300 hover:bg-gray-50"
               }`}
               disabled={onBoardingMutation.isPending}
             >
@@ -94,7 +94,7 @@ export function LevelTestQuestion({
                     disableCurrentColor
                   />
                 ) : (
-                  <Icon name="selectCheck" disableCurrentColor />
+                  <Icon name="selectCheck" className="h-[24px] w-[24px]" disableCurrentColor />
                 )}
                 <span className="text-body1-semibold">{option.text}</span>
               </div>

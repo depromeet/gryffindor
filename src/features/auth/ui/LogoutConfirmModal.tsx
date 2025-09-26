@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { signOutAction } from "@/features/auth/api";
+import { signOut } from "next-auth/react";
 import { BasicCharacter } from "@/shared/lib/assets";
 import { Button, Icon, Modal } from "@/shared/ui";
 
@@ -32,13 +32,14 @@ export function LogoutConfirmModal({ isOpen, onOpenChange }: LogoutConfirmModalP
               하시겠어요?
             </span>
           </div>
-          <form
-            action={async () => {
-              await signOutAction();
+          <Button
+            label="확인"
+            size="medium"
+            variant="primary"
+            onClick={async () => {
+              await signOut({ redirectTo: "/home" });
             }}
-          >
-            <Button label="확인" size="medium" variant="primary" type="submit" />
-          </form>
+          />
         </div>
       </div>
     </Modal>
