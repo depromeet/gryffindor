@@ -105,14 +105,14 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
 
   return (
     <article className="flex flex-col">
-      <header className="flex items-center justify-between p-5">
+      <header className="fixed flex w-full items-center justify-between rounded-t-[24px] bg-gray0 p-5">
         <div className="justify-start text-subtitle1">필터 옵션</div>
         <button type="button" onClick={onClose}>
           <Icon size={24} name="close" className="cursor-pointer text-gray400" />
         </button>
       </header>
 
-      <div className="h-[1px] w-full bg-gray100" />
+      <div className="mt-[65px] h-[1px] w-full bg-gray100" />
 
       {FILTER_SECTIONS.map((section) => {
         const sectionProps = {
@@ -134,7 +134,7 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
         onChange={handlePriceChange}
       />
       <div className="mt-[51px]"></div>
-      <div className="fixed right-0 bottom-0 left-0 z-50 mx-auto max-w-[375px]">
+      <div className="fixed right-0 bottom-0 left-0 z-50 mx-auto">
         <CTA
           secondaryLabel="초기화"
           primaryLabel="완료"

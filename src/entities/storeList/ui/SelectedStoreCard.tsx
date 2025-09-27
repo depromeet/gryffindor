@@ -13,7 +13,7 @@ export function SelectedStoreCard({
   honbobLevel,
 }: StoreListResponseData) {
   return (
-    <article className="-translate-x-1/2 fixed bottom-22 left-1/2 z-49 flex w-[335px] justify-between gap-4 rounded-xl bg-gray0 px-4 py-3 shadow-[-4px_0_20px_0_rgba(0,0,0,0.08)]">
+    <article className="-translate-x-1/2 fixed bottom-22 left-1/2 z-49 flex justify-between gap-4 rounded-xl bg-gray0 px-4 py-3 shadow-[-4px_0_20px_0_rgba(0,0,0,0.08)]">
       <div className="flex flex-col gap-y-3">
         <div className="flex flex-col gap-y-1">
           <Tag label={`레벨 ${honbobLevel}`} color="red" size="small" iconName="crown" />
