@@ -18,7 +18,7 @@ export function StoreBottomSheet({ storeList }: { storeList: StoreListResponseDa
     const selectedStoreInfo = storeList.find((store) => store.id === selectedStoreId);
     if (selectedStoreInfo)
       return (
-        <Link href={`/store/${selectedStoreInfo.id}`}>
+        <Link href={`/store/${selectedStoreInfo.id}`} className="px-4">
           <SelectedStoreCard {...selectedStoreInfo} />
         </Link>
       );

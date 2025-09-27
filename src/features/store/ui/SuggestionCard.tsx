@@ -1,4 +1,6 @@
-import { Icon, TextButton } from "@/shared/ui";
+import Image from "next/image";
+import EditCharacter from "@/shared/lib/assets/png/character/edit.png";
+import { TextButton } from "@/shared/ui";
 
 export function SuggestionCard() {
   return (
@@ -20,7 +22,7 @@ export function SuggestionCard() {
           />
         </div>
 
-        <Icon name="character" size={74} disableCurrentColor />
+        <Image src={EditCharacter} alt="character" width={74} height={74} />
       </div>
     </article>
   );
