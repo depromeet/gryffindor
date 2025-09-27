@@ -24,6 +24,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Kakao({ clientId: process.env.KAKAO_CLIENT_ID, clientSecret: process.env.KAKAO_CLIENT_SECRET }),
   ],
   callbacks: {
+    async signIn() {
+      // 로그인 성공 시 항상 true 반환하여 로그인 허용
+      return true;
+    },
+    async redirect({ url, baseUrl }) {
+      // 로그인 후 리다이렉트 로직
+      // 콜백 URL에서 온 경우가 아닌 일반적인 경우에만 처리
+      if (url.startsWith(baseUrl) || url.startsWith("/")) {
+        return url;
+      }
+      return baseUrl;
+    },
     async jwt({ token, account, trigger, session }) {
       // 최초 로그인 시 소셜 로그인 처리
 

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useUserState } from "@/entities/user";
 import { useSessionStorage } from "@/shared/lib";
@@ -12,6 +13,7 @@ const MODAL_EXPIRED_TIME = 24 * 60 * 60 * 1000; // 24시간
 
 export function HonbobLevelTestGuideModal() {
   const { userState } = useUserState();
+  const router = useRouter();
 
   const { getSession, setSession } = useSessionStorage<boolean>(MODAL_SESSION_KEY);
   const hasSeenModal = getSession();
@@ -55,10 +57,7 @@ export function HonbobLevelTestGuideModal() {
             label="다시 시작하기"
             size="medium"
             variant="primary"
-            onClick={
-              () => console.log("다시 시작하기")
-              // fixme: 다시 시작하기 누르면 온보딩으로 이동
-            }
+            onClick={() => router.push("/level-test")}
           />
         </div>
       </div>
