@@ -1,12 +1,12 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-import type { StoreSearchResponse } from "@/entities/storeList/api";
+import type { StoreListResponseData } from "@/entities/storeList/api";
 import { useMapStore } from "../../model";
 
 export function useMapMarkers(map: naver.maps.Map | null) {
   const markersRef = useRef<Map<number, naver.maps.Marker>>(new Map());
-  const storesRef = useRef<Map<number, StoreSearchResponse>>(new Map());
+  const storesRef = useRef<Map<number, StoreListResponseData>>(new Map());
 
   const { selectStore } = useMapStore();
 
@@ -20,7 +20,7 @@ export function useMapMarkers(map: naver.maps.Map | null) {
 
   // 마커 생성
   const createMarker = useCallback(
-    (store: StoreSearchResponse, iconHtml: string) => {
+    (store: StoreListResponseData, iconHtml: string) => {
       if (!map) return;
 
       const marker = new window.naver.maps.Marker({
