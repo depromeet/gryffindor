@@ -56,7 +56,7 @@ export function StoreInfo({
 
         const timer = setTimeout(() => {
           document.body.removeChild(iframe);
-          window.open(webUrl, "_blank");
+          window.location.href = webUrl;
         }, 1500);
 
         // 앱 열리면 페이지 비활성화 → fallback 취소
