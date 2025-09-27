@@ -16,7 +16,7 @@ export default function MapPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<FilterData>({
     price: { min: 0, max: 20000 },
-    honbobLevel: 1,
+    honbobLevel: 2,
     seatTypes: [],
     categories: [],
   });
