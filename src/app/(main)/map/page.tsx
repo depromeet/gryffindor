@@ -21,12 +21,12 @@ export default function MapPage() {
     categories: [],
   });
 
-  const { storeList, refetch } = useStoreListQuery(filters);
+  const { storeList, refetch, isFetching } = useStoreListQuery(filters);
 
   return (
     <TransitionLayout>
       <MapView storeList={storeList} />
-      <FetchStoreListButton onClick={refetch} />
+      <FetchStoreListButton onClick={refetch} isFetching={isFetching} />
       <MapActionButton type="filter" onClick={() => setIsFilterOpen(true)} />
       <MapActionButton type="location" onClick={() => {}} />
       <StoreBottomSheet storeList={storeList} />
