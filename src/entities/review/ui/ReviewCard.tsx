@@ -23,16 +23,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
             />
           ) : (
             // 임시 기본 이미지 -> 추후 디자이너분 시안 나오면 교체 예정
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="36"
-              height="36"
-              viewBox="0 0 36 36"
-              fill="none"
-            >
-              <title>profile</title>
-              <circle cx="18" cy="18" r="18" fill="#FF5532" />
-            </svg>
+            <Icon name="lv2User" size={36} disableCurrentColor />
           )}
           <div className="flex items-center gap-1.5">
             <span className="text-body2-semibold">{review.reviewer.nickname}</span>
