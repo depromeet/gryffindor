@@ -38,6 +38,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async jwt({ token, account, trigger, session }) {
       // 최초 로그인 시 소셜 로그인 처리
+      console.log("===jwt 처리====", token, account, trigger, session);
 
       if (account?.access_token) {
         try {
@@ -137,6 +138,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       // 세션 업데이트 처리
       if (trigger === "update" && session) {
+        console.log("===세션 업데이트 처리====(session)", session);
+
         if (session.nickName) {
           token.nickName = session.nickName;
         }
@@ -158,6 +161,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const userMeData = await userMeResponse.json();
 
+        console.log("===get userMeData====", userMeData);
+
         token.level = userMeData.response.level;
         token.nickName = userMeData.response.nickname;
       } catch (error) {
@@ -168,6 +173,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
     async session({ session, token }) {
+      console.log("===session====", session, token);
       // 토큰 정보를 세션에 전달
       if (token.accessToken) {
         session.accessToken = token.accessToken;
