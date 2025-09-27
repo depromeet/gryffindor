@@ -16,7 +16,7 @@ export default function LevelTestDynamicPage() {
 
   return (
     <TransitionLayout>
-      <div className="min-h-screen bg-gray50 px-[20px] pt-[24px]">
+      <div className="min-h-screen bg-gray0 px-[20px] pt-[24px]">
         {showProgress && (
           <LevelTestProgress current={currentStep} total={totalSteps} progress={getProgress()} />
         )}
