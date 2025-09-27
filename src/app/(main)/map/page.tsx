@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import type { StoreSearchResponse } from "@/entities/storeList/api";
-import { STORE_LIST_MOCK_DATA } from "@/entities/storeList/model";
 import type { FilterData } from "@/features/filter/model/types";
+import { useStoreListQuery } from "@/features/map/lib";
 import {
   FetchStoreListButton,
   FilterBottomSheet,
@@ -14,20 +13,20 @@ import {
 import { TransitionLayout } from "@/shared/ui";
 
 export default function MapPage() {
-  // TODO: API 연동 후, 목 데이터 제거
-  const [storeList] = useState<StoreSearchResponse[]>(STORE_LIST_MOCK_DATA);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<FilterData>({
     price: { min: 0, max: 20000 },
-    level: null,
+    honbobLevel: 1,
     seatTypes: [],
     categories: [],
   });
 
+  const { storeList, refetch } = useStoreListQuery(filters);
+
   return (
     <TransitionLayout>
       <MapView storeList={storeList} />
-      <FetchStoreListButton onClick={() => {}} />
+      <FetchStoreListButton onClick={refetch} />
       <MapActionButton type="filter" onClick={() => setIsFilterOpen(true)} />
       <MapActionButton type="location" onClick={() => {}} />
       <StoreBottomSheet storeList={storeList} />
