@@ -1,4 +1,7 @@
 import BarSeatIcon from "./bar-seat.svg";
+import BobEatTextIcon from "./bob-eat-text.svg";
+import BubbleIcon from "./bubble.svg";
+import BubblePickIcon from "./bubble-pick.svg";
 import BulkheadIcon from "./bulkhead.svg";
 import CallIcon from "./call.svg";
 import CharacterIcon from "./character.svg";
@@ -10,12 +13,13 @@ import CloseCircleIcon from "./close-circle.svg";
 import ColorRightChevronIcon from "./color-right-chevron.svg";
 import CrownIcon from "./crown.svg";
 import DownArrowIcon from "./down-arrow.svg";
-import DownTriangleIcon from "./down-triangle.svg";
 import FilterIcon from "./filter.svg";
 import ForFourIcon from "./for-four.svg";
 import ForOneIcon from "./for-one.svg";
 import ForTwoIcon from "./for-two.svg";
+import GoogleIcon from "./google.svg";
 import HomeIcon from "./home.svg";
+import KakaoIcon from "./kakao.svg";
 import KeBabIcon from "./kebab.svg";
 import LeftArrowIcon from "./left-arrow.svg";
 import LocationIcon from "./location.svg";
@@ -24,14 +28,13 @@ import Lv2UserIcon from "./lv2-user.svg";
 import Lv3UserIcon from "./lv3-user.svg";
 import Lv4UserIcon from "./lv4-user.svg";
 import MapIcon from "./map.svg";
-import MapBubbleIcon from "./map-bubble.svg";
 import ColorNoteIcon from "./note.svg";
 import PinIcon from "./pin.svg";
 import RefreshIcon from "./refresh.svg";
 import SearchIcon from "./search.svg";
+import SelectCheckIcon from "./select-check.svg";
 import ColorSpeakerIcon from "./speaker.svg";
 import SpeakerIcon from "./speaker-line.svg";
-import TargetIcon from "./target.svg";
 import ColorTestIcon from "./test.svg";
 import UserIcon from "./user.svg";
 import UserLoginIcon from "./user-login.svg";
@@ -52,14 +55,14 @@ export const iconMap = {
   location: LocationIcon,
   kebab: KeBabIcon,
   character: CharacterIcon,
-  mapBubble: MapBubbleIcon,
-  downTriangle: DownTriangleIcon,
-  target: TargetIcon,
+  bubble: BubbleIcon,
+  bubblePick: BubblePickIcon,
   refresh: RefreshIcon,
   filter: FilterIcon,
   colorNote: ColorNoteIcon,
   colorSpeaker: ColorSpeakerIcon,
   colorTest: ColorTestIcon,
+  selectCheck: SelectCheckIcon,
   bulkhead: BulkheadIcon,
   barSeat: BarSeatIcon,
   forOne: ForOneIcon,
@@ -75,4 +78,7 @@ export const iconMap = {
   lv4User: Lv4UserIcon,
   pin: PinIcon,
   colorRightChevron: ColorRightChevronIcon,
+  bobEatText: BobEatTextIcon,
+  kakao: KakaoIcon,
+  google: GoogleIcon,
 } as const;

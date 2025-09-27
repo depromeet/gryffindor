@@ -1,4 +1,8 @@
-import { HonbobLevelCarousel, HonbobLevelTestGuideModal } from "@/entities/honbob";
+import {
+  HonbobFirstVisitModal,
+  HonbobLevelCarousel,
+  HonbobLevelTestGuideModal,
+} from "@/entities/honbob";
 import { ReportStore } from "@/entities/store/ui";
 import { StoreList } from "@/entities/storeList/ui";
 import { WelcomeUser } from "@/entities/user";
@@ -14,6 +18,7 @@ export default async function HomePage() {
       <ReportStore />
       <StoreList />
       <HonbobLevelTestGuideModal />
+      <HonbobFirstVisitModal />
     </TransitionLayout>
   );
 }
