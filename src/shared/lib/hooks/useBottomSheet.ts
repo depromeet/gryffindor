@@ -55,6 +55,7 @@ export function useBottomSheet({ initialHeight, expandedOffset }: UseBottomSheet
     const handlePointerMove = (e: PointerEvent) => {
       const { start } = metrics.current;
       const deltaY = e.clientY - start.touchY;
+      if (deltaY === 0) return;
 
       metrics.current.direction = deltaY > 0 ? "down" : "up";
 

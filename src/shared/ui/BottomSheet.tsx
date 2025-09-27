@@ -63,8 +63,10 @@ function BottomSheet({
         )}
         style={{
           top: `calc(100% - ${defaultHeight}px)`,
+          height: `calc(100% - ${expandedOffset}px)`,
           maxHeight: `calc(100% - ${expandedOffset}px)`,
           transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          touchAction: "none",
         }}
       >
         {children}
@@ -84,7 +86,7 @@ function BottomSheetContent({ className, children }: PropsWithChildren<{ classNa
     <div
       ref={contentRef}
       className={cn(
-        "flex h-full w-full flex-1 flex-col items-center overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        "flex h-full w-full flex-1 flex-col items-center justify-between overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
         className,
       )}
     >
