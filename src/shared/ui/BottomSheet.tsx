@@ -48,7 +48,10 @@ function BottomSheet({
   children,
 }: PropsWithChildren<BottomSheetProps>) {
   const defaultHeight = initialHeight ? initialHeight : window.innerHeight - expandedOffset;
-  const { sheetRef, contentRef } = useBottomSheet({ initialHeight: defaultHeight, expandedOffset });
+  const { sheetRef, contentRef } = useBottomSheet({
+    initialHeight: defaultHeight,
+    expandedOffset,
+  });
 
   if (!isOpen) return;
 
@@ -58,7 +61,7 @@ function BottomSheet({
       <dialog
         ref={isFixed ? null : sheetRef}
         className={cn(
-          "fixed right-0 left-0 mx-auto flex w-full max-w-[375px] flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
+          "fixed right-0 left-0 mx-auto flex w-full w-full flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
           onClose ? "z-51" : "z-49",
         )}
         style={{
