@@ -1,18 +1,5 @@
 export type SeatTypes = "FOR_ONE" | "FOR_TWO" | "FOR_FOUR" | "CUBICLE" | "BAR_TABLE";
 
-export interface StoreSearchResponse {
-  id: number;
-  name: string;
-  thumbnailUrl: string;
-  signatureMenu: { name: string; price: number };
-  coordinate: { lat: number; lon: number };
-  distance: number;
-  walkingMinutes: number;
-  seatTypes: SeatTypes[];
-  honbobLevel: number;
-  tags?: string[];
-}
-
 export interface StoreListResponseReal {
   //실제 api 응답 StoreListResponse를 다른 곳에서 쓰고 있어 다른 이름으로 정의
   data: StoreListResponseData[];
@@ -30,7 +17,7 @@ export interface StoreListResponseData {
   distance: number;
   walkingMinutes: number;
   seatTypes: SeatTypes[];
-  tags?: string[]; //map 쪽의 mock 데이터와 충돌을 피하기 위해 옵셔널 값으로 제공
+  tags: string[];
   honbobLevel: number;
 }
 export interface StoreListRequest {

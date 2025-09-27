@@ -2,10 +2,10 @@
 
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
-import type { StoreSearchResponse } from "@/entities/storeList/api";
+import type { StoreListResponseData } from "@/entities/storeList/api";
 import { MapMarkers } from "./MapMarkers";
 
-export function MapView({ storeList }: { storeList: StoreSearchResponse[] }) {
+export function MapView({ storeList }: { storeList: StoreListResponseData[] }) {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<naver.maps.Map | null>(null);
 

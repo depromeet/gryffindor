@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Tag } from "@/shared/ui";
-import type { StoreSearchResponse } from "../api";
+import type { StoreListResponseData } from "../api";
 import { SEAT_TYPES_MAP } from "./StoreCard";
 
 export function SelectedStoreCard({
@@ -11,7 +11,7 @@ export function SelectedStoreCard({
   walkingMinutes,
   seatTypes,
   honbobLevel,
-}: StoreSearchResponse) {
+}: StoreListResponseData) {
   return (
     <article className="-translate-x-1/2 fixed bottom-22 left-1/2 z-49 flex w-[335px] justify-between gap-4 rounded-xl bg-gray0 px-4 py-3 shadow-[-4px_0_20px_0_rgba(0,0,0,0.08)]">
       <div className="flex flex-col gap-y-3">

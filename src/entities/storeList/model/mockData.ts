@@ -1,6 +1,6 @@
-import type { StoreSearchResponse } from "../api/types";
+import type { StoreListResponseData } from "../api/types";
 
-export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
+export const STORE_LIST_MOCK_DATA: StoreListResponseData[] = [
   {
     id: 1,
     name: "폴인포케 강남역점",
@@ -11,6 +11,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 300,
     walkingMinutes: 4,
     seatTypes: ["FOR_ONE", "FOR_TWO", "FOR_FOUR", "CUBICLE"],
+    tags: ["기타"],
     honbobLevel: 1,
   },
   {
@@ -23,6 +24,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 150,
     walkingMinutes: 2,
     seatTypes: ["FOR_ONE", "FOR_TWO", "BAR_TABLE"],
+    tags: ["양식"],
     honbobLevel: 2,
   },
   {
@@ -35,6 +37,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 400,
     walkingMinutes: 5,
     seatTypes: ["FOR_ONE", "FOR_TWO", "CUBICLE", "FOR_FOUR"],
+    tags: ["패스트푸드"],
     honbobLevel: 3,
   },
   {
@@ -47,6 +50,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 400,
     walkingMinutes: 5,
     seatTypes: ["FOR_ONE", "FOR_TWO", "CUBICLE", "FOR_FOUR"],
+    tags: ["일식"],
     honbobLevel: 3,
   },
   {
@@ -59,6 +63,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 400,
     walkingMinutes: 5,
     seatTypes: ["FOR_ONE", "FOR_TWO", "FOR_FOUR"],
+    tags: ["일식"],
     honbobLevel: 3,
   },
   {
@@ -71,6 +76,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 400,
     walkingMinutes: 5,
     seatTypes: ["FOR_ONE", "CUBICLE", "FOR_FOUR"],
+    tags: ["기타"],
     honbobLevel: 3,
   },
   {
@@ -83,6 +89,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 400,
     walkingMinutes: 5,
     seatTypes: ["FOR_ONE", "FOR_TWO"],
+    tags: ["기타"],
     honbobLevel: 2,
   },
   {
@@ -95,6 +102,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 400,
     walkingMinutes: 5,
     seatTypes: ["FOR_ONE", "FOR_TWO"],
+    tags: ["일식"],
     honbobLevel: 3,
   },
   {
@@ -107,6 +115,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 400,
     walkingMinutes: 5,
     seatTypes: ["FOR_ONE", "FOR_TWO"],
+    tags: ["일식"],
     honbobLevel: 2,
   },
   {
@@ -119,6 +128,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 400,
     walkingMinutes: 5,
     seatTypes: ["FOR_ONE", "FOR_TWO"],
+    tags: ["한식"],
     honbobLevel: 2,
   },
   {
@@ -131,6 +141,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 400,
     walkingMinutes: 5,
     seatTypes: ["FOR_ONE", "FOR_TWO"],
+    tags: ["한식"],
     honbobLevel: 2,
   },
   {
@@ -143,6 +154,7 @@ export const STORE_LIST_MOCK_DATA: StoreSearchResponse[] = [
     distance: 400,
     walkingMinutes: 5,
     seatTypes: ["FOR_ONE", "FOR_TWO"],
+    tags: ["기타"],
     honbobLevel: 2,
   },
 ];
