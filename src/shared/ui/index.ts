@@ -15,6 +15,7 @@ export * from "./Overlay";
 export * from "./PriceInput";
 export * from "./RoundButton";
 export * from "./Select";
+export * from "./SelectPopover";
 export * from "./StackHeader";
 export * from "./StationOverlaySelect";
 export * from "./Tag";

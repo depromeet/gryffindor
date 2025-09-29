@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { DeleteModal } from "@/features/review/ui";
 import { formatDate } from "@/shared/lib";
-import { Icon, Tag } from "@/shared/ui";
+import { Icon, SelectPopover, Tag } from "@/shared/ui";
 import { REVIEW_KEYWORD_MAP } from "../model/constants";
 import type { Review } from "../model/types";
 
@@ -10,6 +13,33 @@ interface ReviewCardProps {
 }
 
 export function ReviewCard({ review, memberId }: ReviewCardProps) {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const router = useRouter();
+
+  const handleTogglePopover = () => {
+    setIsPopoverOpen((prev) => !prev);
+  };
+
+  const handleEdit = () => {
+    const params = new URLSearchParams();
+    params.set("content", review.content);
+    params.set("keywords", review.keywords.join(","));
+
+    router.push(`/store/50/review?${params.toString()}`);
+    setIsPopoverOpen(false);
+  };
+
+  const handleDelete = () => {
+    setIsPopoverOpen(false);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    console.log("Deleting review:", review.id);
+    setIsDeleteModalOpen(false);
+  };
+
   return (
     <article className="flex w-full flex-col gap-3 pb-5">
       <section className="flex w-full items-center justify-between">
@@ -23,7 +53,6 @@ export function ReviewCard({ review, memberId }: ReviewCardProps) {
               className="rounded-full object-cover"
             />
           ) : (
-            // 임시 기본 이미지 -> 추후 디자이너분 시안 나오면 교체 예정
             <Icon name="lv2User" size={36} disableCurrentColor />
           )}
           <div className="flex items-center gap-1.5">
@@ -33,9 +62,16 @@ export function ReviewCard({ review, memberId }: ReviewCardProps) {
         </div>
         {/* 나중에 memberId로 교체 예정 */}
         {1 === review.reviewer.id && (
-          <button type="button" onClick={() => {}} className="cursor-pointer">
-            <Icon name="kebab" size={15} className="text-gray400" />
-          </button>
+          <div className="relative">
+            <button type="button" onClick={handleTogglePopover} className="cursor-pointer">
+              <Icon name="kebab" size={15} className="text-gray400" />
+            </button>
+            {isPopoverOpen && (
+              <div className="absolute top-full right-29 mt-2">
+                <SelectPopover onEdit={handleEdit} onDelete={handleDelete} />
+              </div>
+            )}
+          </div>
         )}
       </section>
 
@@ -58,6 +94,13 @@ export function ReviewCard({ review, memberId }: ReviewCardProps) {
       <section>
         <span className="text-caption1-medium text-gray400">{formatDate(review.createdAt)}</span>
       </section>
+
+      {isDeleteModalOpen && (
+        <DeleteModal
+          isDeleteModalOpen={isDeleteModalOpen}
+          setIsDeleteModalOpen={setIsDeleteModalOpen}
+        />
+      )}
     </article>
   );
 }
