@@ -10,9 +10,10 @@ import type { Review } from "../model/types";
 interface ReviewCardProps {
   review: Review;
   memberId?: number;
+  storeId: number;
 }
 
-export function ReviewCard({ review, memberId }: ReviewCardProps) {
+export function ReviewCard({ review, storeId, memberId }: ReviewCardProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
@@ -26,7 +27,7 @@ export function ReviewCard({ review, memberId }: ReviewCardProps) {
     params.set("content", review.content);
     params.set("keywords", review.keywords.join(","));
 
-    router.push(`/store/50/review?${params.toString()}`);
+    router.push(`/store/${storeId}/review?${params.toString()}`);
     setIsPopoverOpen(false);
   };
 
@@ -60,8 +61,7 @@ export function ReviewCard({ review, memberId }: ReviewCardProps) {
             <Tag label={`레벨 ${review.reviewer.level}`} color="red" size="small" />
           </div>
         </div>
-        {/* 나중에 memberId로 교체 예정 */}
-        {1 === review.reviewer.id && (
+        {memberId === review.reviewer.id && (
           <div className="relative">
             <button type="button" onClick={handleTogglePopover} className="cursor-pointer">
               <Icon name="kebab" size={15} className="text-gray400" />

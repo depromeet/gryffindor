@@ -55,7 +55,7 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
         />
       </div>
 
-      <ReviewList reviews={reviews} memberId={memberId} />
+      <ReviewList reviews={reviews} memberId={memberId} storeId={storeId} />
 
       {isInfiniteScrollEnabled && hasNextPage && <div ref={loadMoreRef} />}
 
