@@ -67,6 +67,13 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
       title: "마이페이지",
     },
   },
+  "/mypage/nickname": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "닉네임 변경",
+    },
+  },
   "/mypage/*": {
     group: "stack",
     transition: "drill",
@@ -95,11 +102,24 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
       title: "아이템 상세",
     },
   },
-  "/onboarding": {
+  "/level-test": {
     group: "stack",
     transition: "drill",
     header: {
       title: "레벨테스트",
+      backButton: {
+        action: "/",
+      },
+    },
+  },
+  "/level-test/*": {
+    group: "stack",
+    transition: "fade",
+    header: {
+      title: "레벨테스트",
+      backButton: {
+        action: "/",
+      },
     },
   },
   "/store/[id]": {

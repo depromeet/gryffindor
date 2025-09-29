@@ -4,7 +4,7 @@ export function areFiltersEqual(oldFilter: FilterData, newFilter: FilterData): b
   return (
     oldFilter.price.min === newFilter.price.min &&
     oldFilter.price.max === newFilter.price.max &&
-    oldFilter.level === newFilter.level &&
+    oldFilter.honbobLevel === newFilter.honbobLevel &&
     oldFilter.seatTypes.length === newFilter.seatTypes.length &&
     oldFilter.seatTypes.every((v, i) => v === newFilter.seatTypes[i]) &&
     oldFilter.categories.length === newFilter.categories.length &&

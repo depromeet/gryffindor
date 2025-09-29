@@ -1,8 +1,6 @@
 import Image from "next/image";
+import type { SeatTypes, StoreListResponseData } from "@/entities/storeList/api";
 import { Tag } from "@/shared/ui";
-import type { SeatTypes, StoreListResponse } from "../api";
-
-export interface StoreCardProps extends Omit<StoreListResponse, "id" | "coordinate"> {}
 
 export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   FOR_ONE: "1인석",
@@ -18,9 +16,9 @@ export function StoreCard({
   signatureMenu,
   distance,
   walkingMinutes,
-  seats,
+  seatTypes,
   honbobLevel,
-}: StoreCardProps) {
+}: StoreListResponseData) {
   return (
     <article className="flex items-center gap-4 rounded-[16px]">
       <div className="relative h-[120px] w-[120px] flex-shrink-0">
@@ -50,9 +48,9 @@ export function StoreCard({
           </div>
         </div>
         <ul className="flex flex-nowrap items-center gap-x-[5px]">
-          {seats.map((seat) => (
-            <li key={seat}>
-              <Tag label={SEAT_TYPES_MAP[seat]} color="blue" size="small" />
+          {seatTypes?.map((seatType) => (
+            <li key={seatType}>
+              <Tag label={SEAT_TYPES_MAP[seatType]} color="blue" size="small" />
             </li>
           ))}
         </ul>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PriceRange } from "@/entities/filter/ui";
+import type { SeatTypes } from "@/entities/storeList/api";
 import { CTA, FilterSection, Icon } from "@/shared/ui";
 import type { FilterData, SectionConfig } from "../model/types";
 import { areFiltersEqual } from "../utils/filter";
@@ -18,17 +19,25 @@ const ALL_CATEGORIES = [
   "기타",
 ];
 
+const SEAT_TYPE_MAP: Record<SeatTypes, string> = {
+  CUBICLE: "칸막이",
+  BAR_TABLE: "바 좌석",
+  FOR_ONE: "1인석",
+  FOR_TWO: "2인석",
+  FOR_FOUR: "4인석",
+};
+
 const FILTER_SECTIONS: SectionConfig[] = [
   {
     key: "level",
     label: "혼밥 단계",
     options: ["1단계", "2단계", "3단계", "4단계"],
     isMultiple: false,
-    getSelected: (draft) => (draft.level !== null ? [`${draft.level}단계`] : []),
+    getSelected: (draft) => (draft.honbobLevel !== null ? [`${draft.honbobLevel}단계`] : []),
     onChange: (setDraft) => (selected) =>
       setDraft((prev) => ({
         ...prev,
-        level: selected.length > 0 ? parseInt(selected[0], 10) : null,
+        honbobLevel: selected.length > 0 ? parseInt(selected[0], 10) : 1,
       })),
   },
   {
@@ -36,8 +45,14 @@ const FILTER_SECTIONS: SectionConfig[] = [
     label: "좌석 형태",
     options: ["칸막이", "바 좌석", "1인석", "2인석", "4인석"],
     isMultiple: true,
-    getSelected: (draft) => draft.seatTypes,
-    onChange: (setDraft) => (selected) => setDraft((prev) => ({ ...prev, seatTypes: selected })),
+    getSelected: (draft) => draft.seatTypes.map((type) => SEAT_TYPE_MAP[type]),
+    onChange: (setDraft) => (selectedLabels) =>
+      setDraft((prev) => ({
+        ...prev,
+        seatTypes: selectedLabels.map(
+          (label) => Object.entries(SEAT_TYPE_MAP).find(([, v]) => v === label)?.[0] as SeatTypes,
+        ),
+      })),
   },
   {
     key: "categories",
@@ -77,7 +92,7 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
   const handleReset = () => {
     setDraftFilters({
       price: { min: 0, max: 20000 },
-      level: null,
+      honbobLevel: 1,
       seatTypes: [],
       categories: [],
     });
@@ -90,14 +105,14 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
 
   return (
     <article className="flex flex-col">
-      <header className="flex items-center justify-between p-5">
+      <header className="fixed flex w-full items-center justify-between rounded-t-[24px] bg-gray0 p-5">
         <div className="justify-start text-subtitle1">필터 옵션</div>
         <button type="button" onClick={onClose}>
           <Icon size={24} name="close" className="cursor-pointer text-gray400" />
         </button>
       </header>
 
-      <div className="h-[1px] w-full bg-gray100" />
+      <div className="mt-[65px] h-[1px] w-full bg-gray100" />
 
       {FILTER_SECTIONS.map((section) => {
         const sectionProps = {
@@ -119,7 +134,7 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
         onChange={handlePriceChange}
       />
       <div className="mt-[51px]"></div>
-      <div className="fixed right-0 bottom-0 left-0 z-50 mx-auto max-w-[375px]">
+      <div className="fixed right-0 bottom-0 left-0 z-50 mx-auto">
         <CTA
           secondaryLabel="초기화"
           primaryLabel="완료"

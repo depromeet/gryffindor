@@ -14,6 +14,6 @@ export const MY_PAGE_NAVIGATION: { label: string; icon: IconName; href: string }
   {
     label: "레벨 테스트 하기",
     icon: "colorTest",
-    href: "/mypage/tester",
+    href: "/level-test",
   },
 ];

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLocationStore } from "@/shared/store";
 import { Icon, Overlay, Select } from "@/shared/ui";
 
 const stations = [
@@ -8,36 +9,30 @@ const stations = [
   { value: "역삼역", label: "역삼역" },
 ];
 
-const DEFAULT_STATION_VALUE = "강남역";
-
 export function StationOverlaySelect() {
-  const [value, setValue] = useState(DEFAULT_STATION_VALUE);
+  const { selectedStation, setSelectedStation } = useLocationStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleValueChange = (value: string) => {
-    setValue(value);
+    setSelectedStation(value);
     setIsOpen(false);
-  };
-
-  const toggleIsOpen = () => {
-    setIsOpen((prev) => !prev);
   };
 
   return (
     <Select
-      value={value}
+      value={selectedStation}
       isOpen={isOpen}
       onValueChange={handleValueChange}
       onOpenChange={setIsOpen}
-      closeOnOutsideClick={true}
+      closeOnOutsideClick={false}
     >
-      <Select.Trigger className="flex items-center gap-[2px]" onClick={toggleIsOpen}>
+      <Select.Trigger className="flex items-center gap-[2px]">
         <Select.Value
           placeholder="역을 선택하세요"
           className="font-semibold text-Gray-gray900 text-xl leading-relaxed"
         />
-        <Select.Icon>
-          <Icon name="downArrow" />
+        <Select.Icon className="size-[24px]">
+          <Icon name="downArrow" disableCurrentColor />
         </Select.Icon>
       </Select.Trigger>
       <Overlay
@@ -56,7 +51,7 @@ export function StationOverlaySelect() {
             >
               <span
                 className={`mx-[20px] flex w-full border-gray100 border-b py-[14px] ${
-                  value === station.value ? "text-gray900" : "text-gray400"
+                  selectedStation === station.value ? "text-gray900" : "text-gray400"
                 }`}
               >
                 {station.label}

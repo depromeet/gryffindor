@@ -24,8 +24,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Kakao({ clientId: process.env.KAKAO_CLIENT_ID, clientSecret: process.env.KAKAO_CLIENT_SECRET }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async signIn() {
+      // 로그인 성공 시 항상 true 반환하여 로그인 허용
+      return true;
+    },
+    async redirect({ url, baseUrl }) {
+      // 로그인 후 리다이렉트 로직
+      // 콜백 URL에서 온 경우가 아닌 일반적인 경우에만 처리
+      if (url.startsWith(baseUrl) || url.startsWith("/")) {
+        return url;
+      }
+      return baseUrl;
+    },
+    async jwt({ token, account, trigger, session }) {
       // 최초 로그인 시 소셜 로그인 처리
+      console.log("===jwt 처리====", token, account, trigger, session);
 
       if (account?.access_token) {
         try {
@@ -123,9 +136,44 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
 
+      // 세션 업데이트 처리
+      if (trigger === "update" && session) {
+        console.log("===세션 업데이트 처리====(session)", session);
+
+        if (session.nickName) {
+          token.nickName = session.nickName;
+        }
+        if (session.level) {
+          token.level = session.level;
+        }
+      }
+
+      // [GET] user/me호출 response 중 level과 nickname을 토큰에 저장
+      try {
+        const userMeResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/users/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${token.accessToken}`,
+            },
+          },
+        );
+
+        const userMeData = await userMeResponse.json();
+
+        console.log("===get userMeData====", userMeData);
+
+        token.level = userMeData.response.level;
+        token.nickName = userMeData.response.nickname;
+      } catch (error) {
+        console.error("User me error:", error);
+        signOut({ redirectTo: "/home" });
+      }
+
       return token;
     },
     async session({ session, token }) {
+      console.log("===session====", session, token);
       // 토큰 정보를 세션에 전달
       if (token.accessToken) {
         session.accessToken = token.accessToken;

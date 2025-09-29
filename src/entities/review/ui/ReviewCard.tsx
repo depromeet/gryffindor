@@ -23,7 +23,8 @@ export function ReviewCard({ review, memberId }: ReviewCardProps) {
               className="rounded-full object-cover"
             />
           ) : (
-            <Icon name="lv4User" size={36} disableCurrentColor />
+            // 임시 기본 이미지 -> 추후 디자이너분 시안 나오면 교체 예정
+            <Icon name="lv2User" size={36} disableCurrentColor />
           )}
           <div className="flex items-center gap-1.5">
             <span className="text-body2-semibold">{review.reviewer.nickname}</span>

@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { Tag } from "@/shared/ui";
-import type { StoreListResponse } from "../api";
+import type { StoreListResponseData } from "../api";
 import { SEAT_TYPES_MAP } from "./StoreCard";
-
-export interface SelectedStoreCardProps extends Omit<StoreListResponse, "id" | "coordinate"> {}
 
 export function SelectedStoreCard({
   name,
@@ -11,14 +9,12 @@ export function SelectedStoreCard({
   signatureMenu,
   distance,
   walkingMinutes,
-  seats,
+  seatTypes,
   honbobLevel,
-}: SelectedStoreCardProps) {
+}: StoreListResponseData) {
   return (
-    <article
-      className={`flex w-[335px] justify-between gap-4 rounded-xl bg-gray0 px-4 py-3 shadow-[-4px_0_20px_0_rgba(0,0,0,0.08)]`}
-    >
-      <div className="flex flex-col gap-y-3">
+    <article className="fixed right-4 bottom-22 left-4 z-49 flex justify-between gap-4 rounded-xl bg-gray0 px-4 py-3 shadow-[-4px_0_20px_0_rgba(0,0,0,0.08)]">
+      <div className="flex min-w-0 flex-col gap-y-3">
         <div className="flex flex-col gap-y-1">
           <Tag label={`레벨 ${honbobLevel}`} color="red" size="small" iconName="crown" />
           <h3 className="text-body1-semibold text-gray900">{name}</h3>
@@ -35,13 +31,14 @@ export function SelectedStoreCard({
           </div>
         </div>
         <ul className="flex flex-nowrap items-center gap-x-[5px]">
-          {seats.map((seat) => (
-            <li key={seat}>
-              <Tag label={SEAT_TYPES_MAP[seat]} color="blue" size="small" />
+          {seatTypes.map((seatType) => (
+            <li key={seatType}>
+              <Tag label={SEAT_TYPES_MAP[seatType]} color="blue" size="small" />
             </li>
           ))}
         </ul>
       </div>
+
       <div className="relative h-[96px] w-[96px] flex-shrink-0">
         <Image
           src={thumbnailUrl}

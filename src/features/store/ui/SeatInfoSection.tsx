@@ -6,7 +6,7 @@ interface SeatInfoSectionProps {
 }
 
 export function SeatInfoSection({ seatInfo }: SeatInfoSectionProps) {
-  const seats = [
+  const seatTypes = [
     { key: "cubicle", label: "칸막이", icon: "bulkhead" },
     { key: "barTable", label: "바 좌석", icon: "barSeat" },
     { key: "forOne", label: "1인석", icon: "forOne" },
@@ -18,7 +18,7 @@ export function SeatInfoSection({ seatInfo }: SeatInfoSectionProps) {
     <section className="mt-8 flex flex-col gap-3 px-5">
       <span className="text-[#000] text-subtitle1">좌석 정보</span>
       <div className="flex items-center justify-between rounded-[12px] border border-gray100 px-4 py-5">
-        {seats.map(({ key, label, icon }) => {
+        {seatTypes.map(({ key, label, icon }) => {
           return (
             <div key={key} className="flex flex-col items-center gap-2">
               <div className="flex h-12 w-12 items-center justify-center rounded-[8px] bg-gray50">
