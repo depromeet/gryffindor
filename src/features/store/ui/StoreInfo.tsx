@@ -41,7 +41,7 @@ export function StoreInfo({
         const fromLat = pos.coords.latitude;
         const fromLng = pos.coords.longitude;
 
-        const appUrl = `navermaps://route?slat=0&slng=0&sname=${encodeURIComponent(
+        const appUrl = `navermaps://route?slat=${fromLat}&slng=${fromLng}&sname=${encodeURIComponent(
           "현재위치",
         )}&dlat=${toLat}&dlng=${toLng}&dname=${encodeURIComponent(toName)}&mode=walk`;
 
@@ -49,22 +49,24 @@ export function StoreInfo({
           toName,
         )}/walk`;
 
-        const iframe = document.createElement("iframe");
-        iframe.style.display = "none";
-        iframe.src = appUrl;
-        document.body.appendChild(iframe);
+        window.location.href = appUrl;
 
-        const timer = setTimeout(() => {
-          document.body.removeChild(iframe);
+        const fallbackTimer = setTimeout(() => {
           window.location.href = webUrl;
-        }, 1500);
+        }, 1000);
 
-        // 앱 열리면 페이지 비활성화 → fallback 취소
-        const cancelFallback = () => clearTimeout(timer);
-        document.addEventListener("visibilitychange", cancelFallback, {
+        document.addEventListener(
+          "visibilitychange",
+          () => {
+            if (document.visibilityState === "hidden") {
+              clearTimeout(fallbackTimer);
+            }
+          },
+          { once: true },
+        );
+        window.addEventListener("pagehide", () => clearTimeout(fallbackTimer), {
           once: true,
         });
-        window.addEventListener("pagehide", cancelFallback, { once: true });
       },
       (err) => {
         console.error(err);
