@@ -7,7 +7,7 @@ import { DeleteModal } from "@/features/review/ui";
 import { formatDate } from "@/shared/lib";
 import defaultProfile from "@/shared/lib/assets/png/character/basic.png";
 import { Icon, SelectPopover, Tag } from "@/shared/ui";
-import { REVIEW_KEYWORD_MAP } from "../model/constants";
+import { REVIEW_KEYWORD_EN_KO_MAP } from "../model/constants";
 import type { Review } from "../model/types";
 
 interface ReviewCardProps {
@@ -98,7 +98,7 @@ export function ReviewCard({ review, storeId, memberId }: ReviewCardProps) {
             {review.keywords.map((keyword) => (
               <Tag
                 key={keyword}
-                label={REVIEW_KEYWORD_MAP[keyword] ?? keyword}
+                label={REVIEW_KEYWORD_EN_KO_MAP[keyword] ?? keyword}
                 color="gray"
                 size="small"
               />
