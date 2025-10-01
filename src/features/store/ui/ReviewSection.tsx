@@ -3,11 +3,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-import { fetchReviews } from "@/entities/review/api/mock";
+import { getStoreReviews } from "@/entities/review/api/reviewApi";
+import type { StoreReviewResponse } from "@/entities/review/model";
 import { useInfiniteScroll } from "@/shared/lib";
 import { TextButton } from "@/shared/ui";
-
 import { ReviewList } from "./ReviewList";
 
 interface ReviewSectionProps {
@@ -19,12 +18,18 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
   const router = useRouter();
   const [isInfiniteScrollEnabled, setInfiniteScrollEnabled] = useState(false);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ["reviews", storeId],
-    queryFn: ({ pageParam }) => fetchReviews({ pageParam }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.nextCursor,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery<StoreReviewResponse>({
+      queryKey: ["reviews", storeId],
+      queryFn: ({ pageParam }) =>
+        getStoreReviews({
+          storeId,
+          lastKnown: pageParam as string | undefined,
+        }),
+      initialPageParam: undefined,
+      getNextPageParam: (lastPage) => (lastPage.hasNext ? lastPage.nextCursor : undefined),
+      refetchOnMount: "always",
+    });
 
   const loadMoreRef = useInfiniteScroll({
     fetchNextPage,
@@ -40,7 +45,7 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
     }
   };
 
-  const reviews = data?.pages.flatMap((page) => page.reviews) || [];
+  const reviews = data?.pages.flatMap((page) => page.data) || [];
 
   return (
     <section className="mt-8 flex w-full flex-col gap-4 px-5">

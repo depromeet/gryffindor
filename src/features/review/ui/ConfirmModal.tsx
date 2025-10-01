@@ -6,10 +6,20 @@ interface ConfirmModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (open: boolean) => void;
   isEditMode: boolean;
-  cancelText?: string;
+  onClose?: () => void;
 }
 
-export function ConfirmModal({ isModalOpen, setIsModalOpen, isEditMode }: ConfirmModalProps) {
+export function ConfirmModal({
+  isModalOpen,
+  setIsModalOpen,
+  isEditMode,
+  onClose,
+}: ConfirmModalProps) {
+  const handleClose = () => {
+    setIsModalOpen(false);
+    onClose?.();
+  };
+
   return (
     <Modal
       isOpen={isModalOpen}
@@ -31,7 +41,7 @@ export function ConfirmModal({ isModalOpen, setIsModalOpen, isEditMode }: Confir
         </span>
         <button
           type="button"
-          onClick={() => setIsModalOpen(false)}
+          onClick={handleClose}
           className="flex h-[51px] w-full items-center justify-center rounded-[8px] bg-primary400 py-[14px]"
         >
           <span className="text-body1-semibold text-gray0">확인</span>

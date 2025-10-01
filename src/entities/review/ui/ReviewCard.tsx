@@ -1,8 +1,11 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { deleteReview } from "@/entities/review/api/reviewApi";
 import { DeleteModal } from "@/features/review/ui";
 import { formatDate } from "@/shared/lib";
+import defaultProfile from "@/shared/lib/assets/png/character/basic.png";
 import { Icon, SelectPopover, Tag } from "@/shared/ui";
 import { REVIEW_KEYWORD_MAP } from "../model/constants";
 import type { Review } from "../model/types";
@@ -17,6 +20,15 @@ export function ReviewCard({ review, storeId, memberId }: ReviewCardProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: () => deleteReview(review.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews", storeId] });
+      setIsDeleteModalOpen(false);
+    },
+  });
 
   const handleTogglePopover = () => {
     setIsPopoverOpen((prev) => !prev);
@@ -24,6 +36,7 @@ export function ReviewCard({ review, storeId, memberId }: ReviewCardProps) {
 
   const handleEdit = () => {
     const params = new URLSearchParams();
+    params.set("reviewId", review.id.toString());
     params.set("content", review.content);
     params.set("keywords", review.keywords.join(","));
 
@@ -37,28 +50,31 @@ export function ReviewCard({ review, storeId, memberId }: ReviewCardProps) {
   };
 
   const handleDeleteConfirm = () => {
-    console.log("Deleting review:", review.id);
-    setIsDeleteModalOpen(false);
+    mutate();
   };
 
   return (
     <article className="flex w-full flex-col gap-3 pb-5">
       <section className="flex w-full items-center justify-between">
         <div className="flex items-center gap-2.5">
-          {review.reviewer.profileImageUrl ? (
-            <Image
-              src={review.reviewer.profileImageUrl}
-              alt={review.reviewer.nickname}
-              width={36}
-              height={36}
-              className="rounded-full object-cover"
-            />
-          ) : (
-            <Icon name="lv2User" size={36} disableCurrentColor />
-          )}
+          <Image
+            src={
+              review.reviewer.profileImageUrl &&
+              !review.reviewer.profileImageUrl.includes("example.com")
+                ? review.reviewer.profileImageUrl
+                : defaultProfile
+            }
+            alt={review.reviewer.nickname || "User profile image"}
+            width={36}
+            height={36}
+            className="rounded-full object-cover"
+            onError={(e) => {
+              e.currentTarget.src = defaultProfile.src;
+            }}
+          />
           <div className="flex items-center gap-1.5">
             <span className="text-body2-semibold">{review.reviewer.nickname}</span>
-            <Tag label={`레벨 ${review.reviewer.level}`} color="red" size="small" />
+            <Tag label={`레벨 ${review.reviewer.honbobLevel}`} color="red" size="small" />
           </div>
         </div>
         {memberId === review.reviewer.id && (
@@ -99,6 +115,7 @@ export function ReviewCard({ review, storeId, memberId }: ReviewCardProps) {
         <DeleteModal
           isDeleteModalOpen={isDeleteModalOpen}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
+          onConfirm={handleDeleteConfirm}
         />
       )}
     </article>

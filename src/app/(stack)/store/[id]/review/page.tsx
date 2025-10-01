@@ -1,7 +1,9 @@
 "use client";
 
-import { useParams, useSearchParams } from "next/navigation";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { createReview, updateReview } from "@/entities/review/api/reviewApi";
 import { KEYWORD_MAP, REVIEW_FILTERS } from "@/entities/review/model/constants";
 import { ConfirmModal } from "@/features/review/ui";
 import { FilterSection, InputReview, TransitionLayout } from "@/shared/ui";
@@ -14,11 +16,14 @@ const REVERSE_KEYWORD_MAP: { [key: string]: string } = Object.fromEntries(
 export default function ReviewPage() {
   const params = useParams();
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const initialContent = searchParams.get("content") || "";
   const initialKeywordsParam = searchParams.get("keywords") || "";
+  const reviewId = searchParams.get("reviewId");
 
-  const isEditMode = !!(initialContent || initialKeywordsParam);
+  const isEditMode = !!reviewId;
   const title = isEditMode ? "방문 후기 수정" : "방문 후기";
 
   const getInitialFilters = () => {
@@ -32,6 +37,22 @@ export default function ReviewPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const textOnlyFilters = REVIEW_FILTERS.map((filter) => filter.split(" ").slice(1).join(" "));
+
+  const createReviewMutation = useMutation({
+    mutationFn: createReview,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews", params.id] });
+      setIsModalOpen(true);
+    },
+  });
+
+  const updateReviewMutation = useMutation({
+    mutationFn: updateReview,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["reviews", params.id] });
+      setIsModalOpen(true);
+    },
+  });
 
   const handleFilterChange = (items: string[]) => {
     const englishKeys = items.map((itemText) => {
@@ -49,16 +70,18 @@ export default function ReviewPage() {
     .filter(Boolean);
 
   const handleSubmit = () => {
-    const storeId = Number(params.id);
-
-    const payload = {
-      storeId,
-      content: review,
-      keywords: selectedFilters,
-    };
-
-    console.log(payload);
-    setIsModalOpen(true);
+    if (isEditMode) {
+      updateReviewMutation.mutate({
+        reviewId: Number(reviewId),
+        review: { content: review, keywords: selectedFilters },
+      });
+    } else {
+      createReviewMutation.mutate({
+        storeId: Number(params.id),
+        content: review,
+        keywords: selectedFilters,
+      });
+    }
   };
 
   return (
@@ -91,6 +114,7 @@ export default function ReviewPage() {
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
             isEditMode={isEditMode}
+            onClose={() => router.push(`/store/${params.id}`)}
           />
         )}
       </div>

@@ -5,9 +5,14 @@ import { Icon, Modal } from "@/shared/ui";
 interface DeleteModalProps {
   isDeleteModalOpen: boolean;
   setIsDeleteModalOpen: (open: boolean) => void;
+  onConfirm: () => void;
 }
 
-export function DeleteModal({ isDeleteModalOpen, setIsDeleteModalOpen }: DeleteModalProps) {
+export function DeleteModal({
+  isDeleteModalOpen,
+  setIsDeleteModalOpen,
+  onConfirm,
+}: DeleteModalProps) {
   return (
     <Modal
       isOpen={isDeleteModalOpen}
@@ -27,7 +32,7 @@ export function DeleteModal({ isDeleteModalOpen, setIsDeleteModalOpen }: DeleteM
         <span className="text-center text-gray900 text-subtitle1">정말 삭제하시겠어요?</span>
         <button
           type="button"
-          onClick={() => setIsDeleteModalOpen(false)}
+          onClick={onConfirm}
           className="flex h-[51px] w-full items-center justify-center rounded-[8px] bg-primary400 py-[14px]"
         >
           <span className="text-body1-semibold text-gray0">확인</span>
