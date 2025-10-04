@@ -39,6 +39,8 @@ export function StoreInfo({
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const isSimulator =
       navigator.userAgent.includes("Android SDK") || navigator.userAgent.includes("Simulator");
+    const isDesktopChrome =
+      !isMobile && /Chrome/i.test(navigator.userAgent) && !/Mobile/i.test(navigator.userAgent);
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -52,7 +54,7 @@ export function StoreInfo({
           toName,
         )}/walk`;
 
-        if (!isMobile || isSimulator) {
+        if (!isMobile || isSimulator || isDesktopChrome) {
           window.open(webUrl, "_blank");
           return;
         }
