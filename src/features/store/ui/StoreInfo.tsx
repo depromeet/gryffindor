@@ -36,11 +36,14 @@ export function StoreInfo({
       return;
     }
 
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isSimulator =
+      navigator.userAgent.includes("Android SDK") || navigator.userAgent.includes("Simulator");
+
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const fromLat = pos.coords.latitude;
         const fromLng = pos.coords.longitude;
-
         const appUrl = `navermaps://route?slat=${fromLat}&slng=${fromLng}&sname=${encodeURIComponent(
           "현재위치",
         )}&dlat=${toLat}&dlng=${toLng}&dname=${encodeURIComponent(toName)}&mode=walk`;
@@ -49,24 +52,13 @@ export function StoreInfo({
           toName,
         )}/walk`;
 
-        window.location.href = appUrl;
+        if (!isMobile || isSimulator) {
+          window.open(webUrl, "_blank");
+          return;
+        }
 
-        const fallbackTimer = setTimeout(() => {
-          window.location.href = webUrl;
-        }, 1000);
-
-        document.addEventListener(
-          "visibilitychange",
-          () => {
-            if (document.visibilityState === "hidden") {
-              clearTimeout(fallbackTimer);
-            }
-          },
-          { once: true },
-        );
-        window.addEventListener("pagehide", () => clearTimeout(fallbackTimer), {
-          once: true,
-        });
+        window.open(appUrl, "_blank");
+        setTimeout(() => window.open(webUrl, "_blank"), 1000);
       },
       (err) => {
         console.error(err);
