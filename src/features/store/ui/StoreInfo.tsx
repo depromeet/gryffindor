@@ -36,12 +36,17 @@ export function StoreInfo({
       return;
     }
 
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isSimulator =
+      navigator.userAgent.includes("Android SDK") || navigator.userAgent.includes("Simulator");
+    const isDesktopChrome =
+      !isMobile && /Chrome/i.test(navigator.userAgent) && !/Mobile/i.test(navigator.userAgent);
+
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const fromLat = pos.coords.latitude;
         const fromLng = pos.coords.longitude;
-
-        const appUrl = `navermaps://route?slat=0&slng=0&sname=${encodeURIComponent(
+        const appUrl = `navermaps://route?slat=${fromLat}&slng=${fromLng}&sname=${encodeURIComponent(
           "현재위치",
         )}&dlat=${toLat}&dlng=${toLng}&dname=${encodeURIComponent(toName)}&mode=walk`;
 
@@ -49,22 +54,13 @@ export function StoreInfo({
           toName,
         )}/walk`;
 
-        const iframe = document.createElement("iframe");
-        iframe.style.display = "none";
-        iframe.src = appUrl;
-        document.body.appendChild(iframe);
+        if (!isMobile || isSimulator || isDesktopChrome) {
+          window.open(webUrl, "_blank");
+          return;
+        }
 
-        const timer = setTimeout(() => {
-          document.body.removeChild(iframe);
-          window.location.href = webUrl;
-        }, 1500);
-
-        // 앱 열리면 페이지 비활성화 → fallback 취소
-        const cancelFallback = () => clearTimeout(timer);
-        document.addEventListener("visibilitychange", cancelFallback, {
-          once: true,
-        });
-        window.addEventListener("pagehide", cancelFallback, { once: true });
+        window.open(appUrl, "_blank");
+        setTimeout(() => window.open(webUrl, "_blank"), 1000);
       },
       (err) => {
         console.error(err);

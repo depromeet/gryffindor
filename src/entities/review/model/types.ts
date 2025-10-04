@@ -2,7 +2,7 @@ export interface Reviewer {
   id: number;
   nickname: string;
   profileImageUrl: string;
-  level: number;
+  honbobLevel: number;
 }
 
 export interface Review {
@@ -14,9 +14,19 @@ export interface Review {
   updatedAt: string;
 }
 
-export interface ReviewResponse {
+export interface StoreReviewResponse {
   data: Review[];
-  nextCursor: string | null;
+  nextCursor: string;
   hasNext: boolean;
-  metadata: Record<string, unknown>;
+}
+
+export interface CreateReviewRequest {
+  storeId: number;
+  content: string;
+  keywords: string[];
+}
+
+export interface UpdateReviewRequest {
+  content: string;
+  keywords: string[];
 }

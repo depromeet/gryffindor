@@ -95,7 +95,7 @@ export function Button({
       onClick={onClick}
       disabled={disabled}
     >
-      <p className={cn("truncate text-subtitle1", textStyle)}>{label}</p>
+      <p className={`text-subtitle1 ${cn("truncate", textStyle)}`}>{label}</p>
     </button>
   );
 }
