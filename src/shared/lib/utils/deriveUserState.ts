@@ -27,6 +27,7 @@ export function deriveUserState(session: Session | null): UserState {
 
     return {
       isLoggedIn: true,
+      memberId: session.memberId,
       displayName: session.nickName || session.user?.name || DEFAULT_NICKNAME,
       honbabLevel: DEFAULT_HONBAB_LEVEL,
       honbabLevelIcon: pickHonbabLevelIcon(DEFAULT_HONBAB_LEVEL),
@@ -39,6 +40,7 @@ export function deriveUserState(session: Session | null): UserState {
 
   return {
     isLoggedIn: true,
+    memberId: session.memberId,
     displayName: session.nickName || session.user?.name || DEFAULT_NICKNAME,
     honbabLevel: session.level,
     honbabLevelIcon: pickHonbabLevelIcon(session.level),

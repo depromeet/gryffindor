@@ -90,7 +90,7 @@ export function FilterButton({
       onClick={onClick}
       disabled={disabled}
     >
-      <p className={cn("truncate text-body2-semibold", textStyle)}>{label}</p>
+      <p className={`text-body2-semibold ${cn("truncate", textStyle)}`}>{label}</p>
     </button>
   );
 }
