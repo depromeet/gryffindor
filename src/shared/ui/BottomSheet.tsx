@@ -26,10 +26,22 @@
 
 "use client";
 
-import type { PropsWithChildren } from "react";
-import { BottomSheetProvider, useBottomSheetContext } from "@/app/_providers";
+import { createContext, type PropsWithChildren, type RefObject, useContext } from "react";
 import { cn } from "@/shared/lib";
 import { useBottomSheet } from "../lib/hooks";
+
+interface BottomSheetContextProps {
+  contentRef?: RefObject<HTMLDivElement | null> | null;
+}
+
+const BottomSheetContext = createContext<BottomSheetContextProps | null>(null);
+
+export function useBottomSheetContext() {
+  const context = useContext(BottomSheetContext);
+
+  if (!context) throw new Error("useBottomSheetContext must be used within BottomSheetProvider");
+  return context;
+}
 
 interface BottomSheetProps {
   isFixed: boolean;
@@ -53,13 +65,13 @@ function BottomSheet({
   if (!isOpen) return;
 
   return (
-    <BottomSheetProvider contentRef={isFixed ? null : contentRef}>
-      {onClose && <BottomSheetOverlay onClose={onClose} />}
+    <BottomSheetContext.Provider value={{ contentRef: isFixed ? null : contentRef }}>
+      {isFixed && <BottomSheetOverlay onClose={onClose || (() => {})} />}
       <dialog
         ref={isFixed ? null : sheetRef}
         className={cn(
           "fixed right-0 left-0 mx-auto flex w-full flex-col gap-2 rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
-          onClose ? "z-51" : "z-49",
+          isFixed ? "z-51" : "z-49",
         )}
         style={{
           top: `calc(100% - ${height}px)`,
@@ -68,7 +80,7 @@ function BottomSheet({
       >
         {children}
       </dialog>
-    </BottomSheetProvider>
+    </BottomSheetContext.Provider>
   );
 }
 
