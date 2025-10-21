@@ -18,7 +18,7 @@ export function FilterBottomSheet({
   if (!isOpen) return null;
 
   return (
-    <BottomSheet isFixed={true} isOpen={isOpen} onClose={onClose} expandedOffset={88}>
+    <BottomSheet isFixed={true} isOpen={isOpen} onClose={onClose}>
       <BottomSheetContent className="pb-7">
         <Filter initialFilters={initialFilters} onApply={onApply} onClose={onClose} />
       </BottomSheetContent>

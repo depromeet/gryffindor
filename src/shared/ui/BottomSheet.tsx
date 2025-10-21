@@ -19,7 +19,7 @@
  *     <BottomSheetHandler />
  *   </BottomSheetHeader>
  *   <BottomSheetContent>
- *     내용
+ *    <span>컨텐츠 영역</span>
  *   </BottomSheetContent>
  * </BottomSheet>
  */
@@ -36,7 +36,7 @@ interface BottomSheetProps {
   isOpen?: boolean;
   onClose?: () => void;
   initialHeight?: number;
-  expandedOffset: number;
+  expandedOffset?: number;
 }
 
 function BottomSheet({
@@ -44,14 +44,11 @@ function BottomSheet({
   isOpen,
   onClose,
   initialHeight,
-  expandedOffset,
+  expandedOffset = 88,
   children,
 }: PropsWithChildren<BottomSheetProps>) {
-  const defaultHeight = initialHeight ? initialHeight : window.innerHeight - expandedOffset;
-  const { sheetRef, contentRef } = useBottomSheet({
-    initialHeight: defaultHeight,
-    expandedOffset,
-  });
+  const height = initialHeight ? initialHeight : window.innerHeight - expandedOffset;
+  const { sheetRef, contentRef } = useBottomSheet({ initialHeight: height, expandedOffset });
 
   if (!isOpen) return;
 
@@ -61,15 +58,12 @@ function BottomSheet({
       <dialog
         ref={isFixed ? null : sheetRef}
         className={cn(
-          "fixed right-0 left-0 mx-auto flex w-full w-full flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
+          "fixed right-0 left-0 mx-auto flex w-full flex-col gap-2 rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
           onClose ? "z-51" : "z-49",
         )}
         style={{
-          top: `calc(100% - ${defaultHeight}px)`,
+          top: `calc(100% - ${height}px)`,
           height: `calc(100% - ${expandedOffset}px)`,
-          maxHeight: `calc(100% - ${expandedOffset}px)`,
-          transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-          touchAction: "none",
         }}
       >
         {children}
@@ -79,7 +73,9 @@ function BottomSheet({
 }
 
 function BottomSheetHeader({ className, children }: PropsWithChildren<{ className?: string }>) {
-  return <div className={cn("relative flex min-h-9 flex-col", className)}>{children}</div>;
+  return (
+    <div className={cn("relative flex min-h-9 touch-none flex-col", className)}>{children}</div>
+  );
 }
 
 function BottomSheetContent({ className, children }: PropsWithChildren<{ className?: string }>) {
@@ -88,10 +84,8 @@ function BottomSheetContent({ className, children }: PropsWithChildren<{ classNa
   return (
     <div
       ref={contentRef}
-      className={cn(
-        "flex h-full w-full flex-1 flex-col items-center justify-between overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-        className,
-      )}
+      className={cn("scrollbar-hide h-full w-full", className)}
+      style={{ overflowY: "scroll", touchAction: "pan-y" }}
     >
       {children}
     </div>
