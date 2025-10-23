@@ -1,37 +1,21 @@
-"use client";
-
 import Script from "next/script";
-import { useEffect, useRef, useState } from "react";
-import type { StoreListResponseData } from "@/entities/storeList/api";
-import { MapMarkers } from "./MapMarkers";
+import { memo } from "react";
 
-export function MapView({ storeList }: { storeList: StoreListResponseData[] }) {
-  const mapContainerRef = useRef<HTMLDivElement | null>(null);
-  const [map, setMap] = useState<naver.maps.Map | null>(null);
+interface MapViewProps {
+  mapRef: React.RefObject<HTMLDivElement | null>;
+  initializeMap: () => void;
+}
 
-  const initializeMap = () => {
-    if (!mapContainerRef.current || map) return;
-
-    const mapInstance = new window.naver.maps.Map(mapContainerRef.current, {
-      // TODO: 임시로 강남역 좌표 설정, 추후 변경 필요
-      center: new window.naver.maps.LatLng(37.499139, 127.028804),
-      zoom: 16,
-    });
-    setMap(mapInstance);
-  };
-
-  useEffect(() => {
-    return () => map?.destroy();
-  }, [map]);
-
+function MapViewComponent({ mapRef, initializeMap }: MapViewProps) {
   return (
-    <section>
+    <>
       <Script
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}`}
         onReady={initializeMap}
       />
-      <div ref={mapContainerRef} className="fixed inset-0 h-screen w-screen" />
-      {map && <MapMarkers map={map} storeList={storeList} />}
-    </section>
+      <div ref={mapRef} className="fixed inset-0 h-screen w-screen" />
+    </>
   );
 }
+
+export const MapView = memo(MapViewComponent);
