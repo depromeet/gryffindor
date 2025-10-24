@@ -20,16 +20,10 @@ import { TransitionLayout } from "@/shared/ui";
 export default function MapPage() {
   const { map, mapContainerRef, initializeMap } = useMapInitialize();
   const { bounds, center, updateCoordinate } = useMapCoordinate();
-  const { errorMessage, requestLocation } = useLocation(map);
+  const { requestLocation } = useLocation(map);
 
   const { isFilterOpen, filters, openFilter, closeFilter, applyFilters } = useMapFilters();
   const { storeList, isFetching } = useStoreListQuery(filters, { bounds, center });
-
-  const handleCurrentLocation = () => {
-    requestLocation();
-
-    if (errorMessage !== "") alert(errorMessage);
-  };
 
   return (
     <TransitionLayout>
@@ -38,7 +32,7 @@ export default function MapPage() {
 
       <FetchStoreListButton onClick={() => updateCoordinate(map)} isFetching={isFetching} />
       <MapActionButton type="filter" onClick={openFilter} />
-      <MapActionButton type="location" onClick={handleCurrentLocation} />
+      <MapActionButton type="location" onClick={requestLocation} />
       <StoreBottomSheet storeList={storeList} />
       <FilterBottomSheet
         isOpen={isFilterOpen}

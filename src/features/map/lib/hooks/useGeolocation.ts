@@ -19,7 +19,10 @@ export function useGeolocation() {
 
   const handleError = (error: GeolocationPositionError) => {
     setCurrentLocation(null);
-    setErrorMessage(getGeolocationErrorMessage(error));
+
+    const errorMessage = getGeolocationErrorMessage(error);
+    setErrorMessage(errorMessage);
+    alert(errorMessage);
   };
 
   const requestLocation = () => {
