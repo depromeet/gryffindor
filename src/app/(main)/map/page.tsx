@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getDefaultStationCenter } from "@/entities/storeList/lib";
 import type { FilterData } from "@/features/filter/model/types";
-import { useMapInitialize, useStoreListQuery } from "@/features/map/lib";
+import { useMapCoordinate, useMapInitialize, useStoreListQuery } from "@/features/map/lib";
 import {
   FetchStoreListButton,
   FilterBottomSheet,
@@ -17,6 +17,7 @@ import { TransitionLayout } from "@/shared/ui";
 
 export default function MapPage() {
   const { map, mapContainerRef, initializeMap } = useMapInitialize();
+  const { bounds, center, updateCoordinate } = useMapCoordinate();
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<FilterData>({
@@ -26,22 +27,23 @@ export default function MapPage() {
     categories: [],
   });
 
-  const { selectedStation } = useLocationStore();
-  const centerCoordinate = getDefaultStationCenter(selectedStation);
+  const { storeList, isFetching } = useStoreListQuery(filters, { bounds, center });
 
-  const { storeList, isFetching } = useStoreListQuery(filters);
+  const { selectedStation } = useLocationStore();
 
   useEffect(() => {
     if (!map) return;
 
+    const centerCoordinate = getDefaultStationCenter(selectedStation);
     map.panTo(new window.naver.maps.LatLng(centerCoordinate.lat, centerCoordinate.lon));
-  }, [map, centerCoordinate]);
+  }, [map, selectedStation]);
 
   return (
     <TransitionLayout>
       <MapView mapRef={mapContainerRef} initializeMap={initializeMap} />
       <MapMarkers map={map} storeList={storeList} />
-      <FetchStoreListButton onClick={() => {}} isFetching={isFetching} />
+
+      <FetchStoreListButton onClick={() => updateCoordinate(map)} isFetching={isFetching} />
       <MapActionButton type="filter" onClick={() => setIsFilterOpen(true)} />
       <MapActionButton type="location" onClick={() => {}} />
       <StoreBottomSheet storeList={storeList} />

@@ -2,19 +2,16 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { storeListApi } from "@/entities/storeList/api";
 import type { FilterData } from "@/features/filter/model/types";
 import { queryKeys } from "@/shared/api";
+import type { Coordinates } from "../../model";
 
-export function useStoreListQuery(filters: FilterData) {
+export function useStoreListQuery(filters: FilterData, coordinates: Coordinates) {
   const { data, ...query } = useInfiniteQuery({
-    queryKey: queryKeys.STORE_LIST_MAP(filters),
+    queryKey: queryKeys.STORE_LIST_MAP(filters, coordinates),
     queryFn: ({ pageParam }: { pageParam: string | null }) =>
       storeListApi.getStoreByPost({
         requestBody: {
-          // 임시로 강남역 인근으로 위치 설정
-          bbox: {
-            nw: { lat: 37.514, lon: 127.016 },
-            se: { lat: 37.478, lon: 127.042 },
-          },
-          center: { lat: 37.497981, lon: 127.027619 },
+          bbox: coordinates.bounds,
+          center: coordinates.center,
           filters: {
             price: filters.price,
             honbobLevel: filters.honbobLevel,
