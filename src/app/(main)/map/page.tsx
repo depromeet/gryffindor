@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getDefaultStationCenter } from "@/entities/storeList/lib";
 import type { FilterData } from "@/features/filter/model/types";
 import { useMapInitialize, useStoreListQuery } from "@/features/map/lib";
 import {
@@ -11,6 +12,7 @@ import {
   MapView,
   StoreBottomSheet,
 } from "@/features/map/ui";
+import { useLocationStore } from "@/shared/store";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function MapPage() {
@@ -24,7 +26,16 @@ export default function MapPage() {
     categories: [],
   });
 
+  const { selectedStation } = useLocationStore();
+  const centerCoordinate = getDefaultStationCenter(selectedStation);
+
   const { storeList, isFetching } = useStoreListQuery(filters);
+
+  useEffect(() => {
+    if (!map) return;
+
+    map.panTo(new window.naver.maps.LatLng(centerCoordinate.lat, centerCoordinate.lon));
+  }, [map, centerCoordinate]);
 
   return (
     <TransitionLayout>
