@@ -1,9 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getDefaultStationCenter } from "@/entities/storeList/lib";
-import type { FilterData } from "@/features/filter/model/types";
-import { useMapCoordinate, useMapInitialize, useStoreListQuery } from "@/features/map/lib";
+import {
+  useLocation,
+  useMapCoordinate,
+  useMapFilters,
+  useMapInitialize,
+  useStoreListQuery,
+} from "@/features/map/lib";
 import {
   FetchStoreListButton,
   FilterBottomSheet,
@@ -12,31 +15,21 @@ import {
   MapView,
   StoreBottomSheet,
 } from "@/features/map/ui";
-import { useLocationStore } from "@/shared/store";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function MapPage() {
   const { map, mapContainerRef, initializeMap } = useMapInitialize();
   const { bounds, center, updateCoordinate } = useMapCoordinate();
+  const { errorMessage, requestLocation } = useLocation(map);
 
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [filters, setFilters] = useState<FilterData>({
-    price: { min: 0, max: 20000 },
-    honbobLevel: 2,
-    seatTypes: [],
-    categories: [],
-  });
-
+  const { isFilterOpen, filters, openFilter, closeFilter, applyFilters } = useMapFilters();
   const { storeList, isFetching } = useStoreListQuery(filters, { bounds, center });
 
-  const { selectedStation } = useLocationStore();
+  const handleCurrentLocation = () => {
+    requestLocation();
 
-  useEffect(() => {
-    if (!map) return;
-
-    const centerCoordinate = getDefaultStationCenter(selectedStation);
-    map.panTo(new window.naver.maps.LatLng(centerCoordinate.lat, centerCoordinate.lon));
-  }, [map, selectedStation]);
+    if (errorMessage !== "") alert(errorMessage);
+  };
 
   return (
     <TransitionLayout>
@@ -44,14 +37,14 @@ export default function MapPage() {
       <MapMarkers map={map} storeList={storeList} />
 
       <FetchStoreListButton onClick={() => updateCoordinate(map)} isFetching={isFetching} />
-      <MapActionButton type="filter" onClick={() => setIsFilterOpen(true)} />
-      <MapActionButton type="location" onClick={() => {}} />
+      <MapActionButton type="filter" onClick={openFilter} />
+      <MapActionButton type="location" onClick={handleCurrentLocation} />
       <StoreBottomSheet storeList={storeList} />
       <FilterBottomSheet
         isOpen={isFilterOpen}
-        onClose={() => setIsFilterOpen(false)}
+        onClose={closeFilter}
         initialFilters={filters}
-        onApply={setFilters}
+        onApply={applyFilters}
       />
     </TransitionLayout>
   );
