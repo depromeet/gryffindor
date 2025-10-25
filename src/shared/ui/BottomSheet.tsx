@@ -116,7 +116,7 @@ function BottomSheetOverlay({ onClose }: { onClose: () => void }) {
 
 function BottomSheetHandler() {
   return (
-    <div className="-translate-x-1/2 absolute top-3 left-1/2 h-[4px] w-[45px] rounded-[10px] bg-gray-300" />
+    <div className="-translate-x-1/2 absolute top-3 left-1/2 h-[4px] w-[45px] rounded-[10px] bg-[#DFDFDF]" />
   );
 }
 
