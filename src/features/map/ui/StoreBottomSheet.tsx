@@ -25,7 +25,7 @@ export function StoreBottomSheet({ storeList }: { storeList: StoreListResponseDa
   }
 
   return (
-    <BottomSheet isFixed={false} isOpen={true} initialHeight={226} expandedOffset={88}>
+    <BottomSheet isFixed={false} isOpen={true} initialHeight={226}>
       <BottomSheetHeader>
         <BottomSheetHandler />
       </BottomSheetHeader>

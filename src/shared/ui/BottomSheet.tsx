@@ -19,24 +19,36 @@
  *     <BottomSheetHandler />
  *   </BottomSheetHeader>
  *   <BottomSheetContent>
- *     내용
+ *    <span>컨텐츠 영역</span>
  *   </BottomSheetContent>
  * </BottomSheet>
  */
 
 "use client";
 
-import type { PropsWithChildren } from "react";
-import { BottomSheetProvider, useBottomSheetContext } from "@/app/_providers";
+import { createContext, type PropsWithChildren, type RefObject, useContext } from "react";
 import { cn } from "@/shared/lib";
 import { useBottomSheet } from "../lib/hooks";
+
+interface BottomSheetContextProps {
+  contentRef?: RefObject<HTMLDivElement | null> | null;
+}
+
+const BottomSheetContext = createContext<BottomSheetContextProps | null>(null);
+
+export function useBottomSheetContext() {
+  const context = useContext(BottomSheetContext);
+
+  if (!context) throw new Error("useBottomSheetContext must be used within BottomSheetProvider");
+  return context;
+}
 
 interface BottomSheetProps {
   isFixed: boolean;
   isOpen?: boolean;
   onClose?: () => void;
   initialHeight?: number;
-  expandedOffset: number;
+  expandedOffset?: number;
 }
 
 function BottomSheet({
@@ -44,42 +56,38 @@ function BottomSheet({
   isOpen,
   onClose,
   initialHeight,
-  expandedOffset,
+  expandedOffset = 88,
   children,
 }: PropsWithChildren<BottomSheetProps>) {
-  const defaultHeight = initialHeight ? initialHeight : window.innerHeight - expandedOffset;
-  const { sheetRef, contentRef } = useBottomSheet({
-    initialHeight: defaultHeight,
-    expandedOffset,
-  });
+  const height = initialHeight ? initialHeight : window.innerHeight - expandedOffset;
+  const { sheetRef, contentRef } = useBottomSheet({ initialHeight: height, expandedOffset });
 
   if (!isOpen) return;
 
   return (
-    <BottomSheetProvider contentRef={isFixed ? null : contentRef}>
-      {onClose && <BottomSheetOverlay onClose={onClose} />}
+    <BottomSheetContext.Provider value={{ contentRef: isFixed ? null : contentRef }}>
+      {isFixed && <BottomSheetOverlay onClose={onClose || (() => {})} />}
       <dialog
         ref={isFixed ? null : sheetRef}
         className={cn(
-          "fixed right-0 left-0 mx-auto flex w-full w-full flex-col gap-[8px] rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
-          onClose ? "z-51" : "z-49",
+          "fixed right-0 left-0 mx-auto flex w-full flex-col gap-2 rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
+          isFixed ? "z-51" : "z-49",
         )}
         style={{
-          top: `calc(100% - ${defaultHeight}px)`,
+          top: `calc(100% - ${height}px)`,
           height: `calc(100% - ${expandedOffset}px)`,
-          maxHeight: `calc(100% - ${expandedOffset}px)`,
-          transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-          touchAction: "none",
         }}
       >
         {children}
       </dialog>
-    </BottomSheetProvider>
+    </BottomSheetContext.Provider>
   );
 }
 
 function BottomSheetHeader({ className, children }: PropsWithChildren<{ className?: string }>) {
-  return <div className={cn("relative flex min-h-9 flex-col", className)}>{children}</div>;
+  return (
+    <div className={cn("relative flex min-h-9 touch-none flex-col", className)}>{children}</div>
+  );
 }
 
 function BottomSheetContent({ className, children }: PropsWithChildren<{ className?: string }>) {
@@ -88,10 +96,8 @@ function BottomSheetContent({ className, children }: PropsWithChildren<{ classNa
   return (
     <div
       ref={contentRef}
-      className={cn(
-        "flex h-full w-full flex-1 flex-col items-center justify-between overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-        className,
-      )}
+      className={cn("scrollbar-hide h-full w-full", className)}
+      style={{ overflowY: "scroll", touchAction: "pan-y" }}
     >
       {children}
     </div>
@@ -110,7 +116,7 @@ function BottomSheetOverlay({ onClose }: { onClose: () => void }) {
 
 function BottomSheetHandler() {
   return (
-    <div className="-translate-x-1/2 absolute top-3 left-1/2 h-[4px] w-[45px] rounded-[10px] bg-gray-300" />
+    <div className="-translate-x-1/2 absolute top-3 left-1/2 h-[4px] w-[45px] rounded-[10px] bg-[#DFDFDF]" />
   );
 }
 
