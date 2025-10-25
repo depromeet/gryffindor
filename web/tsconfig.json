@@ -28,6 +28,13 @@
       "@bridge/*": ["../shared/bridge/*"]
     }
   },
-  "include": ["next-env.d.ts", "src/next-auth.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../shared/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "src/next-auth.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "../shared/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }
