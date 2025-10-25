@@ -26,6 +26,8 @@ export function useGeolocation() {
   };
 
   const requestLocation = () => {
+    setErrorMessage("");
+
     if (!navigator.geolocation) {
       setErrorMessage("위치 서비스를 지원하지 않습니다.");
       return;
