@@ -1,0 +1,12 @@
+{
+  "name": "@gryffindor/bridge",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "types": "index.ts",
+  "private": true,
+  "exports": {
+    ".": "./index.ts",
+    "./types": "./types.ts",
+    "./queries": "./queries.ts"
+  }
+}

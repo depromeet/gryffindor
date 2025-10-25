@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js
+.next/
+out/
+build/
+
+# Production
+dist/
+
+# Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+.pnpm-debug.log*
+
+# MacOS
+.DS_Store
+*.pem
+
+# Local env files
+.env*.local
+.env
+
+# Vercel
+.vercel
+
+# Typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Biome
+.biome-cache/

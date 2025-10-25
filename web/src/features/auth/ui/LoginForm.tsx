@@ -1,11 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useUserState } from "@/entities/user";
 import { signInAction } from "@/features/auth/api/signInAction";
 import { GoogleLogo, KakaoLogo, LoginCharacter } from "@/shared/lib/assets";
-import { Icon, TextButton } from "@/shared/ui";
+import { Icon } from "@/shared/ui";
 
 const oauthProviders = [
   { id: "google", label: "구글로 로그인" },
@@ -13,8 +11,6 @@ const oauthProviders = [
 ];
 
 export function LoginForm() {
-  const router = useRouter();
-  const { userState } = useUserState();
   return (
     <div className="flex h-screen flex-col items-center justify-center bg-primary500">
       <Icon name="bobEatText" className="h-[83.89px]" size={160} color="white" />

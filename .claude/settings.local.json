@@ -10,7 +10,15 @@
       "Bash(npm run lint:*)",
       "Bash(npm run typecheck:*)",
       "Bash(npm run:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(npx tsc:*)",
+      "Bash(cat:*)",
+      "Bash(git restore:*)",
+      "Bash(git add:*)",
+      "Bash(pnpm check:web:*)",
+      "Bash(pnpm run check:web:*)",
+      "Bash(pnpm -w run check:web:*)"
     ],
     "deny": [],
     "ask": []

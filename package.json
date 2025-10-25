@@ -1,61 +1,20 @@
 {
-  "name": "gryffindor",
-  "version": "0.1.0",
+  "name": "@gryffindor/monorepo",
+  "version": "1.0.0",
   "private": true,
+  "description": "Gryffindor Monorepo - App (React Native) + Web (Next.js)",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "biome check --write . && next build --turbopack",
-    "start": "next start",
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --write .",
-    "format": "biome format --write .",
-    "check": "biome check .",
-    "check:fix": "biome check --write .",
-    "ci": "biome ci .",
-    "prepare": "husky",
-    "husky:permissions": "chmod +x .husky/pre-commit .husky/pre-push .husky/post-merge .husky/_/husky.sh 2>/dev/null || echo 'Husky permissions set'"
+    "dev:web": "pnpm --filter web dev",
+    "dev:app": "pnpm --filter bobtory-app start",
+    "build:web": "pnpm --filter web build",
+    "build:app": "pnpm --filter bobtory-app build",
+    "check:web": "pnpm --filter web check",
+    "check:app": "pnpm --filter bobtory-app lint",
+    "clean": "pnpm -r exec rm -rf node_modules && rm -rf node_modules",
+    "install:all": "pnpm install"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "biome lint --write",
-      "biome format --write"
-    ],
-    "*.json": [
-      "biome format --write"
-    ],
-    "*.{md,scss,css}": [
-      "echo 'Skipping SCSS/CSS formatting'"
-    ]
-  },
-  "dependencies": {
-    "@radix-ui/react-dialog": "^1.1.15",
-    "@ssgoi/react": "^2.1.2",
-    "@svgr/webpack": "^8.1.0",
-    "@tanstack/react-query": "^5.85.5",
-    "@tanstack/react-query-devtools": "^5.85.5",
-    "axios": "^1.12.1",
-    "clsx": "^2.1.1",
-    "embla-carousel": "^8.6.0",
-    "embla-carousel-react": "^8.6.0",
-    "next": "15.5.2",
-    "next-auth": "5.0.0-beta.29",
-    "rc-slider": "^11.1.9",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "tailwind-merge": "^3.3.1",
-    "zustand": "^5.0.8"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.2.0",
-    "@tailwindcss/postcss": "^4",
-    "@types/navermaps": "^3.9.1",
-    "@types/node": "^20",
-    "@types/rc-slider": "^9.3.1",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.1.5",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
   }
 }

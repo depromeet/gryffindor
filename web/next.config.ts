@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -10,6 +11,16 @@ const nextConfig: NextConfig = {
         as: "*.js",
       },
     },
+    resolveAlias: {
+      "@bridge": path.resolve(__dirname, "../shared/bridge"),
+    },
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@bridge": path.resolve(__dirname, "../shared/bridge"),
+    };
+    return config;
   },
   images: {
     remotePatterns: [

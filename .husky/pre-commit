@@ -1,1 +1,1 @@
-pnpm check
+pnpm -w run check:web

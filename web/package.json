@@ -1,0 +1,61 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "biome check --write src/ && next build --turbopack",
+    "start": "next start",
+    "lint": "biome lint src/",
+    "lint:fix": "biome lint --write src/",
+    "format": "biome format --write src/",
+    "check": "biome check src/",
+    "check:fix": "biome check --write src/",
+    "ci": "biome ci src/",
+    "prepare": "husky",
+    "husky:permissions": "chmod +x .husky/pre-commit .husky/pre-push .husky/post-merge .husky/_/husky.sh 2>/dev/null || echo 'Husky permissions set'"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "biome lint --write",
+      "biome format --write"
+    ],
+    "*.json": [
+      "biome format --write"
+    ],
+    "*.{md,scss,css}": [
+      "echo 'Skipping SCSS/CSS formatting'"
+    ]
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@ssgoi/react": "^2.1.2",
+    "@svgr/webpack": "^8.1.0",
+    "@tanstack/react-query": "^5.85.5",
+    "@tanstack/react-query-devtools": "^5.85.5",
+    "axios": "^1.12.1",
+    "clsx": "^2.1.1",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
+    "next": "15.5.2",
+    "next-auth": "5.0.0-beta.29",
+    "rc-slider": "^11.1.9",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "tailwind-merge": "^3.3.1",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/navermaps": "^3.9.1",
+    "@types/node": "^20",
+    "@types/rc-slider": "^9.3.1",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

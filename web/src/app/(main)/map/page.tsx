@@ -15,6 +15,7 @@ import {
   MapView,
   StoreBottomSheet,
 } from "@/features/map/ui";
+
 import { TransitionLayout } from "@/shared/ui";
 
 export default function MapPage() {
@@ -23,13 +24,15 @@ export default function MapPage() {
   const { requestLocation } = useLocation(map);
 
   const { isFilterOpen, filters, openFilter, closeFilter, applyFilters } = useMapFilters();
-  const { storeList, isFetching } = useStoreListQuery(filters, { bounds, center });
+  const { storeList, isFetching } = useStoreListQuery(filters, {
+    bounds,
+    center,
+  });
 
   return (
     <TransitionLayout>
       <MapView mapRef={mapContainerRef} initializeMap={initializeMap} />
       <MapMarkers map={map} storeList={storeList} />
-
       <FetchStoreListButton onClick={() => updateCoordinate(map)} isFetching={isFetching} />
       <MapActionButton type="filter" onClick={openFilter} />
       <MapActionButton type="location" onClick={requestLocation} />

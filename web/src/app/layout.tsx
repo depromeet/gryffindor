@@ -4,7 +4,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-import { QueryProvider, SsgoiProvider, UserStateProvider } from "./_providers";
+import { NativeProvider, QueryProvider, SsgoiProvider, UserStateProvider } from "./_providers";
 
 const pretendard = localFont({
   src: [
@@ -44,7 +44,9 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <UserStateProvider>
             <QueryProvider>
-              <SsgoiProvider>{children}</SsgoiProvider>
+              <SsgoiProvider>
+                <NativeProvider>{children}</NativeProvider>
+              </SsgoiProvider>
             </QueryProvider>
           </UserStateProvider>
         </SessionProvider>
