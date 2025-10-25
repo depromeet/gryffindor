@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Kakao from "next-auth/providers/kakao";
+import Apple from "next-auth/providers/apple";
 import { isTokenExpired } from "@/shared/lib";
 import type { ApiResponse } from "@/shared/model";
 
@@ -21,7 +22,14 @@ export interface LoginResponse {
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Google,
-    Kakao({ clientId: process.env.KAKAO_CLIENT_ID, clientSecret: process.env.KAKAO_CLIENT_SECRET }),
+    Apple({
+      clientId: process.env.APPLE_CLIENT_ID,
+      clientSecret: process.env.APPLE_CLIENT_SECRET,
+    }),
+    Kakao({
+      clientId: process.env.KAKAO_CLIENT_ID,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET,
+    }),
   ],
   callbacks: {
     async signIn() {
@@ -53,7 +61,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 provider: account.provider.toUpperCase(),
                 oAuthToken: account.access_token,
               }),
-            },
+            }
           );
           const data = (await response.json()) as ApiResponse<LoginResponse>;
           console.log("로그인 성공 RESPONSE", data.response);
@@ -74,7 +82,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       // 토큰 만료 확인 및 갱신
-      if (token.accessTokenExpiration && isTokenExpired(token.accessTokenExpiration)) {
+      if (
+        token.accessTokenExpiration &&
+        isTokenExpired(token.accessTokenExpiration)
+      ) {
         // 1. refreshToken 존재 확인
         if (!token.refreshToken) {
           console.error("No refresh token available - signing out");
@@ -82,7 +93,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         // 2. refreshToken 만료 확인 (갱신 전에 체크)
-        if (token.refreshTokenExpiration && isTokenExpired(token.refreshTokenExpiration)) {
+        if (
+          token.refreshTokenExpiration &&
+          isTokenExpired(token.refreshTokenExpiration)
+        ) {
           console.error("Refresh token expired - signing out");
           return null; // 세션 종료
         }
@@ -104,7 +118,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token.refreshToken}`,
               },
-            },
+            }
           );
 
           if (!response.ok) {
@@ -156,7 +170,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             headers: {
               Authorization: `Bearer ${token.accessToken}`,
             },
-          },
+          }
         );
 
         const userMeData = await userMeResponse.json();
