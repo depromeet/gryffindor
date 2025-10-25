@@ -14,7 +14,8 @@
     "check:fix": "biome check --write src/",
     "ci": "biome ci src/",
     "prepare": "husky",
-    "husky:permissions": "chmod +x .husky/pre-commit .husky/pre-push .husky/post-merge .husky/_/husky.sh 2>/dev/null || echo 'Husky permissions set'"
+    "husky:permissions": "chmod +x .husky/pre-commit .husky/pre-push .husky/post-merge .husky/_/husky.sh 2>/dev/null || echo 'Husky permissions set'",
+    "tunnel": "ngrok http http://localhost:3000"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -56,6 +57,7 @@
     "@types/react-dom": "^19",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.5",
+    "ngrok": "5.0.0-beta.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
