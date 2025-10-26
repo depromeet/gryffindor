@@ -22,10 +22,7 @@ export interface LoginResponse {
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Google,
-    Apple({
-      clientId: process.env.APPLE_CLIENT_ID,
-      clientSecret: process.env.APPLE_CLIENT_SECRET,
-    }),
+    Apple,
     Kakao({
       clientId: process.env.KAKAO_CLIENT_ID,
       clientSecret: process.env.KAKAO_CLIENT_SECRET,
