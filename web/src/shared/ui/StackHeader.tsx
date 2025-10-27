@@ -54,7 +54,7 @@ export function StackHeader({ config, className, title: dynamicTitle }: StackHea
         "flex items-center justify-between",
         "border-gray100 border-b",
         "h-[60px] px-[20px] py-[14px]",
-        "sticky top-0 z-40",
+        "fixed top-0 z-40 left-0 right-0",
         className,
       )}
       style={headerStyle}

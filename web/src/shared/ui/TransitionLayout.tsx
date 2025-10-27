@@ -4,7 +4,7 @@ import { SsgoiTransition } from "@ssgoi/react";
 import { usePathname } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
-import { getRouteConfig } from "@/shared/config/routeConfig";
+import { getRouteConfig, getRoutePattern } from "@/shared/config/routeConfig";
 import { useMobile } from "@/shared/lib";
 import { StackHeader } from "./StackHeader";
 
@@ -63,8 +63,9 @@ export function TransitionLayout({
   const detectedMobile = useMobile();
   const isMobile = forceMobile !== undefined ? forceMobile : detectedMobile;
 
-  // ID는 수동 지정이 우선, 없으면 현재 pathname 사용
-  const transitionId = id || pathname;
+  // ID는 수동 지정이 우선, 없으면 route pattern 사용
+  // 예: /store/123 → /store/*, /store/123/review → /store/*/review
+  const transitionId = id || getRoutePattern(pathname);
 
   // 애니메이션 타입 결정
   const actualTransition =
@@ -80,21 +81,23 @@ export function TransitionLayout({
   const needsHeader = routeConfig.header && isMobile;
 
   return (
-    <SsgoiTransition
-      id={transitionId}
-      className={className}
-      data-transition={finalTransition}
-      data-device={isMobile ? "mobile" : "desktop"}
-    >
-      <div className="min-h-screen bg-gray-50">
-        {/* 헤더가 있는 페이지에만 헤더 포함 */}
-        {needsHeader && routeConfig.header && (
-          <StackHeader config={routeConfig.header} title={dynamicTitle} />
-        )}
+    <>
+      {/* 헤더는 transition 컨테이너 밖에 배치하여 fixed가 정상 작동하도록 함 */}
+      {needsHeader && routeConfig.header && (
+        <StackHeader config={routeConfig.header} title={dynamicTitle} />
+      )}
 
-        {/* 페이지 콘텐츠 */}
-        <div className={needsHeader ? "pb-safe" : ""}>{children}</div>
-      </div>
-    </SsgoiTransition>
+      <SsgoiTransition
+        id={transitionId}
+        className={className}
+        data-transition={finalTransition}
+        data-device={isMobile ? "mobile" : "desktop"}
+      >
+        <div className="min-h-screen bg-gray-50">
+          {/* 페이지 콘텐츠 - 헤더가 있으면 상단 여백 추가 */}
+          <div className={needsHeader ? "pt-[60px] pb-safe" : ""}>{children}</div>
+        </div>
+      </SsgoiTransition>
+    </>
   );
 }

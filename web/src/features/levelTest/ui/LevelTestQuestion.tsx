@@ -1,8 +1,8 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { Icon } from "@/shared/ui";
+import { useEffect, useState } from "react";
+import { Button, Icon } from "@/shared/ui";
 import { onBoardingApi } from "../api/onBoardingApi";
 import { type Question, useLevelTestStore } from "../model/levelTestStore";
 
@@ -11,6 +11,7 @@ interface LevelTestQuestionProps {
   questionNumber: number;
   totalQuestions: number;
   onNext: () => void;
+  onPrevious: () => void;
 }
 
 export function LevelTestQuestion({
@@ -18,9 +19,20 @@ export function LevelTestQuestion({
   questionNumber,
   totalQuestions,
   onNext,
+  onPrevious,
 }: LevelTestQuestionProps) {
-  const { setAnswer, setResult, getBackendRequestData } = useLevelTestStore();
+  const { setAnswer, setResult, getBackendRequestData, getAnswer } = useLevelTestStore();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  // 이전 답변 불러오기
+  useEffect(() => {
+    const previousAnswer = getAnswer(question.id);
+    if (previousAnswer) {
+      setSelectedOptions(previousAnswer.selectedOptions);
+    } else {
+      setSelectedOptions([]);
+    }
+  }, [question.id, getAnswer]);
 
   const onBoardingMutation = useMutation({
     mutationFn: onBoardingApi.createOnBoarding,
@@ -34,27 +46,17 @@ export function LevelTestQuestion({
   });
 
   const handleOptionSelect = (optionId: string) => {
-    let newSelection: string[];
+    const newSelection = selectedOptions.includes(optionId)
+      ? selectedOptions.filter((id) => id !== optionId)
+      : [...selectedOptions, optionId];
 
-    if (question.type === "single") {
-      newSelection = [optionId];
-      setSelectedOptions(newSelection);
-      setAnswer(question.id, newSelection);
-
-      setTimeout(() => {
-        handleNext();
-      }, 500);
-    } else {
-      newSelection = selectedOptions.includes(optionId)
-        ? selectedOptions.filter((id) => id !== optionId)
-        : [...selectedOptions, optionId];
-
-      setSelectedOptions(newSelection);
-      setAnswer(question.id, newSelection);
-    }
+    setSelectedOptions(newSelection);
+    setAnswer(question.id, newSelection);
   };
 
   const handleNext = () => {
+    if (selectedOptions.length === 0) return;
+
     if (questionNumber === totalQuestions) {
       const requestData = getBackendRequestData();
       onBoardingMutation.mutate({ answers: requestData.answers });
@@ -62,6 +64,13 @@ export function LevelTestQuestion({
       onNext();
     }
   };
+
+  const handlePrevious = () => {
+    onPrevious();
+  };
+
+  const isNextDisabled = selectedOptions.length === 0 || onBoardingMutation.isPending;
+  const isPreviousDisabled = questionNumber === 1 || onBoardingMutation.isPending;
 
   return (
     <div className="mx-auto">
@@ -106,6 +115,24 @@ export function LevelTestQuestion({
       {onBoardingMutation.isPending && (
         <div className="mt-4 text-center text-gray-500">결과를 계산 중입니다...</div>
       )}
+
+      {/* 이전/다음 버튼 */}
+      <div className="fixed bottom-0 left-0 right-0 flex gap-[12px] bg-gray0 px-[20px] py-[20px]">
+        <Button
+          label="이전"
+          variant="secondary"
+          fullWidth
+          onClick={handlePrevious}
+          disabled={isPreviousDisabled}
+        />
+        <Button
+          label={questionNumber === totalQuestions ? "결과 보기" : "다음"}
+          variant="primary"
+          fullWidth
+          onClick={handleNext}
+          disabled={isNextDisabled}
+        />
+      </div>
     </div>
   );
 }
