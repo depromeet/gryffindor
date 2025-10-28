@@ -2,6 +2,7 @@ export { default as BasicCharacter } from "./png/character/basic.png";
 export { default as LoginCharacter } from "./png/character/login.png";
 export { default as LogoText } from "./png/character/logo_text.png";
 export { default as SadCharacter } from "./png/character/sad.png";
+export { default as AppleLogo } from "./png/logo/apple.png";
 export { default as GoogleLogo } from "./png/logo/google.png";
 export { default as KakaoLogo } from "./png/logo/kakao.png";
 export { default as Lv1Character } from "./png/onBoarding/Lv.1.png";
