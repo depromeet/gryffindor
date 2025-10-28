@@ -1,132 +1,142 @@
 import type { SsgoiConfig } from "@ssgoi/react";
 import { drill, fade } from "@ssgoi/react/view-transitions";
-import type { NavigationDirection } from "../lib/hooks/useNavigationDirection";
 import { getAllRoutes, getRouteConfig } from "./routeConfig";
 
 /**
- * 공통 스프링 설정 (drill용)
+ * 공통 스프링 설정
  */
 export const springConfig = {
-  stiffness: 150,
-  damping: 20,
+  stiffness: 300,
+  damping: 35,
 };
 
 /**
  * 기본 fade 전환 설정
- * outSpring은 느리게 (이전 화면 오래 유지), inSpring은 빠르게 (새 화면 빠른 페이드인)
- * 이렇게 하면 새 화면이 렌더링될 시간을 확보하면서도 부드러운 전환 가능
  */
 export const fadeTransition = fade({
-  inSpring: { stiffness: 500, damping: 40 }, // 새 화면은 빠르게 페이드인
-  outSpring: { stiffness: 150, damping: 25 }, // 이전 화면은 천천히 페이드아웃
+  inSpring: springConfig,
+  outSpring: springConfig,
 });
 
 /**
- * drill 전환 객체 재사용 (성능 최적화)
- * 동일한 설정의 객체를 매번 생성하지 않고 재사용
+ * 기본 drill 전환 설정 (enter)
  */
-const drillEnterTransition = drill({
+export const drillEnterTransition = drill({
   direction: "enter",
   spring: springConfig,
 });
 
-const drillExitTransition = drill({
+/**
+ * 기본 drill 전환 설정 (exit) - 헤더 이질감 방지를 위한 최적화
+ */
+export const drillExitTransition = drill({
   direction: "exit",
-  spring: springConfig,
+  spring: {
+    stiffness: 450, // 약간 더 부드럽게
+    damping: 40, // 바운스 줄임
+  },
 });
 
 /**
- * drill 전환 가져오기 (캐시된 객체 반환)
+ * 경로가 어떤 라우트 그룹에 속하는지 판단
  */
-function getDrillTransition(direction: "enter" | "exit") {
-  return direction === "enter" ? drillEnterTransition : drillExitTransition;
+function getRouteGroup(path: string): "main" | "stack" {
+  return getRouteConfig(path).group;
 }
 
 /**
- * Transition rules 캐시
- * forward/backward용 rules를 각각 미리 계산해서 저장
+ * 스택 그룹 내에서 계층 관계 판단 (개선된 버전)
  */
-let cachedForwardRules: SsgoiConfig["transitions"] | null = null;
-let cachedBackwardRules: SsgoiConfig["transitions"] | null = null;
+function getStackHierarchy(fromPath: string, toPath: string): "enter" | "exit" {
+  const fromClean = fromPath.replace("/*", "");
+  const toClean = toPath.replace("/*", "");
 
-/**
- * 캐시 초기화 (개발 중 라우트 설정 변경 시 사용)
- */
-export function clearTransitionCache() {
-  cachedForwardRules = null;
-  cachedBackwardRules = null;
+  // 1. 명확한 부모-자식 관계 확인
+  if (toClean.startsWith(`${fromClean}/`)) {
+    return "enter"; // 더 깊은 곳으로 (부모 → 자식)
+  }
+
+  if (fromClean.startsWith(`${toClean}/`)) {
+    return "exit"; // 더 얕은 곳으로 (자식 → 부모)
+  }
+
+  // 패턴 매칭 특별 처리
+  if (fromPath.includes("/*") && toClean === fromClean) {
+    // 예: /mypage/* → /mypage 는 자식→부모 관계
+    return "exit";
+  }
+
+  if (toPath.includes("/*") && fromClean === toClean) {
+    // 예: /mypage → /mypage/* 는 부모→자식 관계
+    return "enter";
+  }
+
+  // 2. 같은 레벨이지만 더 정교한 구분
+  const fromDepth = fromClean.split("/").length;
+  const toDepth = toClean.split("/").length;
+
+  if (toDepth > fromDepth) {
+    return "enter"; // 더 깊은 레벨로
+  } else if (toDepth < fromDepth) {
+    return "exit"; // 더 얕은 레벨로
+  }
+
+  // 3. 완전히 같은 레벨일 때 - 브라우저 히스토리 기반 추론
+  // 특별 케이스: 특정 페이지에서 mypage로 돌아가는 것은 exit으로 처리
+  if (toClean === "/mypage" && fromClean !== "/mypage") {
+    return "exit"; // mypage는 홈 역할을 하므로 exit
+  }
+
+  // 기본적으로 새로운 스택 페이지로의 진입은 enter
+  return "enter";
 }
 
 /**
- * 라우트 그룹 기반 전환 규칙을 생성하는 내부 함수
+ * 라우트 그룹 기반 전환 규칙을 자동 생성하는 헬퍼
  */
-function generateTransitionRules(
-  navigationDirection: NavigationDirection,
-): SsgoiConfig["transitions"] {
+export function createTransitionRules() {
   const rules: SsgoiConfig["transitions"] = [];
   const allRoutes = getAllRoutes();
 
   allRoutes.forEach((from) => {
     allRoutes.forEach((to) => {
       if (from !== to) {
-        const fromConfig = getRouteConfig(from);
-        const toConfig = getRouteConfig(to);
-        const fromTransition = fromConfig.transition;
-        const toTransition = toConfig.transition;
-        const fromGroup = fromConfig.group;
-        const toGroup = toConfig.group;
+        const fromGroup = getRouteGroup(from);
+        const toGroup = getRouteGroup(to);
 
-        // 우선순위 1: 그룹 간 전환 (main ↔ stack)
-        // → 항상 drill 사용 (개별 transition 설정 무시)
-        if (
-          (fromGroup === "main" && toGroup === "stack") ||
-          (fromGroup === "stack" && toGroup === "main")
-        ) {
-          const drillDirection = navigationDirection === "backward" ? "exit" : "enter";
+        // 라우트 그룹에 따른 전환 규칙 결정
+        if (fromGroup === "main" && toGroup === "main") {
+          // (main) → (main): 규칙 추가 안함 (기본 fade 사용)
+          return;
+        } else if (fromGroup === "main" && toGroup === "stack") {
+          // (main) → (stack): drill enter
           rules.push({
             from,
             to,
-            transition: getDrillTransition(drillDirection),
+            transition: drillEnterTransition,
             symmetric: false,
           });
-          return;
-        }
-
-        // 우선순위 2: main → main 이동
-        // → 기본 fade 사용 (규칙 추가 안함)
-        if (fromGroup === "main" && toGroup === "main") {
+        } else if (fromGroup === "stack" && toGroup === "main") {
+          // (stack) → (main): drill exit
           rules.push({
             from,
             to,
-            transition: fadeTransition,
-            symmetric: true,
+            transition: drillExitTransition,
+            symmetric: false,
           });
-          return;
-        }
+        } else if (fromGroup === "stack" && toGroup === "stack") {
+          // (stack) → (stack): 계층 관계에 따라 drill enter/exit
+          const hierarchy = getStackHierarchy(from, to);
 
-        // 우선순위 3: stack → stack 이동
-        // → 각 라우트의 transition 설정 확인
+          const transition = hierarchy === "exit" ? drillExitTransition : drillEnterTransition;
 
-        // 3-1. 한쪽이라도 fade: defaultTransition(fade) 사용
-        // 명시적 규칙을 추가하지 않아 중복 방지
-        if (fromTransition === "fade" || toTransition === "fade") {
           rules.push({
             from,
             to,
-            transition: fadeTransition,
-            symmetric: true,
+            transition,
+            symmetric: false,
           });
-          return;
         }
-
-        // 3-2. 양쪽 모두 drill: drill 규칙 추가
-        const drillDirection = navigationDirection === "backward" ? "exit" : "enter";
-        rules.push({
-          from,
-          to,
-          transition: getDrillTransition(drillDirection),
-          symmetric: false,
-        });
       }
     });
   });
@@ -135,41 +145,38 @@ function generateTransitionRules(
 }
 
 /**
- * 라우트 그룹 기반 전환 규칙을 가져오기 (캐싱 적용)
- * Navigation direction을 고려하여 올바른 drill transition 적용
- */
-export function getTransitionRules(
-  navigationDirection: NavigationDirection = "forward",
-): SsgoiConfig["transitions"] {
-  // 캐시된 rules 반환
-  if (navigationDirection === "forward") {
-    if (!cachedForwardRules) {
-      cachedForwardRules = generateTransitionRules("forward");
-    }
-    return cachedForwardRules;
-  } else {
-    if (!cachedBackwardRules) {
-      cachedBackwardRules = generateTransitionRules("backward");
-    }
-    return cachedBackwardRules;
-  }
-}
-
-/**
  * 디바이스별 Ssgoi 설정을 생성하는 헬퍼
  */
-export function createSsgoiConfig(
-  isMobile: boolean = true,
-  navigationDirection: NavigationDirection = "forward",
-): SsgoiConfig {
+export function createSsgoiConfig(isMobile: boolean = true): SsgoiConfig {
   const baseConfig: SsgoiConfig = {
     defaultTransition: fadeTransition,
   };
 
-  // 모바일에서만 drill 전환 규칙 적용 (캐싱된 rules 사용)
+  // 모바일에서만 drill 전환 규칙 적용
   if (isMobile) {
-    baseConfig.transitions = getTransitionRules(navigationDirection);
+    baseConfig.transitions = createTransitionRules();
   }
 
   return baseConfig;
+}
+
+/**
+ * 특정 라우트 패턴에 대한 커스텀 전환 규칙 추가
+ */
+export function addCustomTransitionRule(
+  from: string,
+  to: string,
+  transitionType: "fade" | "drill-enter" | "drill-exit",
+) {
+  const transitionMap = {
+    fade: fadeTransition,
+    "drill-enter": drillEnterTransition,
+    "drill-exit": drillExitTransition,
+  };
+
+  return {
+    from,
+    to,
+    transition: transitionMap[transitionType],
+  };
 }

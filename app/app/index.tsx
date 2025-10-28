@@ -28,7 +28,7 @@ export default function WebViewScreen() {
     <SafeAreaView style={styles.container}>
       <WebView
         ref={webViewRef}
-        source={{ uri: "http://localhost:3000" }}
+        source={{ uri: "https://bobtory.com" }}
         onMessage={(event) => {
           if (!event.nativeEvent.data) return;
           const request = JSON.parse(event.nativeEvent.data);
