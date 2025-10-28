@@ -122,32 +122,74 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
       },
     },
   },
-  "/store/[id]": {
+  "/store/*/review": {
     group: "stack",
     transition: "drill",
     header: {
       title: "매장 정보",
     },
   },
+  "/store/*/review/*": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "매장 정보",
+    },
+  },
+  "/store/*": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "매장 정보",
+    },
+  },
+  "/store/": {
+    group: "stack",
+    transition: "drill",
+    header: null,
+  },
 };
+
+/**
+ * 경로에 매칭되는 route pattern 반환
+ * @example
+ * getRoutePattern('/store/123') // returns '/store/*'
+ * getRoutePattern('/store/123/review') // returns '/store/star/review' (star = *)
+ */
+export function getRoutePattern(pathname: string): string {
+  // 정확한 매칭 우선
+  if (ROUTE_CONFIG[pathname]) {
+    return pathname;
+  }
+
+  // 와일드카드 매칭
+  // 패턴 길이가 긴 순서대로 정렬 (구체적인 패턴이 우선)
+  const sortedPatterns = Object.keys(ROUTE_CONFIG)
+    .filter((pattern) => pattern.includes("*"))
+    .sort((a, b) => b.length - a.length);
+
+  for (const pattern of sortedPatterns) {
+    // /store/* → /store/ 이후 모든 경로 매칭 (슬래시 포함)
+    const regexPattern = pattern.replace(/\*/g, ".*");
+    const regex = new RegExp(`^${regexPattern}$`);
+
+    if (regex.test(pathname)) {
+      return pattern;
+    }
+  }
+
+  // 기본값: pathname 그대로 반환
+  return pathname;
+}
 
 /**
  * 경로에 매칭되는 페이지 설정 반환
  */
 export function getRouteConfig(pathname: string): RouteConfig {
-  // 정확한 매칭 우선
-  if (ROUTE_CONFIG[pathname]) {
-    return ROUTE_CONFIG[pathname];
-  }
+  const pattern = getRoutePattern(pathname);
 
-  // 와일드카드 매칭
-  for (const [pattern, config] of Object.entries(ROUTE_CONFIG)) {
-    if (pattern.includes("*")) {
-      const regex = new RegExp(`^${pattern.replace("*", ".*")}$`);
-      if (regex.test(pathname)) {
-        return config;
-      }
-    }
+  if (ROUTE_CONFIG[pattern]) {
+    return ROUTE_CONFIG[pattern];
   }
 
   // 기본값: 스택 페이지

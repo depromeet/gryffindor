@@ -18,7 +18,8 @@
       "Bash(git add:*)",
       "Bash(pnpm check:web:*)",
       "Bash(pnpm run check:web:*)",
-      "Bash(pnpm -w run check:web:*)"
+      "Bash(pnpm -w run check:web:*)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []

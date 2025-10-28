@@ -16,6 +16,7 @@ interface LevelTestDynamicPageContentProps {
   totalSteps: number;
   result: LevelTestResponse | null;
   onNext: () => void;
+  onPrevious: () => void;
   resultConstant: string;
 }
 
@@ -25,6 +26,7 @@ export function LevelTestDynamicPageContent({
   totalSteps,
   result,
   onNext,
+  onPrevious,
   resultConstant,
 }: LevelTestDynamicPageContentProps) {
   // 결과 페이지
@@ -44,6 +46,7 @@ export function LevelTestDynamicPageContent({
         questionNumber={parsedStep}
         totalQuestions={totalSteps}
         onNext={onNext}
+        onPrevious={onPrevious}
       />
     );
   }

@@ -51,6 +51,13 @@ export function useLevelTestNavigation() {
     }
   }, [currentStep, totalSteps, navigateToStep, navigateToResult]);
 
+  const goToPrevious = useCallback(() => {
+    const prevStep = currentStep - 1;
+    if (prevStep >= 1) {
+      navigateToStep(prevStep);
+    }
+  }, [currentStep, navigateToStep]);
+
   // 라우팅 효과 처리
   useEffect(() => {
     if (currentId === ROUTE_CONSTANTS.RESULT) return;
@@ -69,6 +76,7 @@ export function useLevelTestNavigation() {
     currentId,
     parsedStep,
     goToNext,
+    goToPrevious,
     routeConstants: ROUTE_CONSTANTS,
   };
 }
