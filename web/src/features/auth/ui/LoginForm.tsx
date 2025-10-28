@@ -13,22 +13,19 @@ export function LoginForm() {
       <span className="body1-semibold mt-[35px] text-gray0">식당 찾기 스트레스 없이,</span>
       <span className="body1-semibold mb-[12px] text-gray0">혼밥을 더 자유롭고 편하게</span>
       <Image src={LoginCharacter} className="w-full" alt="login" width={375} height={340} />
-      <div className="flex w-full flex-col items-center justify-center gap-3 px-6">
+      <div className="flex w-full items-center justify-center gap-5 px-6">
         {SOCIAL_LOGIN_CONFIG.map((config) => (
           <form
             key={config.id}
-            className="w-full"
             action={async () => {
               await signInAction(config.id);
             }}
           >
             <button
               type="submit"
-              className={`flex w-full items-center justify-center gap-3 rounded-lg px-6 py-4 font-medium transition-colors duration-200 ${config.buttonStyles}`}
+              className={`flex items-center w-[60px] h-[60px] justify-center rounded-full font-medium transition-colors duration-200 ${config.buttonStyles}`}
             >
-              <Image src={config.src} alt={`${config.label} 로고`} width={20} height={20} />
-
-              {config.label}
+              <Image src={config.src} alt={`${config.label} 로고`} width={28} height={28} />
             </button>
           </form>
         ))}
