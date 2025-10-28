@@ -147,7 +147,10 @@ export function createTransitionRules() {
 /**
  * 디바이스별 Ssgoi 설정을 생성하는 헬퍼
  */
-export function createSsgoiConfig(isMobile: boolean = true): SsgoiConfig {
+export function createSsgoiConfig(
+  isMobile: boolean = true,
+  _navigationDirection?: "forward" | "backward",
+): SsgoiConfig {
   const baseConfig: SsgoiConfig = {
     defaultTransition: fadeTransition,
   };
