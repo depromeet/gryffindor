@@ -6,7 +6,7 @@ import { getAllRoutes, getRouteConfig } from "./routeConfig";
  * 공통 스프링 설정
  */
 export const springConfig = {
-  stiffness: 300,
+  stiffness: 500,
   damping: 35,
 };
 
@@ -32,7 +32,7 @@ export const drillEnterTransition = drill({
 export const drillExitTransition = drill({
   direction: "exit",
   spring: {
-    stiffness: 450, // 약간 더 부드럽게
+    stiffness: 400, // 약간 더 부드럽게
     damping: 40, // 바운스 줄임
   },
 });
@@ -147,10 +147,7 @@ export function createTransitionRules() {
 /**
  * 디바이스별 Ssgoi 설정을 생성하는 헬퍼
  */
-export function createSsgoiConfig(
-  isMobile: boolean = true,
-  _navigationDirection?: "forward" | "backward",
-): SsgoiConfig {
+export function createSsgoiConfig(isMobile: boolean = true): SsgoiConfig {
   const baseConfig: SsgoiConfig = {
     defaultTransition: fadeTransition,
   };
