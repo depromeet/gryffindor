@@ -9,7 +9,7 @@ import { Icon } from "@/shared/ui";
 export function LoginForm() {
   return (
     <div className="flex h-screen flex-col items-center justify-center bg-primary500">
-      <Icon name="bobEatText" className="h-[83.89px]" size={160} color="white" />
+      <Icon name="bobEatText" className="h-[68px]" size={204} color="white" />
       <span className="body1-semibold mt-[35px] text-gray0">식당 찾기 스트레스 없이,</span>
       <span className="body1-semibold mb-[12px] text-gray0">혼밥을 더 자유롭고 편하게</span>
       <Image src={LoginCharacter} className="w-full" alt="login" width={375} height={340} />
