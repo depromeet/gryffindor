@@ -7,6 +7,7 @@ interface SeatImageGalleryProps {
   level: number;
   userName: string;
   seatImages: SeatImage[];
+  handleSetZoomImageSrc: (src: string) => void;
 }
 
 export function SeatImageGallery({
@@ -14,6 +15,7 @@ export function SeatImageGallery({
   storeName,
   level,
   userName,
+  handleSetZoomImageSrc,
 }: SeatImageGalleryProps) {
   const seatTypeMap = {
     CUBICLE: "칸막이",
@@ -44,6 +46,7 @@ export function SeatImageGallery({
                     width={180}
                     height={180}
                     className="h-full w-full object-cover"
+                    onClick={() => img.imageUrl && handleSetZoomImageSrc(img.imageUrl)}
                   />
                 ) : (
                   <div className="h-full w-full bg-gray-200" />

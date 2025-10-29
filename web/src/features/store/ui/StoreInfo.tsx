@@ -11,6 +11,7 @@ interface StoreInfoProps {
   phone: string;
   lat: number;
   lon: number;
+  handleSetZoomImageSrc: (src: string) => void;
 }
 
 export function StoreInfo({
@@ -22,10 +23,18 @@ export function StoreInfo({
   phone,
   lat,
   lon,
+  handleSetZoomImageSrc,
 }: StoreInfoProps) {
   const renderImage = (src: string | undefined, alt: string, className: string) =>
     src ? (
-      <Image src={src} alt={alt} width={186.5} height={224} className={className} />
+      <Image
+        src={src}
+        alt={alt}
+        width={186.5}
+        height={224}
+        className={className}
+        onClick={() => handleSetZoomImageSrc(src)}
+      />
     ) : (
       <div className={`${className} bg-gray-200`} />
     );
