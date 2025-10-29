@@ -1,3 +1,4 @@
+export * from "./MenuSection";
 export * from "./ReviewList";
 export * from "./SeatImageGallery";
 export * from "./SeatInfoSection";

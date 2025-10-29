@@ -79,7 +79,7 @@ export function StoreInfo({
   };
 
   return (
-    <article className="flex w-full flex-col gap-5 pb-6">
+    <article className="flex w-full flex-col gap-5">
       <section className="flex h-[224px] w-full shrink-0 gap-[2px]">
         {renderImage(menus[0].imageUrl, `${name}-thumbnail-1`, "h-full w-1/2 object-cover")}
         <div className="flex w-1/2 flex-col gap-[2px]">
@@ -120,6 +120,7 @@ export function StoreInfo({
           </div>
         </div>
       </section>
+      <div className="h-1 w-full bg-gray50" />
     </article>
   );
 }

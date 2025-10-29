@@ -2,10 +2,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { use, useState } from "react";
-import { MenuItem } from "@/entities/store/ui";
 import { useUserState } from "@/entities/user";
 import { getStoreDetail } from "@/features/store/api/getStoreDetail";
 import {
+  MenuSection,
   SeatImageGallery,
   SeatInfoSection,
   StoreInfo,
@@ -48,15 +48,7 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
     <TransitionLayout dynamicTitle={store.name}>
       <div className="flex flex-col bg-gray0">
         <StoreInfo {...store} handleSetZoomImageSrc={handleSetZoomImageSrc} />
-        <div className="h-1 w-full bg-gray50"></div>
-        <article className="mt-5 flex w-full flex-col gap-3 pl-5">
-          <span className="text-[#000] text-subtitle1">혼밥 메뉴</span>
-          <div className="flex flex-col gap-3">
-            {store.menus.map((menu) => (
-              <MenuItem key={menu.name} {...menu} handleSetZoomImageSrc={handleSetZoomImageSrc} />
-            ))}
-          </div>
-        </article>
+        <MenuSection menus={store.menus} handleSetZoomImageSrc={handleSetZoomImageSrc} />
         <SeatInfoSection seatInfo={store.seatInfo} />
         <SeatImageGallery
           storeName={store.name}
