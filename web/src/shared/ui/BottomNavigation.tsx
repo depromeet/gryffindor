@@ -54,7 +54,7 @@ export function BottomNavigation() {
   const triggerHaptic = async () => {
     try {
       await fetchApp({ query: BRIDGE_QUERIES.HAPTIC_FEEDBACK });
-    } catch (error) {
+    } catch (_error) {
       // WebView 환경이 아닐 경우 무시
       console.debug("Haptic feedback not available");
     }
