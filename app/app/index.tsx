@@ -31,8 +31,8 @@ export default function WebViewScreen() {
         ref={webViewRef}
         // 개발 환경: 로컬 IP 사용 (Expo Go에서 localhost 접근 불가)
         // 프로덕션: https://bobtory.com
-        // source={{ uri: "https://bobtory.com" }}
-        source={{ uri: "http://localhost:3000" }}
+        source={{ uri: "https://bobtory.com" }}
+        // source={{ uri: "http://localhost:3000" }}
         onMessage={(event) => {
           if (!event.nativeEvent.data) return;
           const request = JSON.parse(event.nativeEvent.data);
