@@ -53,11 +53,11 @@ export function StackHeader({ config, className, title: dynamicTitle }: StackHea
       className={cn(
         "flex items-center justify-between",
         "border-gray100 border-b",
-        "h-[60px] px-[20px] py-[14px]",
+        "px-[20px] py-[14px]",
         "fixed top-0 z-40 left-0 right-0",
         className,
       )}
-      style={headerStyle}
+      style={{ ...headerStyle, paddingTop: "calc(env(safe-area-inset-top) + 14px)" }}
     >
       {/* 뒤로가기 버튼 */}
       {!backButton?.hidden && (

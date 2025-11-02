@@ -35,7 +35,7 @@ interface RouteConfig {
  */
 export const AUTH_CONFIG = {
   // 인증이 필요한 경로들
-  PROTECTED_ROUTES: ["/onboarding"] as const,
+  PROTECTED_ROUTES: ["/onboarding", "/mypage"] as const,
   // 인증되지 않은 사용자만 접근 가능한 경로들
   AUTH_ROUTES: ["/login"] as const,
   // 공개 경로들
@@ -61,11 +61,9 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
 
   // 스택 그룹 - 드릴 네비게이션
   "/mypage": {
-    group: "stack",
-    transition: "drill",
-    header: {
-      title: "마이페이지",
-    },
+    group: "main",
+    transition: "fade",
+    header: null,
   },
   "/mypage/nickname": {
     group: "stack",
@@ -75,17 +73,17 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
     },
   },
   "/mypage/*": {
-    group: "stack",
-    transition: "drill",
+    group: "main",
+    transition: "fade",
     header: {
       title: "마이페이지 상세",
     },
   },
-  "/mypage/tester": {
+  "/mypage/reviews": {
     group: "stack",
     transition: "drill",
     header: {
-      title: "테스터 페이지",
+      title: "방문 후기",
     },
   },
   "/item": {

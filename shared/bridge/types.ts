@@ -22,6 +22,10 @@ export interface DeviceLocationLatLngSetResponse {
   lng: number;
 }
 
+export interface DeviceHapticFeedbackResponse {
+  success: boolean;
+}
+
 // ============================================
 // Bridge Schema
 // ============================================
@@ -35,6 +39,7 @@ export interface BridgeSchema {
   fetchDeviceSystemForAppSet: DeviceSystemAppSetResponse;
   fetchDeviceSystemForPlatformSet: DeviceSystemPlatformSetResponse;
   fetchDeviceLocationForLatLngSet: DeviceLocationLatLngSetResponse;
+  triggerHapticFeedback: DeviceHapticFeedbackResponse;
 }
 
 // ============================================

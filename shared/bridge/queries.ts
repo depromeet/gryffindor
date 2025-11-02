@@ -8,6 +8,7 @@ export const BRIDGE_QUERIES = {
   DEVICE_SYSTEM_APP: 'fetchDeviceSystemForAppSet',
   DEVICE_SYSTEM_PLATFORM: 'fetchDeviceSystemForPlatformSet',
   DEVICE_LOCATION: 'fetchDeviceLocationForLatLngSet',
+  HAPTIC_FEEDBACK: 'triggerHapticFeedback',
 } as const satisfies Record<string, BridgeQuery>;
 
 /**
