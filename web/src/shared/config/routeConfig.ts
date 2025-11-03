@@ -148,6 +148,13 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
     transition: "drill",
     header: null,
   },
+  "/store/*/suggestion-store": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "정보 수정 제안",
+    },
+  },
 };
 
 /**

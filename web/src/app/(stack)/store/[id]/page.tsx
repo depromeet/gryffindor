@@ -52,7 +52,7 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
           seatImages={store.seatImages}
         />
         <ReviewSection storeId={store.storeId} memberId={userState?.memberId} />
-        <SuggestionCard />
+        <SuggestionCard storeId={store.storeId} />
       </div>
     </TransitionLayout>
   );
