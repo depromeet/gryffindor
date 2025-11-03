@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useUserState } from "@/entities/user";
-import { LogoutConfirmModal } from "@/features/auth/ui";
+import { LogoutConfirmModal } from "@/features/auth";
 
 export function AccountActionsSection() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
