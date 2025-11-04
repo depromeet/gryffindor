@@ -23,7 +23,7 @@ export default function ReviewPage() {
 
   return (
     <TransitionLayout dynamicTitle={title}>
-      <div className="flex min-h-screen w-full flex-col bg-gray0">
+      <div className="flex h-[calc(100vh-80px)] w-full flex-col bg-gray0">
         <FilterSection
           label="대표 키워드"
           options={textOnlyFilters}

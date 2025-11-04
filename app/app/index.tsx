@@ -6,15 +6,17 @@ import { WebView } from "react-native-webview";
 import { useApis } from "@/apis";
 
 export default function WebViewScreen() {
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
   const webViewRef = useRef<WebView>(null);
   const { onRequest } = useApis(webViewRef);
 
   // 인터넷 상태 확인
   useEffect(() => {
-    NetInfo.addEventListener((status) => {
+    const unsubscribe = NetInfo.addEventListener((status) => {
       setIsConnected(status.isConnected ?? false);
     });
+
+    return () => unsubscribe();
   }, []);
 
   if (!isConnected)
@@ -44,18 +46,20 @@ export default function WebViewScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <WebView
-        ref={webViewRef}
-        source={{ uri: __DEV__ ? "http://localhost:3000" : "https://bobtory.com" }}
-        onMessage={(event) => {
-          if (!event.nativeEvent.data) return;
-          const request = JSON.parse(event.nativeEvent.data);
-          onRequest(request.query);
-        }}
-        onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
-      />
-    </SafeAreaView>
+    <WebView
+      ref={webViewRef}
+      source={{ uri: __DEV__ ? "http://localhost:3000" : "https://bobtory.com" }}
+      onMessage={(event) => {
+        if (!event.nativeEvent.data) return;
+        const request = JSON.parse(event.nativeEvent.data);
+        onRequest(request.query);
+      }}
+      // iOS 스와이프 백 제스처 활성화
+      allowsBackForwardNavigationGestures={true}
+      // iOS에서 바운스 효과 비활성화 (선택사항)
+      bounces={false}
+      onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
+    />
   );
 }
 

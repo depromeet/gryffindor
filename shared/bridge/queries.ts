@@ -10,6 +10,7 @@ export const BRIDGE_QUERIES = {
   DEVICE_LOCATION: 'fetchDeviceLocationForLatLngSet',
   LOGIN_APPLE: 'loginApple',
   LOGIN_KAKAO: 'loginKakao',
+  HAPTIC_FEEDBACK: 'triggerHapticFeedback',
 } as const satisfies Record<string, BridgeQuery>;
 
 /**

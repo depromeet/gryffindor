@@ -61,11 +61,9 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
 
   // 스택 그룹 - 드릴 네비게이션
   "/mypage": {
-    group: "stack",
-    transition: "drill",
-    header: {
-      title: "마이페이지",
-    },
+    group: "main",
+    transition: "fade",
+    header: null,
   },
   "/mypage/nickname": {
     group: "stack",
@@ -75,17 +73,17 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
     },
   },
   "/mypage/*": {
-    group: "stack",
-    transition: "drill",
+    group: "main",
+    transition: "fade",
     header: {
       title: "마이페이지 상세",
     },
   },
-  "/mypage/tester": {
+  "/mypage/reviews": {
     group: "stack",
     transition: "drill",
     header: {
-      title: "테스터 페이지",
+      title: "방문 후기",
     },
   },
   "/item": {
@@ -147,6 +145,13 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
     group: "stack",
     transition: "drill",
     header: null,
+  },
+  "/store/*/suggestion-store": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "정보 수정 제안",
+    },
   },
 };
 

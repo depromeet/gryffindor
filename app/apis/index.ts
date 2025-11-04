@@ -1,7 +1,13 @@
 import type { BridgeMessage, BridgeQuery } from "@bridge";
 import type { RefObject } from "react";
 import type { WebView } from "react-native-webview";
-import { useDeviceLocation, useDeviceSystem, useLoginApple, useLoginKakao } from "@/hooks";
+import {
+  useDeviceLocation,
+  useDeviceSystem,
+  useHapticFeedback,
+  useLoginApple,
+  useLoginKakao,
+} from "@/hooks";
 
 export const useApis = (webviewRef: RefObject<WebView | null>) => {
   const onResponse = <T extends BridgeQuery>(result: BridgeMessage<T>) => {
@@ -13,6 +19,7 @@ export const useApis = (webviewRef: RefObject<WebView | null>) => {
     ...useDeviceLocation(onResponse),
     ...useLoginApple(onResponse),
     ...useLoginKakao(onResponse),
+    ...useHapticFeedback(onResponse),
   };
 
   const onRequest = (query: BridgeQuery) => {

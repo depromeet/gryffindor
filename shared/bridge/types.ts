@@ -32,6 +32,10 @@ export interface LoginKakaoResponse {
   success: boolean;
 }
 
+export interface DeviceHapticFeedbackResponse {
+  success: boolean;
+}
+
 // ============================================
 // Bridge Schema
 // ============================================
@@ -47,6 +51,7 @@ export interface BridgeSchema {
   fetchDeviceLocationForLatLngSet: DeviceLocationLatLngSetResponse;
   loginApple: LoginAppleResponse;
   loginKakao: LoginKakaoResponse;
+  triggerHapticFeedback: DeviceHapticFeedbackResponse;
 }
 
 // ============================================
