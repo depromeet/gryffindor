@@ -11,6 +11,7 @@ interface StoreInfoProps {
   phone: string;
   lat: number;
   lon: number;
+  handleSetZoomImageSrc: (src: string) => void;
 }
 
 export function StoreInfo({
@@ -22,10 +23,18 @@ export function StoreInfo({
   phone,
   lat,
   lon,
+  handleSetZoomImageSrc,
 }: StoreInfoProps) {
   const renderImage = (src: string | undefined, alt: string, className: string) =>
     src ? (
-      <Image src={src} alt={alt} width={186.5} height={224} className={className} />
+      <Image
+        src={src}
+        alt={alt}
+        width={186.5}
+        height={224}
+        className={className}
+        onClick={() => handleSetZoomImageSrc(src)}
+      />
     ) : (
       <div className={`${className} bg-gray-200`} />
     );
@@ -70,7 +79,7 @@ export function StoreInfo({
   };
 
   return (
-    <article className="flex w-full flex-col gap-5 pb-6">
+    <article className="flex w-full flex-col gap-5">
       <section className="flex h-[224px] w-full shrink-0 gap-[2px]">
         {renderImage(menus[0].imageUrl, `${name}-thumbnail-1`, "h-full w-1/2 object-cover")}
         <div className="flex w-1/2 flex-col gap-[2px]">
@@ -111,6 +120,7 @@ export function StoreInfo({
           </div>
         </div>
       </section>
+      <div className="h-1 w-full bg-gray50" />
     </article>
   );
 }

@@ -19,7 +19,8 @@
       "Bash(pnpm check:web:*)",
       "Bash(pnpm run check:web:*)",
       "Bash(pnpm -w run check:web:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(python3:*)"
     ],
     "deny": [],
     "ask": []
