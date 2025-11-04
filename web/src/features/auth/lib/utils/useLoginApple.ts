@@ -9,8 +9,10 @@ export const useLoginApple = () => {
   const { fetchApp } = useNativeBridge();
 
   const loginApple = async () => {
+    console.log("loginApple function called / in web environment");
     try {
       if (isNativeApp()) {
+        console.log("loginApple function called / in native environment");
         const result = await fetchApp({
           query: BRIDGE_QUERIES.LOGIN_APPLE,
         });
