@@ -61,8 +61,10 @@ export function BottomNavigation() {
   };
 
   const handleNavigation = async (path: string) => {
+    if (path === pathname) return;
+
     await triggerHaptic();
-    router.replace(path as any);
+    router.push(path as any);
   };
 
   const isActive = (path: string) => {
