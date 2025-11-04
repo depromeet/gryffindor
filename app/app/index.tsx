@@ -6,15 +6,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 
 export default function WebViewScreen() {
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
   const webViewRef = useRef<WebView>(null);
   const { onRequest } = useApis(webViewRef);
 
   // 인터넷 상태 확인
   useEffect(() => {
-    NetInfo.addEventListener((status) => {
+    const unsubscribe = NetInfo.addEventListener((status) => {
       setIsConnected(status.isConnected ?? false);
     });
+
+    return () => unsubscribe();
   }, []);
 
   if (!isConnected)
@@ -25,17 +27,22 @@ export default function WebViewScreen() {
     );
 
   return (
-    <SafeAreaView style={styles.container}>
       <WebView
         ref={webViewRef}
+        // 개발 환경: 로컬 IP 사용 (Expo Go에서 localhost 접근 불가)
+        // 프로덕션: https://bobtory.com
         source={{ uri: "https://bobtory.com" }}
+        // source={{ uri: "http://localhost:3000" }}
         onMessage={(event) => {
           if (!event.nativeEvent.data) return;
           const request = JSON.parse(event.nativeEvent.data);
           onRequest(request.query);
         }}
+        // iOS 스와이프 백 제스처 활성화
+        allowsBackForwardNavigationGestures={true}
+        // iOS에서 바운스 효과 비활성화 (선택사항)
+        bounces={false}
       />
-    </SafeAreaView>
   );
 }
 

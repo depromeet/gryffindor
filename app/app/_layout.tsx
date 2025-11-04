@@ -11,7 +11,7 @@ export default function RootLayout() {
   return (
     <View style={{ flex: 1 }}>
       <WebViewScreen />
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
     </View>
   );
 }
