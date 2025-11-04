@@ -1,8 +1,10 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import EditCharacter from "@/shared/lib/assets/png/character/edit.png";
 import { TextButton } from "@/shared/ui";
 
-export function SuggestionCard() {
+export function SuggestionCard({ storeId }: { storeId: number }) {
+  const router = useRouter();
   return (
     <article className="px-5 pb-[59px]">
       <div className="mt-[78px] flex w-full items-center justify-between gap-2 rounded-[12px] bg-gray50 px-5 py-4">
@@ -18,7 +20,9 @@ export function SuggestionCard() {
             color
             isIcon
             rotateNumber={270}
-            onClick={() => {}}
+            onClick={() => {
+              router.push(`/store/${storeId}/suggestion-store`);
+            }}
           />
         </div>
 

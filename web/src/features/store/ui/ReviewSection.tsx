@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { getStoreReviews } from "@/entities/review/api/reviewApi";
 import type { StoreReviewResponse } from "@/entities/review/model";
+import { AlreadyReviewedModal } from "@/features/review/ui";
 import { useInfiniteScroll } from "@/shared/lib";
 import { TextButton } from "@/shared/ui";
 import { ReviewList } from "./ReviewList";
@@ -17,6 +18,7 @@ interface ReviewSectionProps {
 export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
   const router = useRouter();
   const [isInfiniteScrollEnabled, setInfiniteScrollEnabled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery<StoreReviewResponse>({
@@ -46,6 +48,26 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
   };
 
   const reviews = data?.pages.flatMap((page) => page.data) || [];
+  const userReview = reviews.find((review) => review.reviewer.id === memberId);
+
+  const handleWriteReviewClick = () => {
+    if (userReview) {
+      setIsModalOpen(true);
+    } else {
+      router.push(`/store/${storeId}/review`);
+    }
+  };
+
+  const handleModalConfirm = () => {
+    if (userReview) {
+      router.push(
+        `/store/${storeId}/review?reviewId=${userReview.id}&content=${
+          userReview.content
+        }&keywords=${userReview.keywords.join(",")}`,
+      );
+    }
+    setIsModalOpen(false);
+  };
 
   return (
     <section className="mt-8 flex w-full flex-col gap-4 px-5">
@@ -56,7 +78,7 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
           isIcon
           color
           rotateNumber={270}
-          onClick={() => router.push(`/store/${storeId}/review`)}
+          onClick={handleWriteReviewClick}
         />
       </div>
 
@@ -69,6 +91,11 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
           <TextButton label="더보기" isIcon onClick={handleLoadMoreClick} />
         </div>
       )}
+      <AlreadyReviewedModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleModalConfirm}
+      />
     </section>
   );
 }

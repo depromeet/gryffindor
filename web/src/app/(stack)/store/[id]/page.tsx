@@ -58,7 +58,7 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
           handleSetZoomImageSrc={handleSetZoomImageSrc}
         />
         <ReviewSection storeId={store.storeId} memberId={userState?.memberId} />
-        <SuggestionCard />
+        <SuggestionCard storeId={store.storeId} />
         {isZoomed && (
           <ZoomableImage
             src={zoomImageSrc}
