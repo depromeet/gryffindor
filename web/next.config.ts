@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
       },
     },
     resolveAlias: {
-      "@bridge": path.resolve(__dirname, "../shared/bridge"),
+      "@bridge": "../shared/bridge",
     },
   },
   webpack: (config) => {

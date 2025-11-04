@@ -6,6 +6,8 @@ export * from "./hooks/useNavigationDirection";
 export * from "./hooks/useOnClickOutside";
 export * from "./hooks/useSessionStorage";
 export * from "./utils/authUtils";
+export * from "./utils/createNextAuthSession";
 export * from "./utils/formatDateUtils";
 export * from "./utils/inputValidation";
+export * from "./utils/platformUtils";
 export * from "./utils/styleUtils";

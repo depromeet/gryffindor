@@ -22,6 +22,16 @@ export interface DeviceLocationLatLngSetResponse {
   lng: number;
 }
 
+export interface LoginAppleResponse {
+  token: string;
+  success: boolean;
+}
+
+export interface LoginKakaoResponse {
+  url: string; // note: 카카오 로그인 URL (WebView에서 리다이렉트용, 앱으로 열었으면 빈 문자열)
+  success: boolean;
+}
+
 export interface DeviceHapticFeedbackResponse {
   success: boolean;
 }
@@ -39,6 +49,8 @@ export interface BridgeSchema {
   fetchDeviceSystemForAppSet: DeviceSystemAppSetResponse;
   fetchDeviceSystemForPlatformSet: DeviceSystemPlatformSetResponse;
   fetchDeviceLocationForLatLngSet: DeviceLocationLatLngSetResponse;
+  loginApple: LoginAppleResponse;
+  loginKakao: LoginKakaoResponse;
   triggerHapticFeedback: DeviceHapticFeedbackResponse;
 }
 

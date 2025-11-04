@@ -41,7 +41,7 @@ const providerConfigs: Record<SocialLoginProvider, Omit<SocialLoginConfig, "id">
  * 활성화된 소셜 로그인 프로바이더 목록 정의
  * 장애, 미사용 요소는 해당 배열에서 제외
  */
-const ENABLED_PROVIDERS: readonly SocialLoginProvider[] = ["apple", "google", "kakao"];
+const ENABLED_PROVIDERS: readonly SocialLoginProvider[] = ["apple", "kakao"];
 
 /**
  * 동적으로 활성화된 provider만 생성하는 함수
