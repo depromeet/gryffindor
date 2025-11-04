@@ -1,9 +1,9 @@
-import { useApis } from "@/apis";
 import NetInfo from "@react-native-community/netinfo";
 import { useEffect, useRef, useState } from "react";
 import { Linking, Platform, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
+import { useApis } from "@/apis";
 
 export default function WebViewScreen() {
   const [isConnected, setIsConnected] = useState(false);
@@ -28,7 +28,10 @@ export default function WebViewScreen() {
     const url = request.url;
 
     // 카카오톡 커스텀 URL 스킴 감지 (kakaolink://, kakaotalk:// 등)
-    if (Platform.OS === "ios" && (url.startsWith("kakaolink://") || url.startsWith("kakaotalk://"))) {
+    if (
+      Platform.OS === "ios" &&
+      (url.startsWith("kakaolink://") || url.startsWith("kakaotalk://"))
+    ) {
       Linking.canOpenURL(url).then((supported) => {
         if (supported) {
           Linking.openURL(url);

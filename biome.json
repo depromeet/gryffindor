@@ -2,13 +2,13 @@
   "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
   "extends": ["./web/biome.json"],
   "files": {
-    "include": ["web/src/**/*"],
+    "include": ["web/src/**/*", "app/**/*"],
     "ignore": [
       "**/node_modules/**",
       "**/dist/**",
       "**/.next/**",
       "**/build/**",
-      "app/**"
+      "**/.expo/**"
     ]
   }
 }

@@ -5,9 +5,8 @@ import { Linking, Platform } from "react-native";
 const clientId = Constants.expoConfig?.extra?.KAKAO_CLIENT_ID;
 const redirectUri = Constants.expoConfig?.extra?.KAKAO_REDIRECT_URI;
 
-
 export const useLoginKakao = (
-  onResponse: <T extends BridgeQuery>(result: BridgeMessage<T>) => void
+  onResponse: <T extends BridgeQuery>(result: BridgeMessage<T>) => void,
 ) => {
   const loginKakao = async () => {
     try {
@@ -19,7 +18,6 @@ export const useLoginKakao = (
         const canOpenKakaoTalk = await Linking.canOpenURL("kakaolink://");
 
         if (canOpenKakaoTalk) {
-
           // 카카오톡 앱으로 로그인 시도
           // 카카오톡 앱에서 인증 후 redirect_uri로 리다이렉트되면 WebView로 돌아옴
           const kakaoLinkUrl = `kakaolink://oauth?url=${encodeURIComponent(kakaoLoginUrl)}`;

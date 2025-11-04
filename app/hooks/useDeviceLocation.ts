@@ -1,8 +1,8 @@
-import * as Location from "expo-location";
 import type { BridgeMessage, BridgeQuery } from "@bridge";
+import * as Location from "expo-location";
 
 export const useDeviceLocation = (
-  onResponse: <T extends BridgeQuery>(result: BridgeMessage<T>) => void
+  onResponse: <T extends BridgeQuery>(result: BridgeMessage<T>) => void,
 ) => {
   const fetchDeviceLocationForLatLngSet = () => {
     const requestPermission = async () => {

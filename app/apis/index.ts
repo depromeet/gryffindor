@@ -1,7 +1,7 @@
-import { useDeviceLocation, useDeviceSystem, useLoginApple, useLoginKakao } from "@/hooks";
 import type { BridgeMessage, BridgeQuery } from "@bridge";
-import { RefObject } from "react";
-import { WebView } from "react-native-webview";
+import type { RefObject } from "react";
+import type { WebView } from "react-native-webview";
+import { useDeviceLocation, useDeviceSystem, useLoginApple, useLoginKakao } from "@/hooks";
 
 export const useApis = (webviewRef: RefObject<WebView | null>) => {
   const onResponse = <T extends BridgeQuery>(result: BridgeMessage<T>) => {
