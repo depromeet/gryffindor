@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import {
   useLocation,
   useMapCoordinate,
@@ -16,7 +17,7 @@ import {
   MapView,
   StoreBottomSheet,
 } from "@/features/map/ui";
-
+import { useToast } from "@/shared/lib/hooks";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function MapPage() {
@@ -31,10 +32,18 @@ export default function MapPage() {
     center,
   });
 
+  const { showToast } = useToast();
+
   const handleStoreListFetch = () => {
     updateCoordinate(map);
     resetDragging();
   };
+
+  useEffect(() => {
+    if (!isFetching && storeList.length === 0) {
+      showToast({ message: "아쉽게도 일치하는 결과가 없어요." });
+    }
+  }, [isFetching, storeList.length, showToast]);
 
   return (
     <TransitionLayout>

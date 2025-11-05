@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import { NavigationDirectionProvider } from "@/shared/lib";
+import { ToastContainer } from "@/shared/ui";
 import { NativeProvider, QueryProvider, SsgoiProvider, UserStateProvider } from "./_providers";
 
 const pretendard = localFont({
@@ -50,7 +51,10 @@ export default async function RootLayout({
             <QueryProvider>
               <NavigationDirectionProvider>
                 <SsgoiProvider>
-                  <NativeProvider>{children}</NativeProvider>
+                  <NativeProvider>
+                    <ToastContainer />
+                    {children}
+                  </NativeProvider>
                 </SsgoiProvider>
               </NavigationDirectionProvider>
             </QueryProvider>
