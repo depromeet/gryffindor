@@ -45,7 +45,7 @@ export function useBottomSheetContext() {
 
 interface BottomSheetProps {
   isFixed: boolean;
-  isOpen?: boolean;
+  isOpen: boolean;
   onClose?: () => void;
   initialHeight?: number;
   expandedOffset?: number;
@@ -62,20 +62,20 @@ function BottomSheet({
   const height = initialHeight ? initialHeight : window.innerHeight - expandedOffset;
   const { sheetRef, contentRef } = useBottomSheet({ initialHeight: height, expandedOffset });
 
-  if (!isOpen) return;
-
   return (
     <BottomSheetContext.Provider value={{ contentRef: isFixed ? null : contentRef }}>
-      {isFixed && <BottomSheetOverlay onClose={onClose || (() => {})} />}
+      {isFixed && isOpen && <BottomSheetOverlay onClose={onClose || (() => {})} />}
       <dialog
         ref={isFixed ? null : sheetRef}
         className={cn(
           "fixed right-0 left-0 mx-auto flex w-full flex-col gap-2 rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
+          "transition-all duration-300 ease-out",
           isFixed ? "z-51" : "z-49",
         )}
         style={{
           top: `calc(100% - ${height}px)`,
           height: `calc(100% - ${expandedOffset}px)`,
+          transform: isOpen ? "translate3d(0, 0, 0)" : "translate3d(0, 100%, 0)",
         }}
       >
         {children}
