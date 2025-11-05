@@ -9,13 +9,20 @@ export const useLoginApple = () => {
   const { fetchApp } = useNativeBridge();
 
   const loginApple = async () => {
-    console.log("loginApple function called / in web environment");
+    console.log("🍎 useLoginApple: loginApple function called");
+    const isNative = isNativeApp();
+    console.log("🍎 useLoginApple: isNativeApp() =", isNative, {
+      hasWindow: typeof window !== "undefined",
+      hasReactNativeWebView:
+        typeof window !== "undefined" && typeof (window as any).ReactNativeWebView !== "undefined",
+    });
     try {
-      if (isNativeApp()) {
-        console.log("loginApple function called / in native environment");
+      if (isNative) {
+        console.log("🍎 useLoginApple: Native environment detected, calling fetchApp");
         const result = await fetchApp({
           query: BRIDGE_QUERIES.LOGIN_APPLE,
         });
+        console.log("🍎 useLoginApple: fetchApp result received", { hasToken: !!result.token });
         if (!result.token) {
           alert("Apple 로그인 정보를 받지 못했습니다. 다시 시도해주세요.");
           return;

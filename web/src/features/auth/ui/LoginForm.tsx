@@ -11,14 +11,20 @@ export function LoginForm() {
   const { loginKakao } = useLoginKakao();
 
   const handleSocialLogin = (providerId: string) => {
-    console.log("next/ click social login button providerId:", providerId);
-    // TODO: 임시 로직
-    if (providerId === "apple") {
-      console.log("next/ click apple login button");
-      loginApple();
-    } else if (providerId === "kakao") {
-      console.log("next/ click kakao login button");
-      loginKakao();
+    console.log("🔵 LoginForm: handleSocialLogin called", { providerId, timestamp: Date.now() });
+    try {
+      // TODO: 임시 로직
+      if (providerId === "apple") {
+        console.log("🔵 LoginForm: Calling loginApple");
+        loginApple();
+      } else if (providerId === "kakao") {
+        console.log("🔵 LoginForm: Calling loginKakao");
+        loginKakao();
+      } else {
+        console.warn("🔵 LoginForm: Unknown providerId", providerId);
+      }
+    } catch (error) {
+      console.error("🔴 LoginForm: Error in handleSocialLogin", error);
     }
   };
 
@@ -34,7 +40,7 @@ export function LoginForm() {
             key={config.id}
             type="button"
             onClick={() => {
-              console.log("onclick event called", config.id);
+              console.log("🔵 LoginForm: Button onClick triggered");
               handleSocialLogin(config.id);
             }}
             className={`flex items-center w-[60px] h-[60px] justify-center rounded-full font-medium transition-colors duration-200 ${config.buttonStyles}`}

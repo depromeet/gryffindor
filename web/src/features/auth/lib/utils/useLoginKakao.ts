@@ -9,12 +9,18 @@ export const useLoginKakao = () => {
   const { fetchApp } = useNativeBridge();
 
   const loginKakao = async () => {
-    console.log("running loginKakao function / in web environment");
+    console.log("💬 useLoginKakao: loginKakao function called");
+    const isNative = isNativeApp();
+    console.log("💬 useLoginKakao: isNativeApp() =", isNative);
     try {
-      if (isNativeApp()) {
-        console.log("loginKakao function called / in native environment");
+      if (isNative) {
+        console.log("💬 useLoginKakao: Native environment detected, calling fetchApp");
         const result = await fetchApp({
           query: BRIDGE_QUERIES.LOGIN_KAKAO,
+        });
+        console.log("💬 useLoginKakao: fetchApp result received", {
+          success: result.success,
+          hasUrl: !!result.url,
         });
 
         if (result.success) {

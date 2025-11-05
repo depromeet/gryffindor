@@ -8,7 +8,16 @@
  */
 export function isNativeApp(): boolean {
   if (typeof window === "undefined") {
+    console.log("🔍 isNativeApp: window is undefined (SSR)");
     return false;
   }
-  return typeof (window as any).ReactNativeWebView !== "undefined";
+  const hasReactNativeWebView = typeof (window as any).ReactNativeWebView !== "undefined";
+  console.log("🔍 isNativeApp:", hasReactNativeWebView, {
+    userAgent: window.navigator?.userAgent,
+    hasReactNativeWebView,
+    windowKeys: Object.keys(window).filter(
+      (key) => key.includes("React") || key.includes("Native"),
+    ),
+  });
+  return hasReactNativeWebView;
 }
