@@ -3,13 +3,13 @@
 import Link from "next/link";
 import type { StoreListResponseData } from "@/entities/storeList/api";
 import { StoreCard } from "@/entities/storeList/ui";
+import { useMapStore } from "@/features/map/model";
 import {
   BottomSheet,
   BottomSheetContent,
   BottomSheetHandler,
   BottomSheetHeader,
 } from "@/shared/ui";
-import { useMapStore } from "../model";
 
 interface StoreBottomSheetProps {
   storeList: StoreListResponseData[];
