@@ -28,6 +28,7 @@ export const useLoginApple = () => {
           return;
         }
 
+        console.log("🍎 useLoginApple: /api/apple/callback 호출 중...");
         const response = await fetch("/api/apple/callback", {
           method: "POST",
           headers: {
@@ -38,19 +39,37 @@ export const useLoginApple = () => {
           }),
         });
 
+        console.log("🍎 useLoginApple: /api/apple/callback 응답 받음", {
+          status: response.status,
+          statusText: response.statusText,
+          ok: response.ok,
+        });
+
         if (!response.ok) {
-          alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+          // 에러 응답 파싱 시도
+          let errorDetails = "서버 오류가 발생했습니다.";
+          try {
+            const errorData = await response.json();
+            console.error("🍎 useLoginApple: 서버 에러 응답:", errorData);
+            errorDetails = errorData.details || errorData.error || errorDetails;
+          } catch (parseError) {
+            const errorText = await response.text();
+            console.error("🍎 useLoginApple: 에러 응답 파싱 실패:", errorText);
+            errorDetails = errorText || errorDetails;
+          }
+          console.error("🍎 useLoginApple: 로그인 실패", {
+            status: response.status,
+            errorDetails,
+          });
+          alert(`서버 오류가 발생했습니다: ${errorDetails}`);
           return;
         }
 
-        if (response.ok) {
-          console.log("✅ 로그인 성공! 홈으로 이동합니다.");
-          window.location.href = "/home?success=true";
-        } else {
-          const errorData = await response.json();
-          console.error("❌ 백엔드 로그인 실패:", errorData);
-          alert("로그인 처리 중 오류가 발생했습니다. 다시 시도해주세요.");
-        }
+        // POST 요청이지만 서버에서 redirect를 반환하므로,
+        // fetch는 리다이렉트를 자동으로 따라가지 않음
+        // 따라서 수동으로 리다이렉트 필요
+        console.log("✅ 로그인 성공! 홈으로 이동합니다.");
+        window.location.href = "/home?success=true";
       } else {
         // Web: NextAuth 사용 (일반 웹 브라우저)
         console.log("🌐 웹 브라우저에서 Apple 로그인 실행");

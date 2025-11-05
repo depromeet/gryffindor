@@ -1,4 +1,3 @@
-
 // Expo 환경변수 설정
 // .env 파일이나 환경변수에서 읽어옵니다
 require("dotenv").config();
@@ -18,6 +17,13 @@ module.exports = {
       bundleIdentifier: "com.bobtory",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
+        // iOS 9.0+ 에서 외부 앱(카카오톡 등)을 열기 위한 URL 스킴 등록
+        // 이 스킴들이 등록되지 않으면 Linking.canOpenURL()이 false를 반환함
+        LSApplicationQueriesSchemes: [
+          "kakaokompassauth", // 카카오 로그인 인증용
+          "kakaolink", // 카카오톡 링크
+          "kakaotalk", // 카카오톡 앱
+        ],
       },
     },
     android: {

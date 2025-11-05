@@ -79,17 +79,36 @@ function getCookieName(): string {
 async function createNextAuthToken(params: CreateSessionParams): Promise<string> {
   const { loginResponse, provider } = params;
 
-  const token = buildTokenPayload(loginResponse, provider);
-  const secret = getAuthSecret();
+  try {
+    console.log("🔐 [NextAuth] Token payload 생성 중...");
+    const token = buildTokenPayload(loginResponse, provider);
+    console.log("🔐 [NextAuth] Token payload 생성 완료", {
+      hasAccessToken: !!token.accessToken,
+      hasMemberId: !!token.memberId,
+      provider: token.providerType,
+    });
 
-  const encodedToken = await encode({
-    token,
-    secret,
-    salt: SESSION_SALT,
-    maxAge: SESSION_MAX_AGE,
-  });
+    console.log("🔐 [NextAuth] AUTH_SECRET 확인 중...");
+    const secret = getAuthSecret();
+    console.log("🔐 [NextAuth] AUTH_SECRET 확인 완료", {
+      hasSecret: !!secret,
+      secretLength: secret.length,
+    });
 
-  return encodedToken;
+    console.log("🔐 [NextAuth] JWT 인코딩 중...");
+    const encodedToken = await encode({
+      token,
+      secret,
+      salt: SESSION_SALT,
+      maxAge: SESSION_MAX_AGE,
+    });
+    console.log("🔐 [NextAuth] JWT 인코딩 완료");
+
+    return encodedToken;
+  } catch (error) {
+    console.error("🔐 [NextAuth] Token 생성 중 에러:", error);
+    throw error;
+  }
 }
 
 // ============================================
@@ -117,23 +136,48 @@ export async function createNextAuthSessionWithCookie(
 ): Promise<NextResponse> {
   const { loginResponse, provider, redirectUrl } = params;
 
-  // JWT 토큰 생성
-  const jwtToken = await createNextAuthToken({ loginResponse, provider });
+  try {
+    console.log("🔐 [NextAuth] 세션 생성 시작", {
+      provider,
+      hasAccessToken: !!loginResponse.accessToken,
+      hasMemberId: !!loginResponse.memberId,
+      redirectUrl: redirectUrl.toString(),
+    });
 
-  // 쿠키 이름 결정
-  const cookieName = getCookieName();
+    // JWT 토큰 생성
+    console.log("🔐 [NextAuth] JWT 토큰 생성 중...");
+    const jwtToken = await createNextAuthToken({ loginResponse, provider });
+    console.log("🔐 [NextAuth] JWT 토큰 생성 완료", {
+      tokenLength: jwtToken.length,
+    });
 
-  // 리다이렉트 응답 생성
-  const nextResponse = NextResponse.redirect(redirectUrl);
+    // 쿠키 이름 결정
+    const cookieName = getCookieName();
+    console.log("🔐 [NextAuth] 쿠키 이름:", cookieName, {
+      isProduction: process.env.NODE_ENV === "production",
+    });
 
-  // 쿠키 설정
-  nextResponse.cookies.set(cookieName, jwtToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: SESSION_MAX_AGE,
-  });
+    // 리다이렉트 응답 생성
+    const nextResponse = NextResponse.redirect(redirectUrl);
 
-  return nextResponse;
+    // 쿠키 설정
+    nextResponse.cookies.set(cookieName, jwtToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: SESSION_MAX_AGE,
+    });
+
+    console.log("🔐 [NextAuth] 쿠키 설정 완료, 응답 반환");
+    return nextResponse;
+  } catch (error) {
+    console.error("🔐 [NextAuth] 세션 생성 중 에러 발생:", error);
+    console.error("🔐 [NextAuth] Error details:", {
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+      name: error instanceof Error ? error.name : undefined,
+    });
+    throw error;
+  }
 }

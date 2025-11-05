@@ -23,9 +23,16 @@ export const useApis = (webviewRef: RefObject<WebView | null>) => {
   };
 
   const onRequest = (query: BridgeQuery) => {
+    console.log("🌉 [Native] useApis: onRequest called", { query });
     const handler = APIS[query as keyof typeof APIS];
     if (handler) {
+      console.log("🌉 [Native] useApis: Handler found, calling handler");
       handler();
+    } else {
+      console.error("❌ [Native] useApis: Handler not found for query", {
+        query,
+        availableHandlers: Object.keys(APIS),
+      });
     }
   };
 
