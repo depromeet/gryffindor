@@ -41,7 +41,7 @@ export default function MapPage() {
 
   useEffect(() => {
     if (!isFetching && storeList.length === 0) {
-      showToast({ message: "아쉽게도 일치하는 결과가 없어요." });
+      showToast({ message: "아직 이 지역의 식당 데이터가 없어요." });
     }
   }, [isFetching, storeList.length, showToast]);
 
