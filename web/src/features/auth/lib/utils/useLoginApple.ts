@@ -47,21 +47,89 @@ export const useLoginApple = () => {
 
         if (!response.ok) {
           // 에러 응답 파싱 시도
-          let errorDetails = "서버 오류가 발생했습니다.";
+          let errorMessage = "서버 오류가 발생했습니다.";
+          let errorDetails: any = null;
+
           try {
             const errorData = await response.json();
             console.error("🍎 useLoginApple: 서버 에러 응답:", errorData);
-            errorDetails = errorData.details || errorData.error || errorDetails;
+
+            // 에러 데이터 구조화
+            errorMessage = errorData.message || errorData.error || errorMessage;
+            errorDetails = errorData.details || errorData;
+
+            // 서버 로그 확인 (프로덕션에서도 포함됨)
+            const serverLogs = errorData.logs || [];
+
+            // 프로덕션에서도 상세 에러 표시 (디버깅용)
+            const fullErrorText = JSON.stringify(errorData, null, 2);
+
+            console.error("🍎 useLoginApple: 로그인 실패", {
+              status: response.status,
+              errorMessage,
+              errorDetails,
+              fullError: fullErrorText,
+              serverLogs: serverLogs.length > 0 ? `서버 로그 ${serverLogs.length}개` : "없음",
+            });
+
+            // 서버 로그가 있으면 콘솔에 출력
+            if (serverLogs.length > 0) {
+              console.group("📋 서버 로그 (시간순)");
+              serverLogs.forEach((log: any, index: number) => {
+                const logMethod =
+                  log.level === "error"
+                    ? console.error
+                    : log.level === "warn"
+                      ? console.warn
+                      : console.log;
+                logMethod(`[${index + 1}] [${log.level}] ${log.message}`, log.data);
+              });
+              console.groupEnd();
+            }
+
+            // 프로덕션에서도 상세 에러 정보 표시 (디버깅용)
+            const logsText =
+              serverLogs.length > 0
+                ? `\n\n서버 로그 (${serverLogs.length}개):\n` +
+                  serverLogs
+                    .map((log: any, i: number) => `[${i + 1}] [${log.level}] ${log.message}`)
+                    .join("\n")
+                : "";
+
+            // 프로덕션에서도 상세 alert 표시 (디버깅용)
+            const showDetailedAlert = true; // 프로덕션에서도 상세 alert 표시
+            if (showDetailedAlert) {
+              alert(
+                `서버 오류 발생 (${response.status})\n\n` +
+                  `메시지: ${errorMessage}\n\n` +
+                  `상세 정보:\n${fullErrorText}${logsText}\n\n` +
+                  `콘솔에서 더 자세한 정보를 확인하세요.`,
+              );
+            } else {
+              // 간단한 메시지만 표시하고 싶을 때
+              alert(`서버 오류가 발생했습니다: ${errorMessage}`);
+            }
+
+            // 에러를 클립보드에 복사할 수 있도록 (프로덕션에서도)
+            if (typeof navigator !== "undefined" && navigator.clipboard) {
+              try {
+                const clipboardText =
+                  serverLogs.length > 0
+                    ? `=== 서버 로그 ===\n${JSON.stringify(serverLogs, null, 2)}\n\n=== 에러 정보 ===\n${fullErrorText}`
+                    : fullErrorText;
+                await navigator.clipboard.writeText(clipboardText);
+                console.log("📋 에러 정보와 서버 로그가 클립보드에 복사되었습니다.");
+              } catch (clipboardError) {
+                console.warn("📋 클립보드 복사 실패:", clipboardError);
+              }
+            }
           } catch (parseError) {
             const errorText = await response.text();
             console.error("🍎 useLoginApple: 에러 응답 파싱 실패:", errorText);
-            errorDetails = errorText || errorDetails;
+            errorMessage = errorText || errorMessage;
+            alert(`서버 오류가 발생했습니다: ${errorMessage}`);
           }
-          console.error("🍎 useLoginApple: 로그인 실패", {
-            status: response.status,
-            errorDetails,
-          });
-          alert(`서버 오류가 발생했습니다: ${errorDetails}`);
+
           return;
         }
 

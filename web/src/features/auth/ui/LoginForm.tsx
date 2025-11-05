@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { useLoginApple, useLoginKakao } from "@/features/auth";
 import { SOCIAL_LOGIN_CONFIG } from "@/features/auth/config/socialLoginConfig";
 import { LoginCharacter } from "@/shared/lib/assets";
@@ -9,6 +11,67 @@ import { Icon } from "@/shared/ui";
 export function LoginForm() {
   const { loginApple } = useLoginApple();
   const { loginKakao } = useLoginKakao();
+  const searchParams = useSearchParams();
+
+  // URL 파라미터에서 에러와 로그 확인 (카카오 로그인 실패 시)
+  useEffect(() => {
+    const error = searchParams.get("error");
+    const errorMessage = searchParams.get("error_message");
+    const logsParam = searchParams.get("logs");
+
+    if (error || logsParam) {
+      console.group("🔴 로그인 에러 발생");
+
+      if (error) {
+        console.error("에러 코드:", error);
+      }
+
+      if (errorMessage) {
+        console.error("에러 메시지:", decodeURIComponent(errorMessage));
+      }
+
+      // 서버 로그가 있으면 파싱하여 출력
+      if (logsParam) {
+        try {
+          const logs = JSON.parse(decodeURIComponent(logsParam));
+          console.log("📋 서버 로그 (시간순):");
+          logs.forEach((log: any, index: number) => {
+            const logMethod =
+              log.level === "error"
+                ? console.error
+                : log.level === "warn"
+                  ? console.warn
+                  : console.log;
+            logMethod(`[${index + 1}] [${log.timestamp}] [${log.level}] ${log.message}`, log.data);
+          });
+
+          // 개발 모드에서 클립보드에 복사
+          if (
+            process.env.NODE_ENV === "development" &&
+            typeof navigator !== "undefined" &&
+            navigator.clipboard
+          ) {
+            navigator.clipboard
+              .writeText(JSON.stringify(logs, null, 2))
+              .then(() => {
+                console.log("📋 서버 로그가 클립보드에 복사되었습니다.");
+              })
+              .catch(() => {
+                console.warn("📋 클립보드 복사 실패");
+              });
+          }
+        } catch (parseError) {
+          console.error("로그 파싱 실패:", parseError);
+        }
+      }
+
+      console.groupEnd();
+
+      // 프로덕션에서도 alert 표시 (디버깅용)
+      const message = errorMessage ? decodeURIComponent(errorMessage) : error || "알 수 없는 에러";
+      alert(`로그인 실패: ${message}\n\n콘솔에서 서버 로그를 확인하세요.`);
+    }
+  }, [searchParams]);
 
   const handleSocialLogin = (providerId: string) => {
     console.log("🔵 LoginForm: handleSocialLogin called", { providerId, timestamp: Date.now() });
