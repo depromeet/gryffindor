@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { StoreListResponseData } from "@/entities/storeList/api";
-import { SelectedStoreCard, StoreCard } from "@/entities/storeList/ui";
+import { StoreCard } from "@/entities/storeList/ui";
 import {
   BottomSheet,
   BottomSheetContent,
@@ -19,34 +19,35 @@ interface StoreBottomSheetProps {
 export function StoreBottomSheet({ storeList, isCollapsed }: StoreBottomSheetProps) {
   const { selectedStoreId } = useMapStore();
 
-  if (selectedStoreId) {
-    const selectedStoreInfo = storeList.find((store) => store.id === selectedStoreId);
-    if (selectedStoreInfo)
-      return (
-        <Link href={`/store/${selectedStoreInfo.id}`} className="px-4">
-          <SelectedStoreCard {...selectedStoreInfo} />
-        </Link>
-      );
-  }
+  const selectedStoreInfo = selectedStoreId
+    ? storeList.find((store) => store.id === selectedStoreId)
+    : null;
 
-  // 지금 드래그 중일 때는 바텀시트 높이 100px, 그 외는 270px
-  const height = isCollapsed ? 100 : 270;
+  // 마커 선택 시, 바텀시트 높이 257px
+  // 지도 드래그 중일 때는 100px, 그 외는 270px
+  const height = selectedStoreId ? 257 : isCollapsed ? 100 : 270;
 
   return (
-    <BottomSheet isFixed={false} isOpen={true} initialHeight={height}>
+    <BottomSheet isFixed={false} isOpen={storeList.length > 0} initialHeight={height}>
       <BottomSheetHeader>
         <BottomSheetHandler />
       </BottomSheetHeader>
       <BottomSheetContent className="!px-5 !pb-9">
-        <ul className="flex w-full flex-col gap-y-[15px]">
-          {storeList.map((store) => (
-            <li key={store.id}>
-              <Link href={`/store/${store.id}`}>
-                <StoreCard {...store} />
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {selectedStoreInfo ? (
+          <Link href={`/store/${selectedStoreInfo.id}`}>
+            <StoreCard {...selectedStoreInfo} />
+          </Link>
+        ) : (
+          <ul className="flex w-full flex-col gap-y-[15px]">
+            {storeList.map((store) => (
+              <li key={store.id}>
+                <Link href={`/store/${store.id}`}>
+                  <StoreCard {...store} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </BottomSheetContent>
     </BottomSheet>
   );
