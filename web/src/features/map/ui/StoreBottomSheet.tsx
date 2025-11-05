@@ -11,7 +11,12 @@ import {
 } from "@/shared/ui";
 import { useMapStore } from "../model";
 
-export function StoreBottomSheet({ storeList }: { storeList: StoreListResponseData[] }) {
+interface StoreBottomSheetProps {
+  storeList: StoreListResponseData[];
+  isCollapsed: boolean;
+}
+
+export function StoreBottomSheet({ storeList, isCollapsed }: StoreBottomSheetProps) {
   const { selectedStoreId } = useMapStore();
 
   if (selectedStoreId) {
@@ -24,8 +29,11 @@ export function StoreBottomSheet({ storeList }: { storeList: StoreListResponseDa
       );
   }
 
+  // 지금 드래그 중일 때는 바텀시트 높이 100px, 그 외는 270px
+  const height = isCollapsed ? 100 : 270;
+
   return (
-    <BottomSheet isFixed={false} isOpen={true} initialHeight={226}>
+    <BottomSheet isFixed={false} isOpen={true} initialHeight={height}>
       <BottomSheetHeader>
         <BottomSheetHandler />
       </BottomSheetHeader>

@@ -3,6 +3,7 @@
 import {
   useLocation,
   useMapCoordinate,
+  useMapDrag,
   useMapFilters,
   useMapInitialize,
   useStoreListQuery,
@@ -22,6 +23,7 @@ export default function MapPage() {
   const { map, mapContainerRef, initializeMap } = useMapInitialize();
   const { bounds, center, updateCoordinate } = useMapCoordinate();
   const { requestLocation } = useLocation(map);
+  const { isDragging, resetDragging } = useMapDrag(map);
 
   const { isFilterOpen, filters, openFilter, closeFilter, applyFilters } = useMapFilters();
   const { storeList, isFetching } = useStoreListQuery(filters, {
@@ -29,14 +31,19 @@ export default function MapPage() {
     center,
   });
 
+  const handleStoreListFetch = () => {
+    updateCoordinate(map);
+    resetDragging();
+  };
+
   return (
     <TransitionLayout>
       <MapView mapRef={mapContainerRef} initializeMap={initializeMap} />
       <MapMarkers map={map} storeList={storeList} />
-      <FetchStoreListButton onClick={() => updateCoordinate(map)} isFetching={isFetching} />
+      <FetchStoreListButton onClick={handleStoreListFetch} isFetching={isFetching} />
       <MapActionButton type="filter" onClick={openFilter} />
       <MapActionButton type="location" onClick={requestLocation} />
-      <StoreBottomSheet storeList={storeList} />
+      <StoreBottomSheet storeList={storeList} isCollapsed={isDragging} />
       <FilterBottomSheet
         isOpen={isFilterOpen}
         onClose={closeFilter}
