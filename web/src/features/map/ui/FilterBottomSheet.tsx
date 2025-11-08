@@ -15,8 +15,6 @@ export function FilterBottomSheet({
   initialFilters,
   onApply,
 }: FilterBottomSheetProps) {
-  if (!isOpen) return null;
-
   return (
     <BottomSheet isFixed={true} isOpen={isOpen} onClose={onClose}>
       <BottomSheetContent className="pb-7">

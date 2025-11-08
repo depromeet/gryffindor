@@ -153,6 +153,13 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
       title: "정보 수정 제안",
     },
   },
+  "/report": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "혼밥 식당 제보",
+    },
+  },
 };
 
 /**
