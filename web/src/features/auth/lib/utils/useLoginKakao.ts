@@ -43,7 +43,7 @@ export const useLoginKakao = () => {
 
         // 카카오 로그인 팝업 호출
         window.Kakao.Auth.authorize({
-          redirectUri: `${window.location.origin}/api/auth/callback/kakao`,
+          redirectUri: `${window.location.origin}/api/kakao/callback`,
         });
       } else {
         // 일반 웹 브라우저: NextAuth 사용
