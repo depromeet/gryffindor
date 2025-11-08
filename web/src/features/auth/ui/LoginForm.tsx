@@ -96,7 +96,7 @@ export function LoginForm() {
       <Icon name="bobEatText" className="h-[68px]" size={204} color="white" />
       <span className="body1-semibold mt-[35px] text-gray0">식당 찾기 스트레스 없이,</span>
       <span className="body1-semibold mb-[12px] text-gray0">혼밥을 더 자유롭고 편하게</span>
-      <Image src={LoginCharacter} className="w-full" alt="login" width={375} height={340} />
+      <Image src={LoginCharacter} alt="login" width={375} height={340} />
       <div className="flex flex-col w-full items-center justify-center gap-y-[45px]">
         <div className="flex  w-full items-center justify-center gap-5 px-6">
           {SOCIAL_LOGIN_CONFIG.map((config) => (
