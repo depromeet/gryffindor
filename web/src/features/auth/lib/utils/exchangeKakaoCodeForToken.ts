@@ -2,16 +2,20 @@
  * 카카오 인증 코드를 액세스 토큰으로 교환
  * 카카오 공식 문서: https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#request-token
  */
-export async function exchangeKakaoCodeForToken(code: string): Promise<string> {
+export async function exchangeKakaoCodeForToken(
+  code: string,
+  redirectUri?: string,
+): Promise<string> {
   const tokenUrl = "https://kauth.kakao.com/oauth/token";
-  const redirectUri = process.env.KAKAO_REDIRECT_URI || "http://localhost:3000/api/kakao/callback";
+  const finalRedirectUri: string =
+    redirectUri || process.env.KAKAO_REDIRECT_URI || "http://localhost:3000/api/kakao/callback";
 
   // 카카오 공식 문서에 따른 파라미터 구성
   const params = new URLSearchParams({
     grant_type: "authorization_code",
     client_id: process.env.KAKAO_CLIENT_ID || "",
     client_secret: process.env.KAKAO_CLIENT_SECRET || "",
-    redirect_uri: redirectUri,
+    redirect_uri: finalRedirectUri,
     code,
   });
 

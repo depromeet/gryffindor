@@ -9,7 +9,7 @@ export const BRIDGE_QUERIES = {
   DEVICE_SYSTEM_PLATFORM: 'fetchDeviceSystemForPlatformSet',
   DEVICE_LOCATION: 'fetchDeviceLocationForLatLngSet',
   LOGIN_APPLE: 'loginApple',
-  LOGIN_KAKAO: 'loginKakao',
+  // LOGIN_KAKAO: 웹뷰 내에서 Kakao JS SDK로 직접 처리
   HAPTIC_FEEDBACK: 'triggerHapticFeedback',
 } as const satisfies Record<string, BridgeQuery>;
 

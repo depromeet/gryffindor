@@ -6,7 +6,6 @@ import {
   useDeviceSystem,
   useHapticFeedback,
   useLoginApple,
-  useLoginKakao,
 } from "@/hooks";
 
 export const useApis = (webviewRef: RefObject<WebView | null>) => {
@@ -18,7 +17,7 @@ export const useApis = (webviewRef: RefObject<WebView | null>) => {
     ...useDeviceSystem(onResponse),
     ...useDeviceLocation(onResponse),
     ...useLoginApple(onResponse),
-    ...useLoginKakao(onResponse),
+    // loginKakao: 웹뷰 내에서 Kakao JS SDK로 직접 처리
     ...useHapticFeedback(onResponse),
   };
 

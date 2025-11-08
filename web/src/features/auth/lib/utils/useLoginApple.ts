@@ -123,7 +123,7 @@ export const useLoginApple = () => {
                 console.warn("📋 클립보드 복사 실패:", clipboardError);
               }
             }
-          } catch (parseError) {
+          } catch (_parseError) {
             const errorText = await response.text();
             console.error("🍎 useLoginApple: 에러 응답 파싱 실패:", errorText);
             errorMessage = errorText || errorMessage;
