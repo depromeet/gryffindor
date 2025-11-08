@@ -3,7 +3,8 @@
  *
  * @param {Object} props - 컴포넌트 props
  * @param {string} props.label - 버튼에 표시할 텍스트
- * @param {boolean} [props.color=false] - true일 경우 primary 색상, false일 경우 gray 색상 적용
+ * @param {TextButtonColor} [props.color="gray"] - primary | gray | white 색상 적용
+ *
  * @param {number} [props.rotateNumber] - 아이콘 회전 각도 (단위: 도)
  * @param {boolean} [props.isIcon=true] - 아이콘 표시 여부
  * @param {boolean} [props.isUnderline=false] - 텍스트에 밑줄 표시 여부
@@ -19,15 +20,16 @@
  *   isIcon
  *   isUnderline
  *   rotateNumber={90}
- *   color
+ *   color="primary"
  *   onClick={() => console.log("clicked")}
  * />
  */
 import { Icon } from "./Icon";
 
+type TextButtonColor = "primary" | "gray" | "white";
 interface TextButtonProps {
   label: string;
-  color?: boolean;
+  color?: TextButtonColor;
   rotateNumber?: 0 | 90 | 180 | 270 | 360;
   isIcon?: boolean;
   isUnderline?: boolean;
@@ -36,7 +38,7 @@ interface TextButtonProps {
 
 export function TextButton({
   label,
-  color = false,
+  color = "gray",
   rotateNumber = 0,
   isIcon = true,
   isUnderline,
@@ -50,6 +52,12 @@ export function TextButton({
     360: "rotate-360",
   };
 
+  const colorClassMap = {
+    primary: "text-primary400",
+    gray: "text-gray600",
+    white: "text-white",
+  };
+
   return (
     <button
       type="button"
@@ -57,9 +65,7 @@ export function TextButton({
       onClick={onClick}
     >
       <span
-        className={`text-body2-medium ${
-          color ? "text-primary400" : "text-gray600"
-        } ${isUnderline ? "underline underline-offset-2" : ""}`}
+        className={`text-body2-medium ${colorClassMap[color]} ${isUnderline ? "underline underline-offset-2" : ""}`}
       >
         {label}
       </span>

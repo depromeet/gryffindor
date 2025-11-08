@@ -76,7 +76,7 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
         <TextButton
           label="후기 작성하기"
           isIcon
-          color
+          color="primary"
           rotateNumber={270}
           onClick={handleWriteReviewClick}
         />

@@ -5,3 +5,4 @@ export { LoginForm } from "./ui/LoginForm";
 export { LogoutConfirmModal } from "./ui/LogoutConfirmModal";
 export { SampleAuthInfo } from "./ui/SampleAuthInfo";
 export { SampleAuthStateInfo } from "./ui/SampleAuthStateInfo";
+export { WithdrawConfirmModal } from "./ui/WithdrawConfirmModal";

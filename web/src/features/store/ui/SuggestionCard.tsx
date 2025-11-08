@@ -17,7 +17,7 @@ export function SuggestionCard({ storeId }: { storeId: number }) {
           </div>
           <TextButton
             label="정보 수정 제안하기"
-            color
+            color="primary"
             isIcon
             rotateNumber={270}
             onClick={() => {

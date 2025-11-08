@@ -1,18 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useLoginApple, useLoginKakao } from "@/features/auth";
 import { SOCIAL_LOGIN_CONFIG } from "@/features/auth/config/socialLoginConfig";
 import { LoginCharacter } from "@/shared/lib/assets";
-import { Icon } from "@/shared/ui";
+import { Icon, TextButton } from "@/shared/ui";
 
 export function LoginForm() {
   const { loginApple } = useLoginApple();
   const { loginKakao } = useLoginKakao();
   const searchParams = useSearchParams();
-
+  const router = useRouter();
   // URL 파라미터에서 에러와 로그 확인 (카카오 로그인 실패 시)
   useEffect(() => {
     const error = searchParams.get("error");
@@ -97,26 +97,33 @@ export function LoginForm() {
       <span className="body1-semibold mt-[35px] text-gray0">식당 찾기 스트레스 없이,</span>
       <span className="body1-semibold mb-[12px] text-gray0">혼밥을 더 자유롭고 편하게</span>
       <Image src={LoginCharacter} className="w-full" alt="login" width={375} height={340} />
-      <div className="flex w-full items-center justify-center gap-5 px-6">
-        {SOCIAL_LOGIN_CONFIG.map((config) => (
-          <button
-            key={config.id}
-            type="button"
+      <div className="flex flex-col w-full items-center justify-center gap-y-[45px]">
+        <div className="flex  w-full items-center justify-center gap-5 px-6">
+          {SOCIAL_LOGIN_CONFIG.map((config) => (
+            <button
+              key={config.id}
+              type="button"
+              onClick={() => {
+                console.log("🔵 LoginForm: Button onClick triggered");
+                handleSocialLogin(config.id);
+              }}
+              className={`flex items-center w-[60px] h-[60px] justify-center rounded-full font-medium transition-colors duration-200 ${config.buttonStyles}`}
+            >
+              <Image src={config.src} alt={`${config.label} 로고`} width={28} height={28} />
+            </button>
+          ))}
+        </div>
+        <div className="text-body2-medium text-white">
+          <TextButton
+            label="로그인 없이 둘러보기"
+            color="white"
             onClick={() => {
-              console.log("🔵 LoginForm: Button onClick triggered");
-              handleSocialLogin(config.id);
+              router.push("/home");
             }}
-            className={`flex items-center w-[60px] h-[60px] justify-center rounded-full font-medium transition-colors duration-200 ${config.buttonStyles}`}
-          >
-            <Image src={config.src} alt={`${config.label} 로고`} width={28} height={28} />
-          </button>
-        ))}
-        {/* <TextButton
-          label="로그인 없이 둘러보기"
-          onClick={() => router.replace("/home")}
-          isUnderline
-          isIcon={false}
-        /> */}
+            isUnderline
+            isIcon={false}
+          />
+        </div>
       </div>
     </div>
   );

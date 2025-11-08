@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useUserState } from "@/entities/user";
-import { LogoutConfirmModal } from "@/features/auth";
+import { LogoutConfirmModal, WithdrawConfirmModal } from "@/features/auth";
 
 export function AccountActionsSection() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
 
   const { userState } = useUserState();
 
@@ -27,13 +28,17 @@ export function AccountActionsSection() {
           로그아웃
         </button>
         <div className="h-full w-[1px] bg-gray100 py-[4px]" />
-        <button type="button">
+        <button type="button" onClick={() => setIsWithdrawModalOpen(true)}>
           <span className="text-body2-medium text-gray600">회원탈퇴</span>
         </button>
       </div>
       <LogoutConfirmModal
         isOpen={isLogoutModalOpen}
         onOpenChange={() => setIsLogoutModalOpen((prev) => !prev)}
+      />
+      <WithdrawConfirmModal
+        isOpen={isWithdrawModalOpen}
+        onOpenChange={() => setIsWithdrawModalOpen((prev) => !prev)}
       />
     </>
   );
