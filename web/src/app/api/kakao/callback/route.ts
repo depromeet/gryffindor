@@ -65,7 +65,11 @@ export async function GET(request: NextRequest) {
       const accessToken = await exchangeKakaoCodeForToken(code, redirectUri);
       addLog("info", "💬 [API] 카카오 토큰 교환 완료");
 
-      addLog("info", "💬 [API] 백엔드로 social-login 요청 전송 중...");
+      addLog("info", "💬 [API] 백엔드로 social-login 요청 전송 중...", {
+        url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/oauth/social-login`,
+        provider: "KAKAO",
+        hasAccessToken: !!accessToken,
+      });
       const backendResponse = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/oauth/social-login`,
         {
@@ -80,17 +84,32 @@ export async function GET(request: NextRequest) {
         },
       );
 
-      addLog("info", "💬 [API] 백엔드 응답 파싱 중...");
+      addLog("info", "💬 [API] 백엔드 응답 파싱 중...", {
+        status: backendResponse.status,
+        ok: backendResponse.ok,
+      });
       const data = (await backendResponse.json()) as ApiResponse<LoginResponse>;
 
-      if (!data.response) {
-        addLog("error", "💬 [API] 백엔드 응답 실패: response가 없습니다", data);
-        throw new Error("백엔드 로그인 실패");
+      if (!backendResponse.ok) {
+        addLog("error", "❌ [API] 백엔드 응답 에러", {
+          status: backendResponse.status,
+          statusText: backendResponse.statusText,
+          data,
+        });
+        throw new Error(`백엔드 로그인 실패 (${backendResponse.status})`);
       }
 
-      addLog("info", "💬 [API] 백엔드 응답 파싱 완료", {
+      if (!data.response) {
+        addLog("error", "❌ [API] 백엔드 응답 실패: response가 없습니다", data);
+        throw new Error("백엔드 로그인 실패: 응답 데이터 없음");
+      }
+
+      addLog("info", "✅ [API] 백엔드 응답 파싱 완료", {
         hasResponse: !!data.response,
         hasAccessToken: !!data.response?.accessToken,
+        hasRefreshToken: !!data.response?.refreshToken,
+        memberId: data.response?.memberId,
+        provider: data.response?.providerType,
       });
 
       // [GET] user/me 호출로 최신 level과 nickname 가져오기 (auth.ts의 JWT callback과 동일한 로직)

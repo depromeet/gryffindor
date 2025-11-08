@@ -19,6 +19,12 @@ export async function exchangeKakaoCodeForToken(
     code,
   });
 
+  console.log("🔑 [Kakao Token Exchange] 요청 시작", {
+    tokenUrl,
+    redirectUri: finalRedirectUri,
+    clientId: process.env.KAKAO_CLIENT_ID?.substring(0, 8) + "...",
+  });
+
   const response = await fetch(tokenUrl, {
     method: "POST",
     headers: {
@@ -29,9 +35,16 @@ export async function exchangeKakaoCodeForToken(
 
   if (!response.ok) {
     const errorText = await response.text();
+    console.error("❌ [Kakao Token Exchange] 실패", {
+      status: response.status,
+      error: errorText,
+      redirectUri: finalRedirectUri,
+    });
 
     throw new Error(`토큰 교환 실패 (${response.status}): ${errorText}`);
   }
+
+  console.log("✅ [Kakao Token Exchange] 성공");
 
   const data = (await response.json()) as {
     access_token: string;
