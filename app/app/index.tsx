@@ -53,7 +53,25 @@ export default function WebViewScreen() {
       }
       const request = JSON.parse(event.nativeEvent.data);
       console.log("WebView: Message received from Web", request);
-      onRequest(request.query);
+
+      if (request.type === "open-external-link" && request.payload?.url) {
+        const { url } = request.payload;
+        Linking.canOpenURL(url).then((supported) => {
+          if (supported) {
+            Linking.openURL(url);
+          } else {
+            console.warn(`Cannot open URL: ${url}`);
+            if (url.startsWith("http")) {
+              Linking.openURL(url);
+            }
+          }
+        });
+        return;
+      }
+
+      if (request.query) {
+        onRequest(request.query);
+      }
     } catch (error) {
       console.error("WebView: Failed to parse message", error, event.nativeEvent.data);
     }
@@ -144,6 +162,10 @@ export default function WebViewScreen() {
       mediaPlaybackRequiresUserAction={false}
       // 디버깅 활성화 실제 배포에서는 빠져야한다고 함.(testFlight 에서 console.log 가 보이기 위함)
       webviewDebuggingEnabled={true}
+      // ✅ 쿠키 공유 활성화 (웹과 앱 간 쿠키 동기화)
+      sharedCookiesEnabled={true}
+      // ✅ 서드파티 쿠키 허용 (sameSite: "none" 쿠키 지원)
+      thirdPartyCookiesEnabled={true}
     />
   );
 }

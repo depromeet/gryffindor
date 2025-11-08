@@ -43,7 +43,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async jwt({ token, account, trigger, session }) {
       // 최초 로그인 시 소셜 로그인 처리
-      console.log("===jwt 처리====", token, account, trigger, session);
+      console.log("🔐 [JWT 콜백] 호출됨", {
+        hasTrigger: !!trigger,
+        trigger,
+        hasAccount: !!account,
+        provider: account?.provider,
+        hasAccessToken: !!token.accessToken,
+        currentLevel: token.level,
+        currentNickName: token.nickName,
+      });
 
       if (account?.access_token) {
         try {
@@ -61,7 +69,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
           );
           const data = (await response.json()) as ApiResponse<LoginResponse>;
-          console.log("로그인 성공 RESPONSE", data.response);
+          console.log("✅ [JWT 콜백] 소셜 로그인 성공", {
+            memberId: data.response?.memberId,
+            nickName: data.response?.nickName,
+            level: data.response?.level,
+            hasAccessToken: !!data.response?.accessToken,
+          });
 
           if (data.response) {
             token.accessToken = data.response.accessToken;
@@ -71,6 +84,35 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             token.memberId = data.response.memberId;
             token.nickName = data.response.nickName;
             token.level = data.response.level;
+            console.log("✅ [JWT 콜백] 토큰에 저장 완료", {
+              memberId: token.memberId,
+              nickName: token.nickName,
+              level: token.level,
+            });
+
+            // 최초 로그인 시 user/me 호출하여 최신 정보 가져오기
+            console.log("📞 [JWT 콜백] 최초 로그인 - user/me 호출 시작...");
+            try {
+              const userMeResponse = await fetch(
+                `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/users/me`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${token.accessToken}`,
+                  },
+                },
+              );
+
+              const userMeData = await userMeResponse.json();
+              console.log("✅ [JWT 콜백] 최초 로그인 user/me 응답", {
+                level: userMeData.response?.level,
+                nickname: userMeData.response?.nickname,
+              });
+
+              token.level = userMeData.response.level;
+              token.nickName = userMeData.response.nickname;
+            } catch (error) {
+              console.error("❌ [JWT 콜백] 최초 로그인 user/me 에러:", error);
+            }
           }
         } catch (error) {
           console.error("Social login error:", error);
@@ -141,9 +183,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
 
-      // 세션 업데이트 처리
+      // 세션 업데이트 처리 (온보딩 완료 등 명시적 업데이트)
       if (trigger === "update" && session) {
-        console.log("===세션 업데이트 처리====(session)", session);
+        console.log("🔄 [JWT 콜백] 세션 업데이트 트리거", {
+          sessionNickName: session.nickName,
+          sessionLevel: session.level,
+        });
 
         if (session.nickName) {
           token.nickName = session.nickName;
@@ -151,34 +196,83 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (session.level) {
           token.level = session.level;
         }
-      }
 
-      // [GET] user/me호출 response 중 level과 nickname을 토큰에 저장
-      try {
-        const userMeResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/users/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${token.accessToken}`,
+        // update trigger 시에는 user/me 호출하여 최신 정보 반영
+        console.log("📞 [JWT 콜백] 업데이트 트리거 - user/me 호출 시작...");
+        try {
+          const userMeResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/users/me`,
+            {
+              headers: {
+                Authorization: `Bearer ${token.accessToken}`,
+              },
             },
-          },
-        );
+          );
 
-        const userMeData = await userMeResponse.json();
+          const userMeData = await userMeResponse.json();
+          console.log("✅ [JWT 콜백] 업데이트 트리거 user/me 응답", {
+            level: userMeData.response?.level,
+            nickname: userMeData.response?.nickname,
+          });
 
-        console.log("===get userMeData====", userMeData);
-
-        token.level = userMeData.response.level;
-        token.nickName = userMeData.response.nickname;
-      } catch (error) {
-        console.error("User me error:", error);
-        signOut({ redirectTo: "/home" });
+          token.level = userMeData.response.level;
+          token.nickName = userMeData.response.nickname;
+        } catch (error) {
+          console.error("❌ [JWT 콜백] 업데이트 트리거 user/me 에러:", error);
+        }
       }
 
+      // 조건부 user/me 호출 (fallback: token에 level/nickName이 없는 경우)
+      if (!token.level || !token.nickName) {
+        console.log("⚠️ [JWT 콜백] 토큰에 level/nickName 없음 - user/me 호출 (fallback)");
+        try {
+          const userMeResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/users/me`,
+            {
+              headers: {
+                Authorization: `Bearer ${token.accessToken}`,
+              },
+            },
+          );
+
+          const userMeData = await userMeResponse.json();
+          console.log("✅ [JWT 콜백] fallback user/me 응답", {
+            level: userMeData.response?.level,
+            nickname: userMeData.response?.nickname,
+          });
+
+          token.level = userMeData.response.level;
+          token.nickName = userMeData.response.nickname;
+        } catch (error) {
+          console.error("❌ [JWT 콜백] fallback user/me 에러:", error);
+          signOut({ redirectTo: "/home" });
+        }
+      } else {
+        console.log("✅ [JWT 콜백] 토큰에 level/nickName 존재 - user/me 호출 스킵", {
+          level: token.level,
+          nickName: token.nickName,
+        });
+      }
+
+      console.log("🔐 [JWT 콜백] 최종 토큰 반환", {
+        memberId: token.memberId,
+        nickName: token.nickName,
+        level: token.level,
+        hasAccessToken: !!token.accessToken,
+      });
       return token;
     },
     async session({ session, token }) {
-      console.log("===session====", session, token);
+      console.log("🎫 [Session 콜백] 호출됨", {
+        hasToken: !!token,
+        tokenData: {
+          memberId: token.memberId,
+          nickName: token.nickName,
+          level: token.level,
+          hasAccessToken: !!token.accessToken,
+        },
+      });
+
       // 토큰 정보를 세션에 전달
       if (token.accessToken) {
         session.accessToken = token.accessToken;
@@ -188,12 +282,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.memberId = token.memberId;
         session.nickName = token.nickName;
         session.level = token.level;
+
+        console.log("✅ [Session 콜백] 세션에 토큰 정보 저장 완료", {
+          memberId: session.memberId,
+          nickName: session.nickName,
+          level: session.level,
+        });
       }
 
       // 에러 정보도 세션에 전달
       if (token.error) {
         session.error = token.error as string;
+        console.log("⚠️ [Session 콜백] 에러 정보 포함", { error: session.error });
       }
+
+      console.log("🎫 [Session 콜백] 최종 세션 반환", {
+        hasAccessToken: !!session.accessToken,
+        memberId: session.memberId,
+        nickName: session.nickName,
+        level: session.level,
+      });
 
       return session;
     },

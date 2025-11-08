@@ -13,8 +13,17 @@ import type { LoginResponse } from "@/auth";
 
 const SESSION_COOKIE_NAME = "authjs.session-token";
 const SECURE_SESSION_COOKIE_NAME = "__Secure-authjs.session-token";
-const SESSION_SALT = "authjs.session-token";
 const SESSION_MAX_AGE = 30 * 24 * 60 * 60; // 30일
+
+/**
+ * 환경에 따른 salt 값 결정
+ * NextAuth는 production에서 __Secure- 접두사를 사용
+ */
+function getSessionSalt(): string {
+  return process.env.NODE_ENV === "production"
+    ? "__Secure-authjs.session-token"
+    : "authjs.session-token";
+}
 
 // ============================================
 // 타입 정의
@@ -95,11 +104,15 @@ async function createNextAuthToken(params: CreateSessionParams): Promise<string>
       secretLength: secret.length,
     });
 
-    console.log("🔐 [NextAuth] JWT 인코딩 중...");
+    const salt = getSessionSalt();
+    console.log("🔐 [NextAuth] JWT 인코딩 중...", {
+      salt,
+      isProduction: process.env.NODE_ENV === "production",
+    });
     const encodedToken = await encode({
       token,
       secret,
-      salt: SESSION_SALT,
+      salt,
       maxAge: SESSION_MAX_AGE,
     });
     console.log("🔐 [NextAuth] JWT 인코딩 완료");
@@ -160,11 +173,11 @@ export async function createNextAuthSessionWithCookie(
     // 리다이렉트 응답 생성
     const nextResponse = NextResponse.redirect(redirectUrl);
 
-    // 쿠키 설정
+    // 쿠키 설정 (WebView 호환성을 위해 sameSite: "none" 사용)
     nextResponse.cookies.set(cookieName, jwtToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: true, // sameSite: "none"은 반드시 secure: true 필요
+      sameSite: "none", // React Native WebView cross-origin 지원
       path: "/",
       maxAge: SESSION_MAX_AGE,
     });
