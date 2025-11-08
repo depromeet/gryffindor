@@ -121,7 +121,7 @@ export default function WebViewScreen() {
   return (
     <WebView
       ref={webViewRef}
-      source={{ uri: __DEV__ ? "http://localhost:3000" : "https://bobtory.com" }}
+      source={{ uri: "http://192.168.2.53:3000" }}
       // ✅ 필수: 브릿지 통신을 위해 반드시 필요
       onMessage={handleMessage}
       // ✅ 필수: 카카오톡 앱 열기 등을 위해 필요

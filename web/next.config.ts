@@ -4,6 +4,12 @@ import path from "path";
 const nextConfig: NextConfig = {
   /* config options here */
 
+  // Allow cross-origin requests from React Native development server
+  allowedDevOrigins: [
+    "http://192.168.2.53:8081", // React Native Metro bundler
+    "http://192.168.2.53:19000", // Expo development server
+  ],
+
   turbopack: {
     rules: {
       "*.svg": {

@@ -27,10 +27,11 @@ export interface LoginAppleResponse {
   success: boolean;
 }
 
-export interface LoginKakaoResponse {
-  url: string; // note: 카카오 로그인 URL (WebView에서 리다이렉트용, 앱으로 열었으면 빈 문자열)
-  success: boolean;
-}
+// Kakao 로그인은 웹뷰 내에서 Kakao JS SDK로 직접 처리되므로 브릿지 불필요
+// export interface LoginKakaoResponse {
+//   url: string;
+//   success: boolean;
+// }
 
 export interface DeviceHapticFeedbackResponse {
   success: boolean;
@@ -50,7 +51,7 @@ export interface BridgeSchema {
   fetchDeviceSystemForPlatformSet: DeviceSystemPlatformSetResponse;
   fetchDeviceLocationForLatLngSet: DeviceLocationLatLngSetResponse;
   loginApple: LoginAppleResponse;
-  loginKakao: LoginKakaoResponse;
+  // loginKakao: 웹뷰 내에서 Kakao JS SDK로 직접 처리
   triggerHapticFeedback: DeviceHapticFeedbackResponse;
 }
 
