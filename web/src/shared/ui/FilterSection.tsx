@@ -60,7 +60,7 @@ export function FilterSection({
   return (
     <article className="flex flex-col gap-4 p-5">
       <section className="flex items-center justify-between gap-4">
-        <span className="text-subtitle1">{label || "옵션"}</span>
+        <span className="text-subtitle1">{label}</span>
         {showCheckbox && <Checkbox label="전체 선택" checked={checked} onChange={handleCheckAll} />}
       </section>
       <section className="flex flex-wrap gap-3">
