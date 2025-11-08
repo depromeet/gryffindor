@@ -4,8 +4,8 @@ require("dotenv").config();
 
 module.exports = {
   expo: {
-    name: "bobtory",
-    slug: "bobtory",
+    name: "밥토리",
+    slug: "bobtory-app",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/images/app-logo.png",
