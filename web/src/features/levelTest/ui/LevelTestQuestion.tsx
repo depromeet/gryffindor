@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Button, Icon } from "@/shared/ui";
 import { onBoardingApi } from "../api/onBoardingApi";
@@ -22,6 +23,7 @@ export function LevelTestQuestion({
   onPrevious,
 }: LevelTestQuestionProps) {
   const { setAnswer, setResult, getBackendRequestData, getAnswer } = useLevelTestStore();
+  const { update } = useSession();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   // 이전 답변 불러오기
@@ -36,12 +38,21 @@ export function LevelTestQuestion({
 
   const onBoardingMutation = useMutation({
     mutationFn: onBoardingApi.createOnBoarding,
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
+      console.log("✅ [LevelTest] 온보딩 완료", { level: response.response.level });
       setResult({ level: response.response.level });
+
+      // NextAuth 세션 업데이트 - auth.ts의 jwt 콜백에서 user/me 호출됨
+      console.log("🔄 [LevelTest] 세션 업데이트 트리거");
+      await update({
+        level: response.response.level,
+      });
+      console.log("✅ [LevelTest] 세션 업데이트 완료");
+
       onNext();
     },
     onError: (error) => {
-      console.error("온보딩 제출 오류:", error);
+      console.error("❌ [LevelTest] 온보딩 제출 오류:", error);
     },
   });
 
