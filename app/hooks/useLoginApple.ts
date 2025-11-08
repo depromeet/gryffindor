@@ -16,7 +16,6 @@ export const useLoginApple = (
       throw new Error("Apple identityToken을 받지 못했습니다");
     }
 
-    //note: identityToken을 Web으로 전달
     //note: 카카오는 code를 전달하지만, Apple은 identityToken (JWT)을 전달
     onResponse({
       loginApple: {

@@ -4,11 +4,11 @@ require("dotenv").config();
 
 module.exports = {
   expo: {
-    name: "bobtory-app",
-    slug: "bobtory-app",
+    name: "bobtory",
+    slug: "bobtory",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/images/icon.png",
+    icon: "./assets/images/app-logo.png",
     scheme: "bobtoryapp",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
@@ -40,7 +40,7 @@ module.exports = {
     },
     web: {
       output: "static",
-      favicon: "./assets/images/favicon.png",
+      favicon: "./assets/images/favicon.ico",
     },
     plugins: [
       "expo-router",

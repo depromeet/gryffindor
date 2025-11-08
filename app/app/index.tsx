@@ -1,9 +1,15 @@
 import NetInfo from "@react-native-community/netinfo";
 import { useEffect, useRef, useState } from "react";
-import { Linking, Platform, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView } from "react-native-webview";
 import { useApis } from "@/apis";
+import {
+  createHandleMessage,
+  handleError,
+  handleHttpError,
+  handleShouldStartLoadWithRequest,
+} from "@/lib/webview/handlers";
 
 export default function WebViewScreen() {
   const [isConnected, setIsConnected] = useState(true);
@@ -26,115 +32,7 @@ export default function WebViewScreen() {
       </SafeAreaView>
     );
 
-  const handleShouldStartLoadWithRequest = (request: { url: string }) => {
-    const url = request.url;
-
-    // 카카오톡 커스텀 URL 스킴 감지 (kakaolink://, kakaotalk:// 등)
-    if (
-      Platform.OS === "ios" &&
-      (url.startsWith("kakaolink://") || url.startsWith("kakaotalk://"))
-    ) {
-      Linking.canOpenURL(url).then((supported) => {
-        if (supported) {
-          Linking.openURL(url);
-        }
-      });
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleMessage = (event: any) => {
-    try {
-      if (!event.nativeEvent.data) {
-        console.warn("WebView: Empty message received");
-        return;
-      }
-      const request = JSON.parse(event.nativeEvent.data);
-      console.log("WebView: Message received from Web", request);
-
-      if (request.type === "open-external-link" && request.payload?.url) {
-        const { url } = request.payload;
-        Linking.canOpenURL(url).then((supported) => {
-          if (supported) {
-            Linking.openURL(url);
-          } else {
-            console.warn(`Cannot open URL: ${url}`);
-            if (url.startsWith("http")) {
-              Linking.openURL(url);
-            }
-          }
-        });
-        return;
-      }
-
-      if (request.query) {
-        onRequest(request.query);
-      }
-    } catch (error) {
-      console.error("WebView: Failed to parse message", error, event.nativeEvent.data);
-    }
-  };
-
-  const handleError = (syntheticEvent: any) => {
-    const { nativeEvent } = syntheticEvent;
-    console.error("WebView: Error loading page", nativeEvent);
-  };
-
-  const handleHttpError = (syntheticEvent: any) => {
-    const { nativeEvent } = syntheticEvent;
-    console.error("WebView: HTTP error", nativeEvent.statusCode);
-  };
-
-  const handleLoadEnd = () => {
-    console.log("WebView: Page loaded successfully");
-    // 페이지 로드 후 ReactNativeWebView 확인을 위해 JavaScript 실행
-    webViewRef.current?.injectJavaScript(`
-      console.log('🔍 onLoadEnd: Checking ReactNativeWebView');
-      console.log('🔍 window.ReactNativeWebView:', typeof window.ReactNativeWebView);
-      if (typeof window.ReactNativeWebView === 'undefined') {
-        console.error('❌ ReactNativeWebView is still not available after load!');
-      } else {
-        console.log('✅ ReactNativeWebView is available after load');
-      }
-    `);
-  };
-
-  // 프로덕션 빌드에서 ReactNativeWebView 객체가 제대로 주입되었는지 확인
-  // 이 스크립트는 페이지 로드 전에 실행되어 디버깅 정보를 수집
-  const injectedJavaScriptBeforeContentLoaded = `
-    (function() {
-      console.log('🔍 Injected before content loaded');
-      console.log('🔍 window.ReactNativeWebView:', typeof window.ReactNativeWebView);
-      console.log('🔍 window.webkit:', typeof window.webkit);
-      if (window.webkit && window.webkit.messageHandlers) {
-        console.log('🔍 messageHandlers:', Object.keys(window.webkit.messageHandlers));
-      }
-      true;
-    })();
-  `;
-
-  // 페이지 로드 후 ReactNativeWebView 확인 및 디버깅
-  const injectedJavaScript = `
-    (function() {
-      console.log('🔍 Injected after content loaded');
-      console.log('🔍 window.ReactNativeWebView:', typeof window.ReactNativeWebView);
-
-      if (typeof window.ReactNativeWebView === 'undefined') {
-        console.error('❌ ReactNativeWebView is not available!');
-        console.log('🔍 window keys:', Object.keys(window).filter(k => k.includes('React') || k.includes('Native') || k.includes('Web')));
-      } else {
-        console.log('✅ ReactNativeWebView is available');
-        console.log('🔍 postMessage type:', typeof window.ReactNativeWebView.postMessage);
-      }
-
-      // 디버깅을 위한 전역 변수 설정
-      window.__REACT_NATIVE_WEBVIEW_BRIDGE_READY = typeof window.ReactNativeWebView !== 'undefined';
-      console.log('🌉 Bridge ready:', window.__REACT_NATIVE_WEBVIEW_BRIDGE_READY);
-      true;
-    })();
-  `;
+  const handleMessage = createHandleMessage(onRequest);
 
   return (
     <WebView
@@ -146,10 +44,6 @@ export default function WebViewScreen() {
       onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
       // ⚠️ 선택: UX 개선용 (로딩 인디케이터 표시)
       startInLoadingState={true}
-      // 🐛 디버깅용: 프로덕션에서는 제거 가능
-      injectedJavaScript={injectedJavaScript}
-      injectedJavaScriptBeforeContentLoaded={injectedJavaScriptBeforeContentLoaded}
-      onLoadEnd={handleLoadEnd}
       // ⚠️ 선택: 에러 처리용 (디버깅/모니터링에 유용)
       onError={handleError}
       onHttpError={handleHttpError}

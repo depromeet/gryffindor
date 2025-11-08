@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   title: "밥토리 | 혼밥을 더 자유롭고 편하게",
   description: "혼밥을 더 자유롭고 편하게",
   icons: {
-    icon: "/favicon.png",
+    icon: "/image/favicon.ico",
   },
 };
 
