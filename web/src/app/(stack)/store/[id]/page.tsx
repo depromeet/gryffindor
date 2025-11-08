@@ -8,6 +8,7 @@ import {
   MenuSection,
   SeatImageGallery,
   SeatInfoSection,
+  SimilerStore,
   StoreInfo,
   SuggestionCard,
   ZoomableImage,
@@ -58,6 +59,7 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
           handleSetZoomImageSrc={handleSetZoomImageSrc}
         />
         <ReviewSection storeId={store.storeId} memberId={userState?.memberId} />
+        <SimilerStore storeId={store.storeId} />
         <SuggestionCard storeId={store.storeId} />
         {isZoomed && (
           <ZoomableImage
