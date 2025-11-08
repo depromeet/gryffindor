@@ -13,7 +13,7 @@ export function ReviewList({ reviews, memberId, storeId }: ReviewListProps) {
       {reviews.map((review) => (
         <div key={review.id}>
           <ReviewCard review={review} storeId={storeId} memberId={memberId} />
-          <div className="mt-5 h-[1px] w-full bg-gray50" />
+          <div className="h-[1px] w-full bg-gray50" />
         </div>
       ))}
     </div>
