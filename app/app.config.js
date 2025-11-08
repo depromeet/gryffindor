@@ -13,7 +13,6 @@ module.exports = {
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     ios: {
-      supportsTablet: true,
       bundleIdentifier: "com.bobtory",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
