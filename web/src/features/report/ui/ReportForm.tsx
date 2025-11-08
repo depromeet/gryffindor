@@ -1,28 +1,24 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
+import { ALL_CATEGORIES, SEAT_TYPE_MAP } from "@/entities/store/model/constants";
 import type { SeatTypes } from "@/entities/storeList/api";
-import { FilterSection, Input, InputReview } from "@/shared/ui";
-
-const SEAT_TYPE_MAP: Record<SeatTypes, string> = {
-  CUBICLE: "칸막이",
-  BAR_TABLE: "바 좌석",
-  FOR_ONE: "1인석",
-  FOR_TWO: "2인석",
-  FOR_FOUR: "4인석",
-};
+import { Button, FilterSection, Input, InputReview } from "@/shared/ui";
 
 interface ReportFormProps {
   location: string;
   setLocation: Dispatch<SetStateAction<string>>;
   name: string;
   setName: Dispatch<SetStateAction<string>>;
+  category: string;
+  setCategory: Dispatch<SetStateAction<string>>;
   recommendedMenu: string;
   setRecommendedMenu: Dispatch<SetStateAction<string>>;
   reason: string;
   setReason: Dispatch<SetStateAction<string>>;
   seatTypes: SeatTypes[];
   setSeatTypes: Dispatch<SetStateAction<SeatTypes[]>>;
+  handleSubmit: () => void;
 }
 
 export const ReportForm = ({
@@ -30,12 +26,15 @@ export const ReportForm = ({
   setLocation,
   name,
   setName,
+  category,
+  setCategory,
   recommendedMenu,
   setRecommendedMenu,
   reason,
   setReason,
   seatTypes,
   setSeatTypes,
+  handleSubmit,
 }: ReportFormProps) => {
   const handleSeatTypesChange = (selectedLabels: string[]) => {
     const newSeatTypes = selectedLabels.map(
@@ -44,9 +43,13 @@ export const ReportForm = ({
     setSeatTypes(newSeatTypes);
   };
 
+  const handleCategoryChange = (selectedLabels: string[]) => {
+    setCategory(selectedLabels[0] || "");
+  };
+
   return (
-    <div className="flex min-h-screen flex-col gap-y-[36px] bg-white p-[20px] pb-[100px]">
-      <div className="flex flex-col gap-y-[8px]">
+    <div className="flex min-h-screen flex-col gap-y-[36px] bg-white pt-[20px] pb-[40px]">
+      <div className="flex flex-col gap-y-[8px] px-[20px]">
         <span className="text-subtitle1">가게 위치</span>
         <Input
           label=""
@@ -55,11 +58,11 @@ export const ReportForm = ({
           onChange={setLocation}
         />
       </div>
-      <div className="flex flex-col gap-y-[8px]">
+      <div className="flex flex-col gap-y-[8px] px-[20px]">
         <span className="text-subtitle1">가게 정보</span>
         <Input label="" placeholder="가게 이름이 무엇인가요?" value={name} onChange={setName} />
       </div>
-      <div className="flex flex-col gap-y-[8px]">
+      <div className="flex flex-col gap-y-[8px] px-[20px]">
         <span className="text-subtitle1">추천 메뉴</span>
         <Input
           label=""
@@ -68,7 +71,17 @@ export const ReportForm = ({
           onChange={setRecommendedMenu}
         />
       </div>
-      <div className="flex flex-col gap-y-[8px]">
+      <div className="flex flex-col">
+        <span className="text-subtitle1 ml-[20px]">메뉴 카테고리</span>
+        <FilterSection
+          label=""
+          isMultiple={false}
+          options={ALL_CATEGORIES as unknown as string[]}
+          selectedItems={[category]}
+          onChange={handleCategoryChange}
+        />
+      </div>
+      <div className="flex flex-col gap-y-[8px] px-[20px]">
         <span className="text-subtitle1">식당 추천 이유</span>
         <InputReview
           label=""
@@ -77,14 +90,29 @@ export const ReportForm = ({
           onChange={(e) => setReason(e.target.value)}
         />
       </div>
-      <div className="flex flex-col gap-y-[8px]">
-        <span className="text-subtitle1">좌석 형태</span>
+      <div className="flex flex-col w-full">
+        <span className="text-subtitle1 ml-[20px]">좌석 형태</span>
         <FilterSection
           label=""
           isMultiple={true}
           options={Object.values(SEAT_TYPE_MAP)}
           selectedItems={seatTypes.map((type) => SEAT_TYPE_MAP[type])}
           onChange={handleSeatTypesChange}
+        />
+      </div>
+      <div className="flex w-full justify-center">
+        <Button
+          label="제보하기"
+          size="large"
+          onClick={handleSubmit}
+          disabled={
+            !location ||
+            !name ||
+            !recommendedMenu ||
+            !category ||
+            reason.length < 5 ||
+            seatTypes.length === 0
+          }
         />
       </div>
     </div>

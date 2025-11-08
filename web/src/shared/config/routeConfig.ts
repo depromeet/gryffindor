@@ -63,7 +63,12 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
   "/mypage": {
     group: "main",
     transition: "fade",
-    header: null,
+    header: {
+      title: "마이페이지",
+      backButton: {
+        hidden: true,
+      },
+    },
   },
   "/mypage/nickname": {
     group: "stack",
@@ -158,6 +163,9 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
     transition: "drill",
     header: {
       title: "혼밥 식당 제보",
+      backButton: {
+        hidden: true,
+      },
     },
   },
 };

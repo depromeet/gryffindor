@@ -11,6 +11,7 @@ export const useReportForm = () => {
   const [recommendedMenu, setRecommendedMenu] = useState("");
   const [reason, setReason] = useState("");
   const [seatTypes, setSeatTypes] = useState<SeatTypes[]>([]);
+  const [category, setCategory] = useState("");
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isFailureModalOpen, setIsFailureModalOpen] = useState(false);
 
@@ -34,7 +35,7 @@ export const useReportForm = () => {
       name,
       seatType: seatTypes,
       paymentMethods: [],
-      menuCategories: [],
+      menuCategories: [category],
       recommendedMenu,
       reason,
       memberId: userState.memberId,
@@ -52,6 +53,8 @@ export const useReportForm = () => {
     setReason,
     seatTypes,
     setSeatTypes,
+    category,
+    setCategory,
     isSuccessModalOpen,
     setIsSuccessModalOpen,
     isFailureModalOpen,
