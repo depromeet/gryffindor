@@ -144,6 +144,10 @@ export default function WebViewScreen() {
       mediaPlaybackRequiresUserAction={false}
       // 디버깅 활성화 실제 배포에서는 빠져야한다고 함.(testFlight 에서 console.log 가 보이기 위함)
       webviewDebuggingEnabled={true}
+      // ✅ 쿠키 공유 활성화 (웹과 앱 간 쿠키 동기화)
+      sharedCookiesEnabled={true}
+      // ✅ 서드파티 쿠키 허용 (sameSite: "none" 쿠키 지원)
+      thirdPartyCookiesEnabled={true}
     />
   );
 }

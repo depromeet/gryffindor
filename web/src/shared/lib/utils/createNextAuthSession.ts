@@ -160,11 +160,11 @@ export async function createNextAuthSessionWithCookie(
     // 리다이렉트 응답 생성
     const nextResponse = NextResponse.redirect(redirectUrl);
 
-    // 쿠키 설정
+    // 쿠키 설정 (WebView 호환성을 위해 sameSite: "none" 사용)
     nextResponse.cookies.set(cookieName, jwtToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: true, // sameSite: "none"은 반드시 secure: true 필요
+      sameSite: "none", // React Native WebView cross-origin 지원
       path: "/",
       maxAge: SESSION_MAX_AGE,
     });
