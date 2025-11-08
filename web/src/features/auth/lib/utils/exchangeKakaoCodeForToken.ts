@@ -22,7 +22,7 @@ export async function exchangeKakaoCodeForToken(
   console.log("🔑 [Kakao Token Exchange] 요청 시작", {
     tokenUrl,
     redirectUri: finalRedirectUri,
-    clientId: process.env.KAKAO_CLIENT_ID?.substring(0, 8) + "...",
+    clientId: `${process.env.KAKAO_CLIENT_ID?.substring(0, 8)}...`,
   });
 
   const response = await fetch(tokenUrl, {
