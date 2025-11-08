@@ -23,6 +23,8 @@ module.exports = {
           "kakaokompassauth", // 카카오 로그인 인증용
           "kakaolink", // 카카오톡 링크
           "kakaotalk", // 카카오톡 앱
+          "navermaps", // 네이버 지도
+          "nmap", // 네이버 지도
         ],
       },
     },
