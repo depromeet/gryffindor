@@ -53,7 +53,25 @@ export default function WebViewScreen() {
       }
       const request = JSON.parse(event.nativeEvent.data);
       console.log("WebView: Message received from Web", request);
-      onRequest(request.query);
+
+      if (request.type === "open-external-link" && request.payload?.url) {
+        const { url } = request.payload;
+        Linking.canOpenURL(url).then((supported) => {
+          if (supported) {
+            Linking.openURL(url);
+          } else {
+            console.warn(`Cannot open URL: ${url}`);
+            if (url.startsWith("http")) {
+              Linking.openURL(url);
+            }
+          }
+        });
+        return;
+      }
+
+      if (request.query) {
+        onRequest(request.query);
+      }
     } catch (error) {
       console.error("WebView: Failed to parse message", error, event.nativeEvent.data);
     }

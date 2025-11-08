@@ -83,3 +83,11 @@ export type BridgeMessage<T extends BridgeQuery = BridgeQuery> = {
 export interface BridgeRequest<T extends BridgeQuery = BridgeQuery> {
   query: T;
 }
+
+/**
+ * Represents all possible messages sent from the web to the native app.
+ * It includes query-based requests and specific typed messages like opening an external link.
+ */
+export type WebToAppMessage =
+  | BridgeRequest
+  | { type: "open-external-link"; payload: { url: string } };

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Menu } from "@/entities/store/model/types";
+import { useWebview } from "@/shared/lib/hooks/useWebview";
 import { ChipFilter, Icon, Tag } from "@/shared/ui";
 
 interface StoreInfoProps {
@@ -25,6 +26,8 @@ export function StoreInfo({
   lon,
   handleSetZoomImageSrc,
 }: StoreInfoProps) {
+  const { isWebview, postMessage } = useWebview();
+
   const renderImage = (src: string | undefined, alt: string, className: string) =>
     src ? (
       <Image
@@ -45,12 +48,6 @@ export function StoreInfo({
       return;
     }
 
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const isSimulator =
-      navigator.userAgent.includes("Android SDK") || navigator.userAgent.includes("Simulator");
-    const isDesktopChrome =
-      !isMobile && /Chrome/i.test(navigator.userAgent) && !/Mobile/i.test(navigator.userAgent);
-
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const fromLat = pos.coords.latitude;
@@ -59,17 +56,29 @@ export function StoreInfo({
           "현재위치",
         )}&dlat=${toLat}&dlng=${toLng}&dname=${encodeURIComponent(toName)}&mode=walk`;
 
+        if (isWebview) {
+          postMessage({
+            type: "open-external-link",
+            payload: {
+              url: appUrl,
+            },
+          });
+          return;
+        }
+
         const webUrl = `https://map.naver.com/v5/directions/${fromLng},${fromLat}/${toLng},${toLat}/${encodeURIComponent(
           toName,
         )}/walk`;
 
-        if (!isMobile || isSimulator || isDesktopChrome) {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+          window.location.href = appUrl;
+          setTimeout(() => {
+            window.location.href = webUrl;
+          }, 1000);
+        } else {
           window.open(webUrl, "_blank");
-          return;
         }
-
-        window.open(appUrl, "_blank");
-        setTimeout(() => window.open(webUrl, "_blank"), 1000);
       },
       (err) => {
         console.error(err);
