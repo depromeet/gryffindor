@@ -59,7 +59,10 @@ export async function GET(request: NextRequest) {
   if (code) {
     try {
       addLog("info", "💬 [API] 카카오 코드로 토큰 교환 시작");
-      const accessToken = await exchangeKakaoCodeForToken(code);
+      // 요청의 origin을 사용하여 redirect URI 구성 (프론트엔드와 동일한 URI 사용)
+      const redirectUri = `${new URL(request.url).origin}/api/kakao/callback`;
+      addLog("info", `💬 [API] Redirect URI: ${redirectUri}`);
+      const accessToken = await exchangeKakaoCodeForToken(code, redirectUri);
       addLog("info", "💬 [API] 카카오 토큰 교환 완료");
 
       addLog("info", "💬 [API] 백엔드로 social-login 요청 전송 중...");
