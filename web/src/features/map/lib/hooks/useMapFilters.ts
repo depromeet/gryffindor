@@ -10,7 +10,7 @@ export const useMapFilters = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filters, setFilters] = useState<FilterData>({
     price: { min: 0, max: 20000 },
-    honbobLevel: userState.honbabLevel,
+    honbobLevel: userState.honbobLevel,
     seatTypes: [],
     categories: [],
   });

@@ -9,7 +9,7 @@ export function HonbobLevelCarousel() {
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
-    startIndex: userState.honbabLevel - 1,
+    startIndex: userState.honbobLevel - 1,
   });
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useCarouselButton(emblaApi);
 

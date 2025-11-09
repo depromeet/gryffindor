@@ -14,8 +14,9 @@ export interface UserState {
   isLoggedIn: boolean;
   memberId?: number;
   displayName: string;
-  honbabLevel: number;
-  honbabLevelIcon: StaticImageData;
+  honbobLevel: number;
+  honbobLevelProfileImage: StaticImageData;
+  honbobLevelCharacterImage: StaticImageData;
   isLevelTestCompleted: boolean;
   canPostReview: boolean;
 }

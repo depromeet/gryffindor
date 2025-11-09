@@ -1,6 +1,6 @@
 import { Lv1Character, Lv2Character, Lv3Character, Lv4Character } from "@/shared/lib/assets";
 
-export const pickHonbabLevelIcon = (level: number) => {
+export const pickHonbobLevelProfileImage = (level: number) => {
   switch (level) {
     case 1:
       return Lv1Character;

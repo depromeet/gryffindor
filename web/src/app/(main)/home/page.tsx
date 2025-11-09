@@ -1,21 +1,19 @@
-import {
-  HonbobFirstVisitModal,
-  HonbobLevelCarousel,
-  HonbobLevelTestGuideModal,
-} from "@/entities/honbob";
-import { ReportStore } from "@/entities/store/ui";
+import Link from "next/link";
+import { HonbobFirstVisitModal, HonbobLevelTestGuideModal } from "@/entities/honbob";
 import { StoreList } from "@/entities/storeList/ui";
 import { WelcomeUser } from "@/entities/user";
+import { InputShapeCard, RECOMMEND_LIST } from "@/features/search";
 import { TransitionLayout } from "@/shared/ui";
 
 export default async function HomePage() {
   return (
     <TransitionLayout>
-      <div className="flex flex-col gap-[20px] bg-gray50 p-[20px]">
+      <div className="flex flex-col  bg-gray50 px-[20px] pb-[20px] rounded-b-[20px]">
         <WelcomeUser />
-        <HonbobLevelCarousel />
+        <Link href={RECOMMEND_LIST.href}>
+          <InputShapeCard />
+        </Link>
       </div>
-      <ReportStore />
       <StoreList />
       <HonbobLevelTestGuideModal />
       <HonbobFirstVisitModal />

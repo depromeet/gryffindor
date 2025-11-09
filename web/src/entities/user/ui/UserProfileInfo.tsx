@@ -5,7 +5,8 @@ import { useUserState } from "../lib/hooks/useUserState";
 
 export function UserProfileInfo() {
   const { userState } = useUserState();
-  const { isLoggedIn, honbabLevel, displayName, isLevelTestCompleted, honbabLevelIcon } = userState;
+  const { isLoggedIn, honbobLevel, displayName, isLevelTestCompleted, honbobLevelProfileImage } =
+    userState;
 
   return (
     <div className="flex items-center gap-x-[8px]">
@@ -15,15 +16,15 @@ export function UserProfileInfo() {
       )}
       {isLevelTestCompleted && (
         <Image
-          src={honbabLevelIcon}
-          alt={`honbabLevelIcon-${honbabLevel}`}
+          src={honbobLevelProfileImage}
+          alt={`honbobLevelIcon-${honbobLevel}`}
           width={72}
           height={72}
         />
       )}
       {isLoggedIn && (
         <div className="flex flex-col gap-y-[8px]">
-          <Tag color="red" size="small" label={`레벨${honbabLevel}`} />
+          <Tag color="red" size="small" label={`레벨${honbobLevel}`} />
           <span className="text-gray900 text-title2">{displayName}</span>
         </div>
       )}

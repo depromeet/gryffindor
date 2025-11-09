@@ -1,9 +1,9 @@
 import type { Session } from "next-auth";
-import { pickHonbabLevelIcon } from "@/entities/honbob";
+import { pickHonbobLevelCharacterImage, pickHonbobLevelProfileImage } from "@/entities/honbob";
 import { USER_CONSTANTS } from "@/shared/config/constants";
 import type { UserState } from "@/shared/model";
 
-const { DEFAULT_NICKNAME, DEFAULT_HONBAB_LEVEL } = USER_CONSTANTS;
+const { DEFAULT_NICKNAME, DEFAULT_HONBOB_LEVEL } = USER_CONSTANTS;
 
 export function deriveUserState(session: Session | null): UserState {
   console.log("🔍 [deriveUserState] 호출됨", {
@@ -25,8 +25,9 @@ export function deriveUserState(session: Session | null): UserState {
     return {
       isLoggedIn: false,
       displayName: DEFAULT_NICKNAME,
-      honbabLevel: DEFAULT_HONBAB_LEVEL,
-      honbabLevelIcon: pickHonbabLevelIcon(DEFAULT_HONBAB_LEVEL),
+      honbobLevel: DEFAULT_HONBOB_LEVEL,
+      honbobLevelProfileImage: pickHonbobLevelProfileImage(DEFAULT_HONBOB_LEVEL),
+      honbobLevelCharacterImage: pickHonbobLevelCharacterImage(DEFAULT_HONBOB_LEVEL),
       isLevelTestCompleted: false,
       canPostReview: false,
     };
@@ -42,7 +43,7 @@ export function deriveUserState(session: Session | null): UserState {
 
   if (!DoneOnboarded) {
     // 2. 로그인 O, 온보딩 X 상태 (don't onboarding)
-    // 온보딩을 하지 않으면 honbabLevel은 /user/me 호출 res의 level은 -1로 옴.
+    // 온보딩을 하지 않으면 honbobLevel은 /user/me 호출 res의 level은 -1로 옴.
     // auth.js의 token과 session을 통해서 가져오는 level은 0으로 옴.
     console.log("⚠️ [deriveUserState] 온보딩 미완료 상태 반환");
 
@@ -50,8 +51,9 @@ export function deriveUserState(session: Session | null): UserState {
       isLoggedIn: true,
       memberId: session.memberId,
       displayName: session.nickName || session.user?.name || DEFAULT_NICKNAME,
-      honbabLevel: DEFAULT_HONBAB_LEVEL,
-      honbabLevelIcon: pickHonbabLevelIcon(DEFAULT_HONBAB_LEVEL),
+      honbobLevel: DEFAULT_HONBOB_LEVEL,
+      honbobLevelProfileImage: pickHonbobLevelProfileImage(DEFAULT_HONBOB_LEVEL),
+      honbobLevelCharacterImage: pickHonbobLevelCharacterImage(DEFAULT_HONBOB_LEVEL),
       isLevelTestCompleted: false,
       canPostReview: true,
     };
@@ -66,8 +68,9 @@ export function deriveUserState(session: Session | null): UserState {
     isLoggedIn: true,
     memberId: session.memberId,
     displayName: session.nickName || session.user?.name || DEFAULT_NICKNAME,
-    honbabLevel: session.level,
-    honbabLevelIcon: pickHonbabLevelIcon(session.level),
+    honbobLevel: session.level,
+    honbobLevelProfileImage: pickHonbobLevelProfileImage(session.level),
+    honbobLevelCharacterImage: pickHonbobLevelCharacterImage(session.level),
     isLevelTestCompleted: true,
     canPostReview: true,
   };
