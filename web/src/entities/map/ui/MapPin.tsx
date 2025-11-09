@@ -14,18 +14,8 @@ function SelectedPin({ honbobLevel }: { honbobLevel: number }) {
   );
 }
 
-function UnselectedPin({ honbobLevel }: { honbobLevel: number }) {
-  return (
-    <div className="relative flex w-[63px] flex-col items-center gap-1">
-      <div className="flex h-6 items-center gap-1 rounded-[13px] bg-primary400 px-1.5 py-1">
-        <div className="flex h-4 w-4 items-center justify-center rounded-full bg-gray0">
-          <Icon name="crown" size={14} color="primary400" />
-        </div>
-        <span className="whitespace-nowrap text-caption1-bold text-gray0">레벨 {honbobLevel}</span>
-      </div>
-      <Icon name="bubblePick" size={12} color="primary400" className="absolute bottom-[-10px]" />
-    </div>
-  );
+function UnselectedPin() {
+  return <Icon name="marker" size={24} disableCurrentColor />;
 }
 
 function StoreName({ name }: { name: string }) {
@@ -49,11 +39,11 @@ interface MapPinProps {
 
 export function MapPin({ selected, name, honbobLevel }: MapPinProps) {
   return (
-    <article className="flex w-fit flex-col items-center justify-center gap-2">
+    <article className="flex w-fit flex-col items-center justify-center gap-1">
       {selected ? (
         <SelectedPin honbobLevel={honbobLevel} />
       ) : (
-        <UnselectedPin honbobLevel={honbobLevel} />
+        <UnselectedPin />
       )}
       <StoreName name={name} />
     </article>
