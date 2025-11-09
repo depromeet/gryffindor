@@ -12,8 +12,7 @@ export function WelcomeUser() {
   return (
     <div className="flex justify-between items-end gap-x-[16px]">
       <div className="flex pt-[13px] flex-col pb-[12px] gap-y-[12px]">
-        <Link href="#">
-          {/* todo: 레벨 소개 페이지로 이동해야합니다. */}
+        <Link href={`/honbob-level-info`}>
           <UserHonbobCard />
         </Link>
         <span className="text-gray900 text-xl leading-7">

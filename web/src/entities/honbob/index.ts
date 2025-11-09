@@ -1,5 +1,6 @@
 export * from "./lib/hooks/useCarouselButton";
-export * from "./lib/util/pickHonbobLevelCharacterImage";
+export * from "./lib/util/pickHonbobLevelHomeCharacterImage";
+export * from "./lib/util/pickHonbobLevelInfoCharacterImage";
 export * from "./lib/util/pickHonbobLevelProfileImage";
 
 export * from "./model/constant";

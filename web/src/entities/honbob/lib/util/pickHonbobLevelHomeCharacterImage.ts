@@ -5,7 +5,7 @@ import {
   Lv4LevelCharacterImage,
 } from "@/shared/lib/assets";
 
-export const pickHonbobLevelCharacterImage = (level: number) => {
+export const pickHonbobLevelHomeCharacterImage = (level: number) => {
   switch (level) {
     case 1:
       return Lv1LevelCharacterImage;

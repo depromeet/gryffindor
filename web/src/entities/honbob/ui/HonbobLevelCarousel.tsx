@@ -14,7 +14,7 @@ export function HonbobLevelCarousel() {
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useCarouselButton(emblaApi);
 
   return (
-    <div className="relative flex w-full flex-col items-center gap-y-[14px]">
+    <div className="relative flex w-full flex-col items-center gap-y-[14px] pt-[40px]">
       <HonbobCarouselSlide ref={emblaRef} />
       <HonbobCarouselIndicator
         scrollSnaps={scrollSnaps}
