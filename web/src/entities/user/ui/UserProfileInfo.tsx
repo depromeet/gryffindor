@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getHonbobLevelImageSet } from "@/shared/lib";
 import { Icon, Tag } from "@/shared/ui";
 import { useUserState } from "../lib/hooks/useUserState";
 
 export function UserProfileInfo() {
   const { userState } = useUserState();
-  const { isLoggedIn, honbobLevel, displayName, isLevelTestCompleted, honbobLevelProfileImage } =
-    userState;
+  const { isLoggedIn, honbobLevel, displayName, isLevelTestCompleted } = userState;
+  const { profileImage } = getHonbobLevelImageSet(honbobLevel);
 
   return (
     <div className="flex items-center gap-x-[8px]">
@@ -15,12 +16,7 @@ export function UserProfileInfo() {
         <Icon name="userLogin" size={72} disableCurrentColor />
       )}
       {isLevelTestCompleted && (
-        <Image
-          src={honbobLevelProfileImage}
-          alt={`honbobLevelIcon-${honbobLevel}`}
-          width={72}
-          height={72}
-        />
+        <Image src={profileImage} alt={`honbobLevelIcon-${honbobLevel}`} width={72} height={72} />
       )}
       {isLoggedIn && (
         <div className="flex flex-col gap-y-[8px]">

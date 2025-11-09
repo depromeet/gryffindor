@@ -1,6 +1,6 @@
 import Image from "next/image";
+import { getHonbobLevelImageSet } from "@/shared/lib";
 import { Tag } from "@/shared/ui";
-import { pickHonbobLevelInfoCharacterImage } from "../lib/util/pickHonbobLevelInfoCharacterImage";
 
 interface HonbobLevelCardProps {
   honbobLevel: string;
@@ -19,11 +19,13 @@ export function HonbobLevelCard({
   recommendedStore,
   characteristics,
 }: HonbobLevelCardProps) {
+  const { infoCharacterImage } = getHonbobLevelImageSet(honbobLevel);
+
   return (
     <div className="flex flex-col">
       <div className="h-[128px] py-[18px] bg-linear-to-bl flex justify-center items-center from-orange-600 to-red-300 rounded-t-2xl ">
         <Image
-          src={pickHonbobLevelInfoCharacterImage(honbobLevel)}
+          src={infoCharacterImage}
           alt={`${honbobLevel}LevelImage`}
           className="h-full object-contain "
         />

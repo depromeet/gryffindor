@@ -3,11 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useUserState } from "@/entities/user";
+import { getHonbobLevelImageSet } from "@/shared/lib";
 
 import { UserHonbobCard } from "./UserHonbobCard";
 
 export function WelcomeUser() {
   const { userState } = useUserState();
+  const { homeCharacterImage } = getHonbobLevelImageSet(userState.honbobLevel);
 
   return (
     <div className="flex justify-between items-end gap-x-[16px]">
@@ -21,7 +23,7 @@ export function WelcomeUser() {
         </span>
       </div>
       <Image
-        src={userState.honbobLevelCharacterImage}
+        src={homeCharacterImage}
         alt="honbobLevelCharacterImage"
         width={110}
         height={116}

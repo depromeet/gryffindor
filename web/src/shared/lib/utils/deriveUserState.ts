@@ -1,5 +1,4 @@
 import type { Session } from "next-auth";
-import { pickHonbobLevelHomeCharacterImage, pickHonbobLevelProfileImage } from "@/entities/honbob";
 import { USER_CONSTANTS } from "@/shared/config/constants";
 import type { UserState } from "@/shared/model";
 
@@ -26,8 +25,6 @@ export function deriveUserState(session: Session | null): UserState {
       isLoggedIn: false,
       displayName: DEFAULT_NICKNAME,
       honbobLevel: DEFAULT_HONBOB_LEVEL,
-      honbobLevelProfileImage: pickHonbobLevelProfileImage(DEFAULT_HONBOB_LEVEL),
-      honbobLevelCharacterImage: pickHonbobLevelHomeCharacterImage(DEFAULT_HONBOB_LEVEL),
       isLevelTestCompleted: false,
       canPostReview: false,
     };
@@ -52,8 +49,6 @@ export function deriveUserState(session: Session | null): UserState {
       memberId: session.memberId,
       displayName: session.nickName || session.user?.name || DEFAULT_NICKNAME,
       honbobLevel: DEFAULT_HONBOB_LEVEL,
-      honbobLevelProfileImage: pickHonbobLevelProfileImage(DEFAULT_HONBOB_LEVEL),
-      honbobLevelCharacterImage: pickHonbobLevelHomeCharacterImage(DEFAULT_HONBOB_LEVEL),
       isLevelTestCompleted: false,
       canPostReview: true,
     };
@@ -69,8 +64,6 @@ export function deriveUserState(session: Session | null): UserState {
     memberId: session.memberId,
     displayName: session.nickName || session.user?.name || DEFAULT_NICKNAME,
     honbobLevel: session.level,
-    honbobLevelProfileImage: pickHonbobLevelProfileImage(session.level),
-    honbobLevelCharacterImage: pickHonbobLevelHomeCharacterImage(session.level),
     isLevelTestCompleted: true,
     canPostReview: true,
   };
