@@ -10,6 +10,7 @@ import {
   BottomSheetHandler,
   BottomSheetHeader,
 } from "@/shared/ui";
+import { StationDropdown } from "./StationDropdown";
 
 interface StoreBottomSheetProps {
   storeList: StoreListResponseData[];
@@ -27,28 +28,37 @@ export function StoreBottomSheet({ storeList, isCollapsed }: StoreBottomSheetPro
   // 지도 드래그 중일 때는 100px, 그 외는 270px
   const height = selectedStoreId ? 257 : isCollapsed ? 100 : 270;
 
+  const renderStoreContent = () => {
+    if (selectedStoreInfo) {
+      return (
+        <Link href={`/store/${selectedStoreInfo.id}`}>
+          <StoreCard {...selectedStoreInfo} />
+        </Link>
+      );
+    }
+
+    return (
+      <div className="flex flex-col gap-5">
+        <StationDropdown />
+        <ul className="flex w-full flex-col gap-y-[15px]">
+          {storeList.map((store) => (
+            <li key={store.id}>
+              <Link href={`/store/${store.id}`}>
+                <StoreCard {...store} />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <BottomSheet isFixed={false} isOpen={storeList.length > 0} initialHeight={height}>
       <BottomSheetHeader>
         <BottomSheetHandler />
       </BottomSheetHeader>
-      <BottomSheetContent className="!px-5 !pb-9">
-        {selectedStoreInfo ? (
-          <Link href={`/store/${selectedStoreInfo.id}`}>
-            <StoreCard {...selectedStoreInfo} />
-          </Link>
-        ) : (
-          <ul className="flex w-full flex-col gap-y-[15px]">
-            {storeList.map((store) => (
-              <li key={store.id}>
-                <Link href={`/store/${store.id}`}>
-                  <StoreCard {...store} />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </BottomSheetContent>
+      <BottomSheetContent className="!px-5 !pb-9">{renderStoreContent()}</BottomSheetContent>
     </BottomSheet>
   );
 }

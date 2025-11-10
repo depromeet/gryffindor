@@ -68,7 +68,7 @@ function BottomSheet({
       <dialog
         ref={isFixed ? null : sheetRef}
         className={cn(
-          "fixed right-0 left-0 mx-auto flex w-full flex-col gap-2 rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
+          "fixed right-0 left-0 mx-auto flex w-full flex-col rounded-t-[24px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]",
           "transition-all duration-300 ease-out",
           isFixed ? "z-51" : "z-49",
         )}
