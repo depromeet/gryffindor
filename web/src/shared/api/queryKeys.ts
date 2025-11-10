@@ -6,9 +6,10 @@ export const queryKeys = {
   USER_PROFILE: () => ["user", "profile"],
   USER_NICKNAME: () => ["user", "nickname"],
   STORE_LIST: (station: string, level: number) => ["store", "list", station, level],
-  STORE_LIST_MAP: (filters: FilterData, coordinates: Coordinates) => [
+  STORE_LIST_BY_BOUNDS: (filters: FilterData, coordinates: Coordinates) => [
     "store",
     "list",
+    "bounds",
     filters,
     coordinates,
   ],
