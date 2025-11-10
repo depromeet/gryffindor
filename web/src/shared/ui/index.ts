@@ -15,6 +15,7 @@ export * from "./Modal";
 export * from "./Overlay";
 export * from "./PriceInput";
 export * from "./RoundButton";
+export * from "./SearchHeader";
 export * from "./Select";
 export * from "./SelectPopover";
 export * from "./StackHeader";

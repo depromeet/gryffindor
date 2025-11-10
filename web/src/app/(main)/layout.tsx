@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { BOTTOM_NAV_HEIGHT, MAIN_HEADER_HEIGHT } from "@/shared/config";
-import { BottomNavigation } from "@/shared/ui";
+import { BottomNavigation, SearchHeader } from "@/shared/ui";
 import MainHeader from "@/shared/ui/MainHeader";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
@@ -20,6 +20,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       }}
     >
       {isHeaderVisible && <MainHeader />}
+      {isMapPage && <SearchHeader />}
       {children}
       <BottomNavigation />
     </div>
