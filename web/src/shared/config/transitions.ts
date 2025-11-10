@@ -22,19 +22,16 @@ export const fadeTransition = fade({
  * 기본 drill 전환 설정 (enter)
  */
 export const drillEnterTransition = drill({
+  opacity: true,
   direction: "enter",
-  spring: springConfig,
 });
 
 /**
  * 기본 drill 전환 설정 (exit) - 헤더 이질감 방지를 위한 최적화
  */
 export const drillExitTransition = drill({
+  opacity: true,
   direction: "exit",
-  spring: {
-    stiffness: 400, // 약간 더 부드럽게
-    damping: 40, // 바운스 줄임
-  },
 });
 
 /**
@@ -149,7 +146,6 @@ export function createTransitionRules() {
  */
 export function createSsgoiConfig(isMobile: boolean = true): SsgoiConfig {
   const baseConfig: SsgoiConfig = {
-    defaultTransition: fadeTransition,
     skipOnIosSwipe: true,
   };
 
