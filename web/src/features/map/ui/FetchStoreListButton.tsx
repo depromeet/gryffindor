@@ -19,7 +19,13 @@ export function FetchStoreListButton({ onClick, isFetching }: FetchStoreListButt
     <button
       type="button"
       onClick={handleClick}
-      className="fixed left-1/2 top-[85px] z-40 flex h-9 w-[139px] flex-row items-center gap-1 rounded-[20px] bg-gray0 py-1.5 pl-2 pr-3 shadow-fab -translate-x-1/2 cursor-pointer transition-transform active:scale-90"
+      className={`
+        fixed left-1/2 -translate-x-1/2 z-40 flex flex-row items-center gap-1 rounded-[20px] bg-gray0
+        py-1.5 pl-2 pr-3 shadow-fab cursor-pointer transition-transform active:scale-90
+      `}
+      style={{
+        top: "calc(84px + env(safe-area-inset-top))",
+      }}
     >
       <Icon
         name="refresh"
