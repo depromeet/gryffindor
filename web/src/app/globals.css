@@ -153,6 +153,7 @@ body {
 
   /* Shadow */
   --shadow-navigation: 0 4px 12px 0 rgba(0, 0, 0, 0.06);
+  --shadow-fab: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
 }
 
 @media (prefers-color-scheme: dark) {
