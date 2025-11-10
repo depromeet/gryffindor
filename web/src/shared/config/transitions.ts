@@ -6,7 +6,7 @@ import { getAllRoutes, getRouteConfig } from "./routeConfig";
  * 공통 스프링 설정
  */
 export const springConfig = {
-  stiffness: 500,
+  stiffness: 410,
   damping: 35,
 };
 
@@ -150,6 +150,7 @@ export function createTransitionRules() {
 export function createSsgoiConfig(isMobile: boolean = true): SsgoiConfig {
   const baseConfig: SsgoiConfig = {
     defaultTransition: fadeTransition,
+    skipOnIosSwipe: true,
   };
 
   // 모바일에서만 drill 전환 규칙 적용
