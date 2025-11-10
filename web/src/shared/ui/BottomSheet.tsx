@@ -75,6 +75,7 @@ function BottomSheet({
         style={{
           top: `calc(100% - ${height}px)`,
           height: `calc(100% - ${expandedOffset}px)`,
+          paddingBottom: "var(--safe-area-inset-bottom)",
           transform: isOpen ? "translate3d(0, 0, 0)" : "translate3d(0, 100%, 0)",
         }}
       >
