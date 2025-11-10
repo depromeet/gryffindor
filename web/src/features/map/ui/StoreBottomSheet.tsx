@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import type { StoreListResponseData } from "@/entities/storeList/api";
 import { StoreCard } from "@/entities/storeList/ui";
 import { useMapStore } from "@/features/map/model";
@@ -15,18 +16,27 @@ import { StationDropdown } from "./StationDropdown";
 interface StoreBottomSheetProps {
   storeList: StoreListResponseData[];
   isCollapsed: boolean;
+  onStationChange: () => void;
 }
 
-export function StoreBottomSheet({ storeList, isCollapsed }: StoreBottomSheetProps) {
+export function StoreBottomSheet({
+  storeList,
+  isCollapsed,
+  onStationChange,
+}: StoreBottomSheetProps) {
   const { selectedStoreId } = useMapStore();
+  const [safeBottom, setSafeBottom] = useState(0);
 
   const selectedStoreInfo = selectedStoreId
     ? storeList.find((store) => store.id === selectedStoreId)
     : null;
 
-  const safeBottom = parseFloat(
-    getComputedStyle(document.documentElement).getPropertyValue("--safe-area-inset-bottom"),
-  );
+  useEffect(() => {
+    const value = getComputedStyle(document.documentElement).getPropertyValue(
+      "--safe-area-inset-bottom",
+    );
+    setSafeBottom(parseFloat(value));
+  }, []);
 
   // 바텀시트 높이: 마커 선택(245px) | 드래그 중(95px) | 기본(310px) + Safe Area
   const height = (selectedStoreId ? 245 : isCollapsed ? 95 : 310) + safeBottom;
@@ -42,7 +52,7 @@ export function StoreBottomSheet({ storeList, isCollapsed }: StoreBottomSheetPro
 
     return (
       <div className="flex flex-col gap-5">
-        <StationDropdown />
+        <StationDropdown onStationChange={onStationChange} />
         <ul className="flex w-full flex-col gap-y-[15px]">
           {storeList.map((store) => (
             <li key={store.id}>

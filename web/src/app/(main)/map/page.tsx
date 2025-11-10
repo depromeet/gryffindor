@@ -53,7 +53,11 @@ export default function MapPage() {
       <FetchStoreListButton onClick={handleStoreListFetch} isFetching={isFetching} />
       <LevelFilterButton honbabLevel={filters.honbobLevel} onClick={openFilter} />
       <CurrentLocationButton onClick={requestLocation} />
-      <StoreBottomSheet storeList={storeList} isCollapsed={isDragging} />
+      <StoreBottomSheet
+        storeList={storeList}
+        isCollapsed={isDragging}
+        onStationChange={() => updateCoordinate(map)}
+      />
       <FilterBottomSheet
         isOpen={isFilterOpen}
         onClose={closeFilter}

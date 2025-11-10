@@ -4,13 +4,18 @@ import { useState } from "react";
 import { useLocationStore } from "@/shared/store";
 import { Icon, Select } from "@/shared/ui";
 
-export function StationDropdown() {
+export function StationDropdown({ onStationChange }: { onStationChange: () => void }) {
   const { selectedStation, setSelectedStation } = useLocationStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleValueChange = (value: string) => {
     setSelectedStation(value);
     setIsOpen(false);
+
+    // 지도 이동 완료 대기
+    setTimeout(() => {
+      onStationChange();
+    }, 800);
   };
 
   return (
