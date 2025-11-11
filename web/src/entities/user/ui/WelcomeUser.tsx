@@ -12,23 +12,23 @@ export function WelcomeUser() {
   const { homeCharacterImage } = getHonbobLevelImageSet(userState.honbobLevel);
 
   return (
-    <div className="flex justify-between items-end gap-x-[16px]">
+      <div className="flex justify-between items-end gap-x-[16px]">
       <div className="flex pt-[13px] flex-col pb-[12px] gap-y-[12px]">
         <Link href={`/honbob-level-info`}>
-          <UserHonbobCard />
-        </Link>
-        <span className="text-gray900 text-xl leading-7">
-          <strong className="text-primary400">{`${userState.displayName}`}</strong>님
-          <br /> 혼밥 식당을 추천드려요
-        </span>
-      </div>
-      <Image
+            <UserHonbobCard />
+          </Link>
+          <span className="text-gray900 text-xl leading-7">
+            <strong className="text-primary400">{`${userState.displayName}`}</strong>님
+            <br /> 혼밥 식당을 추천드려요
+          </span>
+        </div>
+        <Image
         src={homeCharacterImage}
         alt="honbobLevelCharacterImage"
-        width={110}
-        height={116}
-        className="self-end pr-[16px]"
-      />
+          width={110}
+          height={116}
+          className="self-end pr-[16px]"
+        />
     </div>
   );
 }

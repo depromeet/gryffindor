@@ -1,53 +1,50 @@
 "use client";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useState } from "react";
-import { storeListApi } from "@/entities/storeList/api";
+import { useEffect } from "react";
 import { getDefaultStationCenter } from "@/entities/storeList/lib";
 import { useUserState } from "@/entities/user";
-import { queryKeys } from "@/shared/api";
+import { useStoreListQuery } from "@/features/map/lib";
+import { FilterBottomSheet, LevelFilterButton } from "@/features/map/ui";
 import { useInfiniteScroll } from "@/shared/lib";
-import { useLocationStore } from "@/shared/store";
+import { useFilterStore, useLocationStore } from "@/shared/store";
+import { Icon } from "@/shared/ui";
 import { StoreCard } from "./StoreCard";
 import { StoreLevelList } from "./StoreLevelList";
 
 export function StoreList() {
   const { userState } = useUserState();
   const { selectedStation } = useLocationStore();
+  const { isFilterOpen, filters, openFilter, closeFilter, setFilters, initializeFilters } =
+    useFilterStore();
 
-  const [selectedLevel, setSelectedLevel] = useState(userState.honbobLevel);
-  const handleLevelChange = (level: number) => {
-    setSelectedLevel(level);
+  // 필터가 기본값(레벨 1)일 때만 유저 레벨로 초기화
+  useEffect(() => {
+    if (
+      filters.honbobLevels.length === 1 &&
+      filters.honbobLevels[0] === 1 &&
+      userState.honbobLevel !== 1
+    ) {
+      initializeFilters(userState.honbobLevel);
+    }
+  }, [userState.honbobLevel, filters.honbobLevels, initializeFilters]);
+
+  const handleApplyFilters = (newFilters: typeof filters) => {
+    setFilters(newFilters);
+    closeFilter();
   };
 
   const centerLatLonInfo = getDefaultStationCenter(selectedStation);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } =
-    useInfiniteQuery({
-      queryKey: queryKeys.STORE_LIST(selectedStation, selectedLevel),
-      queryFn: ({ pageParam }) =>
-        storeListApi.getStoreByPost({
-          requestBody: {
-            center: {
-              lat: centerLatLonInfo.lat,
-              lon: centerLatLonInfo.lon,
-            },
-            filters: {
-              honbobLevel: selectedLevel,
-            },
-            paging: {
-              limit: 10,
-              lastKnown: pageParam as string | undefined,
-            },
-          },
-        }),
-      initialPageParam: null as string | null,
-      getNextPageParam: (lastPage) => {
-        return lastPage.response?.nextCursor && lastPage.response?.hasNext
-          ? lastPage.response.nextCursor
-          : undefined;
+  const { storeList, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useStoreListQuery({
+      filters,
+      center: {
+        lat: centerLatLonInfo.lat,
+        lon: centerLatLonInfo.lon,
       },
+      limit: 10,
+      station: selectedStation,
     });
 
   const loadMoreTriggerRef = useInfiniteScroll({
@@ -57,11 +54,32 @@ export function StoreList() {
     enabled: !isLoading && !error,
   });
 
-  const storeList = data?.pages.flatMap((page) => page.response?.data || []) || [];
+  const levelDisplayValue =
+    filters.honbobLevels.length > 1 ? "커스텀" : `레벨${filters.honbobLevels[0] || 1}`;
 
   return (
     <div className="flex flex-col bg-gray0 pb-[20px]">
-      <StoreLevelList userLevel={selectedLevel} onLevelChange={handleLevelChange} />
+      <FilterBottomSheet
+        isOpen={isFilterOpen}
+        onClose={closeFilter}
+        initialFilters={filters}
+        onApply={handleApplyFilters}
+        defaultTab="levelFilter"
+      />
+
+      <div className="flex p-[20px]">
+        {/* <button
+          type="button"
+          onClick={openFilter}
+          className="w-fit flex items-center gap-1 pl-3 pr-4 py-1.5 cursor-pointer rounded-[20px] bg-primary400 shadow-fab"
+        >
+          <Icon name="filter" size={24} color="gray0" />
+          <span className="text-body2-medium text-gray0">레벨{"1"}</span>
+        </button> */}
+        <LevelFilterButton honbobLevel={levelDisplayValue} onClick={openFilter} />
+      </div>
+      {/* <StoreLevelList userLevel={selectedLevel} onLevelChange={handleLevelChange} /> */}
+      {/* <StoreFilter/> */}
       {isLoading && (
         <div className="flex h-full min-h-[calc(100vh-380px)] flex-col items-center justify-center bg-gray0 px-[20px]">
           <span className="text-body2 text-gray500">로딩 중...</span>

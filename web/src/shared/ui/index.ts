@@ -19,6 +19,7 @@ export * from "./SearchHeader";
 export * from "./Select";
 export * from "./SelectPopover";
 export * from "./StackHeader";
+export * from "./Tabs";
 export * from "./StationOverlaySelect";
 export * from "./Tag";
 export * from "./TextButton";
