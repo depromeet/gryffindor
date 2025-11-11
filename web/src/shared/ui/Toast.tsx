@@ -37,7 +37,10 @@ export function ToastContainer() {
           }}
         />
       ))}
-      <Toast.Viewport className="fixed bottom-20 left-1/2 z-999 flex -translate-x-1/2 flex-col items-center gap-2 p-0" />
+      <Toast.Viewport
+        className="fixed left-1/2 z-999 flex -translate-x-1/2 flex-col items-center gap-2 p-0"
+        style={{ bottom: "calc(80px + var(--safe-area-inset-bottom))" }}
+      />
     </Toast.Provider>
   );
 }

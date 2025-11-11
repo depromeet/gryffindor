@@ -13,7 +13,7 @@ function MapViewComponent({ mapRef, initializeMap }: MapViewProps) {
         src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}`}
         onReady={initializeMap}
       />
-      <div ref={mapRef} className="fixed inset-0 h-screen w-screen" />
+      <div ref={mapRef} className="fixed inset-0 h-screen w-screen z-0" />
     </>
   );
 }

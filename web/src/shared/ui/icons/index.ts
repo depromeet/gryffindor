@@ -1,7 +1,6 @@
 import BarSeatIcon from "./bar-seat.svg";
 import BobEatTextIcon from "./bob-eat-text.svg";
 import BubbleIcon from "./bubble.svg";
-import BubblePickIcon from "./bubble-pick.svg";
 import BulkheadIcon from "./bulkhead.svg";
 import CallIcon from "./call.svg";
 import CharacterIcon from "./character.svg";
@@ -38,6 +37,8 @@ import SpeakerIcon from "./speaker-line.svg";
 import ColorTestIcon from "./test.svg";
 import UserIcon from "./user.svg";
 import UserLoginIcon from "./user-login.svg";
+import MarkerIcon from "./marker.svg";
+
 
 // 아이콘 매핑 객체
 export const iconMap = {
@@ -56,7 +57,7 @@ export const iconMap = {
   kebab: KeBabIcon,
   character: CharacterIcon,
   bubble: BubbleIcon,
-  bubblePick: BubblePickIcon,
+  marker: MarkerIcon,
   refresh: RefreshIcon,
   filter: FilterIcon,
   colorNote: ColorNoteIcon,
