@@ -7,4 +7,5 @@ export * from "./StoreInfo";
 export * from "./SuggestionCard";
 export * from "./SuggestionImage";
 export * from "./SuggestionModal";
+export * from "./TabNav";
 export * from "./ZoomableImage";
