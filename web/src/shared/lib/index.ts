@@ -8,6 +8,7 @@ export * from "./hooks/useSessionStorage";
 export * from "./utils/authUtils";
 export * from "./utils/createNextAuthSession";
 export * from "./utils/formatDateUtils";
+export * from "./utils/getHonbobLevelImageSet";
 export * from "./utils/inputValidation";
 export * from "./utils/platformUtils";
 export * from "./utils/styleUtils";

@@ -75,7 +75,7 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
           <SeatInfoSection seatInfo={store.seatInfo} />
           <SeatImageGallery
             storeName={store.name}
-            level={userState.honbabLevel}
+            level={userState.honbobLevel}
             userName={userState.displayName}
             seatImages={store.seatImages}
             handleSetZoomImageSrc={handleSetZoomImageSrc}

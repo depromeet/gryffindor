@@ -6,7 +6,7 @@ import type { Coordinates } from "../../model";
 
 export function useStoreListQuery(filters: FilterData, coordinates: Coordinates) {
   const { data, ...query } = useInfiniteQuery({
-    queryKey: queryKeys.STORE_LIST_MAP(filters, coordinates),
+    queryKey: queryKeys.STORE_LIST_BY_BOUNDS(filters, coordinates),
     queryFn: ({ pageParam }: { pageParam: string | null }) =>
       storeListApi.getStoreByPost({
         requestBody: {

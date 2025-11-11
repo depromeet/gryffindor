@@ -1,3 +1,5 @@
+import Image from "next/image";
+import { getHonbobLevelImageSet } from "@/shared/lib";
 import { Tag } from "@/shared/ui";
 
 interface HonbobLevelCardProps {
@@ -6,6 +8,7 @@ interface HonbobLevelCardProps {
   honbobLevelDescription: string;
   recommendedMenu: string;
   recommendedStore: string;
+  characteristics: string;
 }
 
 export function HonbobLevelCard({
@@ -14,26 +17,41 @@ export function HonbobLevelCard({
   honbobLevelDescription,
   recommendedMenu,
   recommendedStore,
+  characteristics,
 }: HonbobLevelCardProps) {
+  const { infoCharacterImage } = getHonbobLevelImageSet(honbobLevel);
+
   return (
-    <div className="flex flex-col justify-between gap-x-[10px] gap-y-[4px] rounded-[16px] bg-gray0 px-[20px] py-[16px]">
-      <div className="flex items-center gap-x-[8px]">
-        <Tag label={honbobLevel} color="red" size="small" />
-        <span className="justify-start text-body1-semibold text-gray900">{honbobLevelTitle}</span>
+    <div className="flex flex-col">
+      <div className="h-[128px] py-[18px] bg-linear-to-bl flex justify-center items-center from-orange-600 to-red-300 rounded-t-2xl ">
+        <Image
+          src={infoCharacterImage}
+          alt={`${honbobLevel}LevelImage`}
+          className="h-full object-contain "
+        />
       </div>
-      <span className="justify-start text-body3-semibold text-primary400">
-        {honbobLevelDescription}
-      </span>
-      <div className="flex flex-col gap-y-[2px]">
-        <div className="flex gap-x-[4px] text-body3-regular text-gray900">
-          <span>추천 메뉴</span>
-          <span>:</span>
-          <span>{recommendedMenu}</span>
+      <div className="rounded-b-2xl w-full p-[24px] bg-white inline-flex flex-col justify-start items-start gap-y-[20px] ">
+        <div className="flex flex-col  gap-x-[8px]">
+          <Tag label={honbobLevel} color="red" size="medium" iconName="crown" />
+          <div className="flex flex-col gap-y-[4px]">
+            <p className="text-title1 text-gray900">{honbobLevelTitle}</p>
+            <p className="text-body1-semibold text-primary400">{honbobLevelDescription}</p>
+          </div>
         </div>
-        <div className="flex gap-x-[4px] text-body3-regular text-gray900">
-          <span>추천 식당</span>
-          <span>:</span>
-          <span>{recommendedStore}</span>
+        <hr className="w-full border-gray50 border-b" />
+        <div className="flex flex-col gap-y-[16px]">
+          <div className="flex flex-col gap-y-[4px]">
+            <span className="text-body2-semibold text-gray900">레벨 특징</span>
+            <span className="text-body2-regular text-gray700">{characteristics}</span>
+          </div>
+          <div className="flex flex-col gap-y-[4px]">
+            <span className="text-body2-semibold text-gray900">추천 메뉴</span>
+            <span className="text-body2-regular text-gray700">{recommendedMenu}</span>
+          </div>
+          <div className="flex flex-col gap-y-[4px]">
+            <span className="text-body2-semibold text-gray900">추천 좌석</span>
+            <span className="text-body2-regular text-gray700">{recommendedStore}</span>
+          </div>
         </div>
       </div>
     </div>

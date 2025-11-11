@@ -159,13 +159,20 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
     },
   },
   "/report": {
-    group: "stack",
-    transition: "drill",
+    group: "main",
+    transition: "fade",
     header: {
       title: "혼밥 식당 제보",
       backButton: {
         hidden: true,
       },
+    },
+  },
+  "/honbob-level-info": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "혼밥 레벨 설명",
     },
   },
 };

@@ -8,12 +8,21 @@ export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth?.accessToken;
 
+  console.log("🔍 [Middleware] 디버깅", {
+    path: nextUrl.pathname,
+    hasAuth: !!req.auth,
+    hasAccessToken: !!req.auth?.accessToken,
+    accessToken: req.auth?.accessToken ? `${req.auth.accessToken.substring(0, 20)}...` : null,
+    isLoggedIn,
+  });
+
   // 경로 확인 함수들
   const isProtectedRoute = PROTECTED_ROUTES.some((route) => nextUrl.pathname.startsWith(route));
   const isAuthRoute = AUTH_ROUTES.some((route) => nextUrl.pathname.startsWith(route));
 
   // 1. 인증된 사용자가 auth 경로에 접근하려는 경우 -> 홈으로 리다이렉트
   if (isLoggedIn && isAuthRoute) {
+    console.log("🚫 [Middleware] 로그인된 사용자가 auth 페이지 접근 차단 -> /home 리다이렉트");
     return NextResponse.redirect(new URL("/home", nextUrl));
   }
 

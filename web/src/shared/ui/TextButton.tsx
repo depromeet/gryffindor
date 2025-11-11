@@ -58,6 +58,12 @@ export function TextButton({
     white: "text-white",
   };
 
+  const iconColorClassMap = {
+    primary: "primary400",
+    gray: "gray400",
+    white: "white",
+  };
+
   return (
     <button
       type="button"
@@ -77,7 +83,7 @@ export function TextButton({
             size={16}
             className={`transition-transform duration-300 ease-in-out ${
               rotateClassMap[rotateNumber]
-            } ${color ? "text-primary400" : "text-gray400"}`}
+            } ${iconColorClassMap[color]}`}
           />
         </div>
       )}

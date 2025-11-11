@@ -16,7 +16,7 @@ export function StoreList() {
   const { userState } = useUserState();
   const { selectedStation } = useLocationStore();
 
-  const [selectedLevel, setSelectedLevel] = useState(userState.honbabLevel);
+  const [selectedLevel, setSelectedLevel] = useState(userState.honbobLevel);
   const handleLevelChange = (level: number) => {
     setSelectedLevel(level);
   };

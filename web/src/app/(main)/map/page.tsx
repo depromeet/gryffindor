@@ -10,9 +10,10 @@ import {
   useStoreListQuery,
 } from "@/features/map/lib";
 import {
+  CurrentLocationButton,
   FetchStoreListButton,
   FilterBottomSheet,
-  MapActionButton,
+  LevelFilterButton,
   MapMarkers,
   MapView,
   StoreBottomSheet,
@@ -50,9 +51,13 @@ export default function MapPage() {
       <MapView mapRef={mapContainerRef} initializeMap={initializeMap} />
       <MapMarkers map={map} storeList={storeList} />
       <FetchStoreListButton onClick={handleStoreListFetch} isFetching={isFetching} />
-      <MapActionButton type="filter" onClick={openFilter} />
-      <MapActionButton type="location" onClick={requestLocation} />
-      <StoreBottomSheet storeList={storeList} isCollapsed={isDragging} />
+      <LevelFilterButton honbabLevel={filters.honbobLevel} onClick={openFilter} />
+      <CurrentLocationButton onClick={requestLocation} />
+      <StoreBottomSheet
+        storeList={storeList}
+        isCollapsed={isDragging}
+        onStationChange={() => updateCoordinate(map)}
+      />
       <FilterBottomSheet
         isOpen={isFilterOpen}
         onClose={closeFilter}

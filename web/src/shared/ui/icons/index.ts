@@ -1,7 +1,6 @@
 import BarSeatIcon from "./bar-seat.svg";
 import BobEatTextIcon from "./bob-eat-text.svg";
 import BubbleIcon from "./bubble.svg";
-import BubblePickIcon from "./bubble-pick.svg";
 import BulkheadIcon from "./bulkhead.svg";
 import CallIcon from "./call.svg";
 import CharacterIcon from "./character.svg";
@@ -28,6 +27,7 @@ import Lv2UserIcon from "./lv2-user.svg";
 import Lv3UserIcon from "./lv3-user.svg";
 import Lv4UserIcon from "./lv4-user.svg";
 import MapIcon from "./map.svg";
+import MarkerIcon from "./marker.svg";
 import ColorNoteIcon from "./note.svg";
 import PinIcon from "./pin.svg";
 import RefreshIcon from "./refresh.svg";
@@ -56,7 +56,7 @@ export const iconMap = {
   kebab: KeBabIcon,
   character: CharacterIcon,
   bubble: BubbleIcon,
-  bubblePick: BubblePickIcon,
+  marker: MarkerIcon,
   refresh: RefreshIcon,
   filter: FilterIcon,
   colorNote: ColorNoteIcon,

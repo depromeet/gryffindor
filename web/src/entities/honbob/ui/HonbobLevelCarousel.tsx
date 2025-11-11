@@ -9,12 +9,12 @@ export function HonbobLevelCarousel() {
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
-    startIndex: userState.honbabLevel - 1,
+    startIndex: userState.honbobLevel - 1,
   });
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useCarouselButton(emblaApi);
 
   return (
-    <div className="relative flex w-full flex-col items-center gap-y-[14px]">
+    <div className="relative flex w-full flex-col items-center gap-y-[14px] pt-[40px]">
       <HonbobCarouselSlide ref={emblaRef} />
       <HonbobCarouselIndicator
         scrollSnaps={scrollSnaps}
