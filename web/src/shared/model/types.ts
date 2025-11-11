@@ -1,5 +1,3 @@
-import type { StaticImageData } from "next/image";
-
 export interface ApiErrorResponse {
   code: string;
   message: string;
@@ -14,8 +12,7 @@ export interface UserState {
   isLoggedIn: boolean;
   memberId?: number;
   displayName: string;
-  honbabLevel: number;
-  honbabLevelIcon: StaticImageData;
+  honbobLevel: number;
   isLevelTestCompleted: boolean;
   canPostReview: boolean;
 }

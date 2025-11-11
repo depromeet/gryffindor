@@ -1,5 +1,4 @@
 export * from "./lib/hooks/useCarouselButton";
-export * from "./lib/util/pickHonbabLevelIcon";
 
 export * from "./model/constant";
 

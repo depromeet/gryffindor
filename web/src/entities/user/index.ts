@@ -3,6 +3,7 @@ export * from "./lib/hooks/useUserState";
 export * from "./model/constant";
 export * from "./model/context";
 export * from "./ui/SampleUser";
+export * from "./ui/UserHonbobCard";
 export * from "./ui/UserMenuCard";
 export * from "./ui/UserMenuList";
 export * from "./ui/UserProfileInfo";

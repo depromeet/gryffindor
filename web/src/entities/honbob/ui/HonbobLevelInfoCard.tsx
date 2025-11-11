@@ -3,7 +3,7 @@ import { useUserState } from "@/entities/user";
 
 export function HonbobLevelInfoCard() {
   const { userState } = useUserState();
-  const userLevel = userState.honbabLevel;
+  const userLevel = userState.honbobLevel;
 
   const honbobLevelInfo = SAMPLE_LEVEL_INFO[userLevel as keyof typeof SAMPLE_LEVEL_INFO];
 

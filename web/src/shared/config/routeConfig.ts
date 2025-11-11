@@ -168,6 +168,13 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
       },
     },
   },
+  "/honbob-level-info": {
+    group: "stack",
+    transition: "drill",
+    header: {
+      title: "혼밥 레벨 설명",
+    },
+  },
 };
 
 /**

@@ -1,25 +1,34 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useUserState } from "@/entities/user";
+import { getHonbobLevelImageSet } from "@/shared/lib";
+
+import { UserHonbobCard } from "./UserHonbobCard";
 
 export function WelcomeUser() {
   const { userState } = useUserState();
+  const { homeCharacterImage } = getHonbobLevelImageSet(userState.honbobLevel);
 
   return (
-    <div className="flex items-start gap-x-[16px]">
+    <div className="flex justify-between items-end gap-x-[16px]">
+      <div className="flex pt-[13px] flex-col pb-[12px] gap-y-[12px]">
+        <Link href={`/honbob-level-info`}>
+          <UserHonbobCard />
+        </Link>
+        <span className="text-gray900 text-xl leading-7">
+          <strong className="text-primary400">{`${userState.displayName}`}</strong>님
+          <br /> 혼밥 식당을 추천드려요
+        </span>
+      </div>
       <Image
-        src={userState.honbabLevelIcon}
-        alt="honbobLevelIcon"
-        width={80}
-        height={80}
-        className="rounded-full"
+        src={homeCharacterImage}
+        alt="honbobLevelCharacterImage"
+        width={110}
+        height={116}
+        className="self-end pr-[16px]"
       />
-      <span className="text-gray900 text-title1">
-        <strong className="text-primary400">{`Lv.${userState.honbabLevel} ${userState.displayName}`}</strong>
-        님을 위한
-        <br /> 식당만 선별했어요
-      </span>
     </div>
   );
 }
