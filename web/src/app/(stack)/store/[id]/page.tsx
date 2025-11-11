@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
 import { use, useRef, useState } from "react";
 import { useUserState } from "@/entities/user";
 import { getStoreDetail } from "@/features/store/api/getStoreDetail";
@@ -16,6 +17,7 @@ import {
 } from "@/features/store/ui";
 import { ReviewSection } from "@/features/store/ui/ReviewSection";
 import { queryKeys } from "@/shared/api";
+import { useSticky } from "@/shared/hooks/useSticky";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
@@ -24,6 +26,7 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
   const { userState } = useUserState();
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomImageSrc, setZoomImageSrc] = useState<string>("");
+  const { ref: tabNavRef, isSticky: isTabNavSticky } = useSticky(60);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const seatRef = useRef<HTMLDivElement>(null);
@@ -57,7 +60,14 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
     <TransitionLayout dynamicTitle={store.name}>
       <div className="flex flex-col bg-gray0">
         <StoreInfo {...store} handleSetZoomImageSrc={handleSetZoomImageSrc} />
-        <TabNav sectionRefs={sectionRefs} />
+        <div
+          ref={tabNavRef}
+          className={clsx("sticky top-[60px] z-10", {
+            "bg-white": isTabNavSticky,
+          })}
+        >
+          <TabNav sectionRefs={sectionRefs} />
+        </div>
         <div ref={menuRef}>
           <MenuSection menus={store.menus} handleSetZoomImageSrc={handleSetZoomImageSrc} />
         </div>

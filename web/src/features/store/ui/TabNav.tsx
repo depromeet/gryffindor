@@ -50,7 +50,7 @@ export function TabNav({ sectionRefs }: TabNavProps) {
     const target = sectionRefs[index].current;
     if (!target) return;
 
-    const offset = 60; // top nav 60px만큼 공간 확보
+    const offset = 120; // top nav 60px만큼 공간 확보
     const top = target.getBoundingClientRect().top + window.scrollY - offset;
 
     window.scrollTo({ top, behavior: "smooth" });
