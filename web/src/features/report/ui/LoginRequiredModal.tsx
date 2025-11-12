@@ -6,13 +6,20 @@ import { Icon, Modal } from "@/shared/ui";
 interface LoginRequiredModalProps {
   isOpen: boolean;
   onClose: () => void;
+  text: string;
+  setIsLoginModalOpen: (isOpen: boolean) => void;
 }
 
-export function LoginRequiredModal({ isOpen, onClose }: LoginRequiredModalProps) {
+export function LoginRequiredModal({
+  isOpen,
+  onClose,
+  text,
+  setIsLoginModalOpen,
+}: LoginRequiredModalProps) {
   const router = useRouter();
 
   const handleConfirm = () => {
-    onClose();
+    setIsLoginModalOpen && setIsLoginModalOpen(false);
     router.push("/login");
   };
 
@@ -25,7 +32,7 @@ export function LoginRequiredModal({ isOpen, onClose }: LoginRequiredModalProps)
         <Image src={Character} alt="character" width={120} height={120} />
         <div className="flex flex-col gap-2">
           <span className="whitespace-pre-line text-center text-gray900 text-subtitle1">
-            {`식당 제보는\n로그인 후 가능해요`}
+            {`${text}는\n로그인 후 가능해요`}
           </span>
           <span className="whitespace-pre-line text-center text-gray700 text-body2-regular">
             로그인을 먼저 해주세요

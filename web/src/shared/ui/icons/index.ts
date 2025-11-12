@@ -27,6 +27,7 @@ import Lv2UserIcon from "./lv2-user.svg";
 import Lv3UserIcon from "./lv3-user.svg";
 import Lv4UserIcon from "./lv4-user.svg";
 import MapIcon from "./map.svg";
+import MarkerIcon from "./marker.svg";
 import ColorNoteIcon from "./note.svg";
 import PinIcon from "./pin.svg";
 import RefreshIcon from "./refresh.svg";
@@ -37,8 +38,6 @@ import SpeakerIcon from "./speaker-line.svg";
 import ColorTestIcon from "./test.svg";
 import UserIcon from "./user.svg";
 import UserLoginIcon from "./user-login.svg";
-import MarkerIcon from "./marker.svg";
-
 
 // 아이콘 매핑 객체
 export const iconMap = {

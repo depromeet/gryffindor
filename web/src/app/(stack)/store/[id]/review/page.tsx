@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { LoginRequiredModal } from "@/features/report/ui/LoginRequiredModal";
 import { useReviewForm } from "@/features/review/lib/hook/useReviewForm";
 import { ConfirmModal } from "@/features/review/ui";
 import { FilterSection, InputReview, TransitionLayout } from "@/shared/ui";
@@ -17,9 +19,13 @@ export default function ReviewPage() {
     textOnlyFilters,
     handleFilterChange,
     selectedTextOnlyFilters,
+    isLoginModalOpen,
+    setIsLoginModalOpen,
     handleSubmit,
     handleModalClose,
   } = useReviewForm();
+
+  const router = useRouter();
 
   return (
     <TransitionLayout dynamicTitle={title}>
@@ -54,6 +60,15 @@ export default function ReviewPage() {
             onClose={handleModalClose}
           />
         )}
+        <LoginRequiredModal
+          isOpen={isLoginModalOpen}
+          onClose={() => {
+            setIsLoginModalOpen(false);
+            router.back();
+          }}
+          setIsLoginModalOpen={setIsLoginModalOpen}
+          text="방문 후기"
+        />
       </div>
     </TransitionLayout>
   );
