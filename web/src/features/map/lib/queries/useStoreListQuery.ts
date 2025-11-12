@@ -39,7 +39,7 @@ export function useStoreListQuery({
           center,
           filters: {
             ...(filters.price && { price: filters.price }),
-            ...(filters.honbobLevels.length > 0 && { honbobLevels: filters.honbobLevels }),
+            ...(filters.honbobLevels.length > 0 && { honbobLevel: filters.honbobLevels }),
             ...(filters.seatTypes.length > 0 && { seatTypes: filters.seatTypes }),
             ...(filters.categories.length > 0 && { categories: filters.categories }),
           },

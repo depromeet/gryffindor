@@ -25,11 +25,8 @@ export function FilterBottomSheet({
   const [selectedTab, setSelectedTab] = useState(defaultTab);
   const [selectedLevels, setSelectedLevels] = useState<number[]>(initialFilters.honbobLevels);
 
-  const findHonbobLevelCard = (level: number) => {
-    return honbobLevelCardList.find(
-      (honbobLevelCard) => honbobLevelCard.honbobLevel === `Lv.${level}`,
-    );
-  };
+  const findHonbobLevelCard = (level: number) =>
+    honbobLevelCardList.find((card) => card.honbobLevel === `Lv.${level}`);
 
   // 마지막에 클릭한 레벨 (배열의 마지막 요소)
   const lastSelectedLevel = selectedLevels[selectedLevels.length - 1] || 1;
@@ -59,12 +56,8 @@ export function FilterBottomSheet({
   };
 
   const handleLevelFilterApply = () => {
-    if (selectedLevels.length === 0) {
-      // 아무것도 선택하지 않은 경우 초기 레벨로 설정
-      onApply({ ...initialFilters, honbobLevels: initialFilters.honbobLevels });
-    } else {
-      onApply({ ...initialFilters, honbobLevels: selectedLevels });
-    }
+    const levels = selectedLevels.length === 0 ? initialFilters.honbobLevels : selectedLevels;
+    onApply({ ...initialFilters, honbobLevels: levels });
     onClose();
   };
 

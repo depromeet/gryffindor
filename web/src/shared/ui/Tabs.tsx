@@ -106,9 +106,8 @@ const Trigger = ({ children, value, disabled, className, ...props }: TriggerProp
 
   // 클릭 시 Context의 함수(=부모의 onValueChange)를 호출합니다.
   const handleClick = () => {
-    if (!disabled) {
-      setActiveValue(value);
-    }
+    if (disabled) return;
+    setActiveValue(value);
   };
 
   return (
