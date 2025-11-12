@@ -14,7 +14,7 @@ export function MyReviewListSection() {
     queryKey: ["myReviews", memberId],
     queryFn: ({ pageParam }) =>
       getMyReviews({
-        memberId: memberId!,
+        memberId: memberId as number,
         lastKnown: pageParam as string | undefined,
       }),
     initialPageParam: undefined,

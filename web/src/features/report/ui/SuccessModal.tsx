@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Character from "@/shared/lib/assets/png/character/basic.png";
 import { Icon, Modal } from "@/shared/ui";
 
