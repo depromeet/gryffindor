@@ -9,8 +9,6 @@ interface SuccessModalProps {
 }
 
 export function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
-  const router = useRouter();
-
   const handleConfirm = () => {
     onClose();
   };
