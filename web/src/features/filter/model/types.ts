@@ -2,9 +2,10 @@ import type { Dispatch, SetStateAction } from "react";
 
 export interface FilterData {
   price: { min: number; max: number };
-  honbobLevels: number[];
+  honbobLevel: number[];
   seatTypes: ("FOR_ONE" | "FOR_TWO" | "FOR_FOUR" | "CUBICLE" | "BAR_TABLE")[];
   categories: string[];
+  sortBy: "DISTANCE" | "RECOMMENDED";
 }
 
 export interface SectionConfig {

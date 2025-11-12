@@ -1,33 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
-import { getDefaultStationCenter } from "@/entities/storeList/lib";
-import { useUserState } from "@/entities/user";
+import { getDefaultStationCenter, getLevelFilterDisplayValue } from "@/entities/storeList/lib";
 import { useStoreListQuery } from "@/features/map/lib";
 import { FilterBottomSheet, LevelFilterButton } from "@/features/map/ui";
 import { useInfiniteScroll } from "@/shared/lib";
 import { useFilterStore, useLocationStore } from "@/shared/store";
-import { Icon } from "@/shared/ui";
+import { RoundedSelectBox } from "@/shared/ui";
 import { StoreCard } from "./StoreCard";
-import { StoreLevelList } from "./StoreLevelList";
+
+const sortOptions = [
+  { value: "RECOMMENDED", label: "추천순" },
+  { value: "DISTANCE", label: "거리순" },
+];
 
 export function StoreList() {
-  const { userState } = useUserState();
   const { selectedStation } = useLocationStore();
-  const { isFilterOpen, filters, openFilter, closeFilter, setFilters, initializeFilters } =
-    useFilterStore();
-
-  // 필터가 기본값(레벨 1)일 때만 유저 레벨로 초기화
-  useEffect(() => {
-    if (
-      filters.honbobLevels.length === 1 &&
-      filters.honbobLevels[0] === 1 &&
-      userState.honbobLevel !== 1
-    ) {
-      initializeFilters(userState.honbobLevel);
-    }
-  }, [userState.honbobLevel, filters.honbobLevels, initializeFilters]);
+  const { isFilterOpen, filters, openFilter, closeFilter, setFilters } = useFilterStore();
 
   const handleApplyFilters = (newFilters: typeof filters) => {
     setFilters(newFilters);
@@ -35,6 +24,7 @@ export function StoreList() {
   };
 
   const centerLatLonInfo = getDefaultStationCenter(selectedStation);
+  const levelFilterDisplayValue = getLevelFilterDisplayValue(filters.honbobLevel);
 
   const { storeList, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useStoreListQuery({
@@ -43,7 +33,7 @@ export function StoreList() {
         lat: centerLatLonInfo.lat,
         lon: centerLatLonInfo.lon,
       },
-      limit: 10,
+      limit: 30,
       station: selectedStation,
     });
 
@@ -53,9 +43,6 @@ export function StoreList() {
     isFetchingNextPage,
     enabled: !isLoading && !error,
   });
-
-  const levelDisplayValue =
-    filters.honbobLevels.length > 1 ? "커스텀" : `레벨${filters.honbobLevels[0] || 1}`;
 
   return (
     <div className="flex flex-col bg-gray0 pb-[20px]">
@@ -67,19 +54,17 @@ export function StoreList() {
         defaultTab="levelFilter"
       />
 
-      <div className="flex p-[20px]">
-        {/* <button
-          type="button"
-          onClick={openFilter}
-          className="w-fit flex items-center gap-1 pl-3 pr-4 py-1.5 cursor-pointer rounded-[20px] bg-primary400 shadow-fab"
-        >
-          <Icon name="filter" size={24} color="gray0" />
-          <span className="text-body2-medium text-gray0">레벨{"1"}</span>
-        </button> */}
-        <LevelFilterButton honbobLevel={levelDisplayValue} onClick={openFilter} />
+      <div className="flex gap-2 p-[20px] justify-between">
+        <LevelFilterButton honbobLevel={levelFilterDisplayValue} onClick={openFilter} />
+        <RoundedSelectBox
+          value={filters.sortBy}
+          onChange={(value) =>
+            setFilters({ ...filters, sortBy: value as "DISTANCE" | "RECOMMENDED" })
+          }
+          options={sortOptions}
+          placeholder="정렬"
+        />
       </div>
-      {/* <StoreLevelList userLevel={selectedLevel} onLevelChange={handleLevelChange} /> */}
-      {/* <StoreFilter/> */}
       {isLoading && (
         <div className="flex h-full min-h-[calc(100vh-380px)] flex-col items-center justify-center bg-gray0 px-[20px]">
           <span className="text-body2 text-gray500">로딩 중...</span>

@@ -88,9 +88,10 @@ export function Filter({ initialFilters, onApply, onClose, isOpen }: FilterProps
   const handleReset = () => {
     setDraftFilters({
       price: { min: 0, max: 20000 },
-      honbobLevels: initialFilters.honbobLevels,
+      honbobLevel: initialFilters.honbobLevel,
       seatTypes: [],
       categories: [],
+      sortBy: "RECOMMENDED",
     });
   };
 

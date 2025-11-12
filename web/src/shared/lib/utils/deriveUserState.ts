@@ -67,6 +67,7 @@ export function deriveUserState(session: Session | null): UserState {
     isLevelTestCompleted: true,
     canPostReview: true,
   };
+
   console.log("✅ [deriveUserState] 반환값:", userState);
   return userState;
 }

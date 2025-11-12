@@ -38,7 +38,7 @@ export default function MapPage() {
   const { showToast } = useToast();
 
   const levelDisplayValue =
-    filters.honbobLevels.length > 1 ? "커스텀" : `레벨${filters.honbobLevels[0] || 1}`;
+    filters.honbobLevel.length > 1 ? "커스텀" : `레벨${filters.honbobLevel[0] || 1}`;
 
   const handleStoreListFetch = () => {
     updateCoordinate(map);

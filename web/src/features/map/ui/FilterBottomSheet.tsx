@@ -23,7 +23,7 @@ export function FilterBottomSheet({
   defaultTab = "customFilter",
 }: FilterBottomSheetProps) {
   const [selectedTab, setSelectedTab] = useState(defaultTab);
-  const [selectedLevels, setSelectedLevels] = useState<number[]>(initialFilters.honbobLevels);
+  const [selectedLevels, setSelectedLevels] = useState<number[]>(initialFilters.honbobLevel);
 
   const findHonbobLevelCard = (level: number) =>
     honbobLevelCardList.find((card) => card.honbobLevel === `Lv.${level}`);
@@ -35,9 +35,9 @@ export function FilterBottomSheet({
   // 바텀시트가 열릴 때마다 현재 필터 상태로 로컬 상태 초기화
   useEffect(() => {
     if (isOpen) {
-      setSelectedLevels(initialFilters.honbobLevels);
+      setSelectedLevels(initialFilters.honbobLevel);
     }
-  }, [isOpen, initialFilters.honbobLevels]);
+  }, [isOpen, initialFilters.honbobLevel]);
 
   const handleLevelToggle = (level: number) => {
     setSelectedLevels((prev) => {
@@ -52,21 +52,24 @@ export function FilterBottomSheet({
   };
 
   const handleLevelReset = () => {
-    setSelectedLevels(initialFilters.honbobLevels);
+    setSelectedLevels(initialFilters.honbobLevel);
   };
 
   const handleLevelFilterApply = () => {
-    const levels = selectedLevels.length === 0 ? initialFilters.honbobLevels : selectedLevels;
-    onApply({ ...initialFilters, honbobLevels: levels });
+    const levels = selectedLevels.length === 0 ? initialFilters.honbobLevel : selectedLevels;
+    onApply({ ...initialFilters, honbobLevel: levels });
     onClose();
   };
 
   const isLevelFilterDirty =
-    selectedLevels.length !== initialFilters.honbobLevels.length ||
-    !selectedLevels.every((level) => initialFilters.honbobLevels.includes(level));
+    selectedLevels.length !== initialFilters.honbobLevel.length ||
+    !selectedLevels.every((level) => initialFilters.honbobLevel.includes(level));
+
+  // 탭에 따라 다른 offset 설정
+  const expandedOffset = selectedTab === "levelFilter" ? 222 : 88;
 
   return (
-    <BottomSheet isFixed={true} isOpen={isOpen} onClose={onClose}>
+    <BottomSheet isFixed={true} isOpen={isOpen} onClose={onClose} expandedOffset={expandedOffset}>
       <BottomSheetContent className="pb-7">
         <header className="sticky top-0 z-10 flex w-full items-center rounded-t-[24px] bg-gray0 p-5">
           <button type="button" onClick={onClose} className="ml-auto">
