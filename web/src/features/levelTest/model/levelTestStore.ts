@@ -65,10 +65,10 @@ export const LEVEL_TEST_QUESTIONS: Question[] = [
         text: "국밥, 라면, 돈까스, 카레, 초밥, 카페/디저트",
         weight: 2,
       },
-      { id: "q1_3", text: "백반, 파스타, 중국집, 냉면, 갈국수", weight: 3 },
+      { id: "q1_3", text: "백반, 파스타, 중국집, 냉면, 칼국수", weight: 3 },
       {
         id: "q1_4",
-        text: "닭갈비, 찜닭, 고기구이, 감자탕/전골, 족발/보쌈",
+        text: "닭갈비, 찜닭, 고기, 감자탕/전골, 족발/보쌈",
         weight: 4,
       },
     ],

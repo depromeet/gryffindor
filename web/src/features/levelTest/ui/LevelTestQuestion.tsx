@@ -128,7 +128,7 @@ export function LevelTestQuestion({
       )}
 
       {/* 이전/다음 버튼 */}
-      <div className="fixed bottom-0 left-0 right-0 flex gap-[12px] bg-gray0 px-[20px] py-[20px]">
+      <div className="fixed bottom-0 left-0 right-0 z-10 flex gap-[12px] bg-gray0 px-[20px] pt-[20px] pb-safe fixed-bottom-bar">
         <Button
           label="이전"
           variant="secondary"

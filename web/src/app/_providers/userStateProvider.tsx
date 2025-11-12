@@ -19,7 +19,7 @@ export function UserStateProvider({ children }: UserStateProviderProps) {
       return deriveUserState(session);
     }
     if (status === "unauthenticated") {
-      return deriveUserState(null);
+      return deriveUserState("session" as any);
     }
     return deriveUserState(session);
   }, [session, status]);
