@@ -19,7 +19,7 @@ export function LoginRequiredModal({
   const router = useRouter();
 
   const handleConfirm = () => {
-    setIsLoginModalOpen && setIsLoginModalOpen(false);
+    setIsLoginModalOpen?.(false);
     router.push("/login");
   };
 

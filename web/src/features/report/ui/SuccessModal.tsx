@@ -13,7 +13,6 @@ export function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
 
   const handleConfirm = () => {
     onClose();
-    router.push("/mypage");
   };
 
   return (
