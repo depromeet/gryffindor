@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-interface SearchIconProps extends SVGProps<SVGSVGElement> {
+interface SearchIconProps extends Omit<SVGProps<SVGSVGElement>, "ref"> {
   size?: number;
   title?: string;
 }
