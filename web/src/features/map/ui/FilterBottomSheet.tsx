@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { honbobLevelCardList } from "@/entities/honbob";
-import { HonbobLevelFilterCard } from "@/entities/honbob/ui/HonbobLevelFilterCard";
+
 import type { FilterData } from "@/features/filter/model/types";
 import { Filter } from "@/features/filter/ui";
-import { BottomSheet, BottomSheetContent, CTA, FilterButton, Icon, Tabs } from "@/shared/ui";
+import { BottomSheet, BottomSheetContent, Icon, Tabs } from "@/shared/ui";
+import { LevelFilterTab } from "./LevelFilterTab";
 
 interface FilterBottomSheetProps {
   isOpen: boolean;
@@ -93,43 +94,14 @@ export function FilterBottomSheet({
             </Tabs.Trigger>
           </Tabs.TriggerList>
           <Tabs.Content value="levelFilter">
-            <article className="flex flex-col">
-              <div className="w-full flex flex-col p-5 gap-y-[16px]">
-                <div className="flex w-full gap-x-[12px]">
-                  {[1, 2, 3, 4].map((level) => (
-                    <FilterButton
-                      key={level}
-                      label={`레벨${level}`}
-                      variant="outline"
-                      selected={selectedLevels.includes(level)}
-                      onClick={() => handleLevelToggle(level)}
-                      className="flex-1 min-w-0"
-                    />
-                  ))}
-                </div>
-                {honbobLevelCardInfo && (
-                  <div>
-                    <HonbobLevelFilterCard
-                      honbobLevel={honbobLevelCardInfo.honbobLevel}
-                      honbobLevelTitle={honbobLevelCardInfo.honbobLevelTitle}
-                      honbobLevelDescription={honbobLevelCardInfo.honbobLevelDescription}
-                      recommendedMenu={honbobLevelCardInfo.recommendedMenu}
-                      recommendedStore={honbobLevelCardInfo.recommendedStore}
-                    />
-                  </div>
-                )}
-              </div>
-              <div className="mt-[51px]"></div>
-              <div className="fixed right-0 bottom-0 left-0 z-50 mx-auto">
-                <CTA
-                  secondaryLabel="초기화"
-                  primaryLabel="완료"
-                  onSecondary={handleLevelReset}
-                  onPrimary={handleLevelFilterApply}
-                  primaryDisabled={!isLevelFilterDirty}
-                />
-              </div>
-            </article>
+            <LevelFilterTab
+              selectedLevels={selectedLevels}
+              handleLevelToggle={handleLevelToggle}
+              honbobLevelCardInfo={honbobLevelCardInfo}
+              handleLevelReset={handleLevelReset}
+              handleLevelFilterApply={handleLevelFilterApply}
+              isLevelFilterDirty={isLevelFilterDirty}
+            />
           </Tabs.Content>
           <Tabs.Content value="customFilter">
             <Filter
