@@ -13,10 +13,9 @@ import type { Review } from "../model/types";
 interface ReviewCardProps {
   review: Review;
   memberId?: number;
-  storeId: number;
 }
 
-export function ReviewCard({ review, storeId, memberId }: ReviewCardProps) {
+export function ReviewCard({ review, memberId }: ReviewCardProps) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const router = useRouter();
@@ -25,7 +24,7 @@ export function ReviewCard({ review, storeId, memberId }: ReviewCardProps) {
   const { mutate } = useMutation({
     mutationFn: () => deleteReview(review.id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["reviews", storeId] });
+      queryClient.invalidateQueries({ queryKey: ["reviews", review.storeId] });
       setIsDeleteModalOpen(false);
     },
   });
@@ -35,12 +34,13 @@ export function ReviewCard({ review, storeId, memberId }: ReviewCardProps) {
   };
 
   const handleEdit = () => {
+    console.log("edit review", review);
     const params = new URLSearchParams();
     params.set("reviewId", review.id.toString());
     params.set("content", review.content);
     params.set("keywords", review.keywords.join(","));
 
-    router.push(`/store/${storeId}/review?${params.toString()}`);
+    router.push(`/store/${review.storeId}/review?${params.toString()}`);
     setIsPopoverOpen(false);
   };
 

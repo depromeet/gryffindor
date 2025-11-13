@@ -18,9 +18,11 @@ export function SimilerStoreCard({
   distanceInMeters,
   seatTypes,
 }: SimilerStoreRes) {
-  const parsedSeatTypes = seatTypes
-    ? (JSON.parse(seatTypes) as SeatTypes[])
-    : (["FOR_ONE", "FOR_TWO"] as SeatTypes[]);
+  const parsedSeatTypes = Array.isArray(seatTypes)
+    ? seatTypes
+    : typeof seatTypes === "string"
+      ? (seatTypes.split(",") as SeatTypes[])
+      : (["FOR_ONE", "FOR_TWO"] as SeatTypes[]);
   return (
     <article className="flex flex-col justify-center gap-3">
       <div className="relative h-[156px] w-[156px] flex-shrink-0">

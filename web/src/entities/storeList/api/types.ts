@@ -7,7 +7,7 @@ export interface SimilerStoreRes {
   honbobLevel: number;
   primaryCategory: string;
   distanceInMeters: number;
-  seatTypes?: string;
+  seatTypes?: string | SeatTypes[];
 }
 
 export interface StoreListResponseReal {

@@ -64,9 +64,10 @@ export default function ReportPage() {
         isOpen={isLoginModalOpen}
         onClose={() => {
           setIsLoginModalOpen(false);
-          // 로그인 페이지로 리다이렉트
-          router.push("/login");
+          router.back();
         }}
+        setIsLoginModalOpen={setIsLoginModalOpen}
+        text="식당 제보"
       />
     </TransitionLayout>
   );

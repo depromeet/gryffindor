@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Character from "@/shared/lib/assets/png/character/basic.png";
 import { Icon, Modal } from "@/shared/ui";
 
@@ -9,11 +8,8 @@ interface SuccessModalProps {
 }
 
 export function SuccessModal({ isOpen, onClose }: SuccessModalProps) {
-  const router = useRouter();
-
   const handleConfirm = () => {
     onClose();
-    router.push("/mypage");
   };
 
   return (

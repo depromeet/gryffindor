@@ -71,7 +71,7 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
 
   return (
     <>
-      <section className="mt-5 flex w-full flex-col gap-4 px-5">
+      <section className="mt-8 flex w-full flex-col gap-4 px-5">
         <div className="flex items-center justify-between">
           <span className="text-[#000] text-subtitle1">방문 후기</span>
           <TextButton
@@ -83,21 +83,25 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
           />
         </div>
 
-        <ReviewList reviews={reviews} memberId={memberId} storeId={storeId} />
+        <ReviewList reviews={reviews} memberId={memberId} />
 
         {isInfiniteScrollEnabled && hasNextPage && <div ref={loadMoreRef} />}
 
         {hasNextPage && !isInfiniteScrollEnabled && (
-          <div className="mt-4 flex justify-center">
-            <TextButton label="더보기" isIcon onClick={handleLoadMoreClick} />
-          </div>
+          <>
+            <div className="mt-4 flex justify-center">
+              <TextButton label="더보기" isIcon onClick={handleLoadMoreClick} />
+            </div>
+
+            <AlreadyReviewedModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              onConfirm={handleModalConfirm}
+            />
+          </>
         )}
-        <AlreadyReviewedModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onConfirm={handleModalConfirm}
-        />
       </section>
+
       <div className="mt-5 h-1 w-full bg-gray50" />
     </>
   );
