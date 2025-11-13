@@ -175,6 +175,11 @@ export const ROUTE_CONFIG: Record<string, RouteConfig> = {
       title: "혼밥 레벨 설명",
     },
   },
+  "/search": {
+    group: "stack",
+    transition: "drill",
+    header: null,
+  },
 };
 
 /**
