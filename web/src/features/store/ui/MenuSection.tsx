@@ -13,13 +13,16 @@ interface MenuSectionProps {
 
 export function MenuSection({ menus, handleSetZoomImageSrc }: MenuSectionProps) {
   return (
-    <article className="mt-5 flex w-full flex-col gap-3 pl-5">
-      <span className="text-[#000] text-subtitle1">혼밥 메뉴</span>
-      <div className="flex flex-col gap-3">
-        {menus.map((menu) => (
-          <MenuItem key={menu.name} {...menu} handleSetZoomImageSrc={handleSetZoomImageSrc} />
-        ))}
-      </div>
-    </article>
+    <>
+      <article className="mt-5 flex w-full flex-col gap-3 pl-5">
+        <span className="text-[#000] text-subtitle1">혼밥 메뉴</span>
+        <div className="flex flex-col gap-3">
+          {menus.map((menu) => (
+            <MenuItem key={menu.name} {...menu} handleSetZoomImageSrc={handleSetZoomImageSrc} />
+          ))}
+        </div>
+      </article>
+      <div className="mt-5 h-1 w-full bg-gray50" />
+    </>
   );
 }

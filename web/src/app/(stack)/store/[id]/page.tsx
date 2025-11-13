@@ -1,19 +1,23 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { use, useState } from "react";
+import clsx from "clsx";
+import { use, useRef, useState } from "react";
 import { useUserState } from "@/entities/user";
 import { getStoreDetail } from "@/features/store/api/getStoreDetail";
 import {
   MenuSection,
   SeatImageGallery,
   SeatInfoSection,
+  SimilerStore,
   StoreInfo,
   SuggestionCard,
+  TabNav,
   ZoomableImage,
 } from "@/features/store/ui";
 import { ReviewSection } from "@/features/store/ui/ReviewSection";
 import { queryKeys } from "@/shared/api";
+import { useSticky } from "@/shared/hooks/useSticky";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
@@ -22,6 +26,14 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
   const { userState } = useUserState();
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomImageSrc, setZoomImageSrc] = useState<string>("");
+  const { ref: tabNavRef, isSticky: isTabNavSticky } = useSticky(60);
+
+  const menuRef = useRef<HTMLDivElement>(null);
+  const seatRef = useRef<HTMLDivElement>(null);
+  const reviewRef = useRef<HTMLDivElement>(null);
+  const similarRef = useRef<HTMLDivElement>(null);
+
+  const sectionRefs = [menuRef, seatRef, reviewRef, similarRef];
 
   const handleSetZoomImageSrc = (src: string) => {
     setZoomImageSrc(src);
@@ -48,16 +60,33 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
     <TransitionLayout dynamicTitle={store.name}>
       <div className="flex flex-col bg-gray0">
         <StoreInfo {...store} handleSetZoomImageSrc={handleSetZoomImageSrc} />
-        <MenuSection menus={store.menus} handleSetZoomImageSrc={handleSetZoomImageSrc} />
-        <SeatInfoSection seatInfo={store.seatInfo} />
-        <SeatImageGallery
-          storeName={store.name}
-          level={userState.honbobLevel}
-          userName={userState.displayName}
-          seatImages={store.seatImages}
-          handleSetZoomImageSrc={handleSetZoomImageSrc}
-        />
-        <ReviewSection storeId={store.storeId} memberId={userState?.memberId} />
+        <div
+          ref={tabNavRef}
+          className={clsx("sticky top-[60px] z-10", {
+            "bg-white": isTabNavSticky,
+          })}
+        >
+          <TabNav sectionRefs={sectionRefs} />
+        </div>
+        <div ref={menuRef}>
+          <MenuSection menus={store.menus} handleSetZoomImageSrc={handleSetZoomImageSrc} />
+        </div>
+        <div ref={seatRef}>
+          <SeatInfoSection seatInfo={store.seatInfo} />
+          <SeatImageGallery
+            storeName={store.name}
+            level={userState.honbobLevel}
+            userName={userState.displayName}
+            seatImages={store.seatImages}
+            handleSetZoomImageSrc={handleSetZoomImageSrc}
+          />
+        </div>
+        <div ref={reviewRef}>
+          <ReviewSection storeId={store.storeId} memberId={userState?.memberId} />
+        </div>
+        <div ref={similarRef}>
+          <SimilerStore storeId={store.storeId} />
+        </div>
         <SuggestionCard storeId={store.storeId} />
         {isZoomed && (
           <ZoomableImage

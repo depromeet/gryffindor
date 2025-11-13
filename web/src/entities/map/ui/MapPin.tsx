@@ -40,11 +40,7 @@ interface MapPinProps {
 export function MapPin({ selected, name, honbobLevel }: MapPinProps) {
   return (
     <article className="flex w-fit flex-col items-center justify-center gap-1">
-      {selected ? (
-        <SelectedPin honbobLevel={honbobLevel} />
-      ) : (
-        <UnselectedPin />
-      )}
+      {selected ? <SelectedPin honbobLevel={honbobLevel} /> : <UnselectedPin />}
       <StoreName name={name} />
     </article>
   );

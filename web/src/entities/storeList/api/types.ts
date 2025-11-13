@@ -1,5 +1,15 @@
 export type SeatTypes = "FOR_ONE" | "FOR_TWO" | "FOR_FOUR" | "CUBICLE" | "BAR_TABLE";
 
+export interface SimilerStoreRes {
+  id: number;
+  name: string;
+  thumbnailUrl: string;
+  honbobLevel: number;
+  primaryCategory: string;
+  distanceInMeters: number;
+  seatTypes?: string;
+}
+
 export interface StoreListResponseReal {
   //실제 api 응답 StoreListResponse를 다른 곳에서 쓰고 있어 다른 이름으로 정의
   data: StoreListResponseData[];
