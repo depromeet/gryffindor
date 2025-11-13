@@ -23,7 +23,6 @@ export function MyReviewListSection() {
   });
 
   const reviews = data?.pages.flatMap((page) => page.data) || [];
-  console.log(reviews);
 
   if (isLoading) {
     return <div>내 리뷰를 불러오는 중...</div>;
