@@ -66,7 +66,7 @@ export function FilterBottomSheet({
     !selectedLevels.every((level) => initialFilters.honbobLevel.includes(level));
 
   // 탭에 따라 다른 offset 설정
-  const expandedOffset = selectedTab === "levelFilter" ? 222 : 88;
+  const expandedOffset = selectedTab === "levelFilter" ? 280 : 88;
 
   return (
     <BottomSheet isFixed={true} isOpen={isOpen} onClose={onClose} expandedOffset={expandedOffset}>
@@ -80,14 +80,14 @@ export function FilterBottomSheet({
           value={selectedTab}
           onValueChange={(value) => setSelectedTab(value as "levelFilter" | "customFilter")}
         >
-          <Tabs.TriggerList className="flex px-5 border-b border-gray100 gap-x-[64px] justify-center">
+          <Tabs.TriggerList className="sticky top-[64px]  z-10 flex w-full items-center bg-gray0 px-5 gap-x-[64px] justify-center">
             <Tabs.Trigger value="levelFilter">
-              <div className="text-body1-semibold flex w-[100px] items-center justify-center pb-[20px] border-b-2 border-transparent group-data-[active=true]:border-gray700 transition-all duration-300">
+              <div className="text-body1-semibold bg-gray0 flex w-[100px] items-center justify-center pb-[20px] border-b-2 border-transparent group-data-[active=true]:border-gray700 transition-all duration-300">
                 <span>레벨별 필터</span>
               </div>
             </Tabs.Trigger>
             <Tabs.Trigger value="customFilter">
-              <div className="text-body1-semibold flex  w-[100px] items-center justify-center pb-[20px] border-b-2 border-transparent group-data-[active=true]:border-gray700 transition-all duration-300">
+              <div className="text-body1-semibold bg-gray0 flex  w-[100px] items-center justify-center pb-[20px] border-b-2 border-transparent group-data-[active=true]:border-gray700 transition-all duration-300">
                 <span>커스텀 필터</span>
               </div>
             </Tabs.Trigger>

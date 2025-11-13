@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { cn } from "@/shared/lib";
 import { Icon } from "./Icon";
 import { Select } from "./Select";
 
@@ -9,6 +10,7 @@ interface RoundedSelectBoxProps {
   onChange: (value: string) => void;
   options: Array<{ value: string; label: string }>;
   placeholder?: string;
+  contentClassName?: string;
 }
 
 export function RoundedSelectBox({
@@ -16,6 +18,7 @@ export function RoundedSelectBox({
   onChange,
   options,
   placeholder = "선택",
+  contentClassName,
 }: RoundedSelectBoxProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -40,7 +43,12 @@ export function RoundedSelectBox({
           <Icon name="downArrow" color="gray400" size={16} />
         </Select.Icon>
       </Select.Trigger>
-      <Select.Content className="absolute top-[calc(100%+10px)] right-0 w-[180px] z-100 rounded-[10px] border border-gray100 bg-gray0 shadow-navigation">
+      <Select.Content
+        className={cn(
+          "absolute top-[calc(100%+10px)] right-0 w-[180px] z-100 rounded-[10px] border border-gray100 bg-gray0 shadow-navigation",
+          contentClassName,
+        )}
+      >
         {options.map((option, index) => (
           <Select.Item key={option.value} value={option.value} className="relative px-5 py-3.5">
             <span
