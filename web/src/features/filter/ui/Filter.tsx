@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { PriceRange } from "@/entities/filter/ui";
 import type { SeatTypes } from "@/entities/storeList/api";
-import { CTA, FilterSection, Icon } from "@/shared/ui";
+import { CTA, FilterSection } from "@/shared/ui";
 import type { FilterData, SectionConfig } from "../model/types";
 import { areFiltersEqual } from "../utils/filter";
 
