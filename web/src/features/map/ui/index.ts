@@ -2,6 +2,7 @@ export * from "./CurrentLocationButton";
 export * from "./FetchStoreListButton";
 export * from "./FilterBottomSheet";
 export * from "./LevelFilterButton";
+export * from "./LevelFilterTab";
 export * from "./MapMarkers";
 export * from "./MapView";
 export * from "./StationDropdown";

@@ -1,13 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { STATIONS } from "@/shared/model";
 import { useLocationStore } from "@/shared/store";
 import { Icon, Overlay, Select } from "@/shared/ui";
-
-const stations = [
-  { value: "강남역", label: "강남역" },
-  { value: "역삼역", label: "역삼역" },
-];
 
 export function StationOverlaySelect() {
   const { selectedStation, setSelectedStation } = useLocationStore();
@@ -43,7 +39,7 @@ export function StationOverlaySelect() {
         overlayZIndex={60}
       >
         <Select.Content className="fixed top-[52px] left-[20px] z-70 max-h-[60vh] w-[180px] overflow-y-auto rounded-[10px] bg-white">
-          {stations.map((station) => (
+          {STATIONS.map((station) => (
             <Select.Item
               key={station.value}
               value={station.value}

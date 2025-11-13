@@ -54,10 +54,11 @@ export interface StoreListRequestBody {
       min: number;
       max: number;
     };
-    honbobLevel: number;
+    honbobLevel?: number[];
     seatTypes?: ("FOR_ONE" | "FOR_TWO" | "FOR_FOUR" | "BAR_TABLE" | "CUBICLE")[];
     paymentMethods?: string[];
     categories?: string[];
+    sortBy?: "DISTANCE" | "RECOMMENDED";
   };
   paging: {
     limit: number;

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PriceRange } from "@/entities/filter/ui";
 import type { SeatTypes } from "@/entities/storeList/api";
-import { CTA, FilterSection, Icon } from "@/shared/ui";
+import { CTA, FilterSection } from "@/shared/ui";
 import type { FilterData, SectionConfig } from "../model/types";
 import { areFiltersEqual } from "../utils/filter";
 
@@ -28,18 +28,6 @@ const SEAT_TYPE_MAP: Record<SeatTypes, string> = {
 };
 
 const FILTER_SECTIONS: SectionConfig[] = [
-  {
-    key: "level",
-    label: "혼밥 단계",
-    options: ["1단계", "2단계", "3단계", "4단계"],
-    isMultiple: false,
-    getSelected: (draft) => (draft.honbobLevel !== null ? [`${draft.honbobLevel}단계`] : []),
-    onChange: (setDraft) => (selected) =>
-      setDraft((prev) => ({
-        ...prev,
-        honbobLevel: selected.length > 0 ? parseInt(selected[0], 10) : 1,
-      })),
-  },
   {
     key: "seatTypes",
     label: "좌석 형태",
@@ -75,10 +63,18 @@ interface FilterProps {
   initialFilters: FilterData;
   onApply: (filters: FilterData) => void;
   onClose: () => void;
+  isOpen?: boolean;
 }
 
-export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
+export function Filter({ initialFilters, onApply, onClose, isOpen }: FilterProps) {
   const [draftFilters, setDraftFilters] = useState<FilterData>(initialFilters);
+
+  // 바텀시트가 열릴 때마다 store의 실제 필터 값으로 초기화
+  useEffect(() => {
+    if (isOpen) {
+      setDraftFilters(initialFilters);
+    }
+  }, [isOpen, initialFilters]);
 
   const isDirty = !areFiltersEqual(initialFilters, draftFilters);
 
@@ -92,9 +88,10 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
   const handleReset = () => {
     setDraftFilters({
       price: { min: 0, max: 20000 },
-      honbobLevel: 1,
+      honbobLevel: initialFilters.honbobLevel,
       seatTypes: [],
       categories: [],
+      sortBy: "RECOMMENDED",
     });
   };
 
@@ -105,14 +102,7 @@ export function Filter({ initialFilters, onApply, onClose }: FilterProps) {
 
   return (
     <article className="flex flex-col">
-      <header className="fixed flex w-full items-center justify-between rounded-t-[24px] bg-gray0 p-5">
-        <div className="justify-start text-subtitle1">필터 옵션</div>
-        <button type="button" onClick={onClose}>
-          <Icon size={24} name="close" className="cursor-pointer text-gray400" />
-        </button>
-      </header>
-
-      <div className="mt-[65px] h-[1px] w-full bg-gray100" />
+      {/* <div className="mt-[65px] h-[1px] w-full bg-gray100" /> */}
 
       {FILTER_SECTIONS.map((section) => {
         const sectionProps = {

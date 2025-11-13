@@ -1,4 +1,5 @@
 import { Lv1Character, Lv2Character, Lv3Character, Lv4Character } from "@/shared/lib/assets";
+import type { HonbobLevelCardInfo } from "./type";
 
 export const SAMPLE_LEVEL_INFO = {
   1: {
@@ -27,7 +28,7 @@ export const SAMPLE_LEVEL_INFO = {
   },
 };
 
-export const honbobLevelCardList = [
+export const honbobLevelCardList: HonbobLevelCardInfo[] = [
   {
     honbobLevel: "Lv.1",
     honbobLevelTitle: "혼밥 입문자",

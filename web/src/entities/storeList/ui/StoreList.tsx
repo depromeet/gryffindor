@@ -1,53 +1,40 @@
 "use client";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useState } from "react";
-import { storeListApi } from "@/entities/storeList/api";
-import { getDefaultStationCenter } from "@/entities/storeList/lib";
-import { useUserState } from "@/entities/user";
-import { queryKeys } from "@/shared/api";
+import { getDefaultStationCenter, getLevelFilterDisplayValue } from "@/entities/storeList/lib";
+import { useStoreListQuery } from "@/features/map/lib";
+import { FilterBottomSheet, LevelFilterButton } from "@/features/map/ui";
 import { useInfiniteScroll } from "@/shared/lib";
-import { useLocationStore } from "@/shared/store";
+import { useFilterStore, useLocationStore } from "@/shared/store";
+import { RoundedSelectBox } from "@/shared/ui";
 import { StoreCard } from "./StoreCard";
-import { StoreLevelList } from "./StoreLevelList";
+
+const sortOptions = [
+  { value: "RECOMMENDED", label: "추천순" },
+  { value: "DISTANCE", label: "거리순" },
+];
 
 export function StoreList() {
-  const { userState } = useUserState();
   const { selectedStation } = useLocationStore();
+  const { isFilterOpen, filters, openFilter, closeFilter, setFilters } = useFilterStore();
 
-  const [selectedLevel, setSelectedLevel] = useState(userState.honbobLevel);
-  const handleLevelChange = (level: number) => {
-    setSelectedLevel(level);
+  const handleApplyFilters = (newFilters: typeof filters) => {
+    setFilters(newFilters);
+    closeFilter();
   };
 
   const centerLatLonInfo = getDefaultStationCenter(selectedStation);
+  const levelFilterDisplayValue = getLevelFilterDisplayValue(filters.honbobLevel);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } =
-    useInfiniteQuery({
-      queryKey: queryKeys.STORE_LIST(selectedStation, selectedLevel),
-      queryFn: ({ pageParam }) =>
-        storeListApi.getStoreByPost({
-          requestBody: {
-            center: {
-              lat: centerLatLonInfo.lat,
-              lon: centerLatLonInfo.lon,
-            },
-            filters: {
-              honbobLevel: selectedLevel,
-            },
-            paging: {
-              limit: 10,
-              lastKnown: pageParam as string | undefined,
-            },
-          },
-        }),
-      initialPageParam: null as string | null,
-      getNextPageParam: (lastPage) => {
-        return lastPage.response?.nextCursor && lastPage.response?.hasNext
-          ? lastPage.response.nextCursor
-          : undefined;
+  const { storeList, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useStoreListQuery({
+      filters,
+      center: {
+        lat: centerLatLonInfo.lat,
+        lon: centerLatLonInfo.lon,
       },
+      limit: 30,
+      station: selectedStation,
     });
 
   const loadMoreTriggerRef = useInfiniteScroll({
@@ -57,11 +44,27 @@ export function StoreList() {
     enabled: !isLoading && !error,
   });
 
-  const storeList = data?.pages.flatMap((page) => page.response?.data || []) || [];
-
   return (
     <div className="flex flex-col bg-gray0 pb-[20px]">
-      <StoreLevelList userLevel={selectedLevel} onLevelChange={handleLevelChange} />
+      <FilterBottomSheet
+        isOpen={isFilterOpen}
+        onClose={closeFilter}
+        initialFilters={filters}
+        onApply={handleApplyFilters}
+        defaultTab="levelFilter"
+      />
+
+      <div className="flex gap-2 p-[20px] justify-between">
+        <LevelFilterButton honbobLevel={levelFilterDisplayValue} onClick={openFilter} />
+        <RoundedSelectBox
+          value={filters.sortBy}
+          onChange={(value) =>
+            setFilters({ ...filters, sortBy: value as "DISTANCE" | "RECOMMENDED" })
+          }
+          options={sortOptions}
+          placeholder="정렬"
+        />
+      </div>
       {isLoading && (
         <div className="flex h-full min-h-[calc(100vh-380px)] flex-col items-center justify-center bg-gray0 px-[20px]">
           <span className="text-body2 text-gray500">로딩 중...</span>
