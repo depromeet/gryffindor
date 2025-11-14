@@ -2,7 +2,7 @@ export * from "./MenuSection";
 export * from "./ReviewList";
 export * from "./SeatImageGallery";
 export * from "./SeatInfoSection";
-export * from "./SimilerStore";
+export * from "./SimilarStore";
 export * from "./StoreInfo";
 export * from "./SuggestionCard";
 export * from "./SuggestionImage";

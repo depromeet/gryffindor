@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { SeatTypes, SimilerStoreRes } from "@/entities/storeList/api";
+import type { SeatTypes, SimilarStoreRes } from "@/entities/storeList/api";
 import { Tag } from "@/shared/ui";
 
 export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
@@ -10,14 +10,14 @@ export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   BAR_TABLE: "바 좌석",
 };
 
-export function SimilerStoreCard({
+export function SimilarStoreCard({
   name,
   thumbnailUrl,
   honbobLevel,
   primaryCategory,
   distanceInMeters,
   seatTypes,
-}: SimilerStoreRes) {
+}: SimilarStoreRes) {
   const parsedSeatTypes = Array.isArray(seatTypes)
     ? seatTypes
     : typeof seatTypes === "string"

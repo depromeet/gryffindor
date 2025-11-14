@@ -9,7 +9,7 @@ import {
   MenuSection,
   SeatImageGallery,
   SeatInfoSection,
-  SimilerStore,
+  SimilarStore,
   StoreInfo,
   SuggestionCard,
   TabNav,
@@ -85,7 +85,7 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
           <ReviewSection storeId={store.storeId} memberId={userState?.memberId} />
         </div>
         <div ref={similarRef}>
-          <SimilerStore storeId={store.storeId} />
+          <SimilarStore storeId={store.storeId} />
         </div>
         <SuggestionCard storeId={store.storeId} />
         {isZoomed && (

@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/shared/config";
-import type { SimilerStoreRes, StoreListRequest, StoreListResponseReal } from "./types";
+import type { SimilarStoreRes, StoreListRequest, StoreListResponseReal } from "./types";
 
 export const storeListApi = {
   getStoreByPost: async ({ requestBody }: StoreListRequest) =>
@@ -12,10 +12,10 @@ export const storeListApi = {
     longitude,
   }: {
     storeId: number;
-    latitude?: number;
-    longitude?: number;
+    latitude: number;
+    longitude: number;
   }) => {
-    const { response } = await axiosInstance.get<SimilerStoreRes[]>(
+    const { response } = await axiosInstance.get<SimilarStoreRes[]>(
       `/api/v1/stores/${storeId}/similar`,
       {
         params: {

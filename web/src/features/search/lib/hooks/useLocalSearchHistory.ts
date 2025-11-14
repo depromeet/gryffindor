@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { UseSearchHistoryReturn } from "@/features/search";
 import { type SearchHistoryResponse, searchHistoryStorage } from "@/features/search";
 
 /**

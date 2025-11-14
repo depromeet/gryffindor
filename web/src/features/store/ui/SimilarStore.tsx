@@ -2,12 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
-import { type SimilerStoreRes, storeListApi } from "@/entities/storeList/api";
-import { SimilerStoreCard } from "@/entities/storeList/ui/SimilerStoreCard";
+import { type SimilarStoreRes, storeListApi } from "@/entities/storeList/api";
+import { SimilarStoreCard } from "@/entities/storeList/ui/SimilarStoreCard";
 import { useGeolocation } from "@/features/map/lib/hooks/useGeolocation";
 import { queryKeys } from "@/shared/api/queryKeys";
 
-export function SimilerStore({ storeId }: { storeId: number }) {
+export function SimilarStore({ storeId }: { storeId: number }) {
   const { currentLocation, requestLocation } = useGeolocation();
   const hasRequested = useRef(false);
 
@@ -18,14 +18,19 @@ export function SimilerStore({ storeId }: { storeId: number }) {
     }
   }, [requestLocation]);
 
-  const { data: similerStores, isLoading } = useQuery<SimilerStoreRes[]>({
+  const { data: similarStores, isLoading } = useQuery<SimilarStoreRes[]>({
     queryKey: [queryKeys.SIMILAR_STORES(storeId)],
-    queryFn: () =>
-      storeListApi.getSimilarStores({
+    enabled: !!currentLocation,
+    queryFn: () => {
+      if (!currentLocation) {
+        throw new Error("currentLocation is required");
+      }
+      return storeListApi.getSimilarStores({
         storeId,
-        latitude: currentLocation?.coords.latitude,
-        longitude: currentLocation?.coords.longitude,
-      }),
+        latitude: currentLocation.coords.latitude,
+        longitude: currentLocation.coords.longitude,
+      });
+    },
   });
 
   if (isLoading) {
@@ -42,8 +47,8 @@ export function SimilerStore({ storeId }: { storeId: number }) {
         <span className="whitespace-pre-line text-subtitle1 text-gray900">{`추천하는\n근처 혼밥 식당이에요`}</span>
       </div>
       <div className="flex gap-3 overflow-x-auto px-5 scrollbar-hide">
-        {similerStores?.map((store: SimilerStoreRes) => (
-          <SimilerStoreCard key={store.id} {...store} />
+        {similarStores?.map((store: SimilarStoreRes) => (
+          <SimilarStoreCard key={store.id} {...store} />
         ))}
       </div>
     </section>
