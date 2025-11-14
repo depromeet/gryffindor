@@ -26,7 +26,14 @@
 
 "use client";
 
-import { createContext, type PropsWithChildren, type RefObject, useContext } from "react";
+import {
+  createContext,
+  type PropsWithChildren,
+  type RefObject,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { cn } from "@/shared/lib";
 import { useBottomSheet } from "../lib/hooks";
 
@@ -59,7 +66,13 @@ function BottomSheet({
   expandedOffset = 88,
   children,
 }: PropsWithChildren<BottomSheetProps>) {
-  const height = initialHeight ? initialHeight : window.innerHeight - expandedOffset;
+  const [clientHeight, setClientHeight] = useState(0);
+
+  useEffect(() => {
+    setClientHeight(window.innerHeight);
+  }, []);
+
+  const height = initialHeight ?? clientHeight - expandedOffset;
   const { sheetRef, contentRef } = useBottomSheet({ initialHeight: height, expandedOffset });
 
   return (
