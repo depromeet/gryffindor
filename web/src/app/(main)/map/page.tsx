@@ -5,7 +5,6 @@ import {
   useLocation,
   useMapCoordinate,
   useMapDrag,
-  useMapFilters,
   useMapInitialize,
   useStoreListQuery,
 } from "@/features/map/lib";
@@ -19,6 +18,7 @@ import {
   StoreBottomSheet,
 } from "@/features/map/ui";
 import { useToast } from "@/shared/lib/hooks";
+import { useFilterStore } from "@/shared/store";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function MapPage() {
@@ -27,13 +27,18 @@ export default function MapPage() {
   const { requestLocation } = useLocation(map);
   const { isDragging, resetDragging } = useMapDrag(map);
 
-  const { isFilterOpen, filters, openFilter, closeFilter, applyFilters } = useMapFilters();
-  const { storeList, isFetching } = useStoreListQuery(filters, {
-    bounds,
+  const { isFilterOpen, filters, openFilter, closeFilter, setFilters } = useFilterStore();
+  const { storeList, isFetching } = useStoreListQuery({
+    filters,
     center,
+    bounds,
+    limit: 30,
   });
 
   const { showToast } = useToast();
+
+  const levelDisplayValue =
+    filters.honbobLevel.length > 1 ? "커스텀" : `레벨${filters.honbobLevel[0] || 1}`;
 
   const handleStoreListFetch = () => {
     updateCoordinate(map);
@@ -51,7 +56,14 @@ export default function MapPage() {
       <MapView mapRef={mapContainerRef} initializeMap={initializeMap} />
       <MapMarkers map={map} storeList={storeList} />
       <FetchStoreListButton onClick={handleStoreListFetch} isFetching={isFetching} />
-      <LevelFilterButton honbabLevel={filters.honbobLevel} onClick={openFilter} />
+      <div
+        className="fixed right-5 z-40"
+        style={{
+          top: "calc(84px + env(safe-area-inset-top))",
+        }}
+      >
+        <LevelFilterButton honbobLevel={levelDisplayValue} onClick={openFilter} />
+      </div>
       <CurrentLocationButton onClick={requestLocation} />
       <StoreBottomSheet
         storeList={storeList}
@@ -62,7 +74,7 @@ export default function MapPage() {
         isOpen={isFilterOpen}
         onClose={closeFilter}
         initialFilters={filters}
-        onApply={applyFilters}
+        onApply={setFilters}
       />
     </TransitionLayout>
   );

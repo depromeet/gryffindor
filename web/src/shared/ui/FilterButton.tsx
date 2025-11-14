@@ -43,6 +43,7 @@ interface FilterButtonProps {
   variant: "fill" | "outline";
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  className?: string;
 }
 
 export function FilterButton({
@@ -52,6 +53,7 @@ export function FilterButton({
   variant,
   type = "button",
   disabled = false,
+  className,
 }: FilterButtonProps) {
   const bgMap = {
     fill: {
@@ -86,6 +88,7 @@ export function FilterButton({
       className={cn(
         "flex min-w-[96px] cursor-pointer items-center justify-center rounded-[8px] py-[12px] transition-colors duration-300",
         variantStyle,
+        className,
       )}
       onClick={onClick}
       disabled={disabled}

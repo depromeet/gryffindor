@@ -18,6 +18,12 @@ export const useReportForm = () => {
   const { mutate: reportMutate } = useReportMutation({
     onSuccess: () => {
       setIsSuccessModalOpen(true);
+      setLocation("");
+      setName("");
+      setRecommendedMenu("");
+      setReason("");
+      setSeatTypes([]);
+      setCategory("");
     },
     onError: () => {
       setIsFailureModalOpen(true);

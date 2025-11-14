@@ -9,6 +9,7 @@ export interface Review {
   id: number;
   content: string;
   reviewer: Reviewer;
+  storeId: number;
   keywords: string[];
   createdAt: string;
   updatedAt: string;

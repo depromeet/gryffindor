@@ -3,7 +3,6 @@ export * from "./hooks/useLocation";
 export * from "./hooks/useLocationMarker";
 export * from "./hooks/useMapCoordinate";
 export * from "./hooks/useMapDrag";
-export * from "./hooks/useMapFilters";
 export * from "./hooks/useMapInitialize";
 export * from "./hooks/useMapMarkers";
 export * from "./queries/useStoreListQuery";
