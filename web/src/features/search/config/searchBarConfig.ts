@@ -28,7 +28,7 @@ const SEARCH_BAR_CONFIGS: Record<string, SearchBarConfig> = {
   search: {
     editable: true,
     layout: {
-      needsSafeArea: false,
+      needsSafeArea: true,
     },
     elements: {
       backButton: true,
