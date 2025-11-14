@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-interface UserProfileIconProps extends SVGProps<SVGSVGElement> {
+interface UserProfileIconProps extends Omit<SVGProps<SVGSVGElement>, "ref"> {
   size?: number;
   title?: string;
 }

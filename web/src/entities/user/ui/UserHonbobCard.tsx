@@ -8,9 +8,16 @@ export function UserHonbobCard() {
   const { userState } = useUserState();
   const userLevel = userState.honbobLevel;
 
-  const honbobLevelInfo = honbobLevelCardList[userLevel as keyof typeof honbobLevelCardList];
+  // honbobLevelCardList is 0-indexed array, userLevel is 1-4
+  const honbobLevelInfo = honbobLevelCardList[userLevel - 1];
 
-  const { honbobLevelTitle } = honbobLevelInfo as { honbobLevelTitle: string };
+  // Add safety check in case level is out of bounds
+  if (!honbobLevelInfo) {
+    console.error(`Invalid honbob level: ${userLevel}`);
+    return null;
+  }
+
+  const { honbobLevelTitle } = honbobLevelInfo;
 
   return (
     <div className="bg-white rounded-[6px] flex items-center w-fit gap-x-[8px] px-[6px] py-[4px]">

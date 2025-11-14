@@ -93,10 +93,8 @@ export function TransitionLayout({
         data-transition={finalTransition}
         data-device={isMobile ? "mobile" : "desktop"}
       >
-        <div className="min-h-screen bg-gray-50">
-          {/* 페이지 콘텐츠 - 헤더가 있으면 상단 여백 추가 */}
-          <div className={needsHeader ? "pt-[60px] pb-safe" : ""}>{children}</div>
-        </div>
+        {/* 페이지 콘텐츠 - 헤더가 있으면 상단 여백 추가 */}
+        {needsHeader ? <div className="h-full pt-[60px]">{children}</div> : children}
       </SsgoiTransition>
     </>
   );

@@ -20,7 +20,15 @@
       "Bash(pnpm run check:web:*)",
       "Bash(pnpm -w run check:web:*)",
       "Bash(node:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(pnpm update:*)",
+      "Bash(pnpm remove:*)",
+      "Bash(pnpm start:*)",
+      "Bash(rm:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm biome check:*)",
+      "Bash(pnpm check:*)",
+      "Bash(pnpm next build:*)"
     ],
     "deny": [],
     "ask": []
