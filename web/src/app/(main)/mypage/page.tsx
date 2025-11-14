@@ -8,7 +8,7 @@ import { TransitionLayout } from "@/shared/ui";
 export default function MyPage() {
   return (
     <TransitionLayout>
-      <div className="flex flex-col">
+      <div className="flex flex-col bg-gray0">
         <div className="flex flex-1 flex-col gap-y-[24px] pt-[20px] pb-[20px]">
           <UserProfileSection />
           <HonbobLevelInfoCard />
