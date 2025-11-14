@@ -1,12 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 import {
   useLocation,
   useMapCoordinate,
   useMapDrag,
   useMapInitialize,
-  useStoreListQuery,
+  useStoreListData,
 } from "@/features/map/lib";
 import {
   CurrentLocationButton,
@@ -17,6 +18,7 @@ import {
   MapView,
   StoreBottomSheet,
 } from "@/features/map/ui";
+import { SearchBar } from "@/features/search";
 import { useToast } from "@/shared/lib/hooks";
 import { useFilterStore } from "@/shared/store";
 import { TransitionLayout } from "@/shared/ui";
@@ -27,13 +29,8 @@ export default function MapPage() {
   const { requestLocation } = useLocation(map);
   const { isDragging, resetDragging } = useMapDrag(map);
 
+  const { storeList, isFetching, isSearchMode } = useStoreListData({ bounds, center });
   const { isFilterOpen, filters, openFilter, closeFilter, setFilters } = useFilterStore();
-  const { storeList, isFetching } = useStoreListQuery({
-    filters,
-    center,
-    bounds,
-    limit: 30,
-  });
 
   const { showToast } = useToast();
 
@@ -46,13 +43,16 @@ export default function MapPage() {
   };
 
   useEffect(() => {
-    if (!isFetching && storeList.length === 0) {
-      showToast({ message: "아직 이 지역의 식당 데이터가 없어요." });
+    if (!isSearchMode && !isFetching && storeList.length === 0) {
+      showToast({ message: "현재는 강남·역삼 지역만 이용할 수 있어요." });
     }
-  }, [isFetching, storeList.length, showToast]);
+  }, [isSearchMode, isFetching, storeList.length, showToast]);
 
   return (
     <TransitionLayout>
+      <Link href="/search">
+        <SearchBar />
+      </Link>
       <MapView mapRef={mapContainerRef} initializeMap={initializeMap} />
       <MapMarkers map={map} storeList={storeList} />
       <FetchStoreListButton onClick={handleStoreListFetch} isFetching={isFetching} />
@@ -66,7 +66,7 @@ export default function MapPage() {
       </div>
       <CurrentLocationButton onClick={requestLocation} />
       <StoreBottomSheet
-        storeList={storeList}
+        storeList={storeList || []}
         isCollapsed={isDragging}
         onStationChange={() => updateCoordinate(map)}
       />

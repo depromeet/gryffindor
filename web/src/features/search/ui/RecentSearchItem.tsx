@@ -1,12 +1,11 @@
 "use client";
 
+import { formatToMonthDay, type SearchHistoryResponse } from "@/features/search";
 import { Icon } from "@/shared/ui";
-import { formatToMonthDay } from "../lib/utils/formatDate";
-import type { SearchHistory } from "../model/types";
 
 interface RecentSearchItemProps {
-  search: SearchHistory;
-  onRemove: (id: string) => void;
+  search: SearchHistoryResponse;
+  onRemove: (id: number) => void;
 }
 
 export function RecentSearchItem({ search, onRemove }: RecentSearchItemProps) {

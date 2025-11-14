@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useRef } from "react";
-import { getSearchBarConfig, SEARCH_BAR_HEIGHT } from "@/features/search";
+import { getSearchBarConfig, useSearchHistoryAdapter } from "@/features/search";
 import { Icon } from "@/shared/ui";
 
 /**
@@ -18,8 +18,9 @@ export function SearchBar() {
   const searchQuery = searchParams.get("query");
 
   const config = getSearchBarConfig(pathname, searchQuery);
-
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const { addHistory } = useSearchHistoryAdapter();
 
   useEffect(() => {
     if (config.editable) {
@@ -31,9 +32,10 @@ export function SearchBar() {
     e.preventDefault();
 
     const keyword = inputRef.current?.value;
-    if (keyword) {
-      router.push(`/map?query=${encodeURIComponent(keyword)}`);
-    }
+    if (!keyword) return;
+
+    if (addHistory) addHistory(keyword);
+    router.push(`/map?query=${encodeURIComponent(keyword)}`);
   };
 
   const handleBack = () => {

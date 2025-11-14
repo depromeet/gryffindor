@@ -5,5 +5,6 @@ export * from "./hooks/useMapCoordinate";
 export * from "./hooks/useMapDrag";
 export * from "./hooks/useMapInitialize";
 export * from "./hooks/useMapMarkers";
+export * from "./hooks/useStoreListData";
 export * from "./queries/useStoreListQuery";
 export * from "./utils/getGeolocationErrorMessage";

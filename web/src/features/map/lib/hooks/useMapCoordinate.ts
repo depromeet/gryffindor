@@ -2,12 +2,12 @@
 
 import { useCallback, useState } from "react";
 
-interface Bounds {
+export interface Bounds {
   nw: { lat: number; lon: number };
   se: { lat: number; lon: number };
 }
 
-interface Center {
+export interface Center {
   lat: number;
   lon: number;
 }
