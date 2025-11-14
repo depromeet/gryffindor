@@ -12,6 +12,7 @@ interface UseStoreListQueryParams {
   };
   limit?: number;
   station?: string;
+  enabled?: boolean;
 }
 
 export function useStoreListQuery({
@@ -20,6 +21,7 @@ export function useStoreListQuery({
   bounds,
   limit = 30,
   station,
+  enabled,
 }: UseStoreListQueryParams) {
   const hasGeoBounds = !!bounds;
 
@@ -50,6 +52,7 @@ export function useStoreListQuery({
     initialPageParam: null,
     getNextPageParam: (lastPage) =>
       lastPage.response.hasNext ? lastPage.response.nextCursor : undefined,
+    enabled,
   });
 
   const storeList = data?.pages.flatMap((page) => page.response.data) || [];

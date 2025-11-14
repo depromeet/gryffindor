@@ -7,6 +7,7 @@ import CharacterIcon from "./character.svg";
 import CheckIcon from "./check.svg";
 import CheckBoldIcon from "./check-bold.svg";
 import CheckLightIcon from "./check-light.svg";
+import ClockIcon from "./clock.svg";
 import CloseIcon from "./close.svg";
 import CloseCircleIcon from "./close-circle.svg";
 import ColorRightChevronIcon from "./color-right-chevron.svg";
@@ -52,6 +53,7 @@ export const iconMap = {
   search: SearchIcon,
   close: CloseIcon,
   call: CallIcon,
+  clock: ClockIcon,
   location: LocationIcon,
   kebab: KeBabIcon,
   character: CharacterIcon,
