@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-interface DownChevronIconProps extends SVGProps<SVGSVGElement> {
+interface DownChevronIconProps extends Omit<SVGProps<SVGSVGElement>, "ref"> {
   size?: number;
   title?: string;
 }

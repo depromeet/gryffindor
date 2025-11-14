@@ -16,11 +16,11 @@ function LevelTestContent() {
   const showProgress = currentId && currentId !== routeConstants.RESULT;
 
   return (
-    <div className="min-h-[calc(100vh-60px)] bg-gray0 px-[20px] pt-[24px] pb-[100px]">
+    <div className="flex h-full flex-col bg-gray0 px-[20px]">
       {showProgress && (
         <LevelTestProgress current={currentStep} total={totalSteps} progress={getProgress()} />
       )}
-      <main className="mt-4">
+      <main className="flex-1 overflow-y-auto pb-[calc(72px+40px)]">
         <LevelTestDynamicPageContent
           currentId={currentId}
           parsedStep={parsedStep}

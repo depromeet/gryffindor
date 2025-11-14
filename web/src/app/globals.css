@@ -20,7 +20,8 @@ html {
 }
 
 body {
-  min-height: 100dvh; /* 동적 뷰포트 지원 */
+  height: 100dvh; /* 동적 뷰포트 지원 - iOS WebView를 위해 min-height → height 변경 */
+  overflow-x: hidden;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -32,6 +33,35 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* Safe Area Utilities */
+.pb-safe {
+  padding-bottom: max(20px, var(--safe-area-inset-bottom));
+}
+
+.pt-safe {
+  padding-top: max(20px, var(--safe-area-inset-top));
+}
+
+.pl-safe {
+  padding-left: max(20px, var(--safe-area-inset-left));
+}
+
+.pr-safe {
+  padding-right: max(20px, var(--safe-area-inset-right));
+}
+
+/* Fixed 요소를 위한 최적화 */
+.fixed-bottom-bar {
+  box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.04);
+  /* iOS에서 초기 렌더링 시 레이어 강제 생성 */
+  transform: translateZ(0);
+  will-change: transform;
+  /* Transition 부모 요소의 transform 영향 차단 */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
