@@ -27,6 +27,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/image/favicon.ico",
   },
+  referrer: "no-referrer",
 };
 
 export const viewport: Viewport = {
