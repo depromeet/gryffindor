@@ -19,6 +19,7 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
   const router = useRouter();
   const [isInfiniteScrollEnabled, setInfiniteScrollEnabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery<StoreReviewResponse>({
@@ -40,7 +41,8 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
     enabled: isInfiniteScrollEnabled,
   });
 
-  const handleLoadMoreClick = () => {
+  const handleShowMoreClick = () => {
+    setShowAll(true);
     if (hasNextPage) {
       fetchNextPage();
       setInfiniteScrollEnabled(true);
@@ -48,6 +50,7 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
   };
 
   const reviews = data?.pages.flatMap((page) => page.data) || [];
+  const visibleReviews = showAll ? reviews : reviews.slice(0, 3);
   const userReview = reviews.find((review) => review.reviewer.id === memberId);
 
   const handleWriteReviewClick = () => {
@@ -86,24 +89,22 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
         {reviews.length === 0 ? (
           <DefaultReview />
         ) : (
-          <ReviewList reviews={reviews} memberId={memberId} />
+          <ReviewList reviews={visibleReviews} memberId={memberId} />
         )}
 
-        {isInfiniteScrollEnabled && hasNextPage && <div ref={loadMoreRef} />}
+        {showAll && isInfiniteScrollEnabled && hasNextPage && <div ref={loadMoreRef} />}
 
-        {hasNextPage && !isInfiniteScrollEnabled && (
-          <>
-            <div className="mt-4 flex justify-center">
-              <TextButton label="더보기" isIcon onClick={handleLoadMoreClick} />
-            </div>
-
-            <AlreadyReviewedModal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-              onConfirm={handleModalConfirm}
-            />
-          </>
+        {!showAll && reviews.length > 3 && (
+          <div className="mt-4 flex justify-center">
+            <TextButton label="더보기" isIcon onClick={handleShowMoreClick} />
+          </div>
         )}
+
+        <AlreadyReviewedModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleModalConfirm}
+        />
       </section>
 
       <div className="mt-5 h-1 w-full bg-gray50" />
