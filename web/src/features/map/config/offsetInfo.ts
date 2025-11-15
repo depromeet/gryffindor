@@ -1,0 +1,4 @@
+export const CURRENT_LOCATION_BUTTON_OFFSET = {
+  WEBVIEW_SPACING: -10,
+  DEFAULT_SPACING: 20,
+} as const;
