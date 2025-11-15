@@ -4,7 +4,7 @@ export function DefaultReview({ text }: { text: string }) {
   return (
     <div className="flex flex-col gap-4 items-center px-5">
       <Image
-        src={require("@/shared/lib/assets/png/character/sad.png")}
+        src={require("@/shared/lib/assets/png/character/sad_review.png")}
         alt="기본 리뷰 이미지"
         width={80}
         height={80}
