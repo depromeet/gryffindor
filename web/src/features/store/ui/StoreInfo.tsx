@@ -1,7 +1,6 @@
-import Image from "next/image";
 import type { Menu } from "@/entities/store/model/types";
 import { useWebview } from "@/shared/lib/hooks/useWebview";
-import { ChipFilter, Icon, Tag } from "@/shared/ui";
+import { ChipFilter, Icon, ImageWithFallback, Tag } from "@/shared/ui";
 
 interface StoreInfoProps {
   thumbnailUrls: string[];
@@ -30,7 +29,7 @@ export function StoreInfo({
 
   const renderImage = (src: string | undefined, alt: string, className: string) =>
     src ? (
-      <Image
+      <ImageWithFallback
         src={src}
         alt={alt}
         width={186.5}

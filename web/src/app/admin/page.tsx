@@ -151,6 +151,7 @@ export default function AdminPage() {
       storeImages: formData.storeImages.map((img) => ({
         ...img,
         imageUrl: img.imageUrl?.trim() || null,
+        isMain: img.isMain,
       })),
       menus: formData.menus.map((menu) => ({
         name: menu.name,
