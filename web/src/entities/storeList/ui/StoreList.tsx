@@ -4,7 +4,7 @@ import Link from "next/link";
 import { getDefaultStationCenter, getLevelFilterDisplayValue } from "@/entities/storeList/lib";
 import { useStoreListQuery } from "@/features/map/lib";
 import { FilterBottomSheet, LevelFilterButton } from "@/features/map/ui";
-import { useInfiniteScroll } from "@/shared/lib";
+import { GA4_RECOMMENDED_EVENTS, useGAClick, useInfiniteScroll } from "@/shared/lib";
 import { useFilterStore, useLocationStore } from "@/shared/store";
 import { RoundedSelectBox } from "@/shared/ui";
 import { StoreCard } from "./StoreCard";
@@ -44,6 +44,10 @@ export function StoreList() {
     enabled: !isLoading && !error,
   });
 
+  const trackStoreCardClick = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT, {
+    select_content_type: "click_store_card",
+  });
+
   return (
     <div className="flex flex-col bg-gray0 pb-[20px]">
       <FilterBottomSheet
@@ -78,7 +82,10 @@ export function StoreList() {
       <ul className="flex flex-col gap-y-[15px] px-[20px]">
         {storeList?.map((store) => (
           <li key={store.id}>
-            <Link href={`/store/${store.id}`}>
+            <Link
+              href={`/store/${store.id}`}
+              onClick={() => trackStoreCardClick({ store_id: store.id, store_name: store.name })}
+            >
               <StoreCard {...store} />
             </Link>
           </li>

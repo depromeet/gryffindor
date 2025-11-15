@@ -9,6 +9,5 @@ export * from "./ga";
 export { useGAClick } from "./hooks/useGAClick";
 export { useGAInView } from "./hooks/useGAInView";
 export { useGAMount } from "./hooks/useGAMount";
-export { useGATimeSpent } from "./hooks/useGATimeSpent";
 // 타입 & 상수
 export * from "./types";

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useLoginApple, useLoginKakao } from "@/features/auth";
 import { SOCIAL_LOGIN_CONFIG } from "@/features/auth/config/socialLoginConfig";
-import { CUSTOM_EVENTS, useGAClick } from "@/shared/lib";
+import { GA4_RECOMMENDED_EVENTS, useGAClick } from "@/shared/lib";
 import { LoginCharacter } from "@/shared/lib/assets";
 import { Icon, TextButton } from "@/shared/ui";
 
@@ -15,22 +15,9 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const trackKakaoButton = useGAClick(CUSTOM_EVENTS.BUTTON_CLICK, {
-    button_id: "login_form_kakao",
-    button_text: "카카오 로그인",
-    location: "login_form",
-  });
-
-  const trackAppleButton = useGAClick(CUSTOM_EVENTS.BUTTON_CLICK, {
-    button_id: "login_form_apple",
-    button_text: "애플 로그인",
-    location: "login_form",
-  });
-
-  const trackNoLoginButton = useGAClick(CUSTOM_EVENTS.BUTTON_CLICK, {
-    button_id: "login_form_no_login",
-    button_text: "로그인 없이 둘러보기",
-    location: "login_form",
+  const trackLogin = useGAClick(GA4_RECOMMENDED_EVENTS.LOGIN);
+  const trackSkipLoginButton = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT, {
+    select_content_type: "skip_login",
   });
 
   // URL 파라미터에서 에러와 로그 확인 (카카오 로그인 실패 시)
@@ -126,9 +113,9 @@ export function LoginForm() {
               onClick={() => {
                 // GA 이벤트 먼저 전송
                 if (config.id === "kakao") {
-                  trackKakaoButton();
+                  trackLogin({ method: "kakao" });
                 } else if (config.id === "apple") {
-                  trackAppleButton();
+                  trackLogin({ method: "apple" });
                 }
 
                 // GA 이벤트가 전송될 시간을 주고 로그인 실행
@@ -147,7 +134,7 @@ export function LoginForm() {
             label="로그인 없이 둘러보기"
             color="white"
             onClick={() => {
-              trackNoLoginButton();
+              trackSkipLoginButton();
               router.push("/home");
             }}
             isUnderline

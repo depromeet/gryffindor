@@ -1,3 +1,4 @@
+import { GA4_RECOMMENDED_EVENTS, useGAClick } from "@/shared/lib";
 import { ImageWithFallback, Tag } from "@/shared/ui";
 import type { Menu } from "../model/types";
 
@@ -8,6 +9,14 @@ export function MenuItem({
   isRepresentative,
   handleSetZoomImageSrc,
 }: Menu & { handleSetZoomImageSrc: (src: string) => void }) {
+  const trackStoreMenuImageClick = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT, {
+    select_content_type: "click_store_menu_image",
+    store_name: name,
+    menu_name: name,
+    menu_price: price.toLocaleString(),
+    menu_image_url: imageUrl,
+  });
+
   return (
     <article className="flex items-center gap-4">
       <div className="h-[80px] w-[80px] bg-gray-100 rounded-[10px] relative">
@@ -18,7 +27,10 @@ export function MenuItem({
           height={80}
           fallbackIconSize={40}
           className="h-[80px] w-[80px] rounded-[10px] object-cover cursor-pointer"
-          onClick={() => imageUrl && handleSetZoomImageSrc(imageUrl)}
+          onClick={() => {
+            trackStoreMenuImageClick();
+            imageUrl && handleSetZoomImageSrc(imageUrl);
+          }}
         />
       </div>
 

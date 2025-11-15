@@ -18,6 +18,7 @@ import {
 import { ReviewSection } from "@/features/store/ui/ReviewSection";
 import { queryKeys } from "@/shared/api";
 import { useSticky } from "@/shared/hooks/useSticky";
+import { CUSTOM_EVENTS, useGAInView } from "@/shared/lib";
 import { TransitionLayout } from "@/shared/ui";
 
 export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
@@ -46,6 +47,52 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
     enabled: !!resolvedParams.id,
   });
 
+  // GA 섹션 뷰포트 추적 (50% 보일 때, 한 번만)
+
+  const menuTrackingRef = useGAInView<HTMLDivElement>({
+    eventName: CUSTOM_EVENTS.SECTION_VISIBLE,
+    params: {
+      section_name: "menu",
+      store_id: resolvedParams.id,
+    },
+    threshold: 0.5,
+    once: true,
+    enabled: !!store,
+  });
+
+  const seatTrackingRef = useGAInView<HTMLDivElement>({
+    eventName: CUSTOM_EVENTS.SECTION_VISIBLE,
+    params: {
+      section_name: "seat_info",
+      store_id: resolvedParams.id,
+    },
+    threshold: 0.5,
+    once: true,
+    enabled: !!store,
+  });
+
+  const reviewTrackingRef = useGAInView<HTMLDivElement>({
+    eventName: CUSTOM_EVENTS.SECTION_VISIBLE,
+    params: {
+      section_name: "review",
+      store_id: resolvedParams.id,
+    },
+    threshold: 0.5,
+    once: true,
+    enabled: !!store,
+  });
+
+  const similarTrackingRef = useGAInView<HTMLDivElement>({
+    eventName: CUSTOM_EVENTS.SECTION_VISIBLE,
+    params: {
+      section_name: "similar_store",
+      store_id: resolvedParams.id,
+    },
+    threshold: 0.5,
+    once: true,
+    enabled: !!store,
+  });
+
   if (isLoading || !store) {
     return (
       <TransitionLayout>
@@ -68,10 +115,22 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
         >
           <TabNav sectionRefs={sectionRefs} />
         </div>
-        <div ref={menuRef} className="scroll-mt-[120px]">
+        <div
+          ref={(el) => {
+            menuRef.current = el;
+            menuTrackingRef.current = el;
+          }}
+          className="scroll-mt-[120px]"
+        >
           <MenuSection menus={store.menus} handleSetZoomImageSrc={handleSetZoomImageSrc} />
         </div>
-        <div ref={seatRef} className="scroll-mt-[120px]">
+        <div
+          ref={(el) => {
+            seatRef.current = el;
+            seatTrackingRef.current = el;
+          }}
+          className="scroll-mt-[120px]"
+        >
           <SeatInfoSection seatInfo={store.seatInfo} />
           <SeatImageGallery
             storeName={store.name}
@@ -81,10 +140,22 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
             handleSetZoomImageSrc={handleSetZoomImageSrc}
           />
         </div>
-        <div ref={reviewRef} className="scroll-mt-[120px]">
+        <div
+          ref={(el) => {
+            reviewRef.current = el;
+            reviewTrackingRef.current = el;
+          }}
+          className="scroll-mt-[120px]"
+        >
           <ReviewSection storeId={store.storeId} memberId={userState?.memberId} />
         </div>
-        <div ref={similarRef} className="scroll-mt-[120px]">
+        <div
+          ref={(el) => {
+            similarRef.current = el;
+            similarTrackingRef.current = el;
+          }}
+          className="scroll-mt-[120px]"
+        >
           <SimilarStore storeId={store.storeId} />
         </div>
         <SuggestionCard storeId={store.storeId} />

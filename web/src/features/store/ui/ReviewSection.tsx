@@ -6,7 +6,7 @@ import { useState } from "react";
 import { getStoreReviews } from "@/entities/review/api/reviewApi";
 import type { StoreReviewResponse } from "@/entities/review/model";
 import { AlreadyReviewedModal, DefaultReview } from "@/features/review/ui";
-import { useInfiniteScroll } from "@/shared/lib";
+import { GA4_RECOMMENDED_EVENTS, useGAClick, useInfiniteScroll } from "@/shared/lib";
 import { TextButton } from "@/shared/ui";
 import { ReviewList } from "./ReviewList";
 
@@ -72,6 +72,11 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
     setIsModalOpen(false);
   };
 
+  const trackClick = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT, {
+    store_id: storeId,
+    member_id: memberId,
+  });
+
   return (
     <>
       <section className="mt-8 flex w-full flex-col gap-4 px-5">
@@ -82,7 +87,12 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
             isIcon
             color="primary"
             rotateNumber={270}
-            onClick={handleWriteReviewClick}
+            onClick={() => {
+              trackClick({
+                select_content_type: "click_write_review",
+              });
+              handleWriteReviewClick();
+            }}
           />
         </div>
 
@@ -96,7 +106,16 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
 
         {!showAll && reviews.length > 3 && (
           <div className="mt-4 flex justify-center">
-            <TextButton label="더보기" isIcon onClick={handleShowMoreClick} />
+            <TextButton
+              label="더보기"
+              isIcon
+              onClick={() => {
+                trackClick({
+                  select_content_type: "click_load_more_review",
+                });
+                handleShowMoreClick();
+              }}
+            />
           </div>
         )}
 

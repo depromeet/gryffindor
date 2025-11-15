@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useUserState } from "@/entities/user";
-import { CUSTOM_EVENTS, useGAClick, useSessionStorage } from "@/shared/lib";
+import { GA4_RECOMMENDED_EVENTS, useGAClick, useSessionStorage } from "@/shared/lib";
 import { BasicCharacter } from "@/shared/lib/assets";
 import { Button, Icon, Modal, TextButton } from "@/shared/ui";
 
@@ -22,16 +22,7 @@ export function HonbobFirstVisitModal() {
     !hasSeenModal && !userState.isLoggedIn && !userState.isLevelTestCompleted,
   );
 
-  const trackStartButton = useGAClick(CUSTOM_EVENTS.BUTTON_CLICK, {
-    button_id: "honbob_level_test_start",
-    button_text: "시작하기",
-    location: "first_visit_modal",
-  });
-
-  const trackCloseButton = useGAClick(CUSTOM_EVENTS.BUTTON_CLICK, {
-    button_id: "honbob_level_test_close",
-    location: "first_visit_modal",
-  });
+  const trackSelectContent = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -56,7 +47,7 @@ export function HonbobFirstVisitModal() {
           className="cursor-pointer self-end"
           type="button"
           onClick={() => {
-            trackCloseButton();
+            trackSelectContent({ select_content_type: "close_honbob_level_test" });
             closeModal();
           }}
         >
@@ -77,7 +68,7 @@ export function HonbobFirstVisitModal() {
             size="medium"
             variant="primary"
             onClick={() => {
-              trackStartButton();
+              trackSelectContent({ select_content_type: "start_honbob_level_test" });
               router.push("/login");
             }}
           />
