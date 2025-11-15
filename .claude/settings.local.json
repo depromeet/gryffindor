@@ -28,7 +28,8 @@
       "Bash(pnpm install:*)",
       "Bash(pnpm biome check:*)",
       "Bash(pnpm check:*)",
-      "Bash(pnpm next build:*)"
+      "Bash(pnpm next build:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []

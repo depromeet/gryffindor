@@ -1,6 +1,5 @@
-import Image from "next/image";
 import type { SeatTypes, StoreListResponseData } from "@/entities/storeList/api";
-import { Tag } from "@/shared/ui";
+import { ImageWithFallback, Tag } from "@/shared/ui";
 
 export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   FOR_ONE: "1인석",
@@ -21,12 +20,13 @@ export function StoreCard({
 }: StoreListResponseData) {
   return (
     <article className="flex items-center gap-4 rounded-[16px]">
-      <div className="relative h-[120px] w-[120px] flex-shrink-0">
-        <Image
+      <div className="relative h-[120px] w-[120px] flex-shrink-0 bg-gray-100 rounded-[12px]">
+        <ImageWithFallback
           src={thumbnailUrl}
           alt={`${name}-thumbnail`}
           fill
           sizes="120px"
+          fallbackIconSize={64}
           className="rounded-[12px] object-cover"
         />
       </div>

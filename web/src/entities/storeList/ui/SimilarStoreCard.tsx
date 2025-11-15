@@ -1,7 +1,6 @@
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { SeatTypes, SimilarStoreRes } from "@/entities/storeList/api";
-import { Tag } from "@/shared/ui";
+import { ImageWithFallback, Tag } from "@/shared/ui";
 
 export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   FOR_ONE: "1인석",
@@ -33,12 +32,13 @@ export function SimilarStoreCard({
       className="flex flex-col gap-3"
       onClick={() => router.push(`/store/${id}`)}
     >
-      <div className="relative h-[156px] w-[156px] flex-shrink-0">
-        <Image
+      <div className="relative h-[156px] w-[156px] flex-shrink-0 bg-gray-100 rounded-[12px]">
+        <ImageWithFallback
           src={thumbnailUrl}
           alt={`${name}-thumbnail`}
           fill
-          sizes="120px"
+          sizes="156px"
+          fallbackIconSize={80}
           className="rounded-[12px] object-cover"
         />
       </div>
