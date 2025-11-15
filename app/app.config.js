@@ -6,7 +6,7 @@ module.exports = {
   expo: {
     name: "밥토리",
     slug: "bobtory-app",
-    version: "1.0.0",
+    version: "1.0.2",
     orientation: "portrait",
     icon: "./assets/images/app-logo.png",
     scheme: "bobtoryapp",
