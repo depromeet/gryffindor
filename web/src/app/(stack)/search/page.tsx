@@ -19,7 +19,7 @@ export default function SearchPage() {
         className="flex flex-col gap-3"
         style={{ paddingTop: `calc(${SEARCH_BAR_HEIGHT}px + 17px)` }}
       >
-        <RecentSearchHeader onDelete={clearHistory} />
+        <RecentSearchHeader searchHistory={searchHistory} onDelete={clearHistory} />
         <RecentSearchList
           searchHistory={searchHistory}
           isLoading={isLoading}

@@ -16,9 +16,7 @@ export function RecentSearchList({ searchHistory, isLoading, onRemove }: RecentS
 
   if (searchHistory.length === 0) {
     return (
-      <div className="px-5 py-4 text-center text-body2-regular text-gray600">
-        최근 검색 내역이 없습니다
-      </div>
+      <div className="px-5 py-3 text-body1-regular text-gray800">최근 검색 내역이 없습니다</div>
     );
   }
 
