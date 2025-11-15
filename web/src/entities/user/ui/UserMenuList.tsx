@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { MY_PAGE_NAVIGATION, UserMenuCard } from "@/entities/user";
 import { useUserState } from "../lib/hooks/useUserState";
 export function UserMenuList() {
@@ -9,9 +8,9 @@ export function UserMenuList() {
       {MY_PAGE_NAVIGATION.map((item) => (
         <li key={item.label}>
           {userState.isLoggedIn && (
-            <Link href={item.href as any}>
+            <a href={item.href as any} target={item.isExternal ? "_blank" : "_self"}>
               <UserMenuCard icon={item.icon} label={item.label} />
-            </Link>
+            </a>
           )}
           {!userState.isLoggedIn && <UserMenuCard icon={item.icon} label={item.label} />}
         </li>

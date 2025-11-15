@@ -4,6 +4,7 @@ export const MY_PAGE_NAVIGATION: {
   label: string;
   icon: IconName;
   href: string;
+  isExternal?: boolean;
 }[] = [
   {
     label: "내 방문 후기 보기",
@@ -19,5 +20,6 @@ export const MY_PAGE_NAVIGATION: {
     label: "문의하러 가기",
     icon: "colorSpeaker",
     href: "https://forms.gle/5FnfNnyP7Rx41o64A",
+    isExternal: true,
   },
 ];
