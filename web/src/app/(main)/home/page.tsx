@@ -8,7 +8,7 @@ import { InputShapeCard, RECOMMEND_LIST } from "@/features/search";
 import { GA4_RECOMMENDED_EVENTS, useGAClick } from "@/shared/lib";
 import { TransitionLayout } from "@/shared/ui";
 
-export default async function HomePage() {
+export default function HomePage() {
   const trackSearchButtonClick = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT, {
     select_content_type: "click_search_button",
     page_path: "/home",
