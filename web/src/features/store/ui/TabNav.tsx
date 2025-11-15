@@ -57,7 +57,7 @@ export function TabNav({ sectionRefs }: TabNavProps) {
   };
 
   return (
-    <nav className="sticky top-0 z-10 flex w-full border-b border-gray-100 bg-white px-5">
+    <nav className="flex w-full border-b border-gray-100 bg-white px-5 pt-4">
       {TABS.map((tab) => (
         <button
           type="button"
@@ -65,7 +65,7 @@ export function TabNav({ sectionRefs }: TabNavProps) {
           onClick={() => handleTabClick(tab)}
           className={`${
             activeTab === tab ? "text-gray-900" : "text-gray-500"
-          } relative flex-1 pt-4 pb-2 text-body1-semibold transition-colors whitespace-nowrap`}
+          } relative flex-1 pb-2 text-body1-semibold transition-colors whitespace-nowrap`}
         >
           {tab}
           {activeTab === tab && (
