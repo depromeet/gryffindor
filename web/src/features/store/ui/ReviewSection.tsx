@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { getStoreReviews } from "@/entities/review/api/reviewApi";
 import type { StoreReviewResponse } from "@/entities/review/model";
-import { AlreadyReviewedModal } from "@/features/review/ui";
+import { AlreadyReviewedModal, DefaultReview } from "@/features/review/ui";
 import { useInfiniteScroll } from "@/shared/lib";
 import { TextButton } from "@/shared/ui";
 import { ReviewList } from "./ReviewList";
@@ -83,7 +83,11 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
           />
         </div>
 
-        <ReviewList reviews={reviews} memberId={memberId} />
+        {reviews.length === 0 ? (
+          <DefaultReview />
+        ) : (
+          <ReviewList reviews={reviews} memberId={memberId} />
+        )}
 
         {isInfiniteScrollEnabled && hasNextPage && <div ref={loadMoreRef} />}
 

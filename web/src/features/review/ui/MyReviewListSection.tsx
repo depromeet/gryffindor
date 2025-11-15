@@ -5,6 +5,7 @@ import { getMyReviews } from "@/entities/review/api";
 import type { StoreReviewResponse } from "@/entities/review/model";
 import { useUserState } from "@/entities/user/lib/hooks/useUserState";
 import { ReviewList } from "@/features/store/ui/ReviewList";
+import { DefaultReview } from "./DefaultReview";
 
 export function MyReviewListSection() {
   const { userState } = useUserState();
@@ -32,13 +33,13 @@ export function MyReviewListSection() {
     return <div>내 리뷰를 불러오는데 오류가 발생했습니다.</div>;
   }
 
-  if (reviews.length === 0) {
-    return <div>작성한 리뷰가 없습니다.</div>;
-  }
-
   return (
     <section className="mt-8 flex w-full flex-col px-5">
-      <ReviewList reviews={reviews} memberId={memberId} />
+      {reviews.length === 0 ? (
+        <DefaultReview />
+      ) : (
+        <ReviewList reviews={reviews} memberId={memberId} />
+      )}
     </section>
   );
 }
