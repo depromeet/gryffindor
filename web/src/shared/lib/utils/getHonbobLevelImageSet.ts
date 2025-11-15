@@ -45,10 +45,10 @@ const HONBOB_LEVEL_IMAGES: Record<HonbobImageType, ImageMap> = {
     4: Lv4LevelCharacterImage,
   },
   [HONBOB_IMAGE_TYPE.INFO_CHARACTER]: {
-    1: Lv1LevelImage,
-    2: Lv2LevelImage,
-    3: Lv3LevelImage,
-    4: Lv4LevelImage,
+    1: Lv1Character,
+    2: Lv2Character,
+    3: Lv3Character,
+    4: Lv4Character,
   },
 } as const;
 
