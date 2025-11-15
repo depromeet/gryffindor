@@ -21,7 +21,7 @@ export function HonbobLevelInfoCard() {
             : "로그인 후 레벨테스트로 나만의 맞춤 식당을 추천받아요"}
         </span>
       </div>
-      <hr className="w-full border-gray100 border-b" />
+      <hr className="w-full border-gray100 h-px" />
       <div className="flex flex-col gap-y-[12px]">
         <div className="flex flex-col gap-y-[2px]">
           <span className="text-body3-semibold text-gray600">추천 메뉴</span>

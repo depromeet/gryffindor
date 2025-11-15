@@ -21,7 +21,7 @@ export function UserProfileInfo() {
           alt={`honbobLevelIcon-${honbobLevel}`}
           width={72}
           height={72}
-          className="rounded-full"
+          className="rounded-full p-[6px]"
         />
       )}
       {isLoggedIn && (
