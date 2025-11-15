@@ -5,7 +5,7 @@ import type { StoreListResponseData } from "@/entities/storeList/api/types";
 import { searchHistoryApi } from "@/features/search";
 import { useToast } from "@/shared/lib/hooks";
 
-export function useStoreSearch() {
+export function useStoreSearch({ lat, lon }: { lat: number; lon: number }) {
   const { showToast } = useToast();
 
   const mutation = useMutation<StoreListResponseData[], Error, { query: string; limit?: number }>({
@@ -13,6 +13,8 @@ export function useStoreSearch() {
       return await searchHistoryApi.searchStore({
         query,
         paging: { limit },
+        lat,
+        lon,
       });
     },
     onSuccess: (data) => {

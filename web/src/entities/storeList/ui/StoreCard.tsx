@@ -44,7 +44,7 @@ export function StoreCard({
           <div className="flex items-center gap-x-[4px] text-[#575757] text-body3-regular">
             <span>{distance}m</span>
             <span>·</span>
-            <span>내 위치에서 약 {walkingMinutes}분</span>
+            <span>역에서 약 {walkingMinutes}분</span>
           </div>
         </div>
         <ul className="flex flex-nowrap items-center gap-x-[5px]">

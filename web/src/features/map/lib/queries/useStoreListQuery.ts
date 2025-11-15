@@ -1,10 +1,11 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { storeListApi } from "@/entities/storeList/api";
-import type { FilterData } from "@/features/filter/model/types";
+import type { FilterData, SortBy } from "@/features/filter/model/types";
 import { queryKeys } from "@/shared/api";
 
 interface UseStoreListQueryParams {
   filters: FilterData;
+  sortBy?: SortBy;
   center: { lat: number; lon: number };
   bounds?: {
     nw: { lat: number; lon: number };
@@ -17,6 +18,7 @@ interface UseStoreListQueryParams {
 
 export function useStoreListQuery({
   filters,
+  sortBy,
   center,
   bounds,
   limit = 30,
@@ -29,7 +31,7 @@ export function useStoreListQuery({
     if (hasGeoBounds && bounds) {
       return queryKeys.STORE_LIST_BY_BOUNDS(filters, { bounds, center });
     }
-    return queryKeys.STORE_LIST(station || "default", filters);
+    return queryKeys.STORE_LIST(station || "default", filters, sortBy);
   };
 
   const { data, ...query } = useInfiniteQuery({
@@ -44,8 +46,8 @@ export function useStoreListQuery({
             honbobLevel: filters.honbobLevel,
             seatTypes: filters.seatTypes,
             categories: filters.categories,
-            sortBy: filters.sortBy,
           },
+          ...(sortBy && { sortBy }),
           paging: { limit, lastKnown: pageParam ?? undefined },
         },
       }),

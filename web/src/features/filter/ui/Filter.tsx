@@ -91,7 +91,6 @@ export function Filter({ initialFilters, onApply, onClose, isOpen }: FilterProps
       honbobLevel: initialFilters.honbobLevel,
       seatTypes: [],
       categories: [],
-      sortBy: "RECOMMENDED",
     });
   };
 
