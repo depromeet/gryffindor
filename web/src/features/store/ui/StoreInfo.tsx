@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { Menu } from "@/entities/store/model/types";
 import { useWebview } from "@/shared/lib/hooks/useWebview";
 import { ChipFilter, Icon, ImageWithFallback, Tag } from "@/shared/ui";
