@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import { SessionProvider } from "next-auth/react";
@@ -43,6 +44,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
   return (
     <html lang="ko" className="overflow-x-hidden">
@@ -55,6 +57,7 @@ export default async function RootLayout({
           strategy="beforeInteractive"
         />
       </head>
+      {gaId && <GoogleAnalytics gaId={gaId} />}
       <body className={`${pretendard.variable}`} suppressHydrationWarning>
         <SessionProvider session={session}>
           <UserStateProvider>
