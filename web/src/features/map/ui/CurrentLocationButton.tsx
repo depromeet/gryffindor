@@ -1,5 +1,7 @@
 import { BOTTOM_NAV_HEIGHT } from "@/shared/config";
+import { useWebview } from "@/shared/lib/hooks/useWebview";
 import { Icon } from "@/shared/ui";
+import { CURRENT_LOCATION_BUTTON_OFFSET } from "../config/offsetInfo";
 
 interface CurrentLocationButtonProps {
   bottomOffset: number;
@@ -7,8 +9,13 @@ interface CurrentLocationButtonProps {
 }
 
 export function CurrentLocationButton({ bottomOffset, onClick }: CurrentLocationButtonProps) {
+  const { isWebview } = useWebview();
+
   // TODO: 임시 구현, 나중에 Observer로 개선 예정
-  const totalBottomOffset = (bottomOffset > 0 ? bottomOffset : BOTTOM_NAV_HEIGHT) + 20;
+  const spacing = isWebview
+    ? CURRENT_LOCATION_BUTTON_OFFSET.WEBVIEW_SPACING
+    : CURRENT_LOCATION_BUTTON_OFFSET.DEFAULT_SPACING;
+  const totalBottomOffset = (bottomOffset > 0 ? bottomOffset : BOTTOM_NAV_HEIGHT + 30) + spacing;
 
   return (
     <button

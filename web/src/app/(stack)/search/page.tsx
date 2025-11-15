@@ -21,7 +21,7 @@ export default function SearchPage() {
       <SearchBar onSubmit={executeSearch} />
       <div
         className="flex flex-col gap-3"
-        style={{ paddingTop: `calc(${SEARCH_BAR_HEIGHT}px + 17px)` }}
+        style={{ paddingTop: `calc(${SEARCH_BAR_HEIGHT}px + env(safe-area-inset-top) + 16px)` }}
       >
         <RecentSearchHeader hasSearchHistory={hasSearchHistory} onDelete={clearHistory} />
         <RecentSearchList
