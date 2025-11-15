@@ -2,8 +2,12 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useRef } from "react";
-import { getSearchBarConfig, useSearchHistoryAdapter } from "@/features/search";
+import { getSearchBarConfig } from "@/features/search";
 import { Icon } from "@/shared/ui";
+
+interface SearchBarProps {
+  onSubmit?: (query: string) => void;
+}
 
 /**
  * 검색바 컴포넌트
@@ -11,7 +15,7 @@ import { Icon } from "@/shared/ui";
  * - 지도 페이지: 읽기 전용 검색바
  * - 검색 페이지: 입력 가능한 검색바
  */
-export function SearchBar() {
+export function SearchBar({ onSubmit }: SearchBarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -19,8 +23,6 @@ export function SearchBar() {
 
   const config = getSearchBarConfig(pathname, searchQuery);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const { addHistory } = useSearchHistoryAdapter();
 
   useEffect(() => {
     if (config.editable) {
@@ -34,8 +36,7 @@ export function SearchBar() {
     const keyword = inputRef.current?.value;
     if (!keyword) return;
 
-    if (addHistory) addHistory(keyword);
-    router.push(`/map?query=${encodeURIComponent(keyword)}`);
+    onSubmit?.(keyword);
   };
 
   const handleBack = () => {

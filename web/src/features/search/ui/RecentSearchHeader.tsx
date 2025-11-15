@@ -1,13 +1,9 @@
-import type { SearchHistoryResponse } from "@/features/search";
-
 interface RecentSearchHeaderProps {
-  searchHistory: SearchHistoryResponse[];
+  hasSearchHistory: boolean;
   onDelete: () => void;
 }
 
-export function RecentSearchHeader({ searchHistory, onDelete }: RecentSearchHeaderProps) {
-  const hasSearchHistory = searchHistory.length > 0;
-
+export function RecentSearchHeader({ hasSearchHistory, onDelete }: RecentSearchHeaderProps) {
   return (
     <div className="flex items-center justify-between px-5">
       <span className="text-body3-semibold text-gray900">최근 검색</span>
