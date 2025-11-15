@@ -16,7 +16,8 @@ const sortOptions = [
 
 export function StoreList() {
   const { selectedStation } = useLocationStore();
-  const { isFilterOpen, filters, openFilter, closeFilter, setFilters } = useFilterStore();
+  const { isFilterOpen, filters, sortBy, openFilter, closeFilter, setFilters, setSortBy } =
+    useFilterStore();
 
   const handleApplyFilters = (newFilters: typeof filters) => {
     setFilters(newFilters);
@@ -29,6 +30,7 @@ export function StoreList() {
   const { storeList, isLoading, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useStoreListQuery({
       filters,
+      sortBy,
       center: {
         lat: centerLatLonInfo.lat,
         lon: centerLatLonInfo.lon,
@@ -59,12 +61,14 @@ export function StoreList() {
       />
 
       <div className="flex gap-2 p-[20px] justify-between">
-        <LevelFilterButton honbobLevel={levelFilterDisplayValue} onClick={openFilter} />
+        <LevelFilterButton
+          honbobLevel={levelFilterDisplayValue}
+          onClick={openFilter}
+          isShadowed={false}
+        />
         <RoundedSelectBox
-          value={filters.sortBy}
-          onChange={(value) =>
-            setFilters({ ...filters, sortBy: value as "DISTANCE" | "RECOMMENDED" })
-          }
+          value={sortBy}
+          onChange={(value) => setSortBy(value as "DISTANCE" | "RECOMMENDED")}
           options={sortOptions}
           placeholder="정렬"
         />

@@ -1,14 +1,16 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { FilterData } from "@/features/filter/model/types";
+import type { FilterData, SortBy } from "@/features/filter/model/types";
 
 interface FilterState {
   isFilterOpen: boolean;
   filters: FilterData;
+  sortBy: SortBy;
   hasInitialized: boolean;
   openFilter: () => void;
   closeFilter: () => void;
   setFilters: (filters: FilterData) => void;
+  setSortBy: (sortBy: SortBy) => void;
   resetFilters: () => void;
   initializeFilters: (userHonbobLevel: number) => void;
 }
@@ -20,7 +22,6 @@ const createDefaultFilters = (userHonbobLevel: number): FilterData => ({
   honbobLevel: [userHonbobLevel],
   seatTypes: [],
   categories: [],
-  sortBy: "RECOMMENDED",
 });
 
 export const useFilterStore = create<FilterState>()(
@@ -28,6 +29,7 @@ export const useFilterStore = create<FilterState>()(
     (set) => ({
       isFilterOpen: false,
       filters: createDefaultFilters(1),
+      sortBy: "RECOMMENDED",
       hasInitialized: false,
 
       openFilter: () => set({ isFilterOpen: true }),
@@ -35,6 +37,8 @@ export const useFilterStore = create<FilterState>()(
       closeFilter: () => set({ isFilterOpen: false }),
 
       setFilters: (filters) => set({ filters }),
+
+      setSortBy: (sortBy) => set({ sortBy }),
 
       resetFilters: () =>
         set((state) => ({
@@ -52,6 +56,7 @@ export const useFilterStore = create<FilterState>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         filters: state.filters,
+        sortBy: state.sortBy,
         hasInitialized: state.hasInitialized,
       }),
     },
