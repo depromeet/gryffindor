@@ -87,7 +87,7 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
         </div>
 
         {reviews.length === 0 ? (
-          <DefaultReview />
+          <DefaultReview text={`아직 작성된 방문 후기가 없어요.\n방문 후기를 들려주세요.`} />
         ) : (
           <ReviewList reviews={visibleReviews} memberId={memberId} />
         )}

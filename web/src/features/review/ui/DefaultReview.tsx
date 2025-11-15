@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export function DefaultReview() {
+export function DefaultReview({ text }: { text: string }) {
   return (
     <div className="flex flex-col gap-4 items-center px-5">
       <Image
@@ -9,7 +9,9 @@ export function DefaultReview() {
         width={80}
         height={80}
       />
-      <span className="text-body2-regular text-gray700 text-center whitespace-pre-line">{`아직 작성된 방문 후기가 없어요.\n방문 후기를 들려주세요.`}</span>
+      <span className="text-body2-regular text-gray700 text-center whitespace-pre-line">
+        {text}
+      </span>
     </div>
   );
 }

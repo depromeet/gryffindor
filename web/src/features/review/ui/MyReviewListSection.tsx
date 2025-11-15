@@ -45,20 +45,26 @@ export function MyReviewListSection() {
     return <div>내 리뷰를 불러오는데 오류가 발생했습니다.</div>;
   }
 
+  if (reviews.length === 0) {
+    return (
+      <section className="flex w-full flex-col h-full justify-center px-5">
+        <DefaultReview
+          text={`아직 작성한 후기가 없어요.\n식당 상세페이지에서 후기를 작성해보세요.`}
+        />
+      </section>
+    );
+  }
+
   return (
     <section className="mt-8 flex w-full flex-col px-5">
-      {reviews.length === 0 ? (
-        <DefaultReview />
-      ) : (
-        <>
-          <ReviewList reviews={visibleReviews} memberId={memberId} />
-          {reviews.length > 3 && !showAll && (
-            <div className="mt-4 flex justify-center">
-              <TextButton label="더보기" isIcon onClick={handleLoadMore} />
-            </div>
-          )}
-        </>
-      )}
+      <>
+        <ReviewList reviews={visibleReviews} memberId={memberId} />
+        {reviews.length > 3 && !showAll && (
+          <div className="mt-4 flex justify-center">
+            <TextButton label="더보기" isIcon onClick={handleLoadMore} />
+          </div>
+        )}
+      </>
     </section>
   );
 }
