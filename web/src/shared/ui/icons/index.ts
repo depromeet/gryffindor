@@ -19,6 +19,7 @@ import ForOneIcon from "./for-one.svg";
 import ForTwoIcon from "./for-two.svg";
 import GoogleIcon from "./google.svg";
 import HomeIcon from "./home.svg";
+import EmptyImageIcon from "./img_empty_case.svg";
 import KakaoIcon from "./kakao.svg";
 import KeBabIcon from "./kebab.svg";
 import LeftArrowIcon from "./left-arrow.svg";
@@ -44,6 +45,7 @@ import UserLoginIcon from "./user-login.svg";
 export const iconMap = {
   home: HomeIcon,
   map: MapIcon,
+  emptyImage: EmptyImageIcon,
   leftArrow: LeftArrowIcon,
   downArrow: DownArrowIcon,
   crown: CrownIcon,
