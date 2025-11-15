@@ -31,7 +31,7 @@ function LevelTestContent() {
   const showProgress = currentId && currentId !== routeConstants.RESULT;
 
   return (
-    <div className="flex h-full flex-col bg-gray0 px-[20px]">
+    <div className="flex h-full flex-col bg-gray0 ">
       {showProgress && (
         <LevelTestProgress current={currentStep} total={totalSteps} progress={getProgress()} />
       )}

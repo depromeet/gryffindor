@@ -84,7 +84,7 @@ export function LevelTestQuestion({
   const isPreviousDisabled = questionNumber === 1 || onBoardingMutation.isPending;
 
   return (
-    <div className="mx-auto">
+    <div className="mx-auto px-[20px]">
       <div className="my-[40px] flex flex-col gap-[13px]">
         <h2 className="text-title2">Q{questionNumber}</h2>
         <h3 className="text-title1">{question.question}</h3>

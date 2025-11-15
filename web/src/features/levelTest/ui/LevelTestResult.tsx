@@ -55,8 +55,8 @@ export function LevelTestResult({ result }: LevelTestResultProps) {
   };
 
   return (
-    <div className="w-full">
-      <div className="flex flex-col items-center rounded-[24px] bg-gray0 px-[20px] pt-[32px] pb-[40px] outline outline-gray100">
+    <div className="w-full h-full p-[20px] bg-gray50">
+      <div className="flex flex-col items-center rounded-[24px] bg-gray0 px-[20px] pt-[32px] pb-[40px] ">
         <Tag label={`레벨 ${result.level}`} color="red" size="small" iconName="crown" />
         <span className="mt-[7px] mb-[20px] text-title1">{levelInfo.title}</span>
         <div className="flex flex-col items-center">

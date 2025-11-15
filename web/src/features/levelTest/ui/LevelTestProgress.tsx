@@ -6,7 +6,7 @@ interface LevelTestProgressProps {
 
 export function LevelTestProgress({ current, total }: LevelTestProgressProps) {
   return (
-    <div className="pt-[20px] pb-[20px]">
+    <div className="p-[20px] ">
       <div className="flex items-center justify-center gap-1">
         {Array.from({ length: total }, (_, index) => {
           const step = index + 1;
