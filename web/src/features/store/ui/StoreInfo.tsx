@@ -113,7 +113,7 @@ export function StoreInfo({
           <div className="flex items-center gap-1">
             <div className="flex items-center gap-2">
               <Icon name="pin" size={18} className="text-gray400" />
-              <span className="text-[#4C4C4C] text-body2-medium">위치</span>
+              <span className="text-[#4C4C4C] text-body2-medium whitespace-nowrap">위치</span>
             </div>
             <span className="text-[#4C4C4C] text-body2-medium">·</span>
             <span className="text-[#4C4C4C] text-body2-medium">{address}</span>

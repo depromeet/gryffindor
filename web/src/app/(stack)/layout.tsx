@@ -1,5 +1,4 @@
 export default function StackLayout({ children }: { children: React.ReactNode }) {
   // 헤더는 이제 TransitionLayout에서 처리
-  // safe-area padding은 TransitionLayout에서 처리하므로 제거
-  return <div className="h-full w-full overflow-x-hidden bg-gray0">{children}</div>;
+  return <div className="h-full bg-gray0">{children}</div>;
 }
