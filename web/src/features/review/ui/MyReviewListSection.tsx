@@ -57,14 +57,12 @@ export function MyReviewListSection() {
 
   return (
     <section className="mt-8 flex w-full flex-col px-5">
-      <>
-        <ReviewList reviews={visibleReviews} memberId={memberId} />
-        {reviews.length > 3 && !showAll && (
-          <div className="mt-4 flex justify-center">
-            <TextButton label="더보기" isIcon onClick={handleLoadMore} />
-          </div>
-        )}
-      </>
+      <ReviewList reviews={visibleReviews} memberId={memberId} />
+      {reviews.length > 3 && !showAll && (
+        <div className="mt-4 flex justify-center">
+          <TextButton label="더보기" isIcon onClick={handleLoadMore} />
+        </div>
+      )}
     </section>
   );
 }
