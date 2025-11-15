@@ -61,7 +61,7 @@ export function PriceRange({ label, values, onChange }: PriceRangeProps) {
           />
           <div className="mt-2 flex w-full items-center justify-between">
             <span className="text-[#000] text-body3-regular">{min.toLocaleString()}원</span>
-            <span className="text-[#000] text-body3-regular">{max.toLocaleString()}원</span>
+            <span className="text-[#000] text-body3-regular">{max.toLocaleString()}원 이상</span>
           </div>
         </div>
         <div className="flex items-center justify-between">
