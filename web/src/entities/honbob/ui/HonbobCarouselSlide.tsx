@@ -7,7 +7,7 @@ interface HonbobCarouselSlideProps {
 
 export function HonbobCarouselSlide({ ref }: HonbobCarouselSlideProps) {
   return (
-    <div className="relative w-full overflow-hidden rounded-[16px]" ref={ref}>
+    <div className="relative w-full overflow-hidden" ref={ref}>
       <div className="flex rounded-[16px]">
         {honbobLevelCardList.map((honbobLevelCard) => (
           <div

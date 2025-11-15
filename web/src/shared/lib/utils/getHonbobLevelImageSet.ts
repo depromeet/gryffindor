@@ -2,12 +2,16 @@ import type { StaticImageData } from "next/image";
 import {
   Lv1Character,
   Lv1LevelCharacterImage,
+  Lv1LevelImage,
   Lv2Character,
   Lv2LevelCharacterImage,
+  Lv2LevelImage,
   Lv3Character,
   Lv3LevelCharacterImage,
+  Lv3LevelImage,
   Lv4Character,
   Lv4LevelCharacterImage,
+  Lv4LevelImage,
 } from "@/shared/lib/assets";
 
 type HonbobLevel = 1 | 2 | 3 | 4;
@@ -41,10 +45,10 @@ const HONBOB_LEVEL_IMAGES: Record<HonbobImageType, ImageMap> = {
     4: Lv4LevelCharacterImage,
   },
   [HONBOB_IMAGE_TYPE.INFO_CHARACTER]: {
-    1: Lv1Character,
-    2: Lv2Character,
-    3: Lv3Character,
-    4: Lv4Character,
+    1: Lv1LevelImage,
+    2: Lv2LevelImage,
+    3: Lv3LevelImage,
+    4: Lv4LevelImage,
   },
 } as const;
 

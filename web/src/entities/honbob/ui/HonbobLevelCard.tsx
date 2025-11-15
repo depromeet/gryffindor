@@ -23,11 +23,18 @@ export function HonbobLevelCard({
 
   return (
     <div className="flex flex-col">
-      <div className="h-[128px] py-[18px] bg-linear-to-bl flex justify-center items-center from-orange-600 to-red-300 rounded-t-2xl ">
+      <div
+        className="
+    h-[128px] py-[18px]
+    flex justify-center items-center
+    rounded-t-[16px]
+    bg-[linear-gradient(217deg,#FF4B22_9.14%,#FF9D9D_125.37%)]
+  "
+      >
         <Image
           src={infoCharacterImage}
           alt={`${honbobLevel}LevelImage`}
-          className="h-full object-contain "
+          className="h-full object-contain"
         />
       </div>
       <div className="rounded-b-2xl w-full p-[24px] bg-white inline-flex flex-col justify-start items-start gap-y-[20px] ">
