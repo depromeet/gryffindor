@@ -83,7 +83,7 @@ export function TextButton({
             size={16}
             className={`transition-transform duration-300 ease-in-out ${
               rotateClassMap[rotateNumber]
-            } ${iconColorClassMap[color]}`}
+            } text-${iconColorClassMap[color]}`}
           />
         </div>
       )}
