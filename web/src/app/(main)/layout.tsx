@@ -15,7 +15,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       style={{
         paddingTop: isHeaderVisible
           ? `calc(${MAIN_HEADER_HEIGHT}px + env(safe-area-inset-top))`
-          : "env(safe-area-inset-top)",
+          : "",
         paddingBottom: isMapPage ? 0 : `calc(${BOTTOM_NAV_HEIGHT}px + env(safe-area-inset-bottom))`,
       }}
     >

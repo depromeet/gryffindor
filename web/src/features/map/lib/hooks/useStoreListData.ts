@@ -37,7 +37,7 @@ export function useStoreListData({ bounds, center }: UseStoreListDataParams) {
     if (query) {
       searchStores({ query });
     }
-  }, [query]);
+  }, [query, searchStores]);
 
   const isSearchMode = !!query;
 

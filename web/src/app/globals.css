@@ -62,6 +62,26 @@ body {
   -webkit-backface-visibility: hidden;
 }
 
+/* drill 애니메이션에서 fixed 요소 문제 해결 */
+/*
+  문제: SsgoiTransition의 transform이 새로운 containing block을 생성하여
+        내부 fixed 요소가 viewport 대신 부모 기준으로 위치함
+
+  해결 방법:
+  1. fixed 요소에 isolation: isolate로 새로운 stacking context 생성
+  2. will-change: transform으로 레이어 분리
+  3. transform: translate3d(0, 0, 0)로 GPU 가속 활성화
+*/
+[data-transition="drill"] .fixed {
+  position: fixed;
+  isolation: isolate;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  /* 부모의 transform에서 독립 */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
