@@ -1,14 +1,14 @@
 "use client";
 
+import axios from "axios";
+import { getSession, useSession } from "next-auth/react";
 import { useState } from "react";
+import { auth } from "@/auth";
 import { axiosInstance } from "@/shared/config";
+import { cn } from "@/shared/lib";
 import { Button } from "@/shared/ui/Button";
 import { StackHeader } from "@/shared/ui/StackHeader";
 import { Tag } from "@/shared/ui/Tag";
-import axios from "axios";
-import { auth } from "@/auth";
-import { getSession, useSession } from "next-auth/react";
-import { cn } from "@/shared/lib";
 
 interface Address {
   address: string;
@@ -97,15 +97,12 @@ export default function AdminPage() {
     try {
       const session = await getSession();
       setIsSearching(true);
-      const response = await axios.get(
-        `https://bluesparrow.shop/api/admin/stores`,
-        {
-          params: { storeName: searchKeyword },
-          headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
-          },
+      const response = await axios.get(`https://bluesparrow.shop/api/admin/stores`, {
+        params: { storeName: searchKeyword },
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
         },
-      );
+      });
 
       const storeData = response.data.response;
 
@@ -122,9 +119,7 @@ export default function AdminPage() {
         mainImageUrl: storeData.mainImageUrl || null,
         honbobLevel: storeData.honbobLevel || 0,
         categories: storeData.categories || { primaryCategory: "" },
-        storeImages: storeData.storeImages || [
-          { imageUrl: null, isMain: false },
-        ],
+        storeImages: storeData.storeImages || [{ imageUrl: null, isMain: false }],
         menus: storeData.menus
           ? storeData.menus.map((menu: Omit<Menu, "id">) => ({
               id: crypto.randomUUID(),
@@ -133,9 +128,7 @@ export default function AdminPage() {
               imageUrl: menu.imageUrl || null,
             }))
           : [{ id: crypto.randomUUID(), name: "", price: 0, imageUrl: null }],
-        seatOptions: storeData.seatOptions || [
-          { seatType: "FOR_ONE", imageUrl: null },
-        ],
+        seatOptions: storeData.seatOptions || [{ seatType: "FOR_ONE", imageUrl: null }],
       });
       alert("가게 정보를 불러왔어요! 아래에서 나머지 데이터를 입력해주세요.");
     } catch (e) {
@@ -174,9 +167,7 @@ export default function AdminPage() {
     console.log("processedData", processedData);
     setIsLoading(false);
     try {
-      const response = await axiosInstance.post("/api/admin/stores", [
-        processedData,
-      ]);
+      const response = await axiosInstance.post("/api/admin/stores", [processedData]);
       alert("가게 정보가 성공적으로 추가되었습니다!");
       console.log("Response:", response);
 
@@ -209,10 +200,7 @@ export default function AdminPage() {
   const addMenu = () => {
     setFormData((prev) => ({
       ...prev,
-      menus: [
-        ...prev.menus,
-        { id: crypto.randomUUID(), name: "", price: 0, imageUrl: null },
-      ],
+      menus: [...prev.menus, { id: crypto.randomUUID(), name: "", price: 0, imageUrl: null }],
     }));
   };
 
@@ -228,10 +216,7 @@ export default function AdminPage() {
   const addSeatOption = () => {
     setFormData((prev) => ({
       ...prev,
-      seatOptions: [
-        ...prev.seatOptions,
-        { seatType: "FOR_ONE", imageUrl: null },
-      ],
+      seatOptions: [...prev.seatOptions, { seatType: "FOR_ONE", imageUrl: null }],
     }));
   };
 
@@ -261,16 +246,13 @@ export default function AdminPage() {
           <div className="rounded-lg border border-gray-200 bg-white p-6">
             {/* 가게 정보 크롤링 */}
             <div className="flex flex-col gap-2">
-              <h2 className="font-bold text-gray-900 text-lg">
-                가게 정보 가져오기
-              </h2>
+              <h2 className="font-bold text-gray-900 text-lg">가게 정보 가져오기</h2>
               <p className="text-gray-500 text-sm">
                 정보를 불러올 가게 이름을 아래에 입력해주세요.
                 <br />
                 정보를 성공적으로 불러오면 아래 폼에 데이터가 채워져요.
                 <br />
-                잘못된 데이터가 포함되거나 누락될 수 있으니 꼭 데이터를
-                확인해주세요!
+                잘못된 데이터가 포함되거나 누락될 수 있으니 꼭 데이터를 확인해주세요!
               </p>
               <div className="flex gap-2">
                 <input
@@ -316,9 +298,7 @@ export default function AdminPage() {
                     id="storeName"
                     type="text"
                     value={formData.name}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, name: e.target.value }))
-                    }
+                    onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="가게 이름을 입력하세요"
                     required
@@ -422,10 +402,7 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="category"
-                  className="mb-2 block font-medium text-gray-700 text-sm"
-                >
+                <label htmlFor="category" className="mb-2 block font-medium text-gray-700 text-sm">
                   카테고리 <span className="text-red-500">*</span>
                 </label>
                 <div className="grid grid-cols-3 gap-2 md:grid-cols-5">
@@ -446,9 +423,7 @@ export default function AdminPage() {
                       }`}
                     >
                       <div className="mb-1 text-lg">{category.icon}</div>
-                      <div className="font-medium text-xs">
-                        {category.label}
-                      </div>
+                      <div className="font-medium text-xs">{category.label}</div>
                     </button>
                   ))}
                 </div>
@@ -465,10 +440,7 @@ export default function AdminPage() {
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               <div className="md:col-span-1">
-                <label
-                  htmlFor="address"
-                  className="mb-1 block font-medium text-gray-700 text-sm"
-                >
+                <label htmlFor="address" className="mb-1 block font-medium text-gray-700 text-sm">
                   주소 <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -488,10 +460,7 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="latitude"
-                  className="mb-1 block font-medium text-gray-700 text-sm"
-                >
+                <label htmlFor="latitude" className="mb-1 block font-medium text-gray-700 text-sm">
                   위도 <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -515,10 +484,7 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <label
-                  htmlFor="longitude"
-                  className="mb-1 block font-medium text-gray-700 text-sm"
-                >
+                <label htmlFor="longitude" className="mb-1 block font-medium text-gray-700 text-sm">
                   경도 <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -548,9 +514,7 @@ export default function AdminPage() {
             <div className="mb-6 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-2xl">📸</span>
-                <h2 className="font-bold text-gray-900 text-lg">
-                  3. 가게 이미지
-                </h2>
+                <h2 className="font-bold text-gray-900 text-lg">3. 가게 이미지</h2>
               </div>
               <button
                 type="button"
@@ -569,12 +533,8 @@ export default function AdminPage() {
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-gray-700 text-sm">
-                        이미지 {index + 1}
-                      </span>
-                      {image.isMain && (
-                        <Tag label="메인" color="red" size="small" />
-                      )}
+                      <span className="font-medium text-gray-700 text-sm">이미지 {index + 1}</span>
+                      {image.isMain && <Tag label="메인" color="red" size="small" />}
                     </div>
                     {formData.storeImages.length > 1 && (
                       <button
@@ -630,9 +590,7 @@ export default function AdminPage() {
                           }}
                           className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
-                        <span className="text-gray-700 text-sm">
-                          메인 이미지로 설정
-                        </span>
+                        <span className="text-gray-700 text-sm">메인 이미지로 설정</span>
                       </label>
                     </div>
                   </div>
@@ -659,14 +617,9 @@ export default function AdminPage() {
 
             <div className="space-y-4">
               {formData.menus.map((menu, index) => (
-                <div
-                  key={menu.id}
-                  className="rounded-md border border-gray-200 p-4"
-                >
+                <div key={menu.id} className="rounded-md border border-gray-200 p-4">
                   <div className="mb-3 flex items-center justify-between">
-                    <span className="font-medium text-gray-700 text-sm">
-                      메뉴 {index + 1}
-                    </span>
+                    <span className="font-medium text-gray-700 text-sm">메뉴 {index + 1}</span>
                     {formData.menus.length > 1 && (
                       <button
                         type="button"
@@ -717,8 +670,7 @@ export default function AdminPage() {
                         value={menu.price}
                         onChange={(e) => {
                           const newMenus = [...formData.menus];
-                          newMenus[index].price =
-                            parseInt(e.target.value, 10) || 0;
+                          newMenus[index].price = parseInt(e.target.value, 10) || 0;
                           setFormData((prev) => ({ ...prev, menus: newMenus }));
                         }}
                       />
@@ -755,9 +707,7 @@ export default function AdminPage() {
             <div className="mb-6 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-2xl">🪑</span>
-                <h2 className="font-bold text-gray-900 text-lg">
-                  5. 좌석 옵션
-                </h2>
+                <h2 className="font-bold text-gray-900 text-lg">5. 좌석 옵션</h2>
               </div>
               <button
                 type="button"
@@ -775,9 +725,7 @@ export default function AdminPage() {
                   className="rounded-md border border-gray-200 p-4"
                 >
                   <div className="mb-3 flex items-center justify-between">
-                    <span className="font-medium text-gray-700 text-sm">
-                      좌석 {index + 1}
-                    </span>
+                    <span className="font-medium text-gray-700 text-sm">좌석 {index + 1}</span>
                     {formData.seatOptions.length > 1 && (
                       <button
                         type="button"
@@ -814,12 +762,8 @@ export default function AdminPage() {
                                   : "border-gray-200 hover:border-gray-300"
                               }`}
                             >
-                              <div className="mb-1 text-lg">
-                                {seatType.icon}
-                              </div>
-                              <div className="font-medium text-xs">
-                                {seatType.label}
-                              </div>
+                              <div className="mb-1 text-lg">{seatType.icon}</div>
+                              <div className="font-medium text-xs">{seatType.label}</div>
                             </button>
                           ))}
                         </div>

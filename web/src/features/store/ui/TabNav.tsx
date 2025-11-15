@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const TABS = ["혼밥메뉴", "좌석", "리뷰", "근처"];
+const TABS = ["혼밥 메뉴", "좌석 정보", "방문 후기", "근처 식당"];
 
 interface TabNavProps {
   sectionRefs: React.RefObject<HTMLElement | null>[];
@@ -65,7 +65,7 @@ export function TabNav({ sectionRefs }: TabNavProps) {
           onClick={() => handleTabClick(tab)}
           className={`${
             activeTab === tab ? "text-gray-900" : "text-gray-500"
-          } relative flex-1 p-4 text-body1-semibold transition-colors`}
+          } relative flex-1 pt-4 pb-2 text-body1-semibold transition-colors whitespace-nowrap`}
         >
           {tab}
           {activeTab === tab && (
