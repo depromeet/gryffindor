@@ -50,45 +50,55 @@ export function StackHeader({ config, className, title: dynamicTitle }: StackHea
 
   return (
     <header
-      className={cn(
-        "flex items-center justify-between",
-        "border-gray100 border-b",
-        "px-[20px] py-[14px]",
-        "fixed top-0 z-40 left-0 right-0",
-        className,
-      )}
-      style={{ ...headerStyle, paddingTop: "calc(env(safe-area-inset-top) + 14px)" }}
+      className={cn("fixed top-0 z-40 left-0 right-0", className)}
+      style={{
+        paddingTop: "env(safe-area-inset-top)",
+        backgroundColor: headerStyle.backgroundColor,
+      }}
     >
-      {/* 뒤로가기 버튼 */}
-      {!backButton?.hidden && (
-        <button
-          type="button"
-          onClick={handleBack}
-          className="-ml-2 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
-          aria-label="뒤로가기"
-        >
-          {backButton?.icon || <Icon size={24} name="leftArrow" disableCurrentColor />}
-        </button>
-      )}
-
-      {/* 뒤로가기 버튼이 숨겨진 경우 빈 공간 */}
-      {backButton?.hidden && <div className="h-10 w-10" />}
-
-      {/* 제목 */}
-      <h1 className="flex-1 truncate text-center font-semibold text-base">
-        {dynamicTitle || title}
-      </h1>
-
-      {/* 우측 액션 영역 */}
-      <div className="flex items-center gap-1">
-        {rightActions && rightActions.length > 0 ? (
-          rightActions.map((action: React.ReactNode, index: number) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: rightActions order is stable
-            <div key={index}>{action}</div>
-          ))
-        ) : (
-          <div className="h-10 w-10" /> // 빈 공간으로 중앙 정렬 유지
+      <div
+        className={cn(
+          "flex items-center justify-between",
+          "border-gray100 border-b",
+          "px-[20px]",
+          "h-[60px]",
         )}
+        style={{
+          color: headerStyle.color,
+          borderBottomColor: headerStyle.borderBottomColor,
+        }}
+      >
+        {/* 뒤로가기 버튼 */}
+        {!backButton?.hidden && (
+          <button
+            type="button"
+            onClick={handleBack}
+            className="-ml-2 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
+            aria-label="뒤로가기"
+          >
+            {backButton?.icon || <Icon size={24} name="leftArrow" disableCurrentColor />}
+          </button>
+        )}
+
+        {/* 뒤로가기 버튼이 숨겨진 경우 빈 공간 */}
+        {backButton?.hidden && <div className="h-10 w-10" />}
+
+        {/* 제목 */}
+        <h1 className="flex-1 truncate text-center font-semibold text-base">
+          {dynamicTitle || title}
+        </h1>
+
+        {/* 우측 액션 영역 */}
+        <div className="flex items-center gap-1">
+          {rightActions && rightActions.length > 0 ? (
+            rightActions.map((action: React.ReactNode, index: number) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: rightActions order is stable
+              <div key={index}>{action}</div>
+            ))
+          ) : (
+            <div className="h-10 w-10" /> // 빈 공간으로 중앙 정렬 유지
+          )}
+        </div>
       </div>
     </header>
   );

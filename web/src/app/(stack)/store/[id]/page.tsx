@@ -62,7 +62,7 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
         <StoreInfo {...store} handleSetZoomImageSrc={handleSetZoomImageSrc} />
         <div
           ref={tabNavRef}
-          className={clsx("sticky top-[60px] z-10", {
+          className={clsx("sticky top-[0px] z-10", {
             "bg-white": isTabNavSticky,
           })}
         >

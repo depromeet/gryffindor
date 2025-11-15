@@ -1,9 +1,8 @@
 "use client";
 
 import axios from "axios";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { useState } from "react";
-import { auth } from "@/auth";
 import { axiosInstance } from "@/shared/config";
 import { cn } from "@/shared/lib";
 import { Button } from "@/shared/ui/Button";

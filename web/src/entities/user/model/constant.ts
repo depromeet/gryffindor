@@ -9,7 +9,7 @@ export const MY_PAGE_NAVIGATION: {
   {
     label: "내 방문 후기 보기",
     icon: "colorNote",
-    href: "/mypage/reviews",
+    href: "/reviews",
   },
   {
     label: "레벨 테스트 하기",

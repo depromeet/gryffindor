@@ -31,10 +31,9 @@ export function UserNicknameModifySection() {
   };
 
   return (
-    <>
-      <div className="flex flex-col gap-y-[8px] p-[20px]">
-        <Input {...nickname.inputProps} />
-      </div>
+    <div className="flex h-full flex-col gap-y-[8px] p-[20px]">
+      <Input {...nickname.inputProps} />
+
       <div className="fixed right-0 bottom-0 left-0 z-50 mx-auto">
         <CTA
           primaryLabel={isPending ? "변경 중..." : "변경 완료"}
@@ -44,6 +43,6 @@ export function UserNicknameModifySection() {
           }
         />
       </div>
-    </>
+    </div>
   );
 }
