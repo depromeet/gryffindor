@@ -2,16 +2,12 @@ import type { StaticImageData } from "next/image";
 import {
   Lv1Character,
   Lv1LevelCharacterImage,
-  Lv1LevelImage,
   Lv2Character,
   Lv2LevelCharacterImage,
-  Lv2LevelImage,
   Lv3Character,
   Lv3LevelCharacterImage,
-  Lv3LevelImage,
   Lv4Character,
   Lv4LevelCharacterImage,
-  Lv4LevelImage,
 } from "@/shared/lib/assets";
 
 type HonbobLevel = 1 | 2 | 3 | 4;
