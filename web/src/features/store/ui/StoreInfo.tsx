@@ -1,4 +1,5 @@
 import type { Menu } from "@/entities/store/model/types";
+import { GA4_RECOMMENDED_EVENTS, useGAClick } from "@/shared/lib";
 import { useWebview } from "@/shared/lib/hooks/useWebview";
 import { ChipFilter, Icon, ImageWithFallback, Tag } from "@/shared/ui";
 
@@ -86,6 +87,14 @@ export function StoreInfo({
     );
   };
 
+  const trackNaverDirectionsClick = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT, {
+    select_content_type: "click_naver_directions",
+    store_name: name,
+    move_to_link_url: `https://map.naver.com/v5/directions/${lon},${lat}/${lon},${lat}/${encodeURIComponent(
+      name,
+    )}/walk`,
+  });
+
   return (
     <article className="flex w-full flex-col gap-5">
       <section className="flex h-[224px] w-full shrink-0 gap-[2px]">
@@ -103,7 +112,10 @@ export function StoreInfo({
             <span className="flex-[1_0_0] text-[#000] text-title2">{name}</span>
             <ChipFilter
               label="길찾기"
-              onClick={() => openNaverDirections(lat, lon, name)}
+              onClick={() => {
+                trackNaverDirectionsClick();
+                openNaverDirections(lat, lon, name);
+              }}
               selected
             />
           </div>

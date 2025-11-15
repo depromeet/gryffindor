@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/shared/lib";
+import { cn, GA4_RECOMMENDED_EVENTS, useGAClick } from "@/shared/lib";
 import { Icon } from "./Icon";
 import { Select } from "./Select";
 
@@ -22,7 +22,15 @@ export function RoundedSelectBox({
 }: RoundedSelectBoxProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const trackSortBySelect = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT, {
+    select_content_type: "select_sort_by",
+  });
+
   const handleValueChange = (newValue: string) => {
+    trackSortBySelect({
+      selected_sort_by_value: newValue,
+      selected_sort_by_label: options.find((opt) => opt.value === newValue)?.label,
+    });
     onChange(newValue);
     setIsOpen(false);
   };

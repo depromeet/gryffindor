@@ -4,12 +4,21 @@ import { useState } from "react";
 import { STATIONS } from "@/shared/model";
 import { useLocationStore } from "@/shared/store";
 import { Icon, Overlay, Select } from "@/shared/ui";
+import { GA4_RECOMMENDED_EVENTS, useGAClick } from "../lib";
 
 export function StationOverlaySelect() {
   const { selectedStation, setSelectedStation } = useLocationStore();
   const [isOpen, setIsOpen] = useState(false);
 
+  const trackStationSelect = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT, {
+    select_content_type: "select_station",
+  });
+
   const handleValueChange = (value: string) => {
+    trackStationSelect({
+      selected_station_value: value,
+      selected_station_label: STATIONS.find((station) => station.value === value)?.label,
+    });
     setSelectedStation(value);
     setIsOpen(false);
   };

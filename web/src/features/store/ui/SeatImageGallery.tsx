@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { SeatImage } from "@/entities/store/model/types";
+import { GA4_RECOMMENDED_EVENTS, useGAClick } from "@/shared/lib";
 import { Tag } from "@/shared/ui";
 
 interface SeatImageGalleryProps {
@@ -28,6 +29,13 @@ export function SeatImageGallery({
   const seatLabels = seatImages
     .map((img) => seatTypeMap[img.seatType as keyof typeof seatTypeMap])
     .filter(Boolean);
+
+  const trackStoreSeatImageClick = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT, {
+    select_content_type: "click_store_seat_image",
+    store_name: storeName,
+    store_level: level,
+  });
+
   return (
     <>
       <article className="mt-8 flex w-full flex-col gap-5 px-5">
@@ -47,7 +55,13 @@ export function SeatImageGallery({
                       width={180}
                       height={180}
                       className="h-full w-full object-cover"
-                      onClick={() => img.imageUrl && handleSetZoomImageSrc(img.imageUrl)}
+                      onClick={() => {
+                        trackStoreSeatImageClick({
+                          seat_image_type: img.seatType,
+                          seat_image_url: img.imageUrl,
+                        });
+                        img.imageUrl && handleSetZoomImageSrc(img.imageUrl);
+                      }}
                     />
                   ) : (
                     <div className="h-full w-full bg-gray-200" />

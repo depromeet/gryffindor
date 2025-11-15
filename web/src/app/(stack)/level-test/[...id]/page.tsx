@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import {
   LevelTestDynamicPageContent,
   LevelTestProgress,
@@ -14,16 +15,20 @@ function LevelTestContent() {
   const { currentId, parsedStep, goToNext, goToPrevious, routeConstants } =
     useLevelTestNavigation();
 
-  const showProgress = currentId && currentId !== routeConstants.RESULT;
+  const isResultPage = currentId === routeConstants.RESULT;
 
-  // 페이지 마운트 추적 (currentId가 변경될 때마다 새로운 이벤트 전송)
-  useGAMount(GA4_RECOMMENDED_EVENTS.PAGE_VIEW, {
-    page_name: "level_test_page",
-    page_id: currentId,
-    step: parsedStep?.toString() ?? "",
-    total_steps: totalSteps,
-    is_result_page: currentId === routeConstants.RESULT,
-  });
+  const eventParams = useMemo(
+    () => ({
+      page_name: "level_test_result_page",
+      result_level: result?.level,
+      is_result_page: isResultPage,
+    }),
+    [result, isResultPage],
+  );
+
+  useGAMount(GA4_RECOMMENDED_EVENTS.PAGE_VIEW, eventParams, isResultPage);
+
+  const showProgress = currentId && currentId !== routeConstants.RESULT;
 
   return (
     <div className="flex h-full flex-col bg-gray0 px-[20px]">

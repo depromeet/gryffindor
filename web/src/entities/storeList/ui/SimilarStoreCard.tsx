@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import type { SeatTypes, SimilarStoreRes } from "@/entities/storeList/api";
-import { formatDistance } from "@/shared/lib";
+import { formatDistance, GA4_RECOMMENDED_EVENTS, useGAClick } from "@/shared/lib";
 import { ImageWithFallback, Tag } from "@/shared/ui";
 
 export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
@@ -29,11 +29,24 @@ export function SimilarStoreCard({
 
   const formattedDistance = formatDistance(distanceInMeters);
 
+  const trackSimilarStoreClick = useGAClick(GA4_RECOMMENDED_EVENTS.SELECT_CONTENT, {
+    select_content_type: "click_move_to_similar_store",
+    store_id: id,
+    store_name: name,
+    store_level: honbobLevel,
+    store_primary_category: primaryCategory,
+    store_distance_in_meters: distanceInMeters,
+    store_seat_types: parsedSeatTypes.join(","),
+  });
+
   return (
     <button
       type="button"
       className="flex flex-col gap-3"
-      onClick={() => router.push(`/store/${id}`)}
+      onClick={() => {
+        trackSimilarStoreClick();
+        router.push(`/store/${id}`);
+      }}
     >
       <div className="relative h-[156px] w-[156px] flex-shrink-0 bg-gray-100 rounded-[12px]">
         <ImageWithFallback
