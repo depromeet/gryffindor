@@ -94,7 +94,7 @@ export function BottomNavigation() {
               )}
             >
               <Icon
-                name={item.icon}
+                name={active && item.id === "mypage" ? "userLogin" : item.icon}
                 size={24}
                 className={cn(
                   "transition-colors duration-200",
