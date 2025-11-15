@@ -12,7 +12,9 @@ export function ReviewList({ reviews, memberId }: ReviewListProps) {
       {reviews.map((review) => (
         <div key={review.id}>
           <ReviewCard review={review} memberId={memberId} />
-          <div className="h-[1px] w-full bg-gray50" />
+          {review.id !== reviews[reviews.length - 1].id && (
+            <div className="h-[1px] w-full bg-gray50" />
+          )}
         </div>
       ))}
     </div>
