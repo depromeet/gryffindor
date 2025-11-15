@@ -100,7 +100,7 @@ export const ReportForm = ({
           onChange={handleSeatTypesChange}
         />
       </div>
-      <div className="flex w-full justify-center">
+      <div className="flex w-full justify-center px-[20px]">
         <Button
           label="제보하기"
           size="large"
