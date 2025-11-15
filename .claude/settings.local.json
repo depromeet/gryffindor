@@ -29,7 +29,8 @@
       "Bash(pnpm biome check:*)",
       "Bash(pnpm check:*)",
       "Bash(pnpm next build:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: Add ImageWithFallback component for error handling\n\n- Create reusable ImageWithFallback component with automatic fallback to empty image icon\n- Handle both null/undefined src and image load errors\n- Add customizable fallbackIconSize prop for different use cases\n- Replace Image components in StoreCard, SimilarStoreCard, MenuItem, and StoreInfo\n- Add empty image icon SVG asset\n- Export ImageWithFallback from shared UI components\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
