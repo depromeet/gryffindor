@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { SeatTypes, SimilarStoreRes } from "@/entities/storeList/api";
+import { formatDistance } from "@/shared/lib";
 import { Tag } from "@/shared/ui";
 
 export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
@@ -27,6 +28,8 @@ export function SimilarStoreCard({
       ? (seatTypes.split(",") as SeatTypes[])
       : (["FOR_ONE", "FOR_TWO"] as SeatTypes[]);
 
+  const formattedDistance = formatDistance(distanceInMeters);
+
   return (
     <button
       type="button"
@@ -50,7 +53,7 @@ export function SimilarStoreCard({
           <div className="flex items-center gap-x-[4px] text-body3-regular text-gray700">
             <span>{primaryCategory}</span>
             <span>·</span>
-            <span>{distanceInMeters}m</span>
+            <span>{formattedDistance}</span>
           </div>
         </div>
         <ul className="flex flex-nowrap items-center gap-x-[5px]">
