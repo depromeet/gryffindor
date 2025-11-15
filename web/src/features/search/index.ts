@@ -7,6 +7,7 @@ export * from "./config/searchBarConfig";
 // Hooks
 export * from "./lib/hooks/useLocalSearchHistory";
 export * from "./lib/hooks/useSearchHistoryAdapter";
+export * from "./lib/hooks/useSearchNavigation";
 
 // Queries
 export * from "./lib/queries/useServerSearchHistory";
