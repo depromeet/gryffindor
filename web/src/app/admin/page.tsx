@@ -1,7 +1,10 @@
 "use client";
 
+import axios from "axios";
+import { getSession } from "next-auth/react";
 import { useState } from "react";
 import { axiosInstance } from "@/shared/config";
+import { cn } from "@/shared/lib";
 import { Button } from "@/shared/ui/Button";
 import { StackHeader } from "@/shared/ui/StackHeader";
 import { Tag } from "@/shared/ui/Tag";
@@ -83,6 +86,57 @@ export default function AdminPage() {
   const [formData, setFormData] = useState<Store>(INITIAL_FORM_DATA);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const [searchKeyword, setSearchKeyword] = useState("");
+
+  const handleSearch = async () => {
+    if (!searchKeyword.trim()) return;
+
+    try {
+      const session = await getSession();
+      setIsSearching(true);
+      const response = await axios.get(`https://bluesparrow.shop/api/admin/stores`, {
+        params: { storeName: searchKeyword },
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+      });
+
+      const storeData = response.data.response;
+
+      setFormData({
+        ...response.data.response,
+        name: storeData.name || "",
+        address: storeData.address || {
+          address: "",
+          latitude: 0,
+          longitude: 0,
+        },
+        phoneNumber: storeData.phoneNumber || null,
+        description: storeData.description || null,
+        mainImageUrl: storeData.mainImageUrl || null,
+        honbobLevel: storeData.honbobLevel || 0,
+        categories: storeData.categories || { primaryCategory: "" },
+        storeImages: storeData.storeImages || [{ imageUrl: null, isMain: false }],
+        menus: storeData.menus
+          ? storeData.menus.map((menu: Omit<Menu, "id">) => ({
+              id: crypto.randomUUID(),
+              name: menu.name || "",
+              price: menu.price || 0,
+              imageUrl: menu.imageUrl || null,
+            }))
+          : [{ id: crypto.randomUUID(), name: "", price: 0, imageUrl: null }],
+        seatOptions: storeData.seatOptions || [{ seatType: "FOR_ONE", imageUrl: null }],
+      });
+      alert("가게 정보를 불러왔어요! 아래에서 나머지 데이터를 입력해주세요.");
+    } catch (e) {
+      console.error(e);
+      alert("가게 검색 중 에러가 발생했어요!");
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -186,9 +240,45 @@ export default function AdminPage() {
       />
 
       <div className="mx-auto max-w-4xl space-y-6 p-4">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 mt-[69px]">
           {/* 1. 기본 정보 */}
           <div className="rounded-lg border border-gray-200 bg-white p-6">
+            {/* 가게 정보 크롤링 */}
+            <div className="flex flex-col gap-2">
+              <h2 className="font-bold text-gray-900 text-lg">가게 정보 가져오기</h2>
+              <p className="text-gray-500 text-sm">
+                정보를 불러올 가게 이름을 아래에 입력해주세요.
+                <br />
+                정보를 성공적으로 불러오면 아래 폼에 데이터가 채워져요.
+                <br />
+                잘못된 데이터가 포함되거나 누락될 수 있으니 꼭 데이터를 확인해주세요!
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="가게 이름을 검색해주세요"
+                  className="w-[300px] rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) => setSearchKeyword(e.target.value)}
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleSearch();
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  className={cn(
+                    "inline-block w-[100px] bg-primary400 text-white rounded-md cursor-pointer",
+                    isSearching && "opacity-50 cursor-not-allowed",
+                  )}
+                  onClick={handleSearch}
+                >
+                  검색
+                </button>
+              </div>
+            </div>
+            <div className="w-full h-px bg-gray-300 my-8" />
             <div className="mb-6 flex items-center gap-2">
               <span className="text-2xl">🏪</span>
               <h2 className="font-bold text-gray-900 text-lg">1. 기본 정보</h2>
@@ -226,7 +316,10 @@ export default function AdminPage() {
                     type="tel"
                     value={formData.phoneNumber || ""}
                     onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }))
+                      setFormData((prev) => ({
+                        ...prev,
+                        phoneNumber: e.target.value,
+                      }))
                     }
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="010-1234-5678"
@@ -245,7 +338,10 @@ export default function AdminPage() {
                   id="description"
                   value={formData.description || ""}
                   onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, description: e.target.value }))
+                    setFormData((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
                   }
                   className="h-24 w-full resize-none rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="가게에 대한 설명을 입력하세요"
@@ -293,7 +389,10 @@ export default function AdminPage() {
                     type="url"
                     value={formData.mainImageUrl || ""}
                     onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, mainImageUrl: e.target.value }))
+                      setFormData((prev) => ({
+                        ...prev,
+                        mainImageUrl: e.target.value,
+                      }))
                     }
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="https://example.com/image.jpg"
@@ -371,7 +470,10 @@ export default function AdminPage() {
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      address: { ...prev.address, latitude: parseFloat(e.target.value) },
+                      address: {
+                        ...prev.address,
+                        latitude: parseFloat(e.target.value),
+                      },
                     }))
                   }
                   className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -392,7 +494,10 @@ export default function AdminPage() {
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      address: { ...prev.address, longitude: parseFloat(e.target.value) },
+                      address: {
+                        ...prev.address,
+                        longitude: parseFloat(e.target.value),
+                      },
                     }))
                   }
                   className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -456,7 +561,10 @@ export default function AdminPage() {
                         onChange={(e) => {
                           const newImages = [...formData.storeImages];
                           newImages[index].imageUrl = e.target.value;
-                          setFormData((prev) => ({ ...prev, storeImages: newImages }));
+                          setFormData((prev) => ({
+                            ...prev,
+                            storeImages: newImages,
+                          }));
                         }}
                         className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="https://example.com/image.jpg"
@@ -474,7 +582,10 @@ export default function AdminPage() {
                             newImages.forEach((img, i) => {
                               img.isMain = i === index && e.target.checked;
                             });
-                            setFormData((prev) => ({ ...prev, storeImages: newImages }));
+                            setFormData((prev) => ({
+                              ...prev,
+                              storeImages: newImages,
+                            }));
                           }}
                           className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
@@ -639,7 +750,10 @@ export default function AdminPage() {
                               onClick={() => {
                                 const newSeats = [...formData.seatOptions];
                                 newSeats[index].seatType = seatType.value;
-                                setFormData((prev) => ({ ...prev, seatOptions: newSeats }));
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  seatOptions: newSeats,
+                                }));
                               }}
                               className={`rounded-lg border-2 p-2 text-center transition-all hover:shadow-sm ${
                                 seat.seatType === seatType.value
@@ -669,7 +783,10 @@ export default function AdminPage() {
                         onChange={(e) => {
                           const newSeats = [...formData.seatOptions];
                           newSeats[index].imageUrl = e.target.value;
-                          setFormData((prev) => ({ ...prev, seatOptions: newSeats }));
+                          setFormData((prev) => ({
+                            ...prev,
+                            seatOptions: newSeats,
+                          }));
                         }}
                         className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="https://example.com/seat.jpg"

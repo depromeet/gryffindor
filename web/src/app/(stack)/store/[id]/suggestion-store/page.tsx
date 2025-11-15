@@ -5,11 +5,13 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { postStoreSuggestion } from "@/features/store/api";
 import { SuggestionImage, SuggestionModal } from "@/features/store/ui";
+import { useFixedInTransition } from "@/shared/hooks/useFixedInTransition";
 import { CTA, FilterSection, InputReview, TransitionLayout } from "@/shared/ui";
 
 const SUGGESTION_KEYWORDS = ["식당 폐업", "식당 정보", "전화 번호", "위치 정보", "영업 시간"];
 
 export default function SuggestionStorePage() {
+  const fixedRef = useFixedInTransition();
   const router = useRouter();
   const params = useParams();
   const storeId = params.id as string;
@@ -74,7 +76,7 @@ export default function SuggestionStorePage() {
           />
         </div>
 
-        <div className="fixed right-0 bottom-0 left-0">
+        <div ref={fixedRef} className="fixed right-0 bottom-0 left-0">
           <CTA primaryLabel="제보하기" onPrimary={handleSubmit} primaryDisabled={isDisabled} />
         </div>
       </div>

@@ -9,6 +9,7 @@ import {
   REVIEW_KEYWORD_EN_KO_MAP,
   REVIEW_KEYWORD_KO_EN_MAP,
 } from "@/entities/review/model/constants";
+import { useUserState } from "@/entities/user";
 
 export function useReviewForm() {
   const params = useParams();
@@ -31,6 +32,9 @@ export function useReviewForm() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>(getInitialFilters());
   const [review, setReview] = useState(initialContent);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { userState } = useUserState();
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   const textOnlyFilters = REVIEW_FILTERS.map((filter) => filter.split(" ").slice(1).join(" "));
 
@@ -65,6 +69,10 @@ export function useReviewForm() {
     .filter(Boolean);
 
   const handleSubmit = () => {
+    if (!userState.memberId) {
+      setIsLoginModalOpen(true);
+      return;
+    }
     if (isEditMode) {
       updateReviewMutation.mutate({
         reviewId: Number(reviewId),
@@ -94,6 +102,8 @@ export function useReviewForm() {
     textOnlyFilters,
     handleFilterChange,
     selectedTextOnlyFilters,
+    isLoginModalOpen,
+    setIsLoginModalOpen,
     handleSubmit,
     handleModalClose,
   };

@@ -49,3 +49,20 @@ export const updateReview = async ({
   const { response } = await axiosInstance.put<Review>(`/api/v1/reviews/${reviewId}`, review);
   return response;
 };
+
+interface GetMyReviewsRequest {
+  memberId: number;
+  limit?: number;
+  lastKnown?: string;
+}
+
+export const getMyReviews = async ({ memberId, limit = 20, lastKnown }: GetMyReviewsRequest) => {
+  const { response } = await axiosInstance.get<StoreReviewResponse>(`/api/v1/reviews/my`, {
+    params: {
+      memberId,
+      limit,
+      lastKnown,
+    },
+  });
+  return response;
+};

@@ -1,5 +1,15 @@
 export type SeatTypes = "FOR_ONE" | "FOR_TWO" | "FOR_FOUR" | "CUBICLE" | "BAR_TABLE";
 
+export interface SimilarStoreRes {
+  id: number;
+  name: string;
+  thumbnailUrl: string;
+  honbobLevel: number;
+  primaryCategory: string;
+  distanceInMeters: number;
+  seatTypes?: string | SeatTypes[];
+}
+
 export interface StoreListResponseReal {
   //실제 api 응답 StoreListResponse를 다른 곳에서 쓰고 있어 다른 이름으로 정의
   data: StoreListResponseData[];
@@ -44,10 +54,11 @@ export interface StoreListRequestBody {
       min: number;
       max: number;
     };
-    honbobLevel: number;
+    honbobLevel?: number[];
     seatTypes?: ("FOR_ONE" | "FOR_TWO" | "FOR_FOUR" | "BAR_TABLE" | "CUBICLE")[];
     paymentMethods?: string[];
     categories?: string[];
+    sortBy?: "DISTANCE" | "RECOMMENDED";
   };
   paging: {
     limit: number;

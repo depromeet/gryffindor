@@ -16,7 +16,7 @@ export function UserProfileSection() {
         <RoundButton
           label="닉네임 변경"
           onClick={() => {
-            router.push("/mypage/nickname");
+            router.push("/nickname");
           }}
         />
       )}

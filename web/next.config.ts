@@ -40,6 +40,7 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
     ],
+    unoptimized: true,
   },
   typedRoutes: true,
   reactStrictMode: false,

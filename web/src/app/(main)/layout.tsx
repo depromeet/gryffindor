@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { BOTTOM_NAV_HEIGHT, MAIN_HEADER_HEIGHT } from "@/shared/config";
-import { BottomNavigation, SearchHeader } from "@/shared/ui";
+import { BottomNavigation } from "@/shared/ui";
 import MainHeader from "@/shared/ui/MainHeader";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
@@ -15,12 +15,11 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       style={{
         paddingTop: isHeaderVisible
           ? `calc(${MAIN_HEADER_HEIGHT}px + env(safe-area-inset-top))`
-          : "env(safe-area-inset-top)",
+          : "",
         paddingBottom: isMapPage ? 0 : `calc(${BOTTOM_NAV_HEIGHT}px + env(safe-area-inset-bottom))`,
       }}
     >
       {isHeaderVisible && <MainHeader />}
-      {isMapPage && <SearchHeader />}
       {children}
       <BottomNavigation />
     </div>
