@@ -4,6 +4,7 @@ export * from "./Button";
 export * from "./Checkbox";
 export * from "./ChipFilter";
 export * from "./CTA";
+export * from "./DynamicColorLevelTag";
 export * from "./FilterButton";
 export * from "./FilterSection";
 export * from "./FloatingNavButton";

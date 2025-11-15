@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import type { SeatTypes, SimilarStoreRes } from "@/entities/storeList/api";
 import { formatDistance, GA4_RECOMMENDED_EVENTS, useGAClick } from "@/shared/lib";
-import { ImageWithFallback, Tag } from "@/shared/ui";
+import { DynamicColorLevelTag, ImageWithFallback, Tag } from "@/shared/ui";
 
 export const SEAT_TYPES_MAP: Record<SeatTypes, string> = {
   FOR_ONE: "1인석",
@@ -61,7 +61,7 @@ export function SimilarStoreCard({
 
       <div className="flex flex-col gap-y-[8px]">
         <div className="flex flex-col gap-y-[4px]">
-          <Tag label={`레벨 ${honbobLevel}`} color="gray" size="small" iconName="crown" />
+          <DynamicColorLevelTag level={honbobLevel} size="small" />
           <span className="text-body1-semibold text-gray900 text-start">{name}</span>
           <div className="flex items-center gap-x-[4px] text-body3-regular text-gray700">
             <span>{primaryCategory}</span>

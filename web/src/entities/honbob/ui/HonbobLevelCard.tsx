@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getHonbobLevelImageSet } from "@/shared/lib";
-import { Tag } from "@/shared/ui";
+import { DynamicColorLevelTag } from "@/shared/ui";
 
 interface HonbobLevelCardProps {
   honbobLevel: string;
@@ -38,8 +38,8 @@ export function HonbobLevelCard({
         />
       </div>
       <div className="rounded-b-2xl w-full p-[24px] bg-white inline-flex flex-col justify-start items-start gap-y-[20px] ">
-        <div className="flex flex-col  gap-x-[8px]">
-          <Tag label={honbobLevel} color="red" size="medium" iconName="crown" />
+        <div className="flex flex-col gap-y-[8px]">
+          <DynamicColorLevelTag level={honbobLevel} size="medium" />
           <div className="flex flex-col gap-y-[4px]">
             <p className="text-title1 text-gray900">{honbobLevelTitle}</p>
             <p className="text-body1-semibold text-primary400">{honbobLevelDescription}</p>
