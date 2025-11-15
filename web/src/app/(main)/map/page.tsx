@@ -19,6 +19,7 @@ import {
   StoreBottomSheet,
 } from "@/features/map/ui";
 import { SearchBar } from "@/features/search";
+import { CUSTOM_EVENTS, useGATimeSpent } from "@/shared/lib";
 import { useToast } from "@/shared/lib/hooks";
 import { useFilterStore } from "@/shared/store";
 import { TransitionLayout } from "@/shared/ui";
@@ -28,6 +29,15 @@ export default function MapPage() {
   const { bounds, center, updateCoordinate } = useMapCoordinate();
   const { requestLocation } = useLocation(map);
   const { isDragging, resetDragging } = useMapDrag(map);
+
+  // 페이지 체류 시간 추적 (최소 3초 이상 머물렀을 때만 전송)
+  useGATimeSpent(
+    CUSTOM_EVENTS.TIME_ON_PAGE,
+    {
+      page_name: "map",
+    },
+    3,
+  );
 
   const { storeList, isFetching, isSearchMode } = useStoreListData({ bounds, center });
   const { isFilterOpen, filters, openFilter, closeFilter, setFilters } = useFilterStore();

@@ -30,6 +30,7 @@
     ]
   },
   "dependencies": {
+    "@next/third-parties": "^16.0.3",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-toast": "^1.2.15",
     "@ssgoi/react": "^2.5.2",
