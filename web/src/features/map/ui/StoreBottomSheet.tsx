@@ -17,15 +17,20 @@ interface StoreBottomSheetProps {
   storeList: StoreListResponseData[];
   isCollapsed: boolean;
   onStationChange: () => void;
+  onHeightChange: (height: number) => void;
 }
 
 export function StoreBottomSheet({
   storeList,
   isCollapsed,
   onStationChange,
+  onHeightChange,
 }: StoreBottomSheetProps) {
   const { selectedStoreId } = useMapStore();
   const [safeBottom, setSafeBottom] = useState(0);
+
+  // 바텀시트 높이: 마커 선택(245px) | 드래그 중(95px) | 기본(310px) + Safe Area
+  const height = (selectedStoreId ? 245 : isCollapsed ? 95 : 310) + safeBottom;
 
   const selectedStoreInfo = selectedStoreId
     ? storeList.find((store) => store.id === selectedStoreId)
@@ -38,8 +43,15 @@ export function StoreBottomSheet({
     setSafeBottom(parseFloat(value));
   }, []);
 
-  // 바텀시트 높이: 마커 선택(245px) | 드래그 중(95px) | 기본(310px) + Safe Area
-  const height = (selectedStoreId ? 245 : isCollapsed ? 95 : 310) + safeBottom;
+  // TODO: 임시 구현, 나중에 Observer로 개선 예정
+  useEffect(() => {
+    if (storeList.length === 0) {
+      onHeightChange(0);
+      return;
+    }
+
+    onHeightChange(height);
+  }, [height, onHeightChange, storeList.length]);
 
   const renderStoreContent = () => {
     if (selectedStoreInfo) {

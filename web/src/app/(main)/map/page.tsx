@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import {
   useLocation,
   useMapCoordinate,
@@ -30,6 +31,9 @@ export default function MapPage() {
   const { storeList, isFetching } = useStoreListData({ bounds, center });
   const { isFilterOpen, filters, openFilter, closeFilter, setFilters } = useFilterStore();
 
+  // TODO: 임시 구현, 나중에 Observer로 자동 감지 개선 예정
+  const [bottomSheetHeight, setBottomSheetHeight] = useState(0);
+
   const levelDisplayValue =
     filters.honbobLevel.length > 1 ? "커스텀" : `레벨${filters.honbobLevel[0] || 1}`;
 
@@ -54,11 +58,12 @@ export default function MapPage() {
       >
         <LevelFilterButton honbobLevel={levelDisplayValue} onClick={openFilter} />
       </div>
-      <CurrentLocationButton onClick={requestLocation} />
+      <CurrentLocationButton bottomOffset={bottomSheetHeight} onClick={requestLocation} />
       <StoreBottomSheet
         storeList={storeList || []}
         isCollapsed={isDragging}
         onStationChange={() => updateCoordinate(map)}
+        onHeightChange={setBottomSheetHeight}
       />
       <FilterBottomSheet
         isOpen={isFilterOpen}
