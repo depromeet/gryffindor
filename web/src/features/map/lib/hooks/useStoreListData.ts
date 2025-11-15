@@ -38,7 +38,10 @@ export function useStoreListData({ bounds, center }: UseStoreListDataParams) {
   });
 
   // 검색 모드: 검색어 기반 스토어 목록
-  const { searchStoreList, isPending, searchStores } = useStoreSearch();
+  const { searchStoreList, isPending, searchStores } = useStoreSearch({
+    lat: center.lat,
+    lon: center.lon,
+  });
 
   useEffect(() => {
     if (isSearchMode) {

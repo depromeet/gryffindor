@@ -13,6 +13,8 @@ export interface SearchStoreRequest {
     limit: number;
     lastKnown?: string;
   };
+  lat: number;
+  lon: number;
 }
 
 export const searchHistoryApi = {
