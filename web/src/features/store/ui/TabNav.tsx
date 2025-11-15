@@ -51,9 +51,6 @@ export function TabNav({ sectionRefs }: TabNavProps) {
     if (!target) return;
 
     target.scrollIntoView({ behavior: "smooth", block: "start" });
-    console.log("scrollHeight", document.body.scrollHeight);
-    console.log("overflow", getComputedStyle(document.body).overflow);
-    console.log("html overflow", getComputedStyle(document.documentElement).overflow);
   };
 
   return (
