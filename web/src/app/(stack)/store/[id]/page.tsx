@@ -62,16 +62,16 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
         <StoreInfo {...store} handleSetZoomImageSrc={handleSetZoomImageSrc} />
         <div
           ref={tabNavRef}
-          className={clsx("sticky top-[60px] z-10", {
+          className={clsx("sticky top-[0px] z-10", {
             "bg-white": isTabNavSticky,
           })}
         >
           <TabNav sectionRefs={sectionRefs} />
         </div>
-        <div ref={menuRef}>
+        <div ref={menuRef} className="scroll-mt-[120px]">
           <MenuSection menus={store.menus} handleSetZoomImageSrc={handleSetZoomImageSrc} />
         </div>
-        <div ref={seatRef}>
+        <div ref={seatRef} className="scroll-mt-[120px]">
           <SeatInfoSection seatInfo={store.seatInfo} />
           <SeatImageGallery
             storeName={store.name}
@@ -81,10 +81,10 @@ export default function StoreDetailPage(props: PageProps<"/store/[id]">) {
             handleSetZoomImageSrc={handleSetZoomImageSrc}
           />
         </div>
-        <div ref={reviewRef}>
+        <div ref={reviewRef} className="scroll-mt-[120px]">
           <ReviewSection storeId={store.storeId} memberId={userState?.memberId} />
         </div>
-        <div ref={similarRef}>
+        <div ref={similarRef} className="scroll-mt-[120px]">
           <SimilarStore storeId={store.storeId} />
         </div>
         <SuggestionCard storeId={store.storeId} />

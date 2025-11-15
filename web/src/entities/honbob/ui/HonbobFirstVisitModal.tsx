@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useUserState } from "@/entities/user";
-import { useSessionStorage } from "@/shared/lib";
+import { CUSTOM_EVENTS, useGAClick, useSessionStorage } from "@/shared/lib";
 import { BasicCharacter } from "@/shared/lib/assets";
 import { Button, Icon, Modal, TextButton } from "@/shared/ui";
 
@@ -21,6 +21,17 @@ export function HonbobFirstVisitModal() {
   const [isOpen, setIsOpen] = useState(
     !hasSeenModal && !userState.isLoggedIn && !userState.isLevelTestCompleted,
   );
+
+  const trackStartButton = useGAClick(CUSTOM_EVENTS.BUTTON_CLICK, {
+    button_id: "honbob_level_test_start",
+    button_text: "시작하기",
+    location: "first_visit_modal",
+  });
+
+  const trackCloseButton = useGAClick(CUSTOM_EVENTS.BUTTON_CLICK, {
+    button_id: "honbob_level_test_close",
+    location: "first_visit_modal",
+  });
 
   const closeModal = () => {
     setIsOpen(false);
@@ -41,7 +52,14 @@ export function HonbobFirstVisitModal() {
       closeOnOverlayClick={false}
     >
       <div className="flex w-[300px] flex-col items-center rounded-[10px] bg-white p-[20px]">
-        <button className="cursor-pointer self-end" type="button" onClick={closeModal}>
+        <button
+          className="cursor-pointer self-end"
+          type="button"
+          onClick={() => {
+            trackCloseButton();
+            closeModal();
+          }}
+        >
           <Icon name="close" size={22} disableCurrentColor />
         </button>
         <div className="flex w-full flex-col items-center gap-[24px]">
@@ -58,7 +76,10 @@ export function HonbobFirstVisitModal() {
             label="시작하기"
             size="medium"
             variant="primary"
-            onClick={() => router.push("/login")}
+            onClick={() => {
+              trackStartButton();
+              router.push("/login");
+            }}
           />
           <TextButton
             label="이미 계정이 있어요"

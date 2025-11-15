@@ -4,10 +4,12 @@ import { useRouter } from "next/navigation";
 import { LoginRequiredModal } from "@/features/report/ui/LoginRequiredModal";
 import { useReviewForm } from "@/features/review/lib/hook/useReviewForm";
 import { ConfirmModal } from "@/features/review/ui";
+import { useFixedInTransition } from "@/shared/hooks/useFixedInTransition";
 import { FilterSection, InputReview, TransitionLayout } from "@/shared/ui";
 import { CTA } from "@/shared/ui/CTA";
 
 export default function ReviewPage() {
+  const fixedRef = useFixedInTransition();
   const {
     title,
     isEditMode,
@@ -45,7 +47,7 @@ export default function ReviewPage() {
             placeholder="후기를 작성해주세요."
           />
         </div>
-        <div className="fixed right-0 bottom-0 left-0">
+        <div ref={fixedRef} className="fixed right-0 bottom-0 left-0">
           <CTA
             primaryLabel="완료"
             onPrimary={handleSubmit}

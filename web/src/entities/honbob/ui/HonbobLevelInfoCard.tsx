@@ -30,7 +30,7 @@ export function HonbobLevelInfoCard() {
           </span>
         </div>
         <div className="flex flex-col gap-y-[2px]">
-          <span className="text-body3-semibold text-gray600">추천 식당</span>
+          <span className="text-body3-semibold text-gray600">추천 좌석</span>
           <span className="text-body3-regular text-gray900">
             {userState.isLevelTestCompleted ? recommendedStore : "-"}
           </span>

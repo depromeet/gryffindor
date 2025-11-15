@@ -94,7 +94,16 @@ export function TransitionLayout({
         data-device={isMobile ? "mobile" : "desktop"}
       >
         {/* 페이지 콘텐츠 - 헤더가 있으면 상단 여백 추가 */}
-        {needsHeader ? <div className="h-full pt-[60px]">{children}</div> : children}
+        {needsHeader ? (
+          <div
+            className="h-dvh overflow-x-hidden w-full bg-gray0"
+            style={{ paddingTop: `calc(60px + env(safe-area-inset-top))` }}
+          >
+            {children}
+          </div>
+        ) : (
+          children
+        )}
       </SsgoiTransition>
     </>
   );
