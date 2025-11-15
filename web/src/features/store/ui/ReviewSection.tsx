@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { getStoreReviews } from "@/entities/review/api/reviewApi";
 import type { StoreReviewResponse } from "@/entities/review/model";
-import { AlreadyReviewedModal } from "@/features/review/ui";
+import { AlreadyReviewedModal, DefaultReview } from "@/features/review/ui";
 import { useInfiniteScroll } from "@/shared/lib";
 import { TextButton } from "@/shared/ui";
 import { ReviewList } from "./ReviewList";
@@ -19,6 +19,7 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
   const router = useRouter();
   const [isInfiniteScrollEnabled, setInfiniteScrollEnabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery<StoreReviewResponse>({
@@ -40,7 +41,8 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
     enabled: isInfiniteScrollEnabled,
   });
 
-  const handleLoadMoreClick = () => {
+  const handleShowMoreClick = () => {
+    setShowAll(true);
     if (hasNextPage) {
       fetchNextPage();
       setInfiniteScrollEnabled(true);
@@ -48,6 +50,7 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
   };
 
   const reviews = data?.pages.flatMap((page) => page.data) || [];
+  const visibleReviews = showAll ? reviews : reviews.slice(0, 3);
   const userReview = reviews.find((review) => review.reviewer.id === memberId);
 
   const handleWriteReviewClick = () => {
@@ -83,23 +86,25 @@ export function ReviewSection({ storeId, memberId }: ReviewSectionProps) {
           />
         </div>
 
-        <ReviewList reviews={reviews} memberId={memberId} />
-
-        {isInfiniteScrollEnabled && hasNextPage && <div ref={loadMoreRef} />}
-
-        {hasNextPage && !isInfiniteScrollEnabled && (
-          <>
-            <div className="mt-4 flex justify-center">
-              <TextButton label="더보기" isIcon onClick={handleLoadMoreClick} />
-            </div>
-
-            <AlreadyReviewedModal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-              onConfirm={handleModalConfirm}
-            />
-          </>
+        {reviews.length === 0 ? (
+          <DefaultReview text={`아직 작성된 방문 후기가 없어요.\n방문 후기를 들려주세요.`} />
+        ) : (
+          <ReviewList reviews={visibleReviews} memberId={memberId} />
         )}
+
+        {showAll && isInfiniteScrollEnabled && hasNextPage && <div ref={loadMoreRef} />}
+
+        {!showAll && reviews.length > 3 && (
+          <div className="mt-4 flex justify-center">
+            <TextButton label="더보기" isIcon onClick={handleShowMoreClick} />
+          </div>
+        )}
+
+        <AlreadyReviewedModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleModalConfirm}
+        />
       </section>
 
       <div className="mt-5 h-1 w-full bg-gray50" />

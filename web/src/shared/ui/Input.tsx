@@ -59,7 +59,7 @@ export function Input({
           placeholder={placeholder}
           disabled={disabled}
           maxLength={validation?.maxLength}
-          className="w-full bg-transparent text-body2-regular text-gray900 outline-none placeholder:text-gray900 disabled:cursor-not-allowed"
+          className="w-full bg-transparent text-body2-regular text-gray900 outline-none placeholder-gray-400  disabled:cursor-not-allowed"
         />
         {resetButton && value && (
           <button type="reset" onClick={handleReset}>

@@ -6,7 +6,7 @@ import { TransitionLayout } from "@/shared/ui";
 export default function MyReviewsPage() {
   return (
     <TransitionLayout>
-      <div className="flex flex-col">
+      <div className="flex flex-col h-full">
         <MyReviewListSection />
       </div>
     </TransitionLayout>

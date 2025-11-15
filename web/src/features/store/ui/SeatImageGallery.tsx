@@ -63,8 +63,8 @@ export function SeatImageGallery({
               ))}
           </div>
         </section>
-        <section className="flex w-full flex-col justify-center gap-1 rounded-[12px] border-[1.2px] border-[rgb(20,20,20,0.2)] bg-gray50 p-4">
-          <span className="text-body2-semibold text-primary500">좌석 사진</span>
+        <section className="flex w-full flex-col justify-center gap-1 rounded-[12px] bg-gray50 p-4">
+          <span className="text-body2-semibold text-primary500">좌석 정보 요약</span>
           <span className="text-[rgba(20,20,20,0.8)] text-body2-regular">
             {storeName}은 {seatLabels.join(", ")}이 있어서 혼밥 레벨 {level}
             에게 안성맞춤이에요! {userName}님, 오늘은 {seatLabels[0]}

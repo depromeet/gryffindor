@@ -63,7 +63,7 @@ export function FilterSection({
         <span className="text-subtitle1">{label}</span>
         {showCheckbox && <Checkbox label="전체 선택" checked={checked} onChange={handleCheckAll} />}
       </section>
-      <section className="flex flex-wrap gap-3">
+      <section className="grid grid-cols-3 gap-3">
         {options.map((option) => (
           <FilterButton
             key={option}

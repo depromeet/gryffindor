@@ -71,8 +71,8 @@ export const ReportForm = ({
           onChange={setRecommendedMenu}
         />
       </div>
-      <div className="flex flex-col">
-        <span className="text-subtitle1 ml-[20px]">메뉴 카테고리</span>
+      <div className="flex flex-col gap-y-[8px]">
+        <span className="text-subtitle1 pl-5">메뉴 카테고리</span>
         <FilterSection
           label=""
           isMultiple={false}
@@ -90,8 +90,8 @@ export const ReportForm = ({
           onChange={(e) => setReason(e.target.value)}
         />
       </div>
-      <div className="flex flex-col w-full">
-        <span className="text-subtitle1 ml-[20px]">좌석 형태</span>
+      <div className="flex flex-col gap-y-[8px]">
+        <span className="text-subtitle1 pl-5">좌석 형태</span>
         <FilterSection
           label=""
           isMultiple={true}
