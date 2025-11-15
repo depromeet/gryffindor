@@ -16,7 +16,13 @@ export function UserProfileInfo() {
         <Icon name="userLogin" size={72} disableCurrentColor />
       )}
       {isLevelTestCompleted && (
-        <Image src={profileImage} alt={`honbobLevelIcon-${honbobLevel}`} width={72} height={72} />
+        <Image
+          src={profileImage}
+          alt={`honbobLevelIcon-${honbobLevel}`}
+          width={72}
+          height={72}
+          className="rounded-full"
+        />
       )}
       {isLoggedIn && (
         <div className="flex flex-col gap-y-[8px]">
