@@ -3,6 +3,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { useFilterStore } from "@/shared/store";
 import { Button, Icon } from "@/shared/ui";
 import { onBoardingApi } from "../api/onBoardingApi";
 import { type Question, useLevelTestStore } from "../model/levelTestStore";
@@ -24,6 +25,7 @@ export function LevelTestQuestion({
 }: LevelTestQuestionProps) {
   const { setAnswer, setResult, getBackendRequestData, getAnswer } = useLevelTestStore();
   const { update } = useSession();
+  const { filters, setFilters } = useFilterStore();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   // 이전 답변 불러오기
@@ -48,6 +50,12 @@ export function LevelTestQuestion({
         level: response.response.level,
       });
       console.log("✅ [LevelTest] 세션 업데이트 완료");
+
+      // 필터 store의 honbobLevel 업데이트
+      setFilters({
+        ...filters,
+        honbobLevel: [response.response.level],
+      });
 
       onNext();
     },
