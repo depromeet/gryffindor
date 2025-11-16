@@ -49,7 +49,7 @@ export function LevelTestQuestion({
       await update({
         level: response.response.level,
       });
-      console.log("✅ [LevelTest] 세션 업데이트 완료");
+      console.log("✅ [LevelTest] 세션 업데이트 완료완료");
 
       // 필터 store의 honbobLevel 업데이트
       setFilters({
