@@ -14,6 +14,7 @@ export default function HomePage() {
     page_path: "/home",
   });
 
+  console.log("🔍 [HomePage] 호출됨");
   return (
     <TransitionLayout>
       <div className="flex flex-col  bg-gray50 px-[20px] pb-[20px] rounded-b-[20px]">
