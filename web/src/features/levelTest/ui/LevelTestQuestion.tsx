@@ -51,7 +51,6 @@ export function LevelTestQuestion({
       });
       console.log("✅ [LevelTest] 세션 업데이트 완료완료");
 
-      // 필터 store의 honbobLevel 업데이트
       setFilters({
         ...filters,
         honbobLevel: [response.response.level],
