@@ -47,23 +47,32 @@ export function StationOverlaySelect() {
         description="원하는 역을 선택해주세요"
         overlayZIndex={60}
       >
-        <Select.Content className="fixed top-[52px] left-[20px] z-70 max-h-[60vh] w-[180px] overflow-y-auto rounded-[10px] bg-white">
-          {STATIONS.map((station) => (
-            <Select.Item
-              key={station.value}
-              value={station.value}
-              className="box-border flex w-full cursor-pointer text-body2-semibold"
-            >
-              <span
-                className={`mx-[20px] flex w-full border-gray100 border-b py-[14px] ${
-                  selectedStation === station.value ? "text-gray900" : "text-gray400"
-                }`}
+        <div
+          style={{
+            position: "fixed",
+            top: "calc(52px + env(safe-area-inset-top))",
+            left: "20px",
+            zIndex: 70,
+          }}
+        >
+          <Select.Content className="max-h-[60vh] w-[180px] overflow-y-auto rounded-[10px] bg-white">
+            {STATIONS.map((station) => (
+              <Select.Item
+                key={station.value}
+                value={station.value}
+                className="box-border flex w-full cursor-pointer text-body2-semibold"
               >
-                {station.label}
-              </span>
-            </Select.Item>
-          ))}
-        </Select.Content>
+                <span
+                  className={`mx-[20px] flex w-full border-gray100 border-b py-[14px] ${
+                    selectedStation === station.value ? "text-gray900" : "text-gray400"
+                  }`}
+                >
+                  {station.label}
+                </span>
+              </Select.Item>
+            ))}
+          </Select.Content>
+        </div>
       </Overlay>
     </Select>
   );
