@@ -27,7 +27,8 @@ export function MapMarkers({ map, storeList }: MapMarkersProps) {
     clearMarker();
 
     storeList.forEach((store) => {
-      createMarker(store, getMarkerHtml(store, false));
+      const isSelected = store.id === selectedStoreId;
+      createMarker(store, getMarkerHtml(store, isSelected));
     });
   }, [storeList, createMarker, clearMarker, getMarkerHtml]);
 
