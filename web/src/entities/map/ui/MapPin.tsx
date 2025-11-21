@@ -1,3 +1,4 @@
+import { createTextOutlineShadow } from "@/entities/map";
 import { Icon } from "@/shared/ui";
 
 function SelectedPin({ honbobLevel }: { honbobLevel: number }) {
@@ -18,9 +19,9 @@ function UnselectedPin() {
 function StoreName({ name }: { name: string }) {
   return (
     <span
-      className="whitespace-nowrap rounded-sm text-caption2-semibold"
+      className="whitespace-nowrap rounded-sm text-caption2-semibold text-gray900"
       style={{
-        textShadow: `1px 0 var(--color-gray0), -1px 0 var(--color-gray0), 0 1px var(--color-gray0), 0 -1px var(--color-gray0), 1px 1px var(--color-gray0), -1px -1px var(--color-gray0), 1px -1px var(--color-gray0), -1px 1px var(--color-gray0)`,
+        textShadow: createTextOutlineShadow("var(--color-gray0)"),
       }}
     >
       {name}
