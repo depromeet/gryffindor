@@ -14,8 +14,13 @@ interface MapMarkersProps {
 
 export function MapMarkers({ map, storeList }: MapMarkersProps) {
   const prevSelectedStoreIdRef = useRef<number | null>(null);
+  // selectedStoreId를 ref로 추적하여 핀 선택 시 불필요한 마커들 재생성 방지
+  const selectedStoreIdRef = useRef<number | null>(null);
+
   const { createMarker, updateMarker, clearMarker, getStore } = useMapMarkers(map);
   const { selectedStoreId } = useMapStore();
+
+  selectedStoreIdRef.current = selectedStoreId;
 
   const getMarkerHtml = useCallback((store: StoreListResponseData, selected: boolean) => {
     return renderToString(
@@ -27,7 +32,7 @@ export function MapMarkers({ map, storeList }: MapMarkersProps) {
     clearMarker();
 
     storeList.forEach((store) => {
-      const isSelected = store.id === selectedStoreId;
+      const isSelected = store.id === selectedStoreIdRef.current;
       createMarker(store, getMarkerHtml(store, isSelected));
     });
   }, [storeList, createMarker, clearMarker, getMarkerHtml]);
