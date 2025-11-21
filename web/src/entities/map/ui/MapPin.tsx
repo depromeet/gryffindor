@@ -1,9 +1,11 @@
-import { DynamicColorLevelTag, Icon } from "@/shared/ui";
+import { Icon } from "@/shared/ui";
 
 function SelectedPin({ honbobLevel }: { honbobLevel: number }) {
   return (
     <div className="flex w-13 flex-col items-center gap-0.5">
-      <DynamicColorLevelTag level={honbobLevel} size="small" />
+      <div className="flex items-center bg-primary400 rounded-[4px] border-[1.4px] border-gray0 px-1.5 py-0.5">
+        <span className="text-caption2-semibold text-gray0">{`레벨 ${honbobLevel}`}</span>
+      </div>
       <Icon name="bubble" size={60} disableCurrentColor className="mx-auto" />
     </div>
   );
