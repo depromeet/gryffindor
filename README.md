@@ -1,4 +1,4 @@
-# BOB-EAT
+# BOBTORY
 
 <div align="center">
   <img src="web/public/gryffindor.jpg" alt="Gryffindor Logo" width="200"/>
