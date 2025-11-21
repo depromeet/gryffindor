@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import { renderToString } from "react-dom/server";
-import { MapPin } from "@/entities/map/ui";
+import { MapPin } from "@/entities/map";
 import type { StoreListResponseData } from "@/entities/storeList/api";
 import { useMapMarkers } from "../lib/hooks/useMapMarkers";
 import { useMapStore } from "../model";

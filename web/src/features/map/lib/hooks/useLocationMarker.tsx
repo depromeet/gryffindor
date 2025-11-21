@@ -2,7 +2,7 @@
 
 import { useCallback, useRef } from "react";
 import { renderToString } from "react-dom/server";
-import { MapLocation } from "@/entities/map/ui";
+import { MapLocation } from "@/entities/map";
 
 export function useLocationMarker() {
   const markerRef = useRef<naver.maps.Marker | null>(null);
