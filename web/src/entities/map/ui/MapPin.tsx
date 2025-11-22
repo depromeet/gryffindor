@@ -1,9 +1,12 @@
-import { DynamicColorLevelTag, Icon } from "@/shared/ui";
+import { createTextOutlineShadow } from "@/entities/map";
+import { Icon } from "@/shared/ui";
 
 function SelectedPin({ honbobLevel }: { honbobLevel: number }) {
   return (
     <div className="flex w-13 flex-col items-center gap-0.5">
-      <DynamicColorLevelTag level={honbobLevel} size="small" />
+      <div className="flex items-center bg-primary400 rounded-[4px] border-[1.4px] border-gray0 px-1.5 py-0.5">
+        <span className="text-caption2-semibold text-gray0">{`레벨 ${honbobLevel}`}</span>
+      </div>
       <Icon name="bubble" size={60} disableCurrentColor className="mx-auto" />
     </div>
   );
@@ -16,9 +19,9 @@ function UnselectedPin() {
 function StoreName({ name }: { name: string }) {
   return (
     <span
-      className="whitespace-nowrap rounded-sm text-caption2-semibold"
+      className="whitespace-nowrap rounded-sm text-caption2-semibold text-gray900"
       style={{
-        textShadow: `1px 0 var(--color-gray0), -1px 0 var(--color-gray0), 0 1px var(--color-gray0), 0 -1px var(--color-gray0), 1px 1px var(--color-gray0), -1px -1px var(--color-gray0), 1px -1px var(--color-gray0), -1px 1px var(--color-gray0)`,
+        textShadow: createTextOutlineShadow("var(--color-gray0)"),
       }}
     >
       {name}
