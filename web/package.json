@@ -42,7 +42,7 @@
     "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.24",
-    "next": "15.5.2",
+    "next": "15.5.9",
     "next-auth": "5.0.0-beta.29",
     "rc-slider": "^11.1.9",
     "react": "19.1.0",
