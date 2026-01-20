@@ -25,7 +25,8 @@ module.exports = {
           "navermaps", // 네이버 지도
           "nmap", // 네이버 지도
         ],
-        NSLocationWhenInUseUsageDescription: "당신의 위치 정보를 사용하여 주변 맛집을 추천하고, 근처 식사 기록을 분석해 더 나은 식사 경험을 제공합니다."
+        NSLocationWhenInUseUsageDescription:
+          "당신의 위치 정보를 사용하여 주변 맛집을 추천하고, 근처 식사 기록을 분석해 더 나은 식사 경험을 제공합니다.",
       },
     },
     android: {
@@ -48,11 +49,10 @@ module.exports = {
         "expo-splash-screen",
         {
           image: "./assets/images/splash-icon.png",
-          imageWidth: 200,
           resizeMode: "contain",
-          backgroundColor: "#ffffff",
+          backgroundColor: "#FF5532",
           dark: {
-            backgroundColor: "#000000",
+            backgroundColor: "#FF5532",
           },
         },
       ],
